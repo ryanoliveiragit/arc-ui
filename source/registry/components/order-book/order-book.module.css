@@ -1,0 +1,85 @@
+/* Bids take the success tone and asks the danger tone. Override --bid and --ask on any ancestor to rebrand the book. */
+.root { --bid: var(--success); --ask: var(--danger); --row: 28px; container-type: inline-size; display: grid; min-width: 0; gap: var(--space-2); color: var(--foreground); font-family: var(--font-body); font-size: var(--text-sm); font-variant-numeric: tabular-nums; }
+
+.heads, .book { display: grid; min-width: 0; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-2); }
+.head, .row { display: grid; min-width: 0; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: var(--space-2); padding: 0 var(--space-3); }
+/* The price column takes the width of its text, so a narrow book squeezes the size and never clips a price. */
+.head[data-side="ask"], .row[data-side="ask"] { grid-template-columns: auto minmax(0, 1fr); }
+.head { color: var(--text-muted); font-size: var(--text-xs); line-height: 1.6; white-space: nowrap; }
+/* Prices meet in the middle: a bid row reads size then price, an ask row price then size. */
+.head[data-side="bid"] > :last-child, .row[data-side="bid"] .price { text-align: right; }
+.head[data-side="ask"] > :last-child, .row[data-side="ask"] .price { order: -1; text-align: left; }
+.head[data-side="ask"] > :nth-child(2), .row[data-side="ask"] .size { text-align: right; }
+.head[data-side="ask"] .total, .row[data-side="ask"] .total { order: 1; text-align: right; }
+.total { display: none; color: var(--text-muted); }
+
+.side { position: relative; display: grid; min-width: 0; align-content: start; gap: 2px; margin: 0; padding: 0; list-style: none; }
+.item { display: block; min-width: 0; }
+.row { --tone: var(--bid); position: relative; width: 100%; height: var(--row); overflow: hidden; border: 0; border-radius: 8px; background: transparent; color: inherit; font: inherit; line-height: 1; white-space: nowrap; cursor: pointer; isolation: isolate; --focus-outline-offset: -2px; -webkit-tap-highlight-color: transparent; }
+.row[data-side="ask"] { --tone: var(--ask); }
+.row > span { position: relative; overflow: hidden; text-overflow: clip; }
+.price { color: var(--tone); font-weight: 500; }
+.size { color: var(--text-secondary); }
+/* The cumulative size up to this row, as a bar that slides out from the middle of the book. It moves on a transform, so it never reflows the row. */
+.depth { position: absolute !important; z-index: -1; inset: 0; border-radius: 6px; background: color-mix(in oklab, var(--tone) 17%, transparent); transform: translateX(calc((1 - var(--share)) * 100%)); transition: transform var(--duration-considered) var(--ease-spring), background-color var(--duration-fast) var(--ease-standard); }
+.row[data-side="ask"] .depth { transform: translateX(calc((var(--share) - 1) * 100%)); }
+.row[data-in-range] .depth { background: color-mix(in oklab, var(--tone) 34%, transparent); }
+.row[data-in-range] .size { color: var(--foreground); }
+.row[aria-pressed="true"] { box-shadow: inset 0 0 0 1.5px var(--accent-strong); }
+.row[aria-pressed="true"] .size { color: var(--foreground); }
+/* A size that changed lights its row for a moment: brighter when it grew, a neutral wash when it shrank. */
+.flash { position: absolute !important; z-index: -1; inset: 0; border-radius: 6px; background: color-mix(in oklab, var(--foreground) 16%, transparent); opacity: 0; animation: order-book-flash 620ms var(--ease-standard); }
+.flash[data-grew] { background: color-mix(in oklab, var(--tone) 46%, transparent); }
+@keyframes order-book-flash { from { opacity: 1; } to { opacity: 0; } }
+.size[data-changed] { animation: order-book-ink 620ms var(--ease-standard); }
+.size[data-changed="up"] { --ink: var(--tone); }
+.size[data-changed="down"] { --ink: var(--text-muted); }
+@keyframes order-book-ink { from { color: var(--ink); } }
+
+.spread { display: flex; min-width: 0; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-1) var(--space-4); margin-top: var(--space-1); padding: var(--space-3) var(--space-3) 0; border-top: 1px solid var(--border); }
+.pair, .mid { display: inline-flex; min-width: 0; align-items: baseline; gap: var(--space-2); white-space: nowrap; }
+.term { color: var(--text-muted); font-size: var(--text-xs); }
+.figure { font-weight: 500; }
+.mid { --tone: var(--ask); align-items: center; }
+.mid[data-up] { --tone: var(--bid); }
+.midValue { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 600; letter-spacing: var(--tracking-body); line-height: 1.2; }
+.arrow { flex: none; color: var(--tone); transform: rotate(180deg); transition: transform var(--duration-standard) var(--ease-spring), color var(--duration-fast) var(--ease-standard); }
+.mid[data-up] .arrow { transform: rotate(0deg); }
+
+/* The last line shows how the visible size splits between the two sides, and swaps to the cost of trading through to the row being read. */
+.foot { display: grid; min-width: 0; min-height: 20px; align-items: center; padding: 0 var(--space-3); }
+.balance, .sweep { grid-area: 1 / 1; min-width: 0; margin: 0; transition: opacity var(--duration-fast) var(--ease-standard), transform var(--duration-standard) var(--ease-standard); }
+.balance { display: flex; align-items: center; gap: var(--space-3); color: var(--text-muted); font-size: var(--text-xs); white-space: nowrap; }
+.balanceLabel[data-side="bid"] { color: var(--bid); }
+.balanceLabel[data-side="ask"] { color: var(--ask); }
+.meter { position: relative; height: 4px; min-width: 24px; flex: 1; overflow: hidden; border-radius: var(--radius-pill); background: color-mix(in oklab, var(--ask) 60%, var(--surface)); }
+.meterFill { position: absolute; inset: 0; border-right: 2px solid var(--surface); background: var(--bid); transform: translateX(calc((var(--share) - 1) * 100%)); transition: transform var(--duration-considered) var(--ease-spring); }
+.sweep { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 var(--space-2); opacity: 0; transform: translateY(4px); white-space: nowrap; pointer-events: none; }
+.foot[data-mode="sweep"] .sweep { opacity: 1; transform: none; }
+.foot[data-mode="sweep"] .balance { opacity: 0; transform: translateY(-4px); }
+.sweep[data-side="bid"] .figure:first-of-type { color: var(--bid); }
+.sweep[data-side="ask"] .figure:first-of-type { color: var(--ask); }
+
+@media (hover: hover) and (pointer: fine) { .row:hover .size { color: var(--foreground); } }
+
+/* A wide book adds the running total on the outer edge of each side. */
+@container (min-width: 520px) {
+  .head, .row, .head[data-side="ask"], .row[data-side="ask"] { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.15fr); }
+  .head[data-side="ask"], .row[data-side="ask"] { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, 1fr); }
+  .total { display: block; }
+  .head[data-side="bid"] > :nth-child(2), .row[data-side="bid"] .size { text-align: center; }
+  .head[data-side="ask"] > :nth-child(2), .row[data-side="ask"] .size { text-align: center; }
+  .head[data-side="bid"] .total, .row[data-side="bid"] .total { text-align: left; }
+}
+@container (max-width: 360px) {
+  .head, .row { padding: 0 var(--space-2); }
+}
+@container (max-width: 300px) {
+  .root { font-size: var(--text-xs); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .depth, .arrow, .meterFill, .balance, .sweep { transition: none; }
+  .flash, .size[data-changed] { animation: none; }
+  .sweep, .foot[data-mode="sweep"] .balance { transform: none; }
+}

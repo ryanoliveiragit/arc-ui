@@ -1,0 +1,76 @@
+[
+  {
+    "name": "toast-action",
+    "type": "registry:ui",
+    "title": "Toast action",
+    "description": "A toast with one action, such as Undo, and a thin countdown bar that drains until it leaves; hover or focus holds the countdown, and taking the action swaps the copy for a short confirmation.",
+    "categories": [
+      "feedback"
+    ],
+    "dependencies": [
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/toast-action/toast-action.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/toast-action/toast-action.tsx"
+      },
+      {
+        "path": "registry/components/toast-action/toast-action.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/toast-action/toast-action.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "toast",
+        "undo",
+        "notification",
+        "countdown"
+      ]
+    }
+  },
+  {
+    "name": "toast-progress",
+    "type": "registry:ui",
+    "title": "Toast progress",
+    "description": "A toast that follows a running task: a bar and a percentage advance, then it morphs in place into a success state with a drawn check, or into an error state with Retry.",
+    "categories": [
+      "feedback"
+    ],
+    "dependencies": [
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/toast-progress/toast-progress.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/toast-progress/toast-progress.tsx"
+      },
+      {
+        "path": "registry/components/toast-progress/toast-progress.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/toast-progress/toast-progress.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "toast",
+        "progress",
+        "upload",
+        "notification"
+      ]
+    }
+  }
+]

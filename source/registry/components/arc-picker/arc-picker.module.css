@@ -1,0 +1,57 @@
+/* The picker is a window onto one arc of a dial. --radius, --inset (apex to the window's edge) and --inner (tick circle) come from JS. */
+.picker { --span: 30rem; --depth: 8rem; position: relative; display: block; max-width: 100%; box-sizing: border-box; border-radius: var(--radius-panel); color: var(--text-muted); font-size: var(--text-base); font-weight: 500; line-height: 22px; cursor: grab; touch-action: pan-y; user-select: none; -webkit-tap-highlight-color: transparent; --focus-outline-offset: -2px; }
+.picker:is([data-side="top"], [data-side="bottom"]) { width: var(--span); height: var(--depth); }
+.picker:is([data-side="left"], [data-side="right"]) { --span: 17rem; --depth: calc(var(--inset) * 2 + 2.5rem); width: var(--depth); height: var(--span); touch-action: pan-x; }
+.picker[data-dragging] { cursor: grabbing; }
+.picker[aria-disabled] { cursor: default; opacity: .5; }
+
+/* Clips the dial and fades the two ends of the arc. The fade is a mask along the direction the options travel. */
+.clip { position: absolute; inset: 0; overflow: hidden; border-radius: inherit; }
+.picker:is([data-side="top"], [data-side="bottom"]) .clip { mask-image: linear-gradient(to right, transparent, var(--foreground) 16%, var(--foreground) 84%, transparent); }
+.picker:is([data-side="left"], [data-side="right"]) .clip { mask-image: linear-gradient(to bottom, transparent, var(--foreground) 14%, var(--foreground) 86%, transparent); }
+
+/* A point at the dial's center. Everything on the dial is placed from here, and turning this point turns it all. */
+.dial { position: absolute; width: 0; height: 0; will-change: transform; }
+.picker[data-side="top"] .dial { top: calc(var(--inset) + var(--radius)); left: 50%; }
+.picker[data-side="bottom"] .dial { top: calc(100% - var(--inset) - var(--radius)); left: 50%; }
+.picker[data-side="left"] .dial { top: 50%; left: calc(var(--inset) + var(--radius)); }
+.picker[data-side="right"] .dial { top: 50%; left: calc(100% - var(--inset) - var(--radius)); }
+
+/* Each option: centered on the dial's center, pushed out by the radius, then swung to its angle. On the top and bottom arcs the
+   text follows the curve; on the side arcs it points along the spoke, so it is level at the apex either way. */
+.item { position: absolute; top: 0; left: 0; display: grid; width: max-content; place-items: center; transform-origin: 0 0; pointer-events: none; }
+.picker[data-side="top"] .item { transform: rotate(var(--angle)) translateY(calc(var(--radius) * -1)) translate(-50%, -50%); }
+.picker[data-side="bottom"] .item { transform: rotate(var(--angle)) translateY(var(--radius)) translate(-50%, -50%); }
+.picker[data-side="left"] .item { transform: rotate(var(--angle)) translateX(calc(var(--radius) * -1)) translate(-50%, -50%); }
+.picker[data-side="right"] .item { transform: rotate(var(--angle)) translateX(var(--radius)) translate(-50%, -50%); }
+.label { display: block; padding: 4px 6px; border-radius: var(--radius-control); white-space: nowrap; cursor: pointer; transition: color var(--duration-fast) var(--ease-standard); }
+.item[data-reachable] .label { pointer-events: auto; }
+.label[data-near] { color: var(--foreground); }
+.label[aria-disabled] { text-decoration: line-through; text-decoration-thickness: 1px; cursor: default; }
+@media (hover: hover) and (pointer: fine) { .picker:not([aria-disabled], [data-dragging]) .label:not([aria-disabled]):hover { color: var(--foreground); } }
+
+/* Tick marks: short dashes of a circle's stroke, every fifth one longer. They turn with the dial, which is what makes its motion readable. */
+.ticks { position: absolute; top: 0; left: 0; max-width: none; overflow: visible; translate: -50% -50%; pointer-events: none; }
+.picker[data-side="top"] .ticks { rotate: -90deg; }
+.picker[data-side="bottom"] .ticks { rotate: 90deg; }
+.picker[data-side="left"] .ticks { rotate: 180deg; }
+.minor { stroke: var(--border-strong); stroke-width: 5; }
+.major { stroke: var(--text-muted); stroke-width: 10; }
+
+/* A point at the apex. */
+.frame { position: absolute; width: 0; height: 0; pointer-events: none; }
+.picker[data-side="top"] .frame { top: var(--inset); left: 50%; }
+.picker[data-side="bottom"] .frame { top: calc(100% - var(--inset)); left: 50%; }
+.picker[data-side="left"] .frame { top: 50%; left: var(--inset); }
+.picker[data-side="right"] .frame { top: 50%; left: calc(100% - var(--inset)); }
+.bracket { position: absolute; top: -17px; width: 8px; height: 34px; box-sizing: border-box; border: 2px solid var(--accent-strong); }
+.bracket[data-end="start"] { right: 0; border-right: 0; border-radius: 8px 0 0 8px; }
+.bracket[data-end="end"] { left: 0; border-left: 0; border-radius: 0 8px 8px 0; }
+/* The pointer marks the apex on the tick circle, toward the dial's center from the label. */
+.pointer { position: absolute; top: -6px; left: -1.5px; width: 3px; height: 12px; border-radius: 2px; background: var(--accent-strong); --reach: calc(var(--radius) - var(--inner)); }
+.picker[data-side="top"] .pointer { translate: 0 var(--reach); }
+.picker[data-side="bottom"] .pointer { translate: 0 calc(var(--reach) * -1); }
+.picker[data-side="left"] .pointer { rotate: 90deg; translate: var(--reach) 0; }
+.picker[data-side="right"] .pointer { rotate: 90deg; translate: calc(var(--reach) * -1) 0; }
+
+@media (prefers-reduced-motion: reduce) { .label { transition: none; } .dial { will-change: auto; } }

@@ -1,4 +1,0 @@
-function(__module,__exports,__require){
-"use strict";
-var __m=(e=>{e.exports={group:"split-button_group__c8_Sg",primary:"split-button_primary__BvURz",trigger:"split-button_trigger__jdCRr",primarySlot:"split-button_primarySlot__nzDMf",primaryContent:"split-button_primaryContent__kcGnk",mainIcon:"split-button_mainIcon__9kWao",iconPhase:"split-button_iconPhase__gGUB7",glyphs:"split-button_glyphs__Fyah3",glyph:"split-button_glyph__3B11O",chevron:"split-button_chevron__dSYKY",secondary:"split-button_secondary__9cxrV",icon:"split-button_icon__c20aR",srOnly:"split-button_srOnly___9Sq8",menu:"split-button_menu__BTohc",item:"split-button_item__zePAB","menu-exit":"split-button_menu-exit__Y0a1Y",destructive:"split-button_destructive__MAzZD"}});if(typeof __m==="function"){__m(__module,__exports,__require);}else{__module.exports=__m;}
-}

@@ -1,0 +1,11 @@
+{
+  "voice-orb": "Orbe de assistente de voz que mostra quando ele escuta, pensa ou fala, com anéis e barras que acompanham o volume.",
+  "message-bubble": "Balão de conversa para você e para o assistente, com cauda, agrupamento, horário e tiques de entrega animados.",
+  "message": "Mensagem completa do assistente, com avatar, nome, texto formatado e ações de copiar, refazer e avaliar ao passar o mouse.",
+  "message-scroller": "Área de conversa que acompanha as mensagens novas, solta quando você rola para cima e mostra um atalho com as não lidas.",
+  "prompt-input": "Caixa de prompt que cresce com o texto, com anexos, menu de modelo e um botão de enviar que vira parar durante a resposta.",
+  "todo-list": "Lista do plano de um agente: cada etapa passa de pendente para em andamento e concluída, com contagem de progresso.",
+  "approval-card": "Cartão que pede sua aprovação antes de o agente agir, com resumo, detalhes que se abrem e o resultado da decisão.",
+  "tool-approval": "Pedido compacto para rodar uma ferramenta: permita uma vez, sempre ou negue, e ele se recolhe em uma linha de resultado.",
+  "tool-result": "Registro recolhível de uma chamada de ferramenta, com status, duração e a entrada e a saída formatadas."
+}

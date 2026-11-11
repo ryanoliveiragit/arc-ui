@@ -1,36 +1,30 @@
 <!doctype html>
-<html lang="pt-BR">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>arc-ui · espelho do uiarc.dev/components</title>
-<meta name="description" content="Espelho navegável do uiarc.dev/components: 385 componentes e blocos com demo ao vivo, documentação e instalação — free e Pro.">
-<meta property="og:title" content="arc-ui · espelho do uiarc.dev/components">
-<meta property="og:description" content="385 itens com demo ao vivo, docs e instalação.">
-<meta property="og:type" content="website">
-<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="assets/apple-icon.png">
-<link rel="stylesheet" href="tokens.css">
-<link rel="stylesheet" href="style.css">
-<script src="runtime/arc-runtime.js"></script>
-<script src="src/shared.registry.js"></script>
-<script src="runtime/vendor-dom.js"></script>
-<script type="module" src="app.js"></script>
-</head>
-<body>
-<header class="topbar">
-  <a class="brand" href="#/">
-    <span class="brand-mark" aria-hidden="true">◐</span>
-    <span class="brand-name">arc-ui</span>
-    <span class="brand-tag">mirror</span>
-  </a>
-  <input id="global-search" class="global-search" type="search" placeholder="Buscar componente, bloco, tag…  ( / )" autocomplete="off" aria-label="Buscar itens">
-  <button id="theme-toggle" class="icon-btn" type="button" aria-label="Alternar tema claro/escuro"></button>
-</header>
-<main id="app" tabindex="-1"></main>
-<footer class="site-footer">
-  <p>Espelho não oficial de <a href="https://uiarc.dev/components" target="_blank" rel="noreferrer">uiarc.dev/components</a> · 385 itens com demo ao vivo · <a href="NOTICE.md">aviso legal</a> (itens Pro extraídos dos bundles públicos)</p>
-</footer>
-<noscript><p style="padding:2rem;text-align:center;color:#666">Este espelho precisa de JavaScript para montar os demos ao vivo.</p></noscript>
-</body>
+<html lang="pt-BR" data-theme="dark" data-accent="lime">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ryan-ui · componentes e blocos React com movimento</title>
+    <meta name="description" content="ryan-ui: componentes e blocos React com movimento, em CSS modules e tokens de design. Código aberto (MIT), com demo ao vivo de cada item." />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <script>
+      // Antes da primeira pintura: tema e cor de destaque salvos (ou os da URL, no preview), e a pasta da mídia de demonstração.
+      (function () {
+        var root = document.documentElement;
+        try {
+          var params = new URLSearchParams(location.hash.split("?")[1] || "");
+          var theme = params.get("theme") || localStorage.getItem("ryan-ui:theme") || "dark";
+          if (theme !== "light" && theme !== "dark") theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          root.dataset.theme = theme;
+          root.dataset.accent = params.get("accent") || localStorage.getItem("ryan-ui:accent") || "lime";
+        } catch (error) { /* armazenamento bloqueado: fica o tema escuro */ }
+        window.__RYAN_UI_MEDIA__ = "./media";
+      })();
+    </script>
+    <script type="module" crossorigin src="./assets/index-kjJGCf8a.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BWQeDZs7.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
 </html>

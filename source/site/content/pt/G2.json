@@ -1,0 +1,7 @@
+{
+  "status-bar": "Faixa de disponibilidade com uma barra por dia, colorida pelo estado, dica por dia e o percentual geral.",
+  "liquidity-heatmap": "Mapa de calor da liquidez por preço e horário, com legenda em degraus e leitura da célula sob o cursor.",
+  "order-book": "Livro de ofertas com compras e vendas lado a lado, barras de profundidade, spread e linhas que piscam a cada mudança.",
+  "returns-calendar": "Calendário de retornos diários, mês a mês, com cada dia colorido pela força do ganho ou da perda e o total do mês.",
+  "price-target-fan": "Histórico de preço que se abre em leque até os alvos alto, mediano e baixo, cada um com rótulo e variação."
+}

@@ -1,0 +1,10 @@
+{
+  "file-diff": "Diff unificado de um arquivo, com números de linha, contagem de mudanças e trechos iguais que se abrem com um clique.",
+  "streaming-response": "Texto que chega palavra por palavra, com cursor e desfoque suave, e controles para pausar, pular e repetir.",
+  "image-generation": "Cartão de pedido de imagem: um campo de células cintila com o progresso e a imagem surge do desfoque até ficar nítida.",
+  "citations": "Números de citação no meio do texto que abrem um cartão com a fonte, mais a lista de fontes com destaque compartilhado.",
+  "agent-activity": "Linha do tempo ao vivo do que o agente está fazendo: a etapa atual pulsa e as concluídas se recolhem num resumo.",
+  "loading-states": "Indicadores de que a IA está pensando: texto cintilante, pontinhos que saltam, frases que se alternam e contador de etapas.",
+  "ai-sidebar": "Painel de assistente que desliza ao lado da página, com cabeçalho, mensagens, sugestões e caixa de prompt.",
+  "chat-app": "Tela de chat completa: lista de conversas, respostas simuladas que chegam aos poucos e caixa de prompt."
+}

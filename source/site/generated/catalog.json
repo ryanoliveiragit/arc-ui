@@ -1,0 +1,6177 @@
+{
+ "generatedFrom": "registry.json",
+ "upstream": {
+  "repository": "https://github.com/kuratlielia/arc-library",
+  "commit": "8302b52ed9dc79ae7ca699b158a98dfdf09656f7",
+  "copyright": "Copyright (c) 2026 Elia Kuratli"
+ },
+ "counts": {
+  "components": 179,
+  "blocks": 42
+ },
+ "items": [
+  {
+   "name": "accordion",
+   "title": "Accordion",
+   "description": "Progressively reveal supporting information in place.",
+   "descricao": "Revela informações de apoio no próprio lugar, uma seção por vez.",
+   "kind": "component",
+   "category": "disclosure",
+   "tags": [
+    "disclosure",
+    "layout"
+   ],
+   "dependencies": [
+    "@radix-ui/react-accordion",
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/accordion/accordion.tsx",
+    "registry/components/accordion/accordion.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/accordion/accordion.tsx",
+    "registry/components/accordion/accordion.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "action-button",
+   "title": "Action button",
+   "description": "A compact button for frequent toolbar actions.",
+   "descricao": "Botão compacto para as ações mais usadas de uma barra de ferramentas.",
+   "kind": "component",
+   "category": "actions",
+   "tags": [
+    "action",
+    "toolbar"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/action-button/action-button.tsx",
+    "registry/components/action-button/action-button.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/action-button/action-button.tsx",
+    "registry/components/action-button/action-button.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "action-swap",
+   "title": "Action swap",
+   "description": "Swap an action label while preserving its place and intent.",
+   "descricao": "Troca o rótulo de uma ação sem ela sair do lugar nem mudar de intenção.",
+   "kind": "component",
+   "category": "actions",
+   "tags": [
+    "action",
+    "motion"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/action-swap/action-swap.tsx",
+    "registry/components/action-swap/action-swap.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/action-swap/action-swap.tsx",
+    "registry/components/action-swap/action-swap.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "activity-heatmap",
+   "title": "Activity heatmap",
+   "description": "See a year of activity at a glance, one square per day.",
+   "descricao": "Um ano de atividade num relance, com um quadradinho para cada dia.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "data",
+    "chart",
+    "calendar"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/activity-heatmap/activity-heatmap.tsx",
+    "registry/components/activity-heatmap/activity-heatmap.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/activity-heatmap/activity-heatmap.tsx",
+    "registry/components/activity-heatmap/activity-heatmap.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "adaptive-stepper",
+   "title": "Adaptive stepper",
+   "description": "A numeric stepper with a fixed footprint: digits roll between values, and the minus or plus button folds away at the minimum or maximum.",
+   "descricao": "Contador que não muda de tamanho: os dígitos rolam até o novo valor e o botão de menos ou de mais se recolhe no limite.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "number",
+    "quantity",
+    "stepper",
+    "spinbutton"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/adaptive-stepper/adaptive-stepper.tsx",
+    "registry/components/adaptive-stepper/adaptive-stepper.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/adaptive-stepper/adaptive-stepper.tsx",
+    "registry/components/adaptive-stepper/adaptive-stepper.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "agent-activity",
+   "title": "Agent activity",
+   "description": "A live timeline of an agent at work: the current step pulses and collects what it finds as chips, and finished steps fold into one summary row that opens again.",
+   "descricao": "Linha do tempo ao vivo do que o agente está fazendo: a etapa atual pulsa e as concluídas se recolhem num resumo.",
+   "kind": "component",
+   "category": "ai",
+   "tags": [
+    "ai",
+    "agent",
+    "timeline",
+    "progress"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/agent-activity/agent-activity.tsx",
+    "registry/components/agent-activity/agent-activity.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/agent-activity/agent-activity.tsx",
+    "registry/components/agent-activity/agent-activity.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "ai-sidebar",
+   "title": "AI sidebar",
+   "description": "A docked assistant panel that springs in beside the page and pushes it aside (or slides over it when narrow), with a header, a message list that follows new messages, suggestion chips and a growing prompt box.",
+   "descricao": "Painel de assistente que desliza ao lado da página, com cabeçalho, mensagens, sugestões e caixa de prompt.",
+   "kind": "component",
+   "category": "ai",
+   "tags": [
+    "ai",
+    "sidebar",
+    "chat",
+    "panel"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [
+    "loading-states"
+   ],
+   "files": [
+    "registry/components/ai-sidebar/ai-sidebar.tsx",
+    "registry/components/ai-sidebar/ai-sidebar.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/ai-sidebar/ai-sidebar.tsx",
+    "registry/components/ai-sidebar/ai-sidebar.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "alert",
+   "title": "Alert",
+   "description": "A persistent message that helps people recover or continue.",
+   "descricao": "Uma mensagem persistente que ajuda a pessoa a se recuperar de um problema ou seguir em frente.",
+   "kind": "component",
+   "category": "feedback",
+   "tags": [
+    "status",
+    "message"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/alert/alert.tsx",
+    "registry/components/alert/alert.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/alert/alert.tsx",
+    "registry/components/alert/alert.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "animated-counter",
+   "title": "Animated counter",
+   "description": "Give changing totals a clear sense of movement.",
+   "descricao": "Totais que mudam com movimento claro, dígito por dígito.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "data",
+    "motion"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/animated-counter/animated-counter.tsx",
+    "registry/components/animated-counter/animated-counter.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/animated-counter/animated-counter.tsx",
+    "registry/components/animated-counter/animated-counter.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "animated-sidebar",
+   "title": "Animated sidebar",
+   "description": "A sidebar with nested groups that open on a height spring, one highlight that glides under the pointer, and a collapsed icon rail with tooltips.",
+   "descricao": "Barra lateral com grupos aninhados que abrem com animação de altura, destaque que desliza e modo recolhido com dicas.",
+   "kind": "component",
+   "category": "disclosure",
+   "tags": [
+    "sidebar",
+    "navigation",
+    "nested",
+    "collapse",
+    "tooltip"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react",
+    "@radix-ui/react-tooltip"
+   ],
+   "requires": [
+    "hover-highlight"
+   ],
+   "files": [
+    "registry/components/animated-sidebar/animated-sidebar.tsx",
+    "registry/components/animated-sidebar/animated-sidebar.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/animated-sidebar/animated-sidebar.tsx",
+    "registry/components/animated-sidebar/animated-sidebar.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "announcement-bar",
+   "title": "Announcement bar",
+   "description": "A top banner that rotates messages, counts down, and collapses smoothly when dismissed.",
+   "descricao": "Faixa no topo que alterna mensagens, mostra contagem regressiva e recolhe com suavidade ao ser dispensada.",
+   "kind": "component",
+   "category": "feedback",
+   "tags": [
+    "feedback",
+    "new"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/announcement-bar/announcement-bar.tsx",
+    "registry/components/announcement-bar/announcement-bar.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/announcement-bar/announcement-bar.tsx",
+    "registry/components/announcement-bar/announcement-bar.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "approval-card",
+   "title": "Approval card",
+   "description": "A card that asks a person to approve or reject an agent's proposed action, with a summary, details that expand, and a resolved state the buttons morph into.",
+   "descricao": "Cartão que pede sua aprovação antes de o agente agir, com resumo, detalhes que se abrem e o resultado da decisão.",
+   "kind": "component",
+   "category": "ai",
+   "tags": [
+    "ai",
+    "agent",
+    "approval",
+    "card"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/approval-card/approval-card.tsx",
+    "registry/components/approval-card/approval-card.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/approval-card/approval-card.tsx",
+    "registry/components/approval-card/approval-card.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "arc-picker",
+   "title": "Arc picker",
+   "description": "A radial text picker: options sit on an arc, the wheel, a drag or the arrow keys turn the dial, and one bracket frame resizes around the active label.",
+   "descricao": "Seletor radial: as opções ficam em um arco, giram com a rolagem, o arraste ou as setas, e uma moldura abraça a opção ativa.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "picker",
+    "radial",
+    "dial",
+    "listbox",
+    "drag"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/arc-picker/arc-picker.tsx",
+    "registry/components/arc-picker/arc-picker.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/arc-picker/arc-picker.tsx",
+    "registry/components/arc-picker/arc-picker.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "aspect-ratio",
+   "title": "Aspect ratio",
+   "description": "A box that holds a width to height ratio and springs to a new one when it changes, keeping the media inside covered.",
+   "descricao": "Caixa que mantém a proporção e desliza suavemente para outra (16:9, 4:3, 1:1, 9:16) sem deixar a mídia descoberta.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "layout",
+    "media",
+    "ratio",
+    "image"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/aspect-ratio/aspect-ratio.tsx",
+    "registry/components/aspect-ratio/aspect-ratio.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/aspect-ratio/aspect-ratio.tsx",
+    "registry/components/aspect-ratio/aspect-ratio.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "availability-scheduler",
+   "title": "Availability scheduler",
+   "description": "Week grid of one-hour slots chosen by click, rectangle drag or keyboard, with one-click presets and a live summary of merged ranges per day.",
+   "descricao": "Grade semanal para marcar horários livres com clique e arraste, com atalhos prontos e um resumo por dia que se atualiza na hora.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [
+    "calendar",
+    "schedule",
+    "drag",
+    "grid"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/blocks/availability-scheduler/availability-scheduler.tsx",
+    "registry/blocks/availability-scheduler/availability-scheduler.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/availability-scheduler/availability-scheduler.tsx",
+    "registry/blocks/availability-scheduler/availability-scheduler.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "avatar",
+   "title": "Avatar",
+   "description": "A compact identity marker for people and accounts.",
+   "descricao": "Foto ou iniciais de uma pessoa, em vários tamanhos e com indicador de presença.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "identity",
+    "people"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/avatar/avatar.tsx",
+    "registry/components/avatar/avatar.module.css",
+    "lib/ryan-provider.tsx"
+   ],
+   "ownFiles": [
+    "registry/components/avatar/avatar.tsx",
+    "registry/components/avatar/avatar.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "avatar-group",
+   "title": "Avatar group",
+   "description": "Show a team or set of contributors in a small space.",
+   "descricao": "Grupo de avatares sobrepostos que resume uma equipe e mostra quantos membros a mais existem.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "identity",
+    "people"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [
+    "avatar"
+   ],
+   "files": [
+    "registry/components/avatar-group/avatar-group.tsx",
+    "registry/components/avatar-group/avatar-group.module.css",
+    "registry/components/avatar/avatar.tsx",
+    "registry/components/avatar/avatar.module.css",
+    "lib/ryan-provider.tsx"
+   ],
+   "ownFiles": [
+    "registry/components/avatar-group/avatar-group.tsx",
+    "registry/components/avatar-group/avatar-group.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "badge",
+   "title": "Badge",
+   "description": "A small label for status, category, or metadata.",
+   "descricao": "Etiqueta compacta para status, categorias e destaques, em tons e cores variados.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "label",
+    "status"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/badge/badge.tsx",
+    "registry/components/badge/badge.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/badge/badge.tsx",
+    "registry/components/badge/badge.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "bar-chart",
+   "title": "Bar chart",
+   "description": "Compare one measure across days and scrub any bar for its value.",
+   "descricao": "Compare uma medida ao longo dos dias e passe o dedo por qualquer barra para ver o valor.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "chart",
+    "bar",
+    "data"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/bar-chart/bar-chart.tsx",
+    "registry/components/bar-chart/bar-chart.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/bar-chart/bar-chart.tsx",
+    "registry/components/bar-chart/bar-chart.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "billing-toggle",
+   "title": "Billing toggle",
+   "description": "A monthly and yearly switch with a savings badge and prices that roll to the new amount.",
+   "descricao": "Alternância entre cobrança mensal e anual, com selo de economia e preços que rolam até o novo valor.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "inputs",
+    "new"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [
+    "animated-counter"
+   ],
+   "files": [
+    "registry/components/billing-toggle/billing-toggle.tsx",
+    "registry/components/billing-toggle/billing-toggle.module.css",
+    "registry/components/animated-counter/animated-counter.tsx",
+    "registry/components/animated-counter/animated-counter.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/billing-toggle/billing-toggle.tsx",
+    "registry/components/billing-toggle/billing-toggle.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "blog-grid",
+   "title": "Blog grid",
+   "description": "A blog index with a featured post, category filter, post cards, pagination and an in-place reader.",
+   "descricao": "Índice de blog com post em destaque, filtro por categoria, cartões, paginação e leitor no próprio lugar.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/blocks/blog-grid/blog-grid.tsx",
+    "registry/blocks/blog-grid/blog-grid-data.ts",
+    "registry/blocks/blog-grid/blog-grid.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/blog-grid/blog-grid.tsx",
+    "registry/blocks/blog-grid/blog-grid-data.ts",
+    "registry/blocks/blog-grid/blog-grid.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "bloom-menu",
+   "title": "Bloom menu",
+   "description": "A floating button whose actions bloom outward along an arc with a staggered, slightly bouncy spring; Escape or a click outside folds them back.",
+   "descricao": "Botão flutuante cujas ações se abrem em arco, uma após a outra; Esc ou um clique fora fecha o menu.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [
+    "fab",
+    "menu",
+    "radial",
+    "actions",
+    "floating"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/blocks/bloom-menu/bloom-menu.tsx",
+    "registry/blocks/bloom-menu/bloom-menu.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/bloom-menu/bloom-menu.tsx",
+    "registry/blocks/bloom-menu/bloom-menu.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "bottom-sheet",
+   "title": "Bottom sheet",
+   "description": "A sheet that rests at a peek or full height and follows your finger.",
+   "descricao": "Painel inferior que repousa em alturas definidas e acompanha o dedo ao arrastar.",
+   "kind": "component",
+   "category": "disclosure",
+   "tags": [
+    "overlay",
+    "gesture",
+    "motion"
+   ],
+   "dependencies": [
+    "@radix-ui/react-dialog",
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/bottom-sheet/bottom-sheet.tsx",
+    "registry/components/bottom-sheet/bottom-sheet.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/bottom-sheet/bottom-sheet.tsx",
+    "registry/components/bottom-sheet/bottom-sheet.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "bounce-sidebar",
+   "title": "Bounce sidebar",
+   "description": "An app sidebar that switches between an icon rail and a full panel on a slightly bouncy width spring, with staggered labels and a gliding active marker.",
+   "descricao": "Barra lateral que alterna entre trilho de ícones e painel completo com uma mola elástica; o marcador ativo desliza.",
+   "kind": "component",
+   "category": "disclosure",
+   "tags": [
+    "sidebar",
+    "navigation",
+    "rail",
+    "collapse",
+    "spring"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/bounce-sidebar/bounce-sidebar.tsx",
+    "registry/components/bounce-sidebar/bounce-sidebar.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/bounce-sidebar/bounce-sidebar.tsx",
+    "registry/components/bounce-sidebar/bounce-sidebar.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "bouncy-accordion",
+   "title": "Bouncy accordion",
+   "description": "An accordion whose open item detaches from its neighbors: the gaps widen and the facing corners round off with a small bounce.",
+   "descricao": "Acordeão em que o item aberto se solta dos vizinhos: o espaço cresce e os cantos arredondam com um leve quique.",
+   "kind": "component",
+   "category": "disclosure",
+   "tags": [
+    "accordion",
+    "faq",
+    "disclosure",
+    "spring"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/bouncy-accordion/bouncy-accordion.tsx",
+    "registry/components/bouncy-accordion/bouncy-accordion.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/bouncy-accordion/bouncy-accordion.tsx",
+    "registry/components/bouncy-accordion/bouncy-accordion.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "breadcrumb",
+   "title": "Breadcrumb",
+   "description": "Show where a page sits in a hierarchy.",
+   "descricao": "Mostra onde a página está dentro da hierarquia do produto.",
+   "kind": "component",
+   "category": "disclosure",
+   "tags": [
+    "navigation",
+    "wayfinding"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/breadcrumb/breadcrumb.tsx",
+    "registry/components/breadcrumb/breadcrumb.module.css",
+    "lib/ryan-provider.tsx"
+   ],
+   "ownFiles": [
+    "registry/components/breadcrumb/breadcrumb.tsx",
+    "registry/components/breadcrumb/breadcrumb.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "brush-chart",
+   "title": "Brush chart",
+   "description": "A dense time series with an overview strip: drag a window to zoom, resize it by its handles, and read events in place.",
+   "descricao": "Série temporal densa com faixa de visão geral: arraste a janela para dar zoom e leia eventos no próprio gráfico.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "data",
+    "chart",
+    "new"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/brush-chart/brush-chart.tsx",
+    "registry/components/brush-chart/brush-chart.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/brush-chart/brush-chart.tsx",
+    "registry/components/brush-chart/brush-chart.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "bump-chart",
+   "title": "Bump chart",
+   "description": "Ranking over time: lines swap positions between periods, draw in from the first period, and hovering a series brings it forward with its rank at every period.",
+   "descricao": "Ranking ao longo do tempo: as linhas trocam de posição a cada período e a série escolhida vem para a frente.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "chart",
+    "ranking",
+    "time-series",
+    "data-viz"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/bump-chart/bump-chart.tsx",
+    "registry/components/bump-chart/bump-chart.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/bump-chart/bump-chart.tsx",
+    "registry/components/bump-chart/bump-chart.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "button",
+   "title": "Button",
+   "description": "A clear, responsive action with quiet secondary states.",
+   "descricao": "Uma ação clara e responsiva, com estados secundários discretos.",
+   "kind": "component",
+   "category": "actions",
+   "tags": [
+    "action",
+    "control"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/button/button.tsx",
+    "registry/components/button/button.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/button/button.tsx",
+    "registry/components/button/button.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "button-group",
+   "title": "Button group",
+   "description": "Related actions joined into one surface with hairline dividers: a hover highlight glides between segments, the pressed one answers in place, and an attached menu can close the row.",
+   "descricao": "Ações relacionadas numa só superfície, com realce que desliza entre os segmentos e menu acoplado.",
+   "kind": "component",
+   "category": "actions",
+   "tags": [
+    "action",
+    "group",
+    "toolbar",
+    "new"
+   ],
+   "dependencies": [
+    "@radix-ui/react-dropdown-menu",
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/button-group/button-group.tsx",
+    "registry/components/button-group/button-group.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/button-group/button-group.tsx",
+    "registry/components/button-group/button-group.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "calendar",
+   "title": "Calendar",
+   "description": "Browse dates in a clear, compact month view.",
+   "descricao": "Navegue pelas datas em uma visão mensal clara e compacta.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "date",
+    "field"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/calendar/calendar.tsx",
+    "lib/use-today.ts",
+    "registry/components/calendar/calendar.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/calendar/calendar.tsx",
+    "registry/components/calendar/calendar.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "candlestick-chart",
+   "title": "Candlestick chart",
+   "description": "OHLC candles with wicks in the status colors that grow in from left to right, with a crosshair that snaps to each candle and a tooltip of its open, high, low and close.",
+   "descricao": "Velas de abertura, máxima, mínima e fechamento, com mira que acompanha o cursor e mostra os valores de cada período.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "chart",
+    "finance",
+    "ohlc",
+    "crosshair"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/candlestick-chart/candlestick-chart.tsx",
+    "registry/components/candlestick-chart/candlestick-chart.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/candlestick-chart/candlestick-chart.tsx",
+    "registry/components/candlestick-chart/candlestick-chart.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "card",
+   "title": "Card",
+   "description": "A contained group of related content and actions.",
+   "descricao": "Cartão com imagem, autor e ação que cresce em uma visão rápida ao ser aberto.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "surface",
+    "layout"
+   ],
+   "dependencies": [
+    "@radix-ui/react-dialog",
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/card/card.tsx",
+    "registry/components/card/card.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/card/card.tsx",
+    "registry/components/card/card.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "card-dealer",
+   "title": "Card dealer",
+   "description": "A deck that deals playing cards to table positions along an arc while they lift and flip face up, with a riffle shuffle, a reset and a named poker hand.",
+   "descricao": "Um baralho que distribui cartas pelas posições da mesa em arco, virando cada uma; dá para embaralhar e recomeçar.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [
+    "cards",
+    "deck",
+    "game",
+    "flip",
+    "deal"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/blocks/card-dealer/card-dealer.tsx",
+    "registry/blocks/card-dealer/card-dealer.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/card-dealer/card-dealer.tsx",
+    "registry/blocks/card-dealer/card-dealer.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "card-folder",
+   "title": "Card folder",
+   "description": "A tabbed pile of index cards: picking a tab pulls that card up, drops it in front with a small bounce, and lets the others settle behind it.",
+   "descricao": "Fichário de cartões com abas: ao escolher uma aba, o cartão sobe, vem para a frente e os outros se acomodam atrás.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [
+    "tabs",
+    "cards",
+    "stack",
+    "folder"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/blocks/card-folder/card-folder.tsx",
+    "registry/blocks/card-folder/card-folder.module.css",
+    "lib/media.ts"
+   ],
+   "ownFiles": [
+    "registry/blocks/card-folder/card-folder.tsx",
+    "registry/blocks/card-folder/card-folder.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "card-stack",
+   "title": "Card stack",
+   "description": "Review a deck one card at a time, with a throw and an undo.",
+   "descricao": "Pilha de cartões para arrastar e decidir, com botões, desfazer e acessibilidade por teclado.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "gesture",
+    "motion",
+    "triage"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/card-stack/card-stack.tsx",
+    "registry/components/card-stack/card-stack.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/card-stack/card-stack.tsx",
+    "registry/components/card-stack/card-stack.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "carousel",
+   "title": "Carousel",
+   "description": "Browse a row of slides by dragging, flicking, or arrowing through them.",
+   "descricao": "Carrossel arrastável que centraliza o slide ativo, com indicadores, setas e rotação opcional.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "carousel",
+    "slider",
+    "gallery"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/carousel/carousel.tsx",
+    "registry/components/carousel/carousel.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/carousel/carousel.tsx",
+    "registry/components/carousel/carousel.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "center-morph-modal",
+   "title": "Center morph modal",
+   "description": "A grid of cards in which the chosen card morphs into a centered modal: its box, icon and title travel while the summary crossfades to the expanded content.",
+   "descricao": "Um cartão da grade cresce até virar um modal no centro da tela, e o resumo dá lugar ao conteúdo completo.",
+   "kind": "component",
+   "category": "disclosure",
+   "tags": [
+    "modal",
+    "card",
+    "grid",
+    "shared layout",
+    "morph"
+   ],
+   "dependencies": [
+    "@radix-ui/react-dialog",
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/center-morph-modal/center-morph-modal.tsx",
+    "registry/components/center-morph-modal/center-morph-modal.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/center-morph-modal/center-morph-modal.tsx",
+    "registry/components/center-morph-modal/center-morph-modal.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "login-centered",
+   "title": "Centered login",
+   "description": "A passkey-first login card on a quiet ring backdrop that morphs through email and code.",
+   "descricao": "Cartão de login centralizado, com passkey em primeiro lugar, que muda de e-mail para código sem trocar de tela.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [
+    "button",
+    "input",
+    "otp-input"
+   ],
+   "files": [
+    "registry/blocks/login-centered/login-centered.tsx",
+    "registry/blocks/login-centered/login-centered.module.css",
+    "registry/components/otp-input/otp-input.tsx",
+    "registry/components/otp-input/otp-input.module.css",
+    "registry/components/input/input.tsx",
+    "registry/components/input/input.module.css",
+    "registry/components/button/button.tsx",
+    "registry/components/button/button.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/login-centered/login-centered.tsx",
+    "registry/blocks/login-centered/login-centered.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "changelog-feed",
+   "title": "Changelog feed",
+   "description": "Release notes you can filter, open in place, and scroll through month by month.",
+   "descricao": "Linha do tempo de novidades por mês, com versões, tipos de mudança e navegação lateral.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [
+    "copy-button"
+   ],
+   "files": [
+    "registry/blocks/changelog-feed/changelog-feed.tsx",
+    "registry/blocks/changelog-feed/changelog-feed.module.css",
+    "lib/media.ts",
+    "registry/components/copy-button/copy-button.tsx",
+    "registry/components/copy-button/copy-button.module.css",
+    "lib/use-copy-feedback.ts"
+   ],
+   "ownFiles": [
+    "registry/blocks/changelog-feed/changelog-feed.tsx",
+    "registry/blocks/changelog-feed/changelog-feed.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "chat-app",
+   "title": "Chat app",
+   "description": "A complete chat screen: a conversation list with a gliding active marker, a thread whose simulated replies think, stream in and can be stopped, copied or regenerated, and a growing prompt box.",
+   "descricao": "Tela de chat completa: lista de conversas, respostas simuladas que chegam aos poucos e caixa de prompt.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [
+    "ai",
+    "chat",
+    "app",
+    "streaming"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [
+    "streaming-response",
+    "loading-states"
+   ],
+   "files": [
+    "registry/blocks/chat-app/chat-app.tsx",
+    "registry/blocks/chat-app/chat-app.module.css",
+    "registry/blocks/chat-app/chat-app-data.ts",
+    "lib/use-copy-feedback.ts",
+    "lib/media.ts"
+   ],
+   "ownFiles": [
+    "registry/blocks/chat-app/chat-app.tsx",
+    "registry/blocks/chat-app/chat-app.module.css",
+    "registry/blocks/chat-app/chat-app-data.ts"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "chat-thread",
+   "title": "Chat thread",
+   "description": "A chat thread with grouped messages, reactions, read receipts, typing, and a composer with attachments.",
+   "descricao": "Conversa com mensagens agrupadas, reações, confirmação de leitura, indicador de digitação e campo de envio com anexos.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "data",
+    "new"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/chat-thread/chat-thread.tsx",
+    "registry/components/chat-thread/chat-thread.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/chat-thread/chat-thread.tsx",
+    "registry/components/chat-thread/chat-thread.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "checkbox",
+   "title": "Checkbox",
+   "description": "A binary choice with a precise, legible state.",
+   "descricao": "Uma escolha binária com estado preciso e fácil de ler.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "field",
+    "form"
+   ],
+   "dependencies": [
+    "@radix-ui/react-checkbox",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/checkbox/checkbox.tsx",
+    "registry/components/checkbox/checkbox.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/checkbox/checkbox.tsx",
+    "registry/components/checkbox/checkbox.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "chip-group",
+   "title": "Chip group",
+   "description": "Filter by a few facets with chips that morph as you pick them.",
+   "descricao": "Filtre por poucas facetas com chips que se transformam ao serem escolhidos.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "chips",
+    "filter",
+    "toggle"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/chip-group/chip-group.tsx",
+    "registry/components/chip-group/chip-group.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/chip-group/chip-group.tsx",
+    "registry/components/chip-group/chip-group.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "citations",
+   "title": "Citations",
+   "description": "Numbered citation chips inside text that open a card with the source title, site and snippet, plus a sources list; chips and rows share one gliding highlight.",
+   "descricao": "Números de citação no meio do texto que abrem um cartão com a fonte, mais a lista de fontes com destaque compartilhado.",
+   "kind": "component",
+   "category": "ai",
+   "tags": [
+    "ai",
+    "sources",
+    "hover-card",
+    "text"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react",
+    "@radix-ui/react-popover"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/citations/citations.tsx",
+    "registry/components/citations/citations.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/citations/citations.tsx",
+    "registry/components/citations/citations.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "code-block",
+   "title": "Code block",
+   "description": "Present code with legible hierarchy and copy access.",
+   "descricao": "Bloco de código com realce leve, nome do arquivo, botão de copiar e opção de expandir trechos longos.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "content",
+    "developer"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [
+    "copy-button"
+   ],
+   "files": [
+    "registry/components/code-block/code-block.tsx",
+    "registry/components/code-block/code-block.module.css",
+    "registry/components/copy-button/copy-button.tsx",
+    "registry/components/copy-button/copy-button.module.css",
+    "lib/use-copy-feedback.ts"
+   ],
+   "ownFiles": [
+    "registry/components/code-block/code-block.tsx",
+    "registry/components/code-block/code-block.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "collapsible",
+   "title": "Collapsible",
+   "description": "One region that opens in place: the height follows on a spring, the content fades in from a small blur and the chevron turns; controlled or uncontrolled.",
+   "descricao": "Uma região que abre e fecha no lugar, com altura em mola, conteúdo que entra em foco e seta que gira.",
+   "kind": "component",
+   "category": "disclosure",
+   "tags": [
+    "disclosure",
+    "expand",
+    "height",
+    "details"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/collapsible/collapsible.tsx",
+    "registry/components/collapsible/collapsible.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/collapsible/collapsible.tsx",
+    "registry/components/collapsible/collapsible.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "color-picker",
+   "title": "Color picker",
+   "description": "A swatch that grows into a picker with format morphing, eyedropper, saved swatches, and contrast readout.",
+   "descricao": "Uma amostra que se expande em seletor, com formatos, conta-gotas, cores salvas e leitura de contraste.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "inputs",
+    "new"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [
+    "text-morph"
+   ],
+   "files": [
+    "registry/components/color-picker/color-picker.tsx",
+    "registry/components/color-picker/color-picker.module.css",
+    "registry/components/text-morph/text-morph.tsx",
+    "registry/components/text-morph/text-morph.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/color-picker/color-picker.tsx",
+    "registry/components/color-picker/color-picker.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "color-swatches",
+   "title": "Color swatches",
+   "description": "A radio group of color swatches whose selection ring glides between swatches on a spring, with press feedback.",
+   "descricao": "Amostras de cor em grupo de opções: um anel desliza com mola até a cor escolhida e cada amostra reage ao toque.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "color",
+    "radio",
+    "picker",
+    "swatch"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/color-swatches/color-swatches.tsx",
+    "registry/components/color-swatches/color-swatches.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/color-swatches/color-swatches.tsx",
+    "registry/components/color-swatches/color-swatches.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "combobox",
+   "title": "Combobox",
+   "description": "Search and select from a list without leaving the field.",
+   "descricao": "Pesquise e escolha em uma lista sem sair do campo.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "field",
+    "search"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/combobox/combobox.tsx",
+    "registry/components/combobox/combobox.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/combobox/combobox.tsx",
+    "registry/components/combobox/combobox.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "command-palette",
+   "title": "Command palette",
+   "description": "A complete keyboard driven action surface with search, grouped results, and shortcuts.",
+   "descricao": "Paleta de comandos controlada pelo teclado, com busca, resultados agrupados e atalhos.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/command-palette/command-palette.tsx",
+    "registry/components/command-palette/command-palette.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/command-palette/command-palette.tsx",
+    "registry/components/command-palette/command-palette.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "comment-thread",
+   "title": "Comment thread",
+   "description": "Threaded comments with replies, reactions, mentions, inline edit, and resolve.",
+   "descricao": "Comentários em fio, com respostas, reações, menções, edição no local e opção de resolver a conversa.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "data",
+    "new"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/comment-thread/comment-thread.tsx",
+    "registry/components/comment-thread/comment-thread.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/comment-thread/comment-thread.tsx",
+    "registry/components/comment-thread/comment-thread.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "comparison-table",
+   "title": "Comparison table",
+   "description": "An us versus them table with a sticky header, a highlighted column, and a stacked phone view.",
+   "descricao": "Tabela comparativa com cabeçalho fixo, seções recolhíveis e filtro para ver só as diferenças.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/blocks/comparison-table/comparison-table.tsx",
+    "registry/blocks/comparison-table/comparison-table-data.ts",
+    "registry/blocks/comparison-table/comparison-table.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/comparison-table/comparison-table.tsx",
+    "registry/blocks/comparison-table/comparison-table-data.ts",
+    "registry/blocks/comparison-table/comparison-table.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "composition-chart",
+   "title": "Composition chart",
+   "description": "100% stacked bar of the parts of a whole with a legend: segments slide to their new shares when the data changes, and legend rows switch parts off and on.",
+   "descricao": "Barra empilhada de 100% com legenda: mostra as partes de um todo e desliza os segmentos quando os dados mudam.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "chart",
+    "stacked-bar",
+    "proportion",
+    "legend"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/composition-chart/composition-chart.tsx",
+    "registry/components/composition-chart/composition-chart.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/composition-chart/composition-chart.tsx",
+    "registry/components/composition-chart/composition-chart.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "confirm-morph",
+   "title": "Confirm morph",
+   "description": "A destructive button that morphs into an inline confirmation, a spinner, and a result with undo.",
+   "descricao": "Botão destrutivo que vira confirmação no próprio lugar, depois carregamento e resultado com desfazer.",
+   "kind": "component",
+   "category": "actions",
+   "tags": [
+    "actions",
+    "new"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/confirm-morph/confirm-morph.tsx",
+    "registry/components/confirm-morph/confirm-morph.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/confirm-morph/confirm-morph.tsx",
+    "registry/components/confirm-morph/confirm-morph.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "contact-section",
+   "title": "Contact section",
+   "description": "A validated contact form that morphs into a confirmation, support channels, and office cards with local times.",
+   "descricao": "Seção de contato com formulário, canais e escritórios, em três layouts à escolha.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [
+    "avatar",
+    "button",
+    "copy-button",
+    "input",
+    "segmented-control",
+    "textarea"
+   ],
+   "files": [
+    "registry/blocks/contact-section/contact-section.tsx",
+    "registry/blocks/contact-section/contact-section.module.css",
+    "lib/media.ts",
+    "registry/components/textarea/textarea.tsx",
+    "registry/components/textarea/textarea.module.css",
+    "registry/components/segmented-control/segmented-control.tsx",
+    "registry/components/segmented-control/segmented-control.module.css",
+    "registry/components/input/input.tsx",
+    "registry/components/input/input.module.css",
+    "registry/components/copy-button/copy-button.tsx",
+    "registry/components/copy-button/copy-button.module.css",
+    "lib/use-copy-feedback.ts",
+    "registry/components/button/button.tsx",
+    "registry/components/button/button.module.css",
+    "registry/components/avatar/avatar.tsx",
+    "registry/components/avatar/avatar.module.css",
+    "lib/ryan-provider.tsx"
+   ],
+   "ownFiles": [
+    "registry/blocks/contact-section/contact-section.tsx",
+    "registry/blocks/contact-section/contact-section.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "context-menu",
+   "title": "Context menu",
+   "description": "Secondary actions kept close to the selected object.",
+   "descricao": "Ações secundárias ao alcance do clique direito, junto do objeto selecionado.",
+   "kind": "component",
+   "category": "actions",
+   "tags": [
+    "menu",
+    "action"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/context-menu/context-menu.tsx",
+    "registry/components/context-menu/context-menu.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/context-menu/context-menu.tsx",
+    "registry/components/context-menu/context-menu.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "cookie-consent",
+   "title": "Cookie consent",
+   "description": "A consent bar that morphs into preferences and folds into a reopen button.",
+   "descricao": "Barra de consentimento que vira painel de preferências e se recolhe em um botão para reabrir.",
+   "kind": "component",
+   "category": "feedback",
+   "tags": [
+    "feedback",
+    "new"
+   ],
+   "dependencies": [
+    "@radix-ui/react-switch",
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [
+    "button",
+    "switch"
+   ],
+   "files": [
+    "registry/components/cookie-consent/cookie-consent.tsx",
+    "registry/components/cookie-consent/cookie-consent.module.css",
+    "registry/components/switch/switch.tsx",
+    "registry/components/switch/switch.module.css",
+    "registry/components/button/button.tsx",
+    "registry/components/button/button.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/cookie-consent/cookie-consent.tsx",
+    "registry/components/cookie-consent/cookie-consent.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "copy-button",
+   "title": "Copy button",
+   "description": "Copy a value with immediate confirmation.",
+   "descricao": "Copia um valor e confirma na hora.",
+   "kind": "component",
+   "category": "actions",
+   "tags": [
+    "action",
+    "utility"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/copy-button/copy-button.tsx",
+    "registry/components/copy-button/copy-button.module.css",
+    "lib/use-copy-feedback.ts"
+   ],
+   "ownFiles": [
+    "registry/components/copy-button/copy-button.tsx",
+    "registry/components/copy-button/copy-button.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "countdown",
+   "title": "Countdown",
+   "description": "A launch countdown with rolling digits that morphs into a live state at zero.",
+   "descricao": "Contagem regressiva com dígitos que rolam e se transformam em um estado ao vivo quando chega a zero.",
+   "kind": "component",
+   "category": "feedback",
+   "tags": [
+    "feedback",
+    "new"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/countdown/countdown.tsx",
+    "registry/components/countdown/countdown.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/countdown/countdown.tsx",
+    "registry/components/countdown/countdown.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "crash-game",
+   "title": "Crash game",
+   "description": "A play-money crash game: the multiplier climbs along a live curve until it crashes at a random point, and you cash out first to keep your bet times the multiplier.",
+   "descricao": "Jogo de brincadeira em que o multiplicador sobe numa curva até quebrar; saia antes para ficar com a aposta multiplicada.",
+   "kind": "component",
+   "category": "games",
+   "tags": [
+    "game",
+    "play money",
+    "multiplier",
+    "chart",
+    "bet"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/crash-game/crash-game.tsx",
+    "registry/components/crash-game/crash-game.module.css",
+    "registry/components/crash-game/play-money.tsx",
+    "registry/components/crash-game/play-money.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/crash-game/crash-game.tsx",
+    "registry/components/crash-game/crash-game.module.css",
+    "registry/components/crash-game/play-money.tsx",
+    "registry/components/crash-game/play-money.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "cta-buttons",
+   "title": "CTA buttons",
+   "description": "Three call-to-action buttons: an arrow disc that expands to fill the button on hover, a slide-to-confirm thumb, and a magnetic button that leans toward the cursor.",
+   "descricao": "Três botões de chamada: seta que se expande e preenche o botão, deslize para confirmar e botão magnético que segue o cursor.",
+   "kind": "component",
+   "category": "actions",
+   "tags": [
+    "button",
+    "cta",
+    "magnetic",
+    "slide",
+    "hover"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/cta-buttons/cta-buttons.tsx",
+    "registry/components/cta-buttons/cta-buttons.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/cta-buttons/cta-buttons.tsx",
+    "registry/components/cta-buttons/cta-buttons.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "cta-section",
+   "title": "CTA section",
+   "description": "A call to action as a centered closing section, a split beside a setup card that completes itself, or a dismissible banner.",
+   "descricao": "Chamada para ação como fecho centralizado, dividida ao lado de um cartão de configuração ou em faixa dispensável.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [
+    "button",
+    "segmented-control"
+   ],
+   "files": [
+    "registry/blocks/cta-section/cta-section.tsx",
+    "registry/blocks/cta-section/cta-section-data.ts",
+    "lib/media.ts",
+    "registry/blocks/cta-section/cta-section.module.css",
+    "registry/components/segmented-control/segmented-control.tsx",
+    "registry/components/segmented-control/segmented-control.module.css",
+    "registry/components/button/button.tsx",
+    "registry/components/button/button.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/cta-section/cta-section.tsx",
+    "registry/blocks/cta-section/cta-section-data.ts",
+    "registry/blocks/cta-section/cta-section.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "cylinder-carousel",
+   "title": "Cylinder carousel",
+   "description": "Cards placed around a 3D cylinder that turns by drag, arrows and keys, snaps to the nearest card and dims the cards that turn away.",
+   "descricao": "Cartões dispostos em volta de um cilindro 3D que gira com arraste, setas ou teclado e para sempre em um cartão.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "carousel",
+    "3d",
+    "perspective",
+    "drag",
+    "gallery"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/cylinder-carousel/cylinder-carousel.tsx",
+    "registry/components/cylinder-carousel/cylinder-carousel.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/cylinder-carousel/cylinder-carousel.tsx",
+    "registry/components/cylinder-carousel/cylinder-carousel.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "date-picker",
+   "title": "Date picker",
+   "description": "Choose a date without losing context.",
+   "descricao": "Escolha uma data sem perder o contexto da página.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "date",
+    "field"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [
+    "calendar"
+   ],
+   "files": [
+    "registry/components/date-picker/date-picker.tsx",
+    "registry/components/date-picker/date-picker.module.css",
+    "registry/components/calendar/calendar.tsx",
+    "lib/use-today.ts",
+    "registry/components/calendar/calendar.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/date-picker/date-picker.tsx",
+    "registry/components/date-picker/date-picker.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "date-range-picker",
+   "title": "Date range picker",
+   "description": "A range picker that grows from its trigger into two months with presets and a stretching range highlight.",
+   "descricao": "Seletor de período que cresce a partir do gatilho, com dois meses, atalhos e destaque elástico.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "inputs",
+    "new"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/date-range-picker/date-range-picker.tsx",
+    "lib/use-today.ts",
+    "registry/components/date-range-picker/date-range-picker.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/date-range-picker/date-range-picker.tsx",
+    "registry/components/date-range-picker/date-range-picker.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "dialog",
+   "title": "Dialog",
+   "description": "A focused surface for decisions that need attention.",
+   "descricao": "Uma janela focada para decisões que pedem atenção.",
+   "kind": "component",
+   "category": "disclosure",
+   "tags": [
+    "modal",
+    "overlay"
+   ],
+   "dependencies": [
+    "@radix-ui/react-dialog",
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/dialog/dialog.tsx",
+    "registry/components/dialog/dialog.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/dialog/dialog.tsx",
+    "registry/components/dialog/dialog.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "dock",
+   "title": "Dock",
+   "description": "An app dock whose tiles magnify around the cursor, show a tooltip, bounce when pressed and mark the active one with a dot.",
+   "descricao": "Dock de aplicativos: os ícones crescem perto do cursor, mostram o nome, pulam ao clicar e o ativo ganha um ponto.",
+   "kind": "component",
+   "category": "actions",
+   "tags": [
+    "dock",
+    "toolbar",
+    "magnify",
+    "hover",
+    "launcher"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/dock/dock.tsx",
+    "registry/components/dock/dock.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/dock/dock.tsx",
+    "registry/components/dock/dock.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "donut-chart",
+   "title": "Donut chart",
+   "description": "A donut whose arcs morph between datasets, with the active value rolling into the center.",
+   "descricao": "Gráfico de rosca cujos arcos se transformam entre conjuntos de dados, com o valor ativo rolando no centro.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "data",
+    "new"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/donut-chart/donut-chart.tsx",
+    "registry/components/donut-chart/donut-chart.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/donut-chart/donut-chart.tsx",
+    "registry/components/donut-chart/donut-chart.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "drawer",
+   "title": "Drawer",
+   "description": "A temporary side surface for focused work.",
+   "descricao": "Painel lateral temporário para tarefas focadas.",
+   "kind": "component",
+   "category": "disclosure",
+   "tags": [
+    "overlay",
+    "surface"
+   ],
+   "dependencies": [
+    "@radix-ui/react-dialog",
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/drawer/drawer.tsx",
+    "registry/components/drawer/drawer.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/drawer/drawer.tsx",
+    "registry/components/drawer/drawer.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "dropdown-menu",
+   "title": "Dropdown menu",
+   "description": "A focused list of actions anchored to a trigger.",
+   "descricao": "Lista enxuta de ações ancorada a um botão.",
+   "kind": "component",
+   "category": "actions",
+   "tags": [
+    "menu",
+    "action"
+   ],
+   "dependencies": [
+    "@radix-ui/react-dropdown-menu",
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/dropdown-menu/dropdown-menu.tsx",
+    "registry/components/dropdown-menu/dropdown-menu.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/dropdown-menu/dropdown-menu.tsx",
+    "registry/components/dropdown-menu/dropdown-menu.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "dynamic-island",
+   "title": "Dynamic island",
+   "description": "A pill at the top of the screen that morphs on one spring between a resting dot, a compact live activity and expanded call, timer and music views.",
+   "descricao": "Pílula no topo da tela que se transforma com mola entre repouso, atividade compacta e visões expandidas de chamada, timer e música.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [
+    "island",
+    "morph",
+    "live-activity",
+    "mobile"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [
+    "segmented-control"
+   ],
+   "files": [
+    "registry/blocks/dynamic-island/dynamic-island.tsx",
+    "registry/blocks/dynamic-island/dynamic-island.module.css",
+    "lib/media.ts"
+   ],
+   "ownFiles": [
+    "registry/blocks/dynamic-island/dynamic-island.tsx",
+    "registry/blocks/dynamic-island/dynamic-island.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "theme-switch-eclipse",
+   "title": "Eclipse",
+   "description": "The next appearance crosses the page like an eclipse.",
+   "descricao": "O novo tema atravessa a página como um eclipse.",
+   "kind": "component",
+   "category": "actions",
+   "tags": [
+    "theme",
+    "appearance",
+    "motion"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [
+    "button"
+   ],
+   "files": [
+    "registry/components/theme-switch/theme-switch.tsx",
+    "registry/components/theme-switch/theme-switch.module.css",
+    "registry/components/button/button.tsx",
+    "registry/components/button/button.module.css"
+   ],
+   "ownFiles": [],
+   "hasDemo": true
+  },
+  {
+   "name": "elastic-slider",
+   "title": "Elastic slider",
+   "description": "A slider that stretches like rubber past its ends, with a swaying value tag and detents the thumb clicks into.",
+   "descricao": "Controle deslizante que estica como borracha nos limites, com etiqueta que balança e marcas magnéticas.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "inputs",
+    "new"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/elastic-slider/elastic-slider.tsx",
+    "registry/components/elastic-slider/elastic-slider.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/elastic-slider/elastic-slider.tsx",
+    "registry/components/elastic-slider/elastic-slider.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "empty-state",
+   "title": "Empty state",
+   "description": "A useful next step when there is nothing to show yet.",
+   "descricao": "Estado vazio com título, explicação e uma ação para ajudar a pessoa a começar.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "data",
+    "guidance"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/empty-state/empty-state.tsx",
+    "registry/components/empty-state/empty-state.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/empty-state/empty-state.tsx",
+    "registry/components/empty-state/empty-state.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "empty-states",
+   "title": "Empty states",
+   "description": "Four empty states in one illustration whose shapes morph between scenes as you switch tabs.",
+   "descricao": "Quatro estados vazios numa única ilustração, cujas formas se transformam ao trocar de aba.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [
+    "button"
+   ],
+   "files": [
+    "registry/blocks/empty-states/empty-states.tsx",
+    "registry/blocks/empty-states/empty-states.module.css",
+    "registry/blocks/empty-states/empty-states-art.ts",
+    "registry/components/button/button.tsx",
+    "registry/components/button/button.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/empty-states/empty-states.tsx",
+    "registry/blocks/empty-states/empty-states.module.css",
+    "registry/blocks/empty-states/empty-states-art.ts"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "expandable-action-bar",
+   "title": "Expandable action bar",
+   "description": "Floating action bar that grows upward from a compact pill into a labeled grid of every action plus a secondary row, with the icons gliding to their new places.",
+   "descricao": "Barra de ações flutuante que cresce de uma pílula compacta para uma grade com todas as ações e uma linha secundária.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [
+    "toolbar",
+    "actions",
+    "floating",
+    "expand"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/blocks/expandable-action-bar/expandable-action-bar.tsx",
+    "registry/blocks/expandable-action-bar/expandable-action-bar.module.css",
+    "lib/media.ts"
+   ],
+   "ownFiles": [
+    "registry/blocks/expandable-action-bar/expandable-action-bar.tsx",
+    "registry/blocks/expandable-action-bar/expandable-action-bar.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "expandable-card",
+   "title": "Expandable card",
+   "description": "Give a dense card more room when requested.",
+   "descricao": "Dá mais espaço a um cartão denso quando a pessoa pede.",
+   "kind": "component",
+   "category": "disclosure",
+   "tags": [
+    "disclosure",
+    "layout"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/expandable-card/expandable-card.tsx",
+    "registry/components/expandable-card/expandable-card.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/expandable-card/expandable-card.tsx",
+    "registry/components/expandable-card/expandable-card.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "expandable-control",
+   "title": "Expandable control",
+   "description": "An icon button or chip that widens on a spring when pressed to reveal its label and an optional trailing action.",
+   "descricao": "Botão de ícone ou chip que se alarga com mola ao ser pressionado e revela o rótulo ou uma ação extra.",
+   "kind": "component",
+   "category": "actions",
+   "tags": [
+    "button",
+    "chip",
+    "expand",
+    "toolbar"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/expandable-control/expandable-control.tsx",
+    "registry/components/expandable-control/expandable-control.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/expandable-control/expandable-control.tsx",
+    "registry/components/expandable-control/expandable-control.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "expandable-tabs",
+   "title": "Expandable tabs",
+   "description": "Icon tabs in which only the active tab shows its label, unfolding on a spring while the others fold back to icons.",
+   "descricao": "Abas de ícones em que só a aba ativa mostra o rótulo, que se abre com uma mola enquanto as outras se recolhem.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [
+    "tabs",
+    "navigation",
+    "icons",
+    "spring"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/blocks/expandable-tabs/expandable-tabs.tsx",
+    "registry/blocks/expandable-tabs/expandable-tabs.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/expandable-tabs/expandable-tabs.tsx",
+    "registry/blocks/expandable-tabs/expandable-tabs.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "expandable-text",
+   "title": "Expandable text",
+   "description": "Long text clamped to a few lines with a soft fade that glides open with Read more and closes with Show less, shown only when the text overflows.",
+   "descricao": "Texto longo recolhido em poucas linhas, com ler mais e mostrar menos.",
+   "kind": "component",
+   "category": "disclosure",
+   "tags": [
+    "disclosure",
+    "text",
+    "motion",
+    "new"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/expandable-text/expandable-text.tsx",
+    "registry/components/expandable-text/expandable-text.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/expandable-text/expandable-text.tsx",
+    "registry/components/expandable-text/expandable-text.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "expanding-button-group",
+   "title": "Expanding button group",
+   "description": "Icon buttons in a compact group: the one you point at or focus grows to reveal its label while its neighbours slide aside, and an action confirms in place.",
+   "descricao": "Grupo de botões de ícone em que o apontado cresce para mostrar o rótulo e os vizinhos abrem espaço.",
+   "kind": "component",
+   "category": "actions",
+   "tags": [
+    "action",
+    "group",
+    "toolbar",
+    "new"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/expanding-button-group/expanding-button-group.tsx",
+    "registry/components/expanding-button-group/expanding-button-group.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/expanding-button-group/expanding-button-group.tsx",
+    "registry/components/expanding-button-group/expanding-button-group.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "expanding-search",
+   "title": "Expanding search",
+   "description": "An icon that morphs into a search field with results beneath it.",
+   "descricao": "Um ícone que se transforma em campo de busca, com resultados logo abaixo.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "search",
+    "field",
+    "motion"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/expanding-search/expanding-search.tsx",
+    "registry/components/expanding-search/expanding-search.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/expanding-search/expanding-search.tsx",
+    "registry/components/expanding-search/expanding-search.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "faq-section",
+   "title": "FAQ section",
+   "description": "FAQs as an accordion, a topic rail, or a searchable list that highlights matches.",
+   "descricao": "Perguntas frequentes em acordeão, por categoria ou com busca, com um caminho para falar com alguém.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [
+    "search-field",
+    "segmented-control"
+   ],
+   "files": [
+    "registry/blocks/faq-section/faq-section.tsx",
+    "registry/blocks/faq-section/faq-section.module.css",
+    "registry/components/segmented-control/segmented-control.tsx",
+    "registry/components/segmented-control/segmented-control.module.css",
+    "registry/components/search-field/search-field.tsx",
+    "registry/components/search-field/search-field.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/faq-section/faq-section.tsx",
+    "registry/blocks/faq-section/faq-section.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "feedback-widget",
+   "title": "Feedback widget",
+   "description": "A floating feedback button that morphs into a small form with a mood picker and a message field, then walks through sending into a drawn check and a thank-you.",
+   "descricao": "Botão flutuante de feedback que vira um formulário com humor e mensagem, passa pelo envio e termina num agradecimento.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [
+    "feedback",
+    "form",
+    "floating",
+    "mood",
+    "widget"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/blocks/feedback-widget/feedback-widget.tsx",
+    "registry/blocks/feedback-widget/feedback-widget.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/feedback-widget/feedback-widget.tsx",
+    "registry/blocks/feedback-widget/feedback-widget.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "file-diff",
+   "title": "File diff",
+   "description": "A unified diff of one file with line numbers, tinted added and removed lines, header stats, and unchanged ranges that fold into a row and spring open.",
+   "descricao": "Diff unificado de um arquivo, com números de linha, contagem de mudanças e trechos iguais que se abrem com um clique.",
+   "kind": "component",
+   "category": "ai",
+   "tags": [
+    "diff",
+    "code",
+    "ai",
+    "review"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/file-diff/file-diff.tsx",
+    "registry/components/file-diff/file-diff.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/file-diff/file-diff.tsx",
+    "registry/components/file-diff/file-diff.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "file-dropzone",
+   "title": "File dropzone",
+   "description": "A generous target for dropping one or more files.",
+   "descricao": "Uma área generosa para soltar um ou vários arquivos, com progresso de envio.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "field",
+    "files"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/file-dropzone/file-dropzone.tsx",
+    "registry/components/file-dropzone/file-dropzone.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/file-dropzone/file-dropzone.tsx",
+    "registry/components/file-dropzone/file-dropzone.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "file-tree",
+   "title": "File tree",
+   "description": "A file explorer tree whose folders open on a height spring, with file-type icons, selection, change markers and full keyboard navigation with type-ahead.",
+   "descricao": "Árvore de arquivos com pastas que abrem suavemente, ícones por tipo, seleção e navegação completa pelo teclado.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "tree",
+    "files",
+    "explorer",
+    "folders",
+    "keyboard"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/file-tree/file-tree.tsx",
+    "registry/components/file-tree/file-tree.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/file-tree/file-tree.tsx",
+    "registry/components/file-tree/file-tree.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "file-upload",
+   "title": "File upload",
+   "description": "A complete file selection flow with constraints, progress, and error feedback.",
+   "descricao": "Envio de arquivos com arrastar e soltar, limite de tamanho, progresso e mensagens de erro.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/file-upload/file-upload.tsx",
+    "registry/components/file-upload/file-upload.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/file-upload/file-upload.tsx",
+    "registry/components/file-upload/file-upload.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "filter-toolbar",
+   "title": "Filter toolbar",
+   "description": "Keep collection filters close and easy to reset.",
+   "descricao": "Barra de filtros ativos que se removem com um toque, com um botão que vira menu para escolher campo e valor.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "data",
+    "filter"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/filter-toolbar/filter-toolbar.tsx",
+    "registry/components/filter-toolbar/filter-toolbar.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/filter-toolbar/filter-toolbar.tsx",
+    "registry/components/filter-toolbar/filter-toolbar.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "floating-button-group",
+   "title": "Floating button group",
+   "description": "Separate soft buttons in a quiet tray, with one shared highlight that morphs from button to button as you move, and a pressed state that settles in place.",
+   "descricao": "Botões soltos numa bandeja discreta, com um realce único que passa de um para o outro.",
+   "kind": "component",
+   "category": "actions",
+   "tags": [
+    "action",
+    "group",
+    "toolbar",
+    "new"
+   ],
+   "dependencies": [
+    "@radix-ui/react-tooltip",
+    "motion"
+   ],
+   "requires": [
+    "tooltip"
+   ],
+   "files": [
+    "registry/components/floating-button-group/floating-button-group.tsx",
+    "registry/components/floating-button-group/floating-button-group.module.css",
+    "registry/components/tooltip/tooltip.tsx",
+    "registry/components/tooltip/tooltip.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/floating-button-group/floating-button-group.tsx",
+    "registry/components/floating-button-group/floating-button-group.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "funnel-chart",
+   "title": "Funnel chart",
+   "description": "Conversion funnel with a value per stage and the drop-off percentage between stages: stages grow in one after another and morph when the data changes.",
+   "descricao": "Funil de conversão em que cada etapa surge depois da anterior, com o valor da etapa e a queda percentual entre elas.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "chart",
+    "funnel",
+    "conversion",
+    "data-viz"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/funnel-chart/funnel-chart.tsx",
+    "registry/components/funnel-chart/funnel-chart.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/funnel-chart/funnel-chart.tsx",
+    "registry/components/funnel-chart/funnel-chart.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "gauge",
+   "title": "Gauge",
+   "description": "Show a value against a known range.",
+   "descricao": "Mostra um valor dentro de um intervalo conhecido, com faixas de estado.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "data",
+    "chart"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/gauge/gauge.tsx",
+    "registry/components/gauge/gauge.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/gauge/gauge.tsx",
+    "registry/components/gauge/gauge.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "hero-section",
+   "title": "Hero section",
+   "description": "A landing page hero in three versions on a solid page with a faint dot grid: a live product window with counting figures, a self-drawing chart and floating cards; an automation graph with a pulse travelling along its lines; and editorial type over a marquee of words.",
+   "descricao": "Hero em três versões sem gradientes: janela de produto viva, fluxo de automação com pulso e tipografia editorial com marquee.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [
+    "hero",
+    "landing",
+    "marketing",
+    "dashboard"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [
+    "animated-counter",
+    "avatar",
+    "badge",
+    "button",
+    "copy-button",
+    "marquee",
+    "segmented-control"
+   ],
+   "files": [
+    "registry/blocks/hero-section/hero-section.tsx",
+    "registry/blocks/hero-section/hero-section.module.css",
+    "registry/blocks/hero-section/hero-parts.tsx",
+    "registry/blocks/hero-section/hero-content.tsx",
+    "registry/blocks/hero-section/hero-content.module.css",
+    "registry/blocks/hero-section/hero-motion.ts",
+    "registry/blocks/hero-section/hero-lumen.tsx",
+    "registry/blocks/hero-section/hero-lumen.module.css",
+    "registry/blocks/hero-section/hero-lumen-data.ts",
+    "registry/blocks/hero-section/hero-relay.tsx",
+    "registry/blocks/hero-section/hero-relay.module.css",
+    "registry/blocks/hero-section/hero-cadence.tsx",
+    "registry/blocks/hero-section/hero-cadence.module.css",
+    "registry/components/animated-counter/animated-counter.tsx",
+    "registry/components/animated-counter/animated-counter.module.css",
+    "registry/components/avatar/avatar.tsx",
+    "registry/components/avatar/avatar.module.css",
+    "lib/ryan-provider.tsx",
+    "registry/components/badge/badge.tsx",
+    "registry/components/badge/badge.module.css",
+    "registry/components/button/button.tsx",
+    "registry/components/button/button.module.css",
+    "registry/components/copy-button/copy-button.tsx",
+    "registry/components/copy-button/copy-button.module.css",
+    "lib/use-copy-feedback.ts",
+    "registry/components/marquee/marquee.tsx",
+    "registry/components/marquee/marquee.module.css",
+    "registry/components/segmented-control/segmented-control.tsx",
+    "registry/components/segmented-control/segmented-control.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/hero-section/hero-section.tsx",
+    "registry/blocks/hero-section/hero-section.module.css",
+    "registry/blocks/hero-section/hero-parts.tsx",
+    "registry/blocks/hero-section/hero-content.tsx",
+    "registry/blocks/hero-section/hero-content.module.css",
+    "registry/blocks/hero-section/hero-motion.ts",
+    "registry/blocks/hero-section/hero-lumen.tsx",
+    "registry/blocks/hero-section/hero-lumen.module.css",
+    "registry/blocks/hero-section/hero-lumen-data.ts",
+    "registry/blocks/hero-section/hero-relay.tsx",
+    "registry/blocks/hero-section/hero-relay.module.css",
+    "registry/blocks/hero-section/hero-cadence.tsx",
+    "registry/blocks/hero-section/hero-cadence.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "hold-to-confirm",
+   "title": "Hold to confirm",
+   "description": "Confirm a destructive action by holding, not tapping.",
+   "descricao": "Confirma uma ação destrutiva ao segurar o botão, não com um toque.",
+   "kind": "component",
+   "category": "actions",
+   "tags": [
+    "hold",
+    "long press",
+    "confirm"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/hold-to-confirm/hold-to-confirm.tsx",
+    "registry/components/hold-to-confirm/hold-to-confirm.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/hold-to-confirm/hold-to-confirm.tsx",
+    "registry/components/hold-to-confirm/hold-to-confirm.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "hover-card",
+   "title": "Hover card",
+   "description": "Preview a person or link on hover or focus without leaving the page.",
+   "descricao": "Pré-visualiza uma pessoa ou link ao passar o mouse ou focar, sem sair da página.",
+   "kind": "component",
+   "category": "disclosure",
+   "tags": [
+    "preview",
+    "people",
+    "popover"
+   ],
+   "dependencies": [
+    "@radix-ui/react-popover",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/hover-card/hover-card.tsx",
+    "registry/components/hover-card/hover-card.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/hover-card/hover-card.tsx",
+    "registry/components/hover-card/hover-card.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "hover-highlight",
+   "title": "Hover highlight",
+   "description": "A group in which one shared background pill glides to the hovered or focused item and returns to the selected one.",
+   "descricao": "Grupo em que um único fundo desliza até o item sob o cursor ou em foco, ideal para menus, navegação e barras de ferramentas.",
+   "kind": "component",
+   "category": "actions",
+   "tags": [
+    "hover",
+    "menu",
+    "nav",
+    "toolbar",
+    "highlight"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/hover-highlight/hover-highlight.tsx",
+    "registry/components/hover-highlight/hover-highlight.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/hover-highlight/hover-highlight.tsx",
+    "registry/components/hover-highlight/hover-highlight.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "icon-morph",
+   "title": "Icon morph",
+   "description": "Icons that morph between states: menu to close, play to pause, copy to check, and more.",
+   "descricao": "Ícones que se transformam entre estados: menu em fechar, play em pausa, copiar em confirmado e outros.",
+   "kind": "component",
+   "category": "actions",
+   "tags": [
+    "actions",
+    "new"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/icon-morph/icon-morph.tsx",
+    "registry/components/icon-morph/icon-morph.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/icon-morph/icon-morph.tsx",
+    "registry/components/icon-morph/icon-morph.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "image-compare",
+   "title": "Image compare",
+   "description": "Drag a divider across two images to see what changed.",
+   "descricao": "Arraste um divisor sobre duas imagens para ver o antes e o depois, também pelo teclado.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "before after",
+    "comparison",
+    "image"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/image-compare/image-compare.tsx",
+    "registry/components/image-compare/image-compare.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/image-compare/image-compare.tsx",
+    "registry/components/image-compare/image-compare.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "image-generation",
+   "title": "Image generation",
+   "description": "An image request card: a shimmering field of cells with progress and phase labels, then the image resolves from blurred to sharp and the footer becomes the actions row.",
+   "descricao": "Cartão de pedido de imagem: um campo de células cintila com o progresso e a imagem surge do desfoque até ficar nítida.",
+   "kind": "component",
+   "category": "ai",
+   "tags": [
+    "ai",
+    "image",
+    "progress",
+    "reveal"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/image-generation/image-generation.tsx",
+    "registry/components/image-generation/image-generation.module.css",
+    "lib/use-copy-feedback.ts"
+   ],
+   "ownFiles": [
+    "registry/components/image-generation/image-generation.tsx",
+    "registry/components/image-generation/image-generation.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "image-viewer",
+   "title": "Image viewer",
+   "description": "A thumbnail gallery whose pictures grow into a lightbox with a shared-element zoom, with arrows, swipe, zoom and pan, a focus trap, and Escape closing back into the thumbnail.",
+   "descricao": "Galeria de miniaturas que se ampliam num visualizador com setas, gesto de deslizar, zoom e arraste; Esc devolve a imagem ao lugar.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "gallery",
+    "lightbox",
+    "zoom",
+    "images",
+    "swipe"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react",
+    "@radix-ui/react-dialog"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/image-viewer/image-viewer.tsx",
+    "registry/components/image-viewer/image-viewer.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/image-viewer/image-viewer.tsx",
+    "registry/components/image-viewer/image-viewer.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "in-view-title",
+   "title": "In-view title",
+   "description": "Bring a section title in as it scrolls into view.",
+   "descricao": "Título que entra com animação ao aparecer na rolagem.",
+   "kind": "component",
+   "category": "text",
+   "tags": [
+    "text",
+    "motion",
+    "heading"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/in-view-title/in-view-title.tsx",
+    "registry/components/in-view-title/in-view-title.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/in-view-title/in-view-title.tsx",
+    "registry/components/in-view-title/in-view-title.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "infinite-masonry",
+   "title": "Infinite masonry",
+   "description": "Masonry feed of cards with different heights that loads the next page as the end scrolls into view, with new cards rising in on a stagger.",
+   "descricao": "Mural em colunas com cartões de alturas diferentes que carrega mais conforme você rola, com os novos subindo em sequência.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [
+    "masonry",
+    "grid",
+    "infinite-scroll",
+    "feed"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/blocks/infinite-masonry/infinite-masonry.tsx",
+    "registry/blocks/infinite-masonry/infinite-masonry.module.css",
+    "lib/media.ts"
+   ],
+   "ownFiles": [
+    "registry/blocks/infinite-masonry/infinite-masonry.tsx",
+    "registry/blocks/infinite-masonry/infinite-masonry.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "inline-edit",
+   "title": "Inline edit",
+   "description": "Rename in place: the text becomes a field without moving.",
+   "descricao": "Renomeie no próprio lugar: o texto vira campo sem mudar de posição.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "inline edit",
+    "rename",
+    "click to edit"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/inline-edit/inline-edit.tsx",
+    "registry/components/inline-edit/inline-edit.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/inline-edit/inline-edit.tsx",
+    "registry/components/inline-edit/inline-edit.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "input",
+   "title": "Input",
+   "description": "A single line field with clear labels and useful states.",
+   "descricao": "Campo de uma linha com rótulos claros e estados úteis.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "field",
+    "form"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/input/input.tsx",
+    "registry/components/input/input.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/input/input.tsx",
+    "registry/components/input/input.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "json-viewer",
+   "title": "JSON viewer",
+   "description": "A collapsible JSON tree with search, paging for long arrays, and copy value or path.",
+   "descricao": "Árvore de JSON recolhível, com busca, paginação de listas longas e cópia de valor ou caminho.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "data",
+    "new"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/json-viewer/json-viewer.tsx",
+    "registry/components/json-viewer/json-viewer.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/json-viewer/json-viewer.tsx",
+    "registry/components/json-viewer/json-viewer.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "knockout-bracket",
+   "title": "Knockout bracket",
+   "description": "Single-elimination bracket with rounds in columns and measured connector lines; picking a winner draws its line and slides the team into the next round.",
+   "descricao": "Chave de mata-mata em colunas: escolha o vencedor e ele avança pela linha de conexão até a próxima fase.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [
+    "bracket",
+    "tournament",
+    "sports",
+    "connectors"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/blocks/knockout-bracket/knockout-bracket.tsx",
+    "registry/blocks/knockout-bracket/knockout-bracket.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/knockout-bracket/knockout-bracket.tsx",
+    "registry/blocks/knockout-bracket/knockout-bracket.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "line-chart",
+   "title": "Line chart",
+   "description": "A multi-series line chart with a gliding crosshair, legend toggles, and paths that morph between ranges.",
+   "descricao": "Gráfico de várias linhas com mira deslizante, legenda interativa e curvas que se transformam entre períodos.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "data",
+    "new"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/line-chart/line-chart.tsx",
+    "registry/components/line-chart/line-chart.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/line-chart/line-chart.tsx",
+    "registry/components/line-chart/line-chart.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "liquidity-heatmap",
+   "title": "Liquidity heatmap",
+   "description": "A price by time grid tinted by resting size, with columns that sweep in, a traded price line, a crosshair that glides to the cell being read, and a stepped legend.",
+   "descricao": "Mapa de calor da liquidez por preço e horário, com legenda em degraus e leitura da célula sob o cursor.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "chart",
+    "heatmap",
+    "trading",
+    "order-book"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/liquidity-heatmap/liquidity-heatmap.tsx",
+    "registry/components/liquidity-heatmap/liquidity-heatmap.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/liquidity-heatmap/liquidity-heatmap.tsx",
+    "registry/components/liquidity-heatmap/liquidity-heatmap.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "loader",
+   "title": "Loader",
+   "description": "A family of five loaders (spinner, dots, bars, pulse ring, orbit) in three sizes that share one box, color and accessible label.",
+   "descricao": "Cinco indicadores de carregamento em três tamanhos, com rótulo lido por leitores de tela.",
+   "kind": "component",
+   "category": "feedback",
+   "tags": [
+    "loading",
+    "spinner",
+    "progress",
+    "status"
+   ],
+   "dependencies": [],
+   "requires": [],
+   "files": [
+    "registry/components/loader/loader.tsx",
+    "registry/components/loader/loader.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/loader/loader.tsx",
+    "registry/components/loader/loader.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "loading-states",
+   "title": "Loading states",
+   "description": "Thinking indicators for AI interfaces: shimmering text, bouncing dots, a rotating status phrase beside an orbiting mark, and a step counter with rolling digits and pips.",
+   "descricao": "Indicadores de que a IA está pensando: texto cintilante, pontinhos que saltam, frases que se alternam e contador de etapas.",
+   "kind": "component",
+   "category": "ai",
+   "tags": [
+    "ai",
+    "loading",
+    "thinking",
+    "status"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/loading-states/loading-states.tsx",
+    "registry/components/loading-states/loading-states.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/loading-states/loading-states.tsx",
+    "registry/components/loading-states/loading-states.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "logo-marquee",
+   "title": "Logo marquee",
+   "description": "A quiet, continuously moving row of brand marks with a pause control.",
+   "descricao": "Faixa de logos de clientes que desliza sem parar e pausa quando você aponta.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [
+    "button"
+   ],
+   "files": [
+    "registry/blocks/logo-marquee/logo-marquee.tsx",
+    "registry/blocks/logo-marquee/logo-marquee.module.css",
+    "registry/components/button/button.tsx",
+    "registry/components/button/button.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/logo-marquee/logo-marquee.tsx",
+    "registry/blocks/logo-marquee/logo-marquee.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "marquee",
+   "title": "Marquee",
+   "description": "An infinite horizontal or vertical scroller with speed and direction control, faded edges, and a pause on hover that eases to a stop.",
+   "descricao": "Faixa que rola sem fim na horizontal ou na vertical, com bordas esmaecidas, e desacelera até parar quando o cursor passa.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "scroller",
+    "ticker",
+    "logos",
+    "loop"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/marquee/marquee.tsx",
+    "registry/components/marquee/marquee.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/marquee/marquee.tsx",
+    "registry/components/marquee/marquee.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "mention-input",
+   "title": "Mention input",
+   "description": "A textarea with @people and #channel mentions that act as single tokens, with suggestions at the caret.",
+   "descricao": "Caixa de texto com menções a @pessoas e #canais que funcionam como um único bloco.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "inputs",
+    "new"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/mention-input/mention-input.tsx",
+    "registry/components/mention-input/mention-input.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/mention-input/mention-input.tsx",
+    "registry/components/mention-input/mention-input.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "message",
+   "title": "Message",
+   "description": "A full assistant message row with avatar, name and formatted content that staggers in, plus a copy, retry and rate bar that steps in on hover or focus.",
+   "descricao": "Mensagem completa do assistente, com avatar, nome, texto formatado e ações de copiar, refazer e avaliar ao passar o mouse.",
+   "kind": "component",
+   "category": "ai",
+   "tags": [
+    "ai",
+    "chat",
+    "message",
+    "actions"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/message/message.tsx",
+    "registry/components/message/message.module.css",
+    "lib/use-copy-feedback.ts"
+   ],
+   "ownFiles": [
+    "registry/components/message/message.tsx",
+    "registry/components/message/message.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "message-bubble",
+   "title": "Message bubble",
+   "description": "A chat bubble for the person and the assistant that pops in from its tail corner, groups consecutive messages, and draws delivery ticks under a timestamp.",
+   "descricao": "Balão de conversa para você e para o assistente, com cauda, agrupamento, horário e tiques de entrega animados.",
+   "kind": "component",
+   "category": "ai",
+   "tags": [
+    "ai",
+    "chat",
+    "message"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/message-bubble/message-bubble.tsx",
+    "registry/components/message-bubble/message-bubble.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/message-bubble/message-bubble.tsx",
+    "registry/components/message-bubble/message-bubble.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "message-scroller",
+   "title": "Message scroller",
+   "description": "A conversation scroll area that follows new messages while the reader is at the bottom, lets go when they scroll up, and offers a jump to latest pill with an unread count.",
+   "descricao": "Área de conversa que acompanha as mensagens novas, solta quando você rola para cima e mostra um atalho com as não lidas.",
+   "kind": "component",
+   "category": "ai",
+   "tags": [
+    "ai",
+    "chat",
+    "scroll"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/message-scroller/message-scroller.tsx",
+    "registry/components/message-scroller/message-scroller.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/message-scroller/message-scroller.tsx",
+    "registry/components/message-scroller/message-scroller.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "metric-card",
+   "title": "Metric card",
+   "description": "A compact summary for a number that needs context.",
+   "descricao": "Um resumo compacto para um número que precisa de contexto.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "data",
+    "summary"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [
+    "animated-counter"
+   ],
+   "files": [
+    "registry/components/metric-card/metric-card.tsx",
+    "registry/components/metric-card/metric-card.module.css",
+    "registry/components/animated-counter/animated-counter.tsx",
+    "registry/components/animated-counter/animated-counter.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/metric-card/metric-card.tsx",
+    "registry/components/metric-card/metric-card.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "mines-game",
+   "title": "Mines game",
+   "description": "A play-money mines game on a 5×5 grid: tiles flip to reveal gems that raise the multiplier, and a mine ends the round unless you cash out first.",
+   "descricao": "Campo 5×5 de mentirinha: vire as peças para achar gemas e aumentar o multiplicador, mas uma mina encerra a rodada.",
+   "kind": "component",
+   "category": "games",
+   "tags": [
+    "game",
+    "play money",
+    "grid",
+    "flip",
+    "multiplier"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/mines-game/mines-game.tsx",
+    "registry/components/mines-game/mines-game.module.css",
+    "registry/components/mines-game/play-money.tsx",
+    "registry/components/mines-game/play-money.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/mines-game/mines-game.tsx",
+    "registry/components/mines-game/mines-game.module.css",
+    "registry/components/mines-game/play-money.tsx",
+    "registry/components/mines-game/play-money.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "money-input",
+   "title": "Money input",
+   "description": "A currency field with live grouping, stable width, rolling digits, and minor-unit output.",
+   "descricao": "Campo de valor monetário com agrupamento ao vivo, largura estável e dígitos que rolam.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "inputs",
+    "new"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/money-input/money-input.tsx",
+    "registry/components/money-input/money-input.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/money-input/money-input.tsx",
+    "registry/components/money-input/money-input.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "morph-select",
+   "title": "Morph select",
+   "description": "A select whose trigger grows into the list, with a gliding highlight and type-ahead.",
+   "descricao": "Um select cujo gatilho cresce até virar a lista, com destaque deslizante e busca por digitação.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "inputs",
+    "new"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/morph-select/morph-select.tsx",
+    "registry/components/morph-select/morph-select.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/morph-select/morph-select.tsx",
+    "registry/components/morph-select/morph-select.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "morphing-modal",
+   "title": "Morphing modal",
+   "description": "A trigger button that morphs into the modal panel from its own position, size and color, and back on close, with a focus trap, Escape and a scrim.",
+   "descricao": "O botão se transforma no modal a partir do próprio lugar e volta a ser botão ao fechar.",
+   "kind": "component",
+   "category": "disclosure",
+   "tags": [
+    "modal",
+    "dialog",
+    "shared layout",
+    "morph",
+    "overlay"
+   ],
+   "dependencies": [
+    "@radix-ui/react-dialog",
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/morphing-modal/morphing-modal.tsx",
+    "registry/components/morphing-modal/morphing-modal.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/morphing-modal/morphing-modal.tsx",
+    "registry/components/morphing-modal/morphing-modal.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "morphing-search",
+   "title": "Morphing search",
+   "description": "A search icon that stretches into a field and then grows a results panel with a gliding highlight; Escape walks the same steps back.",
+   "descricao": "Ícone de busca que se estica em campo e depois abre um painel de resultados; Esc desfaz o caminho passo a passo.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [
+    "search",
+    "combobox",
+    "morph",
+    "command"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/blocks/morphing-search/morphing-search.tsx",
+    "registry/blocks/morphing-search/morphing-search.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/morphing-search/morphing-search.tsx",
+    "registry/blocks/morphing-search/morphing-search.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "morphing-tabs",
+   "title": "Morphing tabs",
+   "description": "Tabs whose active pill stretches, thins and squares off as it travels to the next tab, while the panel crossfades in the direction of travel.",
+   "descricao": "Abas com uma pílula ativa que estica e muda de forma ao viajar, enquanto o painel troca na mesma direção.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [
+    "tabs",
+    "morph",
+    "pill",
+    "navigation"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/blocks/morphing-tabs/morphing-tabs.tsx",
+    "registry/blocks/morphing-tabs/morphing-tabs.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/morphing-tabs/morphing-tabs.tsx",
+    "registry/blocks/morphing-tabs/morphing-tabs.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "multi-select",
+   "title": "Multi-select",
+   "description": "Select several values while keeping the field readable.",
+   "descricao": "Selecione vários valores mantendo o campo legível.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "field",
+    "choice"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/multi-select/multi-select.tsx",
+    "registry/components/multi-select/multi-select.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/multi-select/multi-select.tsx",
+    "registry/components/multi-select/multi-select.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "newsletter-signup",
+   "title": "Newsletter signup",
+   "description": "An email signup framed by a stack of past issues; subscribing drops the next issue, addressed to you, onto the front.",
+   "descricao": "Cadastro de newsletter em dois layouts, com confirmação e tratamento de erro.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [],
+   "dependencies": [
+    "@radix-ui/react-switch",
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [
+    "animated-counter",
+    "segmented-control",
+    "switch"
+   ],
+   "files": [
+    "registry/blocks/newsletter-signup/newsletter-signup.tsx",
+    "registry/blocks/newsletter-signup/newsletter-signup-data.ts",
+    "lib/media.ts",
+    "registry/blocks/newsletter-signup/newsletter-signup.module.css",
+    "registry/components/switch/switch.tsx",
+    "registry/components/switch/switch.module.css",
+    "registry/components/segmented-control/segmented-control.tsx",
+    "registry/components/segmented-control/segmented-control.module.css",
+    "registry/components/animated-counter/animated-counter.tsx",
+    "registry/components/animated-counter/animated-counter.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/newsletter-signup/newsletter-signup.tsx",
+    "registry/blocks/newsletter-signup/newsletter-signup-data.ts",
+    "registry/blocks/newsletter-signup/newsletter-signup.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "not-found",
+   "title": "Not found",
+   "description": "A 404 page with an illustration built from shapes (a zero with eyes that follow the pointer between two fours), a search field that filters the suggested pages, and links back.",
+   "descricao": "Página 404 com uma ilustração animada feita de formas, um campo de busca e atalhos para voltar ao site.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [
+    "404",
+    "error",
+    "page",
+    "illustration",
+    "search"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/blocks/not-found/not-found.tsx",
+    "registry/blocks/not-found/not-found.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/not-found/not-found.tsx",
+    "registry/blocks/not-found/not-found.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "notification-center",
+   "title": "Notification center",
+   "description": "A home for updates with read state, grouped information, and animated disclosure.",
+   "descricao": "Central de notificações com estado de lido, avisos agrupados e abertura animada.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [],
+   "dependencies": [
+    "@radix-ui/react-popover",
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [
+    "avatar"
+   ],
+   "files": [
+    "registry/components/notification-center/notification-center.tsx",
+    "registry/components/notification-center/notification-center.module.css",
+    "registry/components/avatar/avatar.tsx",
+    "registry/components/avatar/avatar.module.css",
+    "lib/ryan-provider.tsx"
+   ],
+   "ownFiles": [
+    "registry/components/notification-center/notification-center.tsx",
+    "registry/components/notification-center/notification-center.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "notification-stack",
+   "title": "Notification stack",
+   "description": "A pile of notification cards that fans out into a list on hover or focus; cards leave by swipe, close button or Delete, and the rest restack on a spring.",
+   "descricao": "Pilha de notificações que se abre em leque ao passar o mouse; dispense arrastando ou pelo botão e as demais se reorganizam com mola.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [
+    "notifications",
+    "stack",
+    "swipe",
+    "dismiss"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/blocks/notification-stack/notification-stack.tsx",
+    "registry/blocks/notification-stack/notification-stack.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/notification-stack/notification-stack.tsx",
+    "registry/blocks/notification-stack/notification-stack.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "number-field",
+   "title": "Number field",
+   "description": "Enter a bounded number with clear increment controls.",
+   "descricao": "Informe um número limitado com controles de incremento claros e dígitos em odômetro.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "field",
+    "numeric"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/number-field/number-field.tsx",
+    "registry/components/number-field/number-field.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/number-field/number-field.tsx",
+    "registry/components/number-field/number-field.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "onboarding-checklist",
+   "title": "Onboarding checklist",
+   "description": "Guide a new workspace through setup, one step at a time.",
+   "descricao": "Lista que guia um novo espaço de trabalho pela configuração, um passo de cada vez.",
+   "kind": "component",
+   "category": "feedback",
+   "tags": [
+    "onboarding",
+    "checklist",
+    "getting started"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/onboarding-checklist/onboarding-checklist.tsx",
+    "registry/components/onboarding-checklist/onboarding-checklist.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/onboarding-checklist/onboarding-checklist.tsx",
+    "registry/components/onboarding-checklist/onboarding-checklist.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "order-book",
+   "title": "Order book",
+   "description": "Bids and asks side by side with cumulative depth bars, a spread row, rows that flash when their size changes and slide when the price moves, plus a seeded feed hook.",
+   "descricao": "Livro de ofertas com compras e vendas lado a lado, barras de profundidade, spread e linhas que piscam a cada mudança.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "chart",
+    "trading",
+    "order-book",
+    "live"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/order-book/order-book.tsx",
+    "registry/components/order-book/order-book.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/order-book/order-book.tsx",
+    "registry/components/order-book/order-book.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "otp-input",
+   "title": "OTP input",
+   "description": "A six digit verification flow with paste support and keyboard navigation.",
+   "descricao": "Campo de código de seis dígitos com suporte a colar e navegação pelo teclado.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/otp-input/otp-input.tsx",
+    "registry/components/otp-input/otp-input.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/otp-input/otp-input.tsx",
+    "registry/components/otp-input/otp-input.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "overflow-actions",
+   "title": "Overflow actions",
+   "description": "A toolbar that measures its width and moves the actions that do not fit into a \"more\" menu, with buttons that scale out and a menu button that glides into place.",
+   "descricao": "Barra de ações que mede a própria largura e guarda no menu “mais” o que não cabe, animando a cada ajuste.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [
+    "toolbar",
+    "overflow",
+    "menu",
+    "responsive"
+   ],
+   "dependencies": [
+    "@radix-ui/react-dropdown-menu",
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/blocks/overflow-actions/overflow-actions.tsx",
+    "registry/blocks/overflow-actions/overflow-actions.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/overflow-actions/overflow-actions.tsx",
+    "registry/blocks/overflow-actions/overflow-actions.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "page-header",
+   "title": "Page header",
+   "description": "A project page header that folds into a compact bar as you scroll, with tabs whose counts roll.",
+   "descricao": "Cabeçalho de projeto que encolhe numa barra compacta ao rolar, com abas de contagem animada.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [],
+   "dependencies": [
+    "@radix-ui/react-dropdown-menu",
+    "@radix-ui/react-tabs",
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [
+    "animated-counter",
+    "avatar",
+    "avatar-group",
+    "badge",
+    "button",
+    "progress"
+   ],
+   "files": [
+    "registry/blocks/page-header/page-header.tsx",
+    "lib/use-copy-feedback.ts",
+    "registry/blocks/page-header/page-header.module.css",
+    "registry/components/progress/progress.tsx",
+    "registry/components/progress/progress.module.css",
+    "registry/components/button/button.tsx",
+    "registry/components/button/button.module.css",
+    "registry/components/badge/badge.tsx",
+    "registry/components/badge/badge.module.css",
+    "registry/components/avatar-group/avatar-group.tsx",
+    "registry/components/avatar-group/avatar-group.module.css",
+    "registry/components/avatar/avatar.tsx",
+    "registry/components/avatar/avatar.module.css",
+    "lib/ryan-provider.tsx",
+    "registry/components/animated-counter/animated-counter.tsx",
+    "registry/components/animated-counter/animated-counter.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/page-header/page-header.tsx",
+    "registry/blocks/page-header/page-header.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "pagination",
+   "title": "Pagination",
+   "description": "Move through a long collection with clear bounds.",
+   "descricao": "Navegação entre páginas de uma coleção longa, com limites claros e reticências quando necessário.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "data",
+    "navigation"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/pagination/pagination.tsx",
+    "registry/components/pagination/pagination.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/pagination/pagination.tsx",
+    "registry/components/pagination/pagination.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "password-field",
+   "title": "Password field",
+   "description": "Capture sensitive text with a visible reveal control.",
+   "descricao": "Capture texto sensível com um botão para revelar o que foi digitado.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "field",
+    "security"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/password-field/password-field.tsx",
+    "registry/components/password-field/password-field.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/password-field/password-field.tsx",
+    "registry/components/password-field/password-field.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "password-strength",
+   "title": "Password strength",
+   "description": "Show how strong a new password is while it is typed.",
+   "descricao": "Mostra a força de uma nova senha enquanto ela é digitada, com requisitos em tempo real.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "password",
+    "strength meter",
+    "validation"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/password-strength/password-strength.tsx",
+    "registry/components/password-strength/password-strength.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/password-strength/password-strength.tsx",
+    "registry/components/password-strength/password-strength.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "phone-input",
+   "title": "Phone input",
+   "description": "A phone field with a country picker, formatting as you type, and E.164 output.",
+   "descricao": "Campo de telefone com seletor de país, formatação enquanto você digita e saída no padrão E.164.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "inputs",
+    "new"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/phone-input/phone-input.tsx",
+    "registry/components/phone-input/phone-input.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/phone-input/phone-input.tsx",
+    "registry/components/phone-input/phone-input.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "plan-comparison",
+   "title": "Plan comparison",
+   "description": "Compare meaningful differences between plans and billing periods.",
+   "descricao": "Comparação de planos com troca de cobrança mensal ou anual e foco nas diferenças reais.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [],
+   "dependencies": [
+    "@radix-ui/react-switch",
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [
+    "button",
+    "segmented-control",
+    "switch"
+   ],
+   "files": [
+    "registry/blocks/plan-comparison/plan-comparison.tsx",
+    "registry/blocks/plan-comparison/plan-comparison.module.css",
+    "registry/components/switch/switch.tsx",
+    "registry/components/switch/switch.module.css",
+    "registry/components/segmented-control/segmented-control.tsx",
+    "registry/components/segmented-control/segmented-control.module.css",
+    "registry/components/button/button.tsx",
+    "registry/components/button/button.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/plan-comparison/plan-comparison.tsx",
+    "registry/blocks/plan-comparison/plan-comparison.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "plinko-game",
+   "title": "Plinko game",
+   "description": "A play-money plinko board: each ball bounces left or right off every row of pegs and lights up the multiplier slot it lands in.",
+   "descricao": "Tabuleiro de plinko de mentirinha: a bolinha quica nos pinos, para a esquerda ou a direita, e acende a casa do multiplicador.",
+   "kind": "component",
+   "category": "games",
+   "tags": [
+    "game",
+    "play money",
+    "pegs",
+    "ball",
+    "multiplier"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/plinko-game/plinko-game.tsx",
+    "registry/components/plinko-game/plinko-game.module.css",
+    "registry/components/plinko-game/play-money.tsx",
+    "registry/components/plinko-game/play-money.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/plinko-game/plinko-game.tsx",
+    "registry/components/plinko-game/plinko-game.module.css",
+    "registry/components/plinko-game/play-money.tsx",
+    "registry/components/plinko-game/play-money.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "popover",
+   "title": "Popover",
+   "description": "A small anchored surface for contextual information.",
+   "descricao": "Pequena superfície ancorada para informações de contexto.",
+   "kind": "component",
+   "category": "disclosure",
+   "tags": [
+    "overlay",
+    "menu"
+   ],
+   "dependencies": [
+    "@radix-ui/react-popover"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/popover/popover.tsx",
+    "registry/components/popover/popover.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/popover/popover.tsx",
+    "registry/components/popover/popover.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "prediction-market",
+   "title": "Prediction market",
+   "description": "A market card with yes and no prices, a probability line that flips to the picked outcome, an amount field and a payout estimate that counts to each new value (play money).",
+   "descricao": "Cartão de mercado de previsões com preços de sim e não, linha de probabilidade, valor e estimativa de retorno (dados fictícios).",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [
+    "market",
+    "chart",
+    "trading",
+    "form"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/blocks/prediction-market/prediction-market.tsx",
+    "registry/blocks/prediction-market/prediction-market.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/prediction-market/prediction-market.tsx",
+    "registry/blocks/prediction-market/prediction-market.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "preview-rail",
+   "title": "Preview rail",
+   "description": "A rail of image cards in which the hovered or focused one widens to reveal its preview while the others shrink to a slice.",
+   "descricao": "Trilho de cartões em que o cartão sob o cursor ou em foco se alarga para mostrar a prévia enquanto os outros encolhem.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "cards",
+    "gallery",
+    "hover",
+    "expand",
+    "preview"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/preview-rail/preview-rail.tsx",
+    "registry/components/preview-rail/preview-rail.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/preview-rail/preview-rail.tsx",
+    "registry/components/preview-rail/preview-rail.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "price-target-fan",
+   "title": "Price target fan",
+   "description": "A price history line that draws to the last close and fans out into dashed high, median and low target lines with labeled end points you can bring forward.",
+   "descricao": "Histórico de preço que se abre em leque até os alvos alto, mediano e baixo, cada um com rótulo e variação.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "chart",
+    "line",
+    "forecast",
+    "finance"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/price-target-fan/price-target-fan.tsx",
+    "registry/components/price-target-fan/price-target-fan.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/price-target-fan/price-target-fan.tsx",
+    "registry/components/price-target-fan/price-target-fan.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "progress",
+   "title": "Progress",
+   "description": "Show how much of a known task is complete.",
+   "descricao": "Barra que mostra quanto de uma tarefa conhecida já foi concluído.",
+   "kind": "component",
+   "category": "feedback",
+   "tags": [
+    "status",
+    "loading"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/progress/progress.tsx",
+    "registry/components/progress/progress.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/progress/progress.tsx",
+    "registry/components/progress/progress.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "project-folder",
+   "title": "Project folder",
+   "description": "A folder whose flap leans open on hover while its documents peek out, then rise and fan out with a springy stagger on click.",
+   "descricao": "Pasta que entreabre ao passar o mouse e, no clique, deixa os documentos subirem e se abrirem em leque.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [
+    "folder",
+    "files",
+    "hover",
+    "3d"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/blocks/project-folder/project-folder.tsx",
+    "registry/blocks/project-folder/project-folder.module.css",
+    "lib/media.ts"
+   ],
+   "ownFiles": [
+    "registry/blocks/project-folder/project-folder.tsx",
+    "registry/blocks/project-folder/project-folder.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "prompt-input",
+   "title": "Prompt input",
+   "description": "An auto-growing prompt box with attachment chips and a model menu whose send button morphs into stop while a response runs; Enter sends and Shift+Enter adds a line.",
+   "descricao": "Caixa de prompt que cresce com o texto, com anexos, menu de modelo e um botão de enviar que vira parar durante a resposta.",
+   "kind": "component",
+   "category": "ai",
+   "tags": [
+    "ai",
+    "chat",
+    "input",
+    "form"
+   ],
+   "dependencies": [
+    "@radix-ui/react-dropdown-menu",
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/prompt-input/prompt-input.tsx",
+    "registry/components/prompt-input/prompt-input.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/prompt-input/prompt-input.tsx",
+    "registry/components/prompt-input/prompt-input.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "pull-to-refresh",
+   "title": "Pull to refresh",
+   "description": "A scroll container you drag down with a finger or the mouse: the indicator stretches, spins while the async refresh runs, confirms and settles.",
+   "descricao": "Área de rolagem que você puxa para baixo para atualizar: o indicador estica, gira durante a atualização e volta ao lugar.",
+   "kind": "component",
+   "category": "feedback",
+   "tags": [
+    "refresh",
+    "scroll",
+    "gesture",
+    "drag",
+    "loading"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/pull-to-refresh/pull-to-refresh.tsx",
+    "registry/components/pull-to-refresh/pull-to-refresh.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/pull-to-refresh/pull-to-refresh.tsx",
+    "registry/components/pull-to-refresh/pull-to-refresh.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "radio-cards",
+   "title": "Radio cards",
+   "description": "Selectable option cards with a sliding selection ring, price and description slots, and radio keyboard behavior.",
+   "descricao": "Cartões selecionáveis com anel deslizante, preço e descrição, com o teclado de um grupo de rádio.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "inputs",
+    "new"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/radio-cards/radio-cards.tsx",
+    "registry/components/radio-cards/radio-cards.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/radio-cards/radio-cards.tsx",
+    "registry/components/radio-cards/radio-cards.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "radio-group",
+   "title": "Radio group",
+   "description": "Choose one option from a visible set.",
+   "descricao": "Escolha uma opção entre várias visíveis, com um destaque que desliza até a linha escolhida.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "field",
+    "choice"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/radio-group/radio-group.tsx",
+    "registry/components/radio-group/radio-group.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/radio-group/radio-group.tsx",
+    "registry/components/radio-group/radio-group.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "range-histogram-slider",
+   "title": "Range histogram slider",
+   "description": "A price range over a live histogram of the data, lighting the bars inside the range and settling on bar edges.",
+   "descricao": "Faixa de preço sobre um histograma dos dados, acendendo as barras dentro do intervalo escolhido.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "inputs",
+    "new"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/range-histogram-slider/range-histogram-slider.tsx",
+    "registry/components/range-histogram-slider/range-histogram-slider.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/range-histogram-slider/range-histogram-slider.tsx",
+    "registry/components/range-histogram-slider/range-histogram-slider.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "rating",
+   "title": "Rating",
+   "description": "A simple, accessible way to capture a numeric opinion.",
+   "descricao": "Avaliação por estrelas acessível, com meias estrelas, teclado e opção de limpar.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "input",
+    "feedback"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/rating/rating.tsx",
+    "registry/components/rating/rating.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/rating/rating.tsx",
+    "registry/components/rating/rating.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "reactions",
+   "title": "Reactions",
+   "description": "Acknowledge a post in one tap, with counts that roll.",
+   "descricao": "Reage a uma publicação com um toque, com contadores que rolam.",
+   "kind": "component",
+   "category": "actions",
+   "tags": [
+    "reactions",
+    "social",
+    "comments"
+   ],
+   "dependencies": [
+    "@radix-ui/react-popover",
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/reactions/reactions.tsx",
+    "registry/components/reactions/reactions.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/reactions/reactions.tsx",
+    "registry/components/reactions/reactions.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "reorderable-list",
+   "title": "Reorderable list",
+   "description": "Organize items with direct drag and drop.",
+   "descricao": "Lista que se reorganiza arrastando, com alternativa pelo teclado para mover cada item.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "data",
+    "interaction"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/reorderable-list/reorderable-list.tsx",
+    "registry/components/reorderable-list/reorderable-list.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/reorderable-list/reorderable-list.tsx",
+    "registry/components/reorderable-list/reorderable-list.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "resizable-panels",
+   "title": "Resizable panels",
+   "description": "Trade space between panes by dragging the divider between them.",
+   "descricao": "Painéis que trocam espaço entre si ao arrastar o divisor.",
+   "kind": "component",
+   "category": "disclosure",
+   "tags": [
+    "split view",
+    "resizable",
+    "panes"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/resizable-panels/resizable-panels.tsx",
+    "registry/components/resizable-panels/resizable-panels.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/resizable-panels/resizable-panels.tsx",
+    "registry/components/resizable-panels/resizable-panels.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "returns-calendar",
+   "title": "Returns calendar",
+   "description": "Small month calendars of daily returns tinted by gain or loss, with month totals, months and cells that wave in, and a tooltip that glides between days.",
+   "descricao": "Calendário de retornos diários, mês a mês, com cada dia colorido pela força do ganho ou da perda e o total do mês.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "chart",
+    "calendar",
+    "heatmap",
+    "finance"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/returns-calendar/returns-calendar.tsx",
+    "registry/components/returns-calendar/returns-calendar.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/returns-calendar/returns-calendar.tsx",
+    "registry/components/returns-calendar/returns-calendar.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "rich-text-editor",
+   "title": "Rich text editor",
+   "description": "A lightweight editor with markdown shortcuts, a floating toolbar, a slash menu, and HTML and markdown output.",
+   "descricao": "Editor leve com atalhos de markdown, barra flutuante, menu de barra e saída em HTML ou markdown.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "inputs",
+    "new"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/rich-text-editor/rich-text-editor.tsx",
+    "registry/components/rich-text-editor/rich-text-editor.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/rich-text-editor/rich-text-editor.tsx",
+    "registry/components/rich-text-editor/rich-text-editor.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "ridgeline",
+   "title": "Ridgeline",
+   "description": "Overlapping distributions, one ridge per group: hover to lift a ridge and read its quartiles, switch datasets and every curve morphs.",
+   "descricao": "Distribuições sobrepostas, uma crista por grupo: passe o mouse para destacar e ver os quartis.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "data",
+    "chart",
+    "new"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/ridgeline/ridgeline.tsx",
+    "registry/components/ridgeline/ridgeline.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/ridgeline/ridgeline.tsx",
+    "registry/components/ridgeline/ridgeline.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "theme-switch-rise",
+   "title": "Rise",
+   "description": "The next appearance rises into place.",
+   "descricao": "O novo tema sobe até ocupar a página.",
+   "kind": "component",
+   "category": "actions",
+   "tags": [
+    "theme",
+    "appearance",
+    "motion"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [
+    "button"
+   ],
+   "files": [
+    "registry/components/theme-switch/theme-switch.tsx",
+    "registry/components/theme-switch/theme-switch.module.css",
+    "registry/components/button/button.tsx",
+    "registry/components/button/button.module.css"
+   ],
+   "ownFiles": [],
+   "hasDemo": true
+  },
+  {
+   "name": "ruler-slider",
+   "title": "Ruler slider",
+   "description": "A tape of ticks that slides under a fixed needle, with momentum, snapping, and a rolling readout.",
+   "descricao": "Uma fita de marcas que desliza sob uma agulha fixa, com inércia, encaixe e valor rolante.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "inputs",
+    "new"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/ruler-slider/ruler-slider.tsx",
+    "registry/components/ruler-slider/ruler-slider.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/ruler-slider/ruler-slider.tsx",
+    "registry/components/ruler-slider/ruler-slider.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "sankey-chart",
+   "title": "Sankey chart",
+   "description": "Flow diagram with nodes in columns joined by curved ribbons sized by value: ribbons draw in column by column, and hovering a node or ribbon dims everything else.",
+   "descricao": "Diagrama de fluxo em colunas: as faixas têm a espessura do valor e, ao passar o mouse, só o caminho escolhido fica aceso.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "chart",
+    "flow",
+    "sankey",
+    "data-viz"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/sankey-chart/sankey-chart.tsx",
+    "registry/components/sankey-chart/sankey-chart.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/sankey-chart/sankey-chart.tsx",
+    "registry/components/sankey-chart/sankey-chart.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "scroll-area",
+   "title": "Scroll area",
+   "description": "A native scroll container with thin overlay scrollbars and edge fades that appear only when content overflows.",
+   "descricao": "Área de rolagem nativa com barras finas e esmaecimento só quando há overflow.",
+   "kind": "component",
+   "category": "disclosure",
+   "tags": [
+    "disclosure",
+    "new"
+   ],
+   "dependencies": [],
+   "requires": [],
+   "files": [
+    "registry/components/scroll-area/scroll-area.tsx",
+    "registry/components/scroll-area/scroll-area.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/scroll-area/scroll-area.tsx",
+    "registry/components/scroll-area/scroll-area.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "scroll-reveal",
+   "title": "Scroll reveal",
+   "description": "A wrapper that reveals its children as they enter the viewport (fade, slide, scale or blur) with stagger and once or repeat modes, plus a scroll progress bar.",
+   "descricao": "Revela o conteúdo conforme ele entra na tela, em sequência, e acompanha a leitura com uma barra de progresso.",
+   "kind": "component",
+   "category": "special",
+   "tags": [
+    "scroll",
+    "viewport",
+    "entrance",
+    "stagger",
+    "progress"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/scroll-reveal/scroll-reveal.tsx",
+    "registry/components/scroll-reveal/scroll-reveal.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/scroll-reveal/scroll-reveal.tsx",
+    "registry/components/scroll-reveal/scroll-reveal.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "scrub-input",
+   "title": "Scrub input",
+   "description": "A Figma-style number field: drag the label to scrub, or type values, units, and arithmetic.",
+   "descricao": "Campo numérico estilo Figma: arraste o rótulo para ajustar ou digite valores, unidades e contas.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "inputs",
+    "new"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/scrub-input/scrub-input.tsx",
+    "registry/components/scrub-input/scrub-input.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/scrub-input/scrub-input.tsx",
+    "registry/components/scrub-input/scrub-input.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "search-field",
+   "title": "Search field",
+   "description": "A recognizable search entry point with clear affordances.",
+   "descricao": "Campo de busca reconhecível, com ícone, botão de limpar e foco bem marcado.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "field",
+    "search"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/search-field/search-field.tsx",
+    "registry/components/search-field/search-field.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/search-field/search-field.tsx",
+    "registry/components/search-field/search-field.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "segmented-control",
+   "title": "Segmented control",
+   "description": "Switch between a small set of related views.",
+   "descricao": "Alterne entre poucas visões relacionadas com um seletor segmentado de destaque deslizante.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "control",
+    "choice"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/segmented-control/segmented-control.tsx",
+    "registry/components/segmented-control/segmented-control.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/segmented-control/segmented-control.tsx",
+    "registry/components/segmented-control/segmented-control.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "select",
+   "title": "Select",
+   "description": "A compact choice field with a keyboard friendly menu.",
+   "descricao": "Campo de escolha compacto com um menu que funciona bem pelo teclado.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "field",
+    "form"
+   ],
+   "dependencies": [
+    "@radix-ui/react-select",
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/select/select.tsx",
+    "registry/components/select/select.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/select/select.tsx",
+    "registry/components/select/select.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "shader-background",
+   "title": "Shader background",
+   "description": "An animated WebGL backdrop: a flowing noise field tinted with the accent that pauses off screen, holds still under reduced motion and falls back to a flat surface.",
+   "descricao": "Fundo animado em canvas: um campo de ruído que flui na cor de destaque e pausa quando sai da tela.",
+   "kind": "component",
+   "category": "special",
+   "tags": [
+    "background",
+    "canvas",
+    "webgl",
+    "shader",
+    "noise",
+    "hero"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/shader-background/shader-background.tsx",
+    "registry/components/shader-background/shader-background.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/shader-background/shader-background.tsx",
+    "registry/components/shader-background/shader-background.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "shortcut-recorder",
+   "title": "Shortcut recorder",
+   "description": "Record key combinations into key caps, with conflict warnings, Kbd, and a searchable cheatsheet.",
+   "descricao": "Grave atalhos de teclado em teclas visuais, com aviso de conflito e uma lista de atalhos pesquisável.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "inputs",
+    "new"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/shortcut-recorder/shortcut-recorder.tsx",
+    "registry/components/shortcut-recorder/shortcut-recorder.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/shortcut-recorder/shortcut-recorder.tsx",
+    "registry/components/shortcut-recorder/shortcut-recorder.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "sign-in",
+   "title": "Sign in",
+   "description": "A sign in card that morphs from email to a six digit code to your account.",
+   "descricao": "Cartão de entrada que passa de e-mail para código de seis dígitos e depois para a sua conta.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [
+    "avatar",
+    "button",
+    "input",
+    "otp-input"
+   ],
+   "files": [
+    "registry/blocks/sign-in/sign-in.tsx",
+    "registry/blocks/sign-in/sign-in.module.css",
+    "lib/media.ts",
+    "registry/components/otp-input/otp-input.tsx",
+    "registry/components/otp-input/otp-input.module.css",
+    "registry/components/input/input.tsx",
+    "registry/components/input/input.module.css",
+    "registry/components/button/button.tsx",
+    "registry/components/button/button.module.css",
+    "registry/components/avatar/avatar.tsx",
+    "registry/components/avatar/avatar.module.css",
+    "lib/ryan-provider.tsx"
+   ],
+   "ownFiles": [
+    "registry/blocks/sign-in/sign-in.tsx",
+    "registry/blocks/sign-in/sign-in.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "signup-form",
+   "title": "Sign up form",
+   "description": "An account creation flow with field validation, password strength, and a clear completion state.",
+   "descricao": "Cadastro com validação por campo, força da senha e um estado de conclusão claro.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [],
+   "dependencies": [
+    "@radix-ui/react-checkbox",
+    "motion"
+   ],
+   "requires": [
+    "button",
+    "checkbox",
+    "input",
+    "password-field"
+   ],
+   "files": [
+    "registry/blocks/signup-form/signup-form.tsx",
+    "registry/blocks/signup-form/signup-form.module.css",
+    "registry/components/password-field/password-field.tsx",
+    "registry/components/password-field/password-field.module.css",
+    "registry/components/input/input.tsx",
+    "registry/components/input/input.module.css",
+    "registry/components/checkbox/checkbox.tsx",
+    "registry/components/checkbox/checkbox.module.css",
+    "registry/components/button/button.tsx",
+    "registry/components/button/button.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/signup-form/signup-form.tsx",
+    "registry/blocks/signup-form/signup-form.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "signature-pad",
+   "title": "Signature pad",
+   "description": "Smooth ink that thins with speed, with undo, replay, and PNG or SVG export.",
+   "descricao": "Quadro de assinatura com traço suave que afina com a velocidade, desfazer, replay e exportação em PNG ou SVG.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "inputs",
+    "new"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/signature-pad/signature-pad.tsx",
+    "registry/components/signature-pad/signature-pad.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/signature-pad/signature-pad.tsx",
+    "registry/components/signature-pad/signature-pad.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "site-footer",
+   "title": "Site footer",
+   "description": "A website footer with link columns and newsletter, a minimal layout, and a large fading ryan-ui mark.",
+   "descricao": "Rodapé de site em três layouts, com colunas de links, redes sociais, newsletter e status.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [
+    "button",
+    "segmented-control"
+   ],
+   "files": [
+    "registry/blocks/site-footer/site-footer.tsx",
+    "registry/blocks/site-footer/site-footer.module.css",
+    "registry/components/segmented-control/segmented-control.tsx",
+    "registry/components/segmented-control/segmented-control.module.css",
+    "registry/components/button/button.tsx",
+    "registry/components/button/button.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/site-footer/site-footer.tsx",
+    "registry/blocks/site-footer/site-footer.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "site-header",
+   "title": "Site header",
+   "description": "A sticky website header that turns solid on scroll, with a gliding active link, mega menu panels, and a mobile sheet.",
+   "descricao": "Cabeçalho de site com menu mega, que ganha fundo ao rolar a página, em três layouts.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [
+    "segmented-control"
+   ],
+   "files": [
+    "registry/blocks/site-header/site-header.tsx",
+    "registry/blocks/site-header/site-header.module.css",
+    "lib/media.ts",
+    "registry/components/segmented-control/segmented-control.tsx",
+    "registry/components/segmented-control/segmented-control.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/site-header/site-header.tsx",
+    "registry/blocks/site-header/site-header.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "skeleton",
+   "title": "Skeleton",
+   "description": "Reserve space while content is still loading.",
+   "descricao": "Reserva o espaço enquanto o conteúdo carrega e some em transição suave quando ele chega.",
+   "kind": "component",
+   "category": "feedback",
+   "tags": [
+    "loading",
+    "status"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/skeleton/skeleton.tsx",
+    "registry/components/skeleton/skeleton.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/skeleton/skeleton.tsx",
+    "registry/components/skeleton/skeleton.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "slide-game",
+   "title": "Slide game",
+   "description": "A play-money slide game: a strip of multiplier tiles shoots past a center marker, decelerates and stops on the multiplier that pays the bet.",
+   "descricao": "Uma faixa de multiplicadores dispara, desacelera e para sob o marcador central: o valor sorteado multiplica a aposta de mentirinha.",
+   "kind": "component",
+   "category": "games",
+   "tags": [
+    "game",
+    "play money",
+    "strip",
+    "multiplier",
+    "deceleration"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/slide-game/slide-game.tsx",
+    "registry/components/slide-game/slide-game.module.css",
+    "registry/components/slide-game/play-money.tsx",
+    "registry/components/slide-game/play-money.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/slide-game/slide-game.tsx",
+    "registry/components/slide-game/slide-game.module.css",
+    "registry/components/slide-game/play-money.tsx",
+    "registry/components/slide-game/play-money.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "slider",
+   "title": "Slider",
+   "description": "Pick a value or a range on a track that follows your finger.",
+   "descricao": "Escolha um valor ou um intervalo numa trilha que acompanha o dedo, com balão de dígitos rolantes.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "slider",
+    "range",
+    "input"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/slider/slider.tsx",
+    "registry/components/slider/slider.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/slider/slider.tsx",
+    "registry/components/slider/slider.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "slope-chart",
+   "title": "Slope chart",
+   "description": "Before and after on two axes: lines draw in, rank moves sit beside each value, and switching datasets slides every line to its new slope.",
+   "descricao": "Antes e depois em dois eixos, com variação de posição ao lado de cada valor.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "data",
+    "chart",
+    "new"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/slope-chart/slope-chart.tsx",
+    "registry/components/slope-chart/slope-chart.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/slope-chart/slope-chart.tsx",
+    "registry/components/slope-chart/slope-chart.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "slot-text",
+   "title": "Slot text",
+   "description": "Text and numbers that spin into their new value on staggered slot machine reels.",
+   "descricao": "Textos e números que giram até o novo valor, como rolos de caça-níqueis.",
+   "kind": "component",
+   "category": "special",
+   "tags": [
+    "special",
+    "text",
+    "numbers",
+    "new"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/slot-text/slot-text.tsx",
+    "registry/components/slot-text/slot-text.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/slot-text/slot-text.tsx",
+    "registry/components/slot-text/slot-text.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "sortable-data-table",
+   "title": "Sortable data table",
+   "description": "Compare structured records with sortable columns.",
+   "descricao": "Tabela de registros com colunas ordenáveis, seleção de linhas e contagem de itens.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "data",
+    "table"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/sortable-data-table/sortable-data-table.tsx",
+    "registry/components/sortable-data-table/sortable-data-table.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/sortable-data-table/sortable-data-table.tsx",
+    "registry/components/sortable-data-table/sortable-data-table.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "sparkline",
+   "title": "Sparkline",
+   "description": "Show a compact trend beside a value.",
+   "descricao": "Uma tendência compacta ao lado de um valor, com leitura ponto a ponto.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "data",
+    "chart"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/sparkline/sparkline.tsx",
+    "registry/components/sparkline/sparkline.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/sparkline/sparkline.tsx",
+    "registry/components/sparkline/sparkline.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "theme-switch-split",
+   "title": "Split",
+   "description": "The next appearance opens from a slim center seam.",
+   "descricao": "O novo tema se abre a partir de uma fenda fina no centro.",
+   "kind": "component",
+   "category": "actions",
+   "tags": [
+    "theme",
+    "appearance",
+    "motion"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [
+    "button"
+   ],
+   "files": [
+    "registry/components/theme-switch/theme-switch.tsx",
+    "registry/components/theme-switch/theme-switch.module.css",
+    "registry/components/button/button.tsx",
+    "registry/components/button/button.module.css"
+   ],
+   "ownFiles": [],
+   "hasDemo": true
+  },
+  {
+   "name": "split-button",
+   "title": "Split button",
+   "description": "A primary action with a menu of nearby alternatives.",
+   "descricao": "Ação principal com um menu de alternativas ao lado.",
+   "kind": "component",
+   "category": "actions",
+   "tags": [
+    "action",
+    "menu"
+   ],
+   "dependencies": [
+    "@radix-ui/react-dropdown-menu",
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/split-button/split-button.tsx",
+    "registry/components/split-button/split-button.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/split-button/split-button.tsx",
+    "registry/components/split-button/split-button.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "stats-band",
+   "title": "Stats band",
+   "description": "Headline numbers that count up in view, each with a tiny visual that proves it and a context line on hover, plain or in a hairline grid.",
+   "descricao": "Faixa de números que contam até o valor final, em layout simples ou em cartões.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [
+    "segmented-control"
+   ],
+   "files": [
+    "registry/blocks/stats-band/stats-band.tsx",
+    "registry/blocks/stats-band/stats-band-data.ts",
+    "registry/blocks/stats-band/stats-band.module.css",
+    "registry/blocks/stats-band/stats-band-world.ts",
+    "registry/components/segmented-control/segmented-control.tsx",
+    "registry/components/segmented-control/segmented-control.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/stats-band/stats-band.tsx",
+    "registry/blocks/stats-band/stats-band-data.ts",
+    "registry/blocks/stats-band/stats-band.module.css",
+    "registry/blocks/stats-band/stats-band-world.ts"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "status-bar",
+   "title": "Status bar",
+   "description": "An uptime strip with one bar per day colored by status, bars that lift around the pointer, a gliding tooltip and an overall percentage that counts up.",
+   "descricao": "Faixa de disponibilidade com uma barra por dia, colorida pelo estado, dica por dia e o percentual geral.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "chart",
+    "uptime",
+    "status",
+    "monitoring"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/status-bar/status-bar.tsx",
+    "registry/components/status-bar/status-bar.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/status-bar/status-bar.tsx",
+    "registry/components/status-bar/status-bar.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "stepper",
+   "title": "Stepper",
+   "description": "Show where a person is in a multi-step flow and what is done.",
+   "descricao": "Indicador de etapas de um fluxo, com estados de concluída, atual, pendente e com erro.",
+   "kind": "component",
+   "category": "feedback",
+   "tags": [
+    "motion",
+    "product"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/stepper/stepper.tsx",
+    "registry/components/stepper/stepper.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/stepper/stepper.tsx",
+    "registry/components/stepper/stepper.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "streamgraph",
+   "title": "Streamgraph",
+   "description": "Layered streams on a wiggle baseline that morph between ranges, with a layer you can isolate and read week by week.",
+   "descricao": "Camadas fluidas que se transformam entre períodos, com uma camada para isolar e ler semana a semana.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "data",
+    "chart",
+    "new"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/streamgraph/streamgraph.tsx",
+    "registry/components/streamgraph/streamgraph.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/streamgraph/streamgraph.tsx",
+    "registry/components/streamgraph/streamgraph.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "streaming-response",
+   "title": "Streaming response",
+   "description": "Text that streams in word by word behind a caret, each word rising out of a soft blur, with pause, skip and replay controls; reduced motion shows the full text.",
+   "descricao": "Texto que chega palavra por palavra, com cursor e desfoque suave, e controles para pausar, pular e repetir.",
+   "kind": "component",
+   "category": "ai",
+   "tags": [
+    "ai",
+    "streaming",
+    "text",
+    "chat"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/streaming-response/streaming-response.tsx",
+    "registry/components/streaming-response/streaming-response.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/streaming-response/streaming-response.tsx",
+    "registry/components/streaming-response/streaming-response.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "swipe-actions",
+   "title": "Swipe actions",
+   "description": "Reveal row actions with a swipe, or from the same actions in a menu.",
+   "descricao": "Revela as ações de uma linha ao deslizar, com as mesmas ações também num menu.",
+   "kind": "component",
+   "category": "actions",
+   "tags": [
+    "swipe",
+    "gesture",
+    "list"
+   ],
+   "dependencies": [
+    "@radix-ui/react-dropdown-menu",
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/swipe-actions/swipe-actions.tsx",
+    "registry/components/swipe-actions/swipe-actions.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/swipe-actions/swipe-actions.tsx",
+    "registry/components/swipe-actions/swipe-actions.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "switch",
+   "title": "Switch",
+   "description": "A tactile toggle for settings that take effect immediately.",
+   "descricao": "Um interruptor tátil para ajustes que passam a valer na hora.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "toggle",
+    "settings"
+   ],
+   "dependencies": [
+    "@radix-ui/react-switch",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/switch/switch.tsx",
+    "registry/components/switch/switch.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/switch/switch.tsx",
+    "registry/components/switch/switch.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "tabs",
+   "title": "Tabs",
+   "description": "Switch between related content in the same context.",
+   "descricao": "Alterna entre conteúdos relacionados no mesmo contexto.",
+   "kind": "component",
+   "category": "disclosure",
+   "tags": [
+    "navigation",
+    "layout"
+   ],
+   "dependencies": [
+    "@radix-ui/react-tabs",
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/tabs/tabs.tsx",
+    "registry/components/tabs/tabs.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/tabs/tabs.tsx",
+    "registry/components/tabs/tabs.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "tag-input",
+   "title": "Tag input",
+   "description": "Turn short text values into removable tags.",
+   "descricao": "Transforma textos curtos em etiquetas removíveis, com animação suave ao adicionar e remover.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "field",
+    "tags"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/tag-input/tag-input.tsx",
+    "registry/components/tag-input/tag-input.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/tag-input/tag-input.tsx",
+    "registry/components/tag-input/tag-input.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "text-morph",
+   "title": "Text morph",
+   "description": "Morph a label into its next state, letter by letter.",
+   "descricao": "Transforma um rótulo no próximo estado, letra por letra.",
+   "kind": "component",
+   "category": "text",
+   "tags": [
+    "text",
+    "motion",
+    "status"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/text-morph/text-morph.tsx",
+    "registry/components/text-morph/text-morph.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/text-morph/text-morph.tsx",
+    "registry/components/text-morph/text-morph.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "text-reveal",
+   "title": "Text reveal",
+   "description": "Reveal a short piece of content with restrained motion.",
+   "descricao": "Revela um trecho curto de conteúdo com movimento discreto.",
+   "kind": "component",
+   "category": "text",
+   "tags": [
+    "text",
+    "motion",
+    "content"
+   ],
+   "dependencies": [],
+   "requires": [],
+   "files": [
+    "registry/components/text-reveal/text-reveal.tsx",
+    "registry/components/text-reveal/text-reveal.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/text-reveal/text-reveal.tsx",
+    "registry/components/text-reveal/text-reveal.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "text-shimmer",
+   "title": "Text shimmer",
+   "description": "Show ongoing work with a calm light across the words.",
+   "descricao": "Indica trabalho em andamento com uma luz calma passando pelo texto.",
+   "kind": "component",
+   "category": "text",
+   "tags": [
+    "text",
+    "motion",
+    "loading"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/text-shimmer/text-shimmer.tsx",
+    "registry/components/text-shimmer/text-shimmer.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/text-shimmer/text-shimmer.tsx",
+    "registry/components/text-shimmer/text-shimmer.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "textarea",
+   "title": "Textarea",
+   "description": "A multiline field for notes, descriptions, and longer text.",
+   "descricao": "Campo de várias linhas para notas, descrições e textos mais longos.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "field",
+    "form"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/textarea/textarea.tsx",
+    "registry/components/textarea/textarea.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/textarea/textarea.tsx",
+    "registry/components/textarea/textarea.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "theme-switch",
+   "title": "Theme switcher",
+   "description": "Four smooth ways to move between light and dark appearance.",
+   "descricao": "Quatro transições suaves entre o tema claro e o escuro.",
+   "kind": "component",
+   "category": "actions",
+   "tags": [
+    "theme",
+    "appearance",
+    "motion"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [
+    "button"
+   ],
+   "files": [
+    "registry/components/theme-switch/theme-switch.tsx",
+    "registry/components/theme-switch/theme-switch.module.css",
+    "registry/components/button/button.tsx",
+    "registry/components/button/button.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/theme-switch/theme-switch.tsx",
+    "registry/components/theme-switch/theme-switch.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "tilt-card",
+   "title": "Tilt card",
+   "description": "A card that tilts in 3D toward the cursor with a glare highlight and springs back flat on leave; it stays still on touch and with reduced motion.",
+   "descricao": "Cartão que se inclina em 3D na direção do cursor, com um brilho que acompanha o movimento, e volta ao lugar com mola.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "card",
+    "3d",
+    "hover",
+    "glare"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/tilt-card/tilt-card.tsx",
+    "registry/components/tilt-card/tilt-card.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/tilt-card/tilt-card.tsx",
+    "registry/components/tilt-card/tilt-card.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "time-picker",
+   "title": "Time picker",
+   "description": "Choose a time with sensible keyboard behavior.",
+   "descricao": "Escolha um horário com um comportamento de teclado sensato, em formato 12h ou 24h.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "time",
+    "field"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/time-picker/time-picker.tsx",
+    "registry/components/time-picker/time-picker.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/time-picker/time-picker.tsx",
+    "registry/components/time-picker/time-picker.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "timeline",
+   "title": "Timeline",
+   "description": "Follow what happened, newest first, grouped by day.",
+   "descricao": "Linha do tempo com os eventos mais recentes primeiro, agrupados por dia e com detalhes que se expandem.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "data",
+    "feed",
+    "activity"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/timeline/timeline.tsx",
+    "registry/components/timeline/timeline.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/timeline/timeline.tsx",
+    "registry/components/timeline/timeline.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "toast",
+   "title": "Toast",
+   "description": "Brief confirmation for a completed background action.",
+   "descricao": "Aviso rápido e discreto que aparece, some sozinho e pode ser dispensado com um gesto.",
+   "kind": "component",
+   "category": "feedback",
+   "tags": [
+    "status",
+    "message"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/toast/toast.tsx",
+    "registry/components/toast/toast.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/toast/toast.tsx",
+    "registry/components/toast/toast.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "toast-action",
+   "title": "Toast action",
+   "description": "A toast with one action, such as Undo, and a thin countdown bar that drains until it leaves; hover or focus holds the countdown, and taking the action swaps the copy for a short confirmation.",
+   "descricao": "Aviso com uma ação, como Desfazer, e uma barra fina que se esgota até ele sair; passar o mouse ou focar pausa a contagem.",
+   "kind": "component",
+   "category": "feedback",
+   "tags": [
+    "toast",
+    "undo",
+    "notification",
+    "countdown"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/toast-action/toast-action.tsx",
+    "registry/components/toast-action/toast-action.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/toast-action/toast-action.tsx",
+    "registry/components/toast-action/toast-action.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "toast-progress",
+   "title": "Toast progress",
+   "description": "A toast that follows a running task: a bar and a percentage advance, then it morphs in place into a success state with a drawn check, or into an error state with Retry.",
+   "descricao": "Aviso que acompanha uma tarefa: a barra e a porcentagem avançam e ele vira sucesso, com o check desenhado, ou erro com Tentar de novo.",
+   "kind": "component",
+   "category": "feedback",
+   "tags": [
+    "toast",
+    "progress",
+    "upload",
+    "notification"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/toast-progress/toast-progress.tsx",
+    "registry/components/toast-progress/toast-progress.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/toast-progress/toast-progress.tsx",
+    "registry/components/toast-progress/toast-progress.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "toast-stack",
+   "title": "Toast stack",
+   "description": "Stack short results at the edge until you reach for them.",
+   "descricao": "Pilha de notificações que se empilha, se abre ao passar o mouse e transforma um aviso em seu resultado.",
+   "kind": "component",
+   "category": "feedback",
+   "tags": [
+    "toast",
+    "notification",
+    "sonner"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/toast-stack/toast-stack.tsx",
+    "registry/components/toast-stack/toast-stack.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/toast-stack/toast-stack.tsx",
+    "registry/components/toast-stack/toast-stack.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "todo-list",
+   "title": "Todo list",
+   "description": "An agent plan checklist whose steps move from pending to running with a shimmer to done with a drawn check and strike-through, under a live progress count.",
+   "descricao": "Lista do plano de um agente: cada etapa passa de pendente para em andamento e concluída, com contagem de progresso.",
+   "kind": "component",
+   "category": "ai",
+   "tags": [
+    "ai",
+    "agent",
+    "plan",
+    "progress"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/todo-list/todo-list.tsx",
+    "registry/components/todo-list/todo-list.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/todo-list/todo-list.tsx",
+    "registry/components/todo-list/todo-list.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "toggle-group",
+   "title": "Toggle group",
+   "description": "A row of icon or text toggles, single or multiple: one pressed fill glides between options, or each fades in on its own and neighbours join, as in a formatting toolbar.",
+   "descricao": "Uma fileira de botões de alternância, única ou múltipla, como numa barra de formatação.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "input",
+    "toggle",
+    "toolbar",
+    "new"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/toggle-group/toggle-group.tsx",
+    "registry/components/toggle-group/toggle-group.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/toggle-group/toggle-group.tsx",
+    "registry/components/toggle-group/toggle-group.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "token-swap",
+   "title": "Token swap",
+   "description": "Play-money swap card: two amount fields with token pickers that trade places when flipped, live rate and fee rows, and a pending then confirmed state.",
+   "descricao": "Cartão de troca de tokens com dois campos que trocam de lugar ao inverter, taxa e custos ao vivo e confirmação animada (dados fictícios).",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [
+    "swap",
+    "tokens",
+    "finance",
+    "form"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react",
+    "@radix-ui/react-dropdown-menu"
+   ],
+   "requires": [],
+   "files": [
+    "registry/blocks/token-swap/token-swap.tsx",
+    "registry/blocks/token-swap/token-swap.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/token-swap/token-swap.tsx",
+    "registry/blocks/token-swap/token-swap.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "tool-approval",
+   "title": "Tool approval",
+   "description": "A compact inline request to run a tool, with its arguments and allow once, always allow or deny, that collapses into a one-line result once decided.",
+   "descricao": "Pedido compacto para rodar uma ferramenta: permita uma vez, sempre ou negue, e ele se recolhe em uma linha de resultado.",
+   "kind": "component",
+   "category": "ai",
+   "tags": [
+    "ai",
+    "agent",
+    "tool",
+    "permission"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/tool-approval/tool-approval.tsx",
+    "registry/components/tool-approval/tool-approval.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/tool-approval/tool-approval.tsx",
+    "registry/components/tool-approval/tool-approval.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "tool-result",
+   "title": "Tool result",
+   "description": "A collapsible record of a tool call that shows its status, a live or final duration, and formatted input and output that expand with a height spring.",
+   "descricao": "Registro recolhível de uma chamada de ferramenta, com status, duração e a entrada e a saída formatadas.",
+   "kind": "component",
+   "category": "ai",
+   "tags": [
+    "ai",
+    "agent",
+    "tool",
+    "log"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/tool-result/tool-result.tsx",
+    "registry/components/tool-result/tool-result.module.css",
+    "lib/use-copy-feedback.ts"
+   ],
+   "ownFiles": [
+    "registry/components/tool-result/tool-result.tsx",
+    "registry/components/tool-result/tool-result.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "tooltip",
+   "title": "Tooltip",
+   "description": "Short supporting text for unfamiliar controls.",
+   "descricao": "Texto curto de apoio para controles pouco familiares.",
+   "kind": "component",
+   "category": "disclosure",
+   "tags": [
+    "hint",
+    "overlay"
+   ],
+   "dependencies": [
+    "@radix-ui/react-tooltip",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/tooltip/tooltip.tsx",
+    "registry/components/tooltip/tooltip.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/tooltip/tooltip.tsx",
+    "registry/components/tooltip/tooltip.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "tree-table",
+   "title": "Tree table",
+   "description": "A table with nested rows, tri-state selection, hierarchy-preserving sort, and lazy-loaded children.",
+   "descricao": "Tabela com linhas aninhadas, seleção em três estados, ordenação que preserva a hierarquia e carga sob demanda.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "data",
+    "new"
+   ],
+   "dependencies": [
+    "@radix-ui/react-checkbox",
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [
+    "checkbox"
+   ],
+   "files": [
+    "registry/components/tree-table/tree-table.tsx",
+    "registry/components/tree-table/tree-table.module.css",
+    "registry/components/checkbox/checkbox.tsx",
+    "registry/components/checkbox/checkbox.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/tree-table/tree-table.tsx",
+    "registry/components/tree-table/tree-table.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "tree-view",
+   "title": "Tree view",
+   "description": "Navigate nested folders and structured content.",
+   "descricao": "Árvore de navegação para pastas e conteúdo aninhado, com suporte completo ao teclado.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "data",
+    "navigation"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/tree-view/tree-view.tsx",
+    "registry/components/tree-view/tree-view.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/tree-view/tree-view.tsx",
+    "registry/components/tree-view/tree-view.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "treemap",
+   "title": "Treemap",
+   "description": "A squarified treemap: click to drill and the tiles grow to fill the view, with a breadcrumb back and metrics that morph every tile.",
+   "descricao": "Mapa de árvore em blocos: clique para detalhar e os blocos crescem até preencher a vista.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "data",
+    "chart",
+    "new"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/treemap/treemap.tsx",
+    "registry/components/treemap/treemap.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/treemap/treemap.tsx",
+    "registry/components/treemap/treemap.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "usage-meter",
+   "title": "Usage meter",
+   "description": "Show what fills an allowance and how close it is to the limit.",
+   "descricao": "Medidor de consumo dividido em partes, com alerta quando o uso se aproxima ou passa do limite do plano.",
+   "kind": "component",
+   "category": "feedback",
+   "tags": [
+    "meter",
+    "usage",
+    "storage"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/usage-meter/usage-meter.tsx",
+    "registry/components/usage-meter/usage-meter.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/usage-meter/usage-meter.tsx",
+    "registry/components/usage-meter/usage-meter.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "user-menu",
+   "title": "User menu",
+   "description": "Your account, settings, theme, and sign out behind the avatar. Opens as a bottom sheet on phones.",
+   "descricao": "Conta, ajustes, tema e sair atrás do avatar; no celular abre como painel inferior.",
+   "kind": "component",
+   "category": "actions",
+   "tags": [
+    "motion",
+    "product"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/user-menu/user-menu.tsx",
+    "registry/components/user-menu/user-menu.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/user-menu/user-menu.tsx",
+    "registry/components/user-menu/user-menu.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "voice-orb",
+   "title": "Voice orb",
+   "description": "A voice assistant orb with idle, listening, thinking and speaking states whose rings and waveform bars follow a live level value.",
+   "descricao": "Orbe de assistente de voz que mostra quando ele escuta, pensa ou fala, com anéis e barras que acompanham o volume.",
+   "kind": "component",
+   "category": "ai",
+   "tags": [
+    "ai",
+    "voice",
+    "audio",
+    "status"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/voice-orb/voice-orb.tsx",
+    "registry/components/voice-orb/voice-orb.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/voice-orb/voice-orb.tsx",
+    "registry/components/voice-orb/voice-orb.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "volume-profile",
+   "title": "Volume profile",
+   "description": "Horizontal histogram of volume by price level beside a price line: bars grow outward from the point of control, which is highlighted along with the value area.",
+   "descricao": "Histograma horizontal do volume em cada faixa de preço, ao lado da linha de preço, com o ponto de controle em destaque.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "chart",
+    "finance",
+    "histogram",
+    "volume"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/volume-profile/volume-profile.tsx",
+    "registry/components/volume-profile/volume-profile.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/volume-profile/volume-profile.tsx",
+    "registry/components/volume-profile/volume-profile.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "waffle-chart",
+   "title": "Waffle chart",
+   "description": "A ten by ten unit chart where every cell is one percent, and cells fly to their new group when the data changes.",
+   "descricao": "Gráfico de unidades 10 por 10 em que cada célula vale um por cento e voa para o novo grupo quando os dados mudam.",
+   "kind": "component",
+   "category": "data",
+   "tags": [
+    "data",
+    "chart",
+    "new"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/waffle-chart/waffle-chart.tsx",
+    "registry/components/waffle-chart/waffle-chart.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/waffle-chart/waffle-chart.tsx",
+    "registry/components/waffle-chart/waffle-chart.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "wallet-card",
+   "title": "Wallet card",
+   "description": "A payment card that leans toward the pointer in 3D and flips on a spring to show its back, with a balance that masks digit by digit and a short transaction list.",
+   "descricao": "Cartão de pagamento que inclina em 3D e vira para mostrar o verso, com saldo que pode ser ocultado e últimas transações.",
+   "kind": "block",
+   "category": "blocks",
+   "tags": [
+    "card",
+    "payment",
+    "3d",
+    "flip",
+    "finance"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/blocks/wallet-card/wallet-card.tsx",
+    "registry/blocks/wallet-card/wallet-card.module.css"
+   ],
+   "ownFiles": [
+    "registry/blocks/wallet-card/wallet-card.tsx",
+    "registry/blocks/wallet-card/wallet-card.module.css"
+   ],
+   "hasDemo": true
+  },
+  {
+   "name": "wheel-picker",
+   "title": "Wheel picker",
+   "description": "A vertical wheel picker with snap and drag momentum, like a phone time picker, with several columns, disabled options and full keyboard support.",
+   "descricao": "Seletor de roda como o de hora do celular: arraste, solte com impulso e ele encaixa na opção; aceita várias colunas e teclado.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "picker",
+    "time",
+    "wheel",
+    "drag",
+    "listbox"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/wheel-picker/wheel-picker.tsx",
+    "registry/components/wheel-picker/wheel-picker.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/wheel-picker/wheel-picker.tsx",
+    "registry/components/wheel-picker/wheel-picker.module.css"
+   ],
+   "hasDemo": true
+  }
+ ]
+}

@@ -1,0 +1,6 @@
+.preview { display: flex; min-height: 100vh; min-height: 100dvh; flex-direction: column; background: var(--background); }
+.preview[data-layout="center"] { align-items: center; justify-content: center; padding: var(--space-8) var(--space-6); }
+.preview[data-layout="fill"] { align-items: stretch; }
+.message { display: grid; min-height: 60vh; place-content: center; gap: var(--space-3); padding: var(--space-6); color: var(--text-secondary); text-align: center; }
+.message p { margin: 0; }
+.message pre { max-width: 70ch; margin: 0; overflow: auto; color: var(--danger); font-size: var(--text-xs); white-space: pre-wrap; }

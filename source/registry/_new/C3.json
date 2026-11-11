@@ -1,0 +1,297 @@
+[
+  {
+    "name": "loader",
+    "type": "registry:ui",
+    "title": "Loader",
+    "description": "A family of five loaders (spinner, dots, bars, pulse ring, orbit) in three sizes that share one box, color and accessible label.",
+    "categories": [
+      "feedback"
+    ],
+    "dependencies": [],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/components/loader/loader.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/loader/loader.tsx"
+      },
+      {
+        "path": "registry/components/loader/loader.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/loader/loader.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "loading",
+        "spinner",
+        "progress",
+        "status"
+      ]
+    }
+  },
+  {
+    "name": "collapsible",
+    "type": "registry:ui",
+    "title": "Collapsible",
+    "description": "One region that opens in place: the height follows on a spring, the content fades in from a small blur and the chevron turns; controlled or uncontrolled.",
+    "categories": [
+      "disclosure"
+    ],
+    "dependencies": [
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/collapsible/collapsible.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/collapsible/collapsible.tsx"
+      },
+      {
+        "path": "registry/components/collapsible/collapsible.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/collapsible/collapsible.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "disclosure",
+        "expand",
+        "height",
+        "details"
+      ]
+    }
+  },
+  {
+    "name": "bouncy-accordion",
+    "type": "registry:ui",
+    "title": "Bouncy accordion",
+    "description": "An accordion whose open item detaches from its neighbors: the gaps widen and the facing corners round off with a small bounce.",
+    "categories": [
+      "disclosure"
+    ],
+    "dependencies": [
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/bouncy-accordion/bouncy-accordion.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/bouncy-accordion/bouncy-accordion.tsx"
+      },
+      {
+        "path": "registry/components/bouncy-accordion/bouncy-accordion.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/bouncy-accordion/bouncy-accordion.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "accordion",
+        "faq",
+        "disclosure",
+        "spring"
+      ]
+    }
+  },
+  {
+    "name": "scroll-reveal",
+    "type": "registry:ui",
+    "title": "Scroll reveal",
+    "description": "A wrapper that reveals its children as they enter the viewport (fade, slide, scale or blur) with stagger and once or repeat modes, plus a scroll progress bar.",
+    "categories": [
+      "special"
+    ],
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/scroll-reveal/scroll-reveal.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/scroll-reveal/scroll-reveal.tsx"
+      },
+      {
+        "path": "registry/components/scroll-reveal/scroll-reveal.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/scroll-reveal/scroll-reveal.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "scroll",
+        "viewport",
+        "entrance",
+        "stagger",
+        "progress"
+      ]
+    }
+  },
+  {
+    "name": "morphing-modal",
+    "type": "registry:ui",
+    "title": "Morphing modal",
+    "description": "A trigger button that morphs into the modal panel from its own position, size and color, and back on close, with a focus trap, Escape and a scrim.",
+    "categories": [
+      "disclosure"
+    ],
+    "dependencies": [
+      "@radix-ui/react-dialog",
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/morphing-modal/morphing-modal.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/morphing-modal/morphing-modal.tsx"
+      },
+      {
+        "path": "registry/components/morphing-modal/morphing-modal.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/morphing-modal/morphing-modal.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "modal",
+        "dialog",
+        "shared layout",
+        "morph",
+        "overlay"
+      ]
+    }
+  },
+  {
+    "name": "center-morph-modal",
+    "type": "registry:ui",
+    "title": "Center morph modal",
+    "description": "A grid of cards in which the chosen card morphs into a centered modal: its box, icon and title travel while the summary crossfades to the expanded content.",
+    "categories": [
+      "disclosure"
+    ],
+    "dependencies": [
+      "@radix-ui/react-dialog",
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/center-morph-modal/center-morph-modal.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/center-morph-modal/center-morph-modal.tsx"
+      },
+      {
+        "path": "registry/components/center-morph-modal/center-morph-modal.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/center-morph-modal/center-morph-modal.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "modal",
+        "card",
+        "grid",
+        "shared layout",
+        "morph"
+      ]
+    }
+  },
+  {
+    "name": "shader-background",
+    "type": "registry:ui",
+    "title": "Shader background",
+    "description": "An animated WebGL backdrop: a flowing noise field tinted with the accent that pauses off screen, holds still under reduced motion and falls back to a flat surface.",
+    "categories": [
+      "special"
+    ],
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/components/shader-background/shader-background.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/shader-background/shader-background.tsx"
+      },
+      {
+        "path": "registry/components/shader-background/shader-background.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/shader-background/shader-background.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "background",
+        "canvas",
+        "webgl",
+        "shader",
+        "noise",
+        "hero"
+      ]
+    }
+  },
+  {
+    "name": "cylinder-carousel",
+    "type": "registry:ui",
+    "title": "Cylinder carousel",
+    "description": "Cards placed around a 3D cylinder that turns by drag, arrows and keys, snaps to the nearest card and dims the cards that turn away.",
+    "categories": [
+      "data"
+    ],
+    "dependencies": [
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/cylinder-carousel/cylinder-carousel.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/cylinder-carousel/cylinder-carousel.tsx"
+      },
+      {
+        "path": "registry/components/cylinder-carousel/cylinder-carousel.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/cylinder-carousel/cylinder-carousel.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "carousel",
+        "3d",
+        "perspective",
+        "drag",
+        "gallery"
+      ]
+    }
+  }
+]

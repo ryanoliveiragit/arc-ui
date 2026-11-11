@@ -1,0 +1,55 @@
+.root { --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace; --tool-tone: var(--success); width: 100%; min-width: 0; box-sizing: border-box; overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius-control); background: var(--surface); color: var(--foreground); font-family: var(--font-body); letter-spacing: var(--tracking-body); text-align: left; transition: border-color var(--duration-standard) var(--ease-standard), box-shadow var(--duration-standard) var(--ease-standard); }
+.root[data-status="error"] { --tool-tone: var(--danger); }
+.root[data-open] { border-color: var(--border-strong); box-shadow: var(--shadow-resting); }
+
+.header { display: flex; width: 100%; min-height: 42px; box-sizing: border-box; align-items: center; gap: var(--space-2); padding: 0 var(--space-3); border: 0; background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background-color var(--duration-fast) var(--ease-standard); }
+.header:focus-visible { --focus-outline-offset: -3px; border-radius: var(--radius-control); }
+@media (hover: hover) and (pointer: fine) { .header:hover { background: color-mix(in oklab, var(--surface-muted) 55%, transparent); } }
+.state { position: relative; display: grid; width: 20px; height: 20px; flex: none; place-items: center; }
+.spinner, .badge { display: grid; grid-area: 1 / 1; box-sizing: border-box; place-items: center; border-radius: var(--radius-pill); }
+.spinner { width: 16px; height: 16px; border: 2px solid var(--accent-subtle); border-top-color: var(--accent-strong); animation: tool-spin .8s linear infinite; }
+.badge { width: 20px; height: 20px; background: color-mix(in oklab, var(--tool-tone) 16%, transparent); color: var(--tool-tone); }
+.badge svg { display: block; width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.tool { flex: none; max-width: 55%; overflow: hidden; font-family: var(--mono); font-size: var(--text-sm); font-weight: 500; letter-spacing: 0; text-overflow: ellipsis; white-space: nowrap; }
+.summary { min-width: 0; flex: 1; overflow: hidden; color: var(--text-muted); font-size: var(--text-sm); text-overflow: ellipsis; white-space: nowrap; }
+.duration { flex: none; color: var(--text-secondary); font-size: var(--text-xs); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.root[data-status="running"] .duration { color: var(--accent-strong); }
+.chevron { flex: none; color: var(--text-muted); transition: rotate var(--duration-spring) var(--ease-spring); }
+.header[aria-expanded="false"] .chevron { rotate: -90deg; }
+
+.region { overflow: hidden; }
+.sections { display: grid; gap: var(--space-3); padding: var(--space-1) var(--space-3) var(--space-3); }
+.section { display: grid; min-width: 0; gap: 6px; }
+.sectionHead { display: flex; min-height: 24px; align-items: center; justify-content: space-between; gap: var(--space-2); }
+.sectionLabel { color: var(--text-muted); font-size: var(--text-xs); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+.section[data-tone="error"] .sectionLabel { color: var(--danger); }
+.copy { position: relative; display: grid; width: 24px; height: 24px; flex: none; padding: 0; place-items: center; border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--text-muted); cursor: pointer; -webkit-tap-highlight-color: transparent; transition: scale var(--duration-spring) var(--ease-spring), background-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard); }
+.copy:active { scale: .88; transition-duration: var(--duration-instant); }
+.copy[data-done] { color: var(--success); }
+.copyGlyph { display: grid; grid-area: 1 / 1; place-items: center; }
+@media (hover: hover) and (pointer: fine) { .copy:hover { background: var(--surface-muted); color: var(--foreground); } .copy[data-done]:hover { color: var(--success); } }
+.code { max-height: 15rem; margin: 0; padding: var(--space-3); overflow: auto; border-radius: 12px; background: var(--surface-muted); color: var(--foreground); font-family: var(--mono); font-size: var(--text-xs); line-height: 1.65; letter-spacing: 0; white-space: pre-wrap; overflow-wrap: anywhere; tab-size: 2; scrollbar-width: thin; }
+.code:focus-visible { --focus-outline-offset: -2px; }
+.code code { font: inherit; }
+.section[data-tone="error"] .code { background: color-mix(in oklab, var(--danger) 9%, var(--surface)); color: var(--danger); }
+/* Code tones come from the categorical palette, which is tuned for text in both themes. */
+.key { color: var(--tone-sky); }
+.string { color: var(--tone-green); }
+.number { color: var(--tone-amber); }
+.literal { color: var(--tone-violet); }
+
+/* Placeholder lines while the call runs. Functional gradient: a skeleton shimmer. */
+.waiting { display: grid; gap: 8px; padding: var(--space-3); border-radius: 12px; background: var(--surface-muted); }
+.waiting span { display: block; height: 9px; border-radius: var(--radius-pill); background: linear-gradient(100deg, var(--border) 30%, var(--border-strong) 50%, var(--border) 70%) 0 0 / 300% 100%; animation: tool-shimmer 1.5s linear infinite; }
+.waiting span:nth-child(1) { width: 72%; }
+.waiting span:nth-child(2) { width: 54%; animation-delay: .12s; }
+.waiting span:nth-child(3) { width: 38%; animation-delay: .24s; }
+.srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+@keyframes tool-spin { to { rotate: 360deg; } }
+@keyframes tool-shimmer { from { background-position: 100% 0; } to { background-position: -50% 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .root, .header, .chevron, .copy { transition: none; }
+  .copy:active { scale: none; }
+  .spinner, .waiting span { animation: none; }
+}

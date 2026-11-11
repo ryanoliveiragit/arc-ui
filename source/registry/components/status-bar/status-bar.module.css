@@ -1,0 +1,70 @@
+/* Each state takes a status token. Override --status-* on any ancestor to rebrand the strip. */
+.root { --status-operational: var(--success); --status-degraded: var(--warning); --status-outage: var(--danger); --status-maintenance: var(--info); --status-unknown: color-mix(in oklab, var(--foreground) 14%, var(--surface)); --bar-height: 36px; container-type: inline-size; position: relative; display: grid; min-width: 0; gap: var(--space-4); color: var(--foreground); font-family: var(--font-body); }
+.header { display: flex; min-width: 0; align-items: flex-end; justify-content: space-between; gap: var(--space-4); }
+.service { display: grid; min-width: 0; gap: var(--space-1); }
+.name { overflow: hidden; font-family: var(--font-display); font-size: var(--text-lg); font-weight: 600; letter-spacing: var(--tracking-display); line-height: 1.2; text-overflow: ellipsis; white-space: nowrap; }
+.state { --tone: var(--status-operational); display: inline-flex; min-width: 0; align-items: center; gap: var(--space-2); color: var(--text-secondary); font-size: var(--text-sm); line-height: var(--leading-body); }
+.state[data-status="degraded"], .key[data-status="degraded"], .tipState[data-status="degraded"] { --tone: var(--status-degraded); }
+.state[data-status="outage"], .key[data-status="outage"], .tipState[data-status="outage"] { --tone: var(--status-outage); }
+.state[data-status="maintenance"], .key[data-status="maintenance"], .tipState[data-status="maintenance"] { --tone: var(--status-maintenance); }
+.state[data-status="unknown"], .key[data-status="unknown"], .tipState[data-status="unknown"] { --tone: var(--status-unknown); }
+.stateText { position: relative; display: inline-flex; min-width: 0; }
+.stateLine { display: inline-block; white-space: nowrap; }
+/* The live dot breathes: a ring grows out of it and fades, on transform and opacity only. */
+.dot { position: relative; width: 8px; height: 8px; flex: none; border-radius: var(--radius-pill); background: var(--tone); }
+.dot::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--tone); animation: status-bar-pulse 2.2s var(--ease-standard) infinite; }
+@keyframes status-bar-pulse { 0% { opacity: .55; transform: scale(1); } 70%, 100% { opacity: 0; transform: scale(2.8); } }
+.overall { display: grid; flex: none; justify-items: end; gap: 2px; margin: 0; }
+.percent { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 600; letter-spacing: var(--tracking-display); line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.sign { margin-left: 1px; color: var(--text-muted); font-size: .62em; font-weight: 500; }
+.period { color: var(--text-muted); font-size: var(--text-xs); line-height: var(--leading-body); white-space: nowrap; }
+
+.track { display: grid; min-width: 0; gap: var(--space-2); }
+/* The strip reads the pointer as a position, not as a target, so the hairline gaps between bars never drop the tooltip. */
+.strip { --active: -99; --gap: clamp(1px, .42cqi, 3px); display: flex; min-width: 0; align-items: flex-end; gap: var(--gap); padding-top: 14px; touch-action: pan-y; cursor: default; }
+.bar { --d: max(calc(var(--i) - var(--active)), calc(var(--active) - var(--i))); --tone: var(--status-operational); position: relative; display: block; min-width: 0; height: calc(var(--bar-height) + 8px); flex: 1 1 0; padding: 0; border: 0; border-radius: 3px; background: transparent; cursor: pointer; --focus-outline-offset: 1px; -webkit-tap-highlight-color: transparent; }
+.bar[data-status="degraded"] { --tone: var(--status-degraded); }
+.bar[data-status="outage"] { --tone: var(--status-outage); }
+.bar[data-status="maintenance"] { --tone: var(--status-maintenance); }
+.bar[data-status="unknown"] { --tone: var(--status-unknown); }
+/* The visible bar. It lifts with its neighbours around the active day: full height at the day, fading out three bars away. */
+.bar::before { content: ""; display: block; height: var(--bar-height); border-radius: var(--radius-pill); background: var(--tone); transform-origin: 50% 100%; transform: scaleY(calc(1 + .34 * max(0, 1 - var(--d) / 3))); transition: transform 320ms var(--ease-spring), opacity var(--duration-fast) var(--ease-standard), background-color var(--duration-standard) var(--ease-standard); }
+/* The selected day keeps a small marker under its bar. */
+.bar::after { content: ""; position: absolute; bottom: 0; left: 50%; width: 4px; height: 4px; margin-left: -2px; border-radius: var(--radius-pill); background: var(--foreground); opacity: 0; transform: scale(0); transition: transform var(--duration-standard) var(--ease-spring), opacity var(--duration-fast) var(--ease-standard); }
+.bar[aria-pressed="true"]::after { opacity: 1; transform: scale(1); }
+.strip[data-reveal="hidden"] .bar::before { opacity: 0; transform: scaleY(0); transition: none; }
+.strip[data-reveal="revealing"] .bar::before { transition: transform var(--duration-spring) var(--ease-spring) calc(var(--i) * var(--step)), opacity 300ms var(--ease-enter) calc(var(--i) * var(--step)); }
+.strip[data-highlight] .bar::before { opacity: .22; }
+.strip[data-highlight="operational"] .bar[data-status="operational"]::before, .strip[data-highlight="degraded"] .bar[data-status="degraded"]::before, .strip[data-highlight="outage"] .bar[data-status="outage"]::before, .strip[data-highlight="maintenance"] .bar[data-status="maintenance"]::before, .strip[data-highlight="unknown"] .bar[data-status="unknown"]::before { opacity: 1; }
+.axis { display: flex; align-items: center; gap: var(--space-3); color: var(--text-muted); font-size: var(--text-xs); line-height: 1; white-space: nowrap; }
+.rule { height: 1px; flex: 1; background: var(--border); }
+
+.legend { display: flex; min-width: 0; flex-wrap: wrap; gap: var(--space-1) var(--space-2); margin: 0 calc(var(--space-2) * -1); }
+.key { --tone: var(--status-operational); display: inline-flex; align-items: center; gap: var(--space-2); min-height: 28px; padding: 0 var(--space-2); border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--text-secondary); font: inherit; font-size: var(--text-xs); line-height: 1; cursor: pointer; transition: background-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard); -webkit-tap-highlight-color: transparent; }
+.key[aria-pressed="true"] { background: var(--surface-muted); color: var(--foreground); }
+@media (hover: hover) and (pointer: fine) { .key:hover { background: var(--surface-muted); color: var(--foreground); } }
+.swatch { width: 8px; height: 8px; flex: none; border-radius: 3px; background: var(--tone); }
+.count { color: var(--text-muted); font-variant-numeric: tabular-nums; }
+
+/* One bubble for the whole strip. The outer layer glides between days; the bubble fades and scales from its foot. */
+.tip { position: absolute; z-index: 5; top: 0; left: 0; width: 0; height: 0; pointer-events: none; }
+.tipShift { position: absolute; top: 0; left: 0; width: 0; height: 0; }
+.bubble { position: absolute; bottom: 6px; left: 0; display: grid; width: max-content; max-width: min(260px, 92cqi); gap: 3px; margin-left: 0; padding: 9px 12px 10px; border: 1px solid var(--border-strong); border-radius: var(--radius-control); background: var(--surface-raised); box-shadow: var(--shadow-raised); translate: -50% 0; transform-origin: 50% 100%; will-change: transform, opacity; }
+.tipDate { color: var(--text-muted); font-size: var(--text-xs); line-height: 1.3; white-space: nowrap; }
+.tipState { --tone: var(--status-operational); display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-sm); font-weight: 500; line-height: 1.3; white-space: nowrap; }
+.tipValue { margin-left: auto; padding-left: var(--space-3); color: var(--text-secondary); font-weight: 400; font-variant-numeric: tabular-nums; }
+.tipNote { color: var(--text-secondary); font-size: var(--text-xs); line-height: 1.35; text-wrap: pretty; }
+
+.srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+@container (max-width: 380px) {
+  .header { align-items: flex-start; }
+  .percent { font-size: var(--text-xl); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot::after { animation: none; opacity: 0; }
+  .bar::before, .strip[data-reveal="revealing"] .bar::before { transform: none; transition: opacity var(--duration-fast) var(--ease-standard); }
+  .strip[data-reveal="hidden"] .bar::before { transform: none; }
+  .bar::after { transition: none; }
+}

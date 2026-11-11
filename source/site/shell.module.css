@@ -1,0 +1,7 @@
+.app { display: grid; min-height: 100dvh; grid-template-rows: auto minmax(0, 1fr) auto; }
+.content { min-width: 0; }
+
+.notFound { max-width: var(--site-max); margin: 0 auto; padding: var(--space-16) var(--site-gutter) var(--space-24); }
+.notFoundLink { display: inline-block; border-radius: var(--radius-control); padding: var(--space-2) var(--space-5); color: var(--accent-foreground); background: var(--accent); font-weight: 600; text-decoration: none; transition: background var(--duration-fast) var(--ease-standard); }
+@media (hover: hover) and (pointer: fine) { .notFoundLink:hover { background: var(--accent-strong); } }
+@media (prefers-reduced-motion: reduce) { .notFoundLink { transition: none; } }

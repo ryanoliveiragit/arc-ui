@@ -1,4 +1,0 @@
-function(__module,__exports,__require){
-"use strict";
-var __m=(e=>{e.exports={trigger:"dropdown-menu_trigger__tHHfW",item:"dropdown-menu_item__2mM29",triggerIcon:"dropdown-menu_triggerIcon__ePoI_",label:"dropdown-menu_label__E6np5",labelMeasure:"dropdown-menu_labelMeasure__xGL22",labelText:"dropdown-menu_labelText__77jcs",chevron:"dropdown-menu_chevron__4EgVP",menu:"dropdown-menu_menu__N7a5H","menu-exit":"dropdown-menu_menu-exit__njtoa",highlight:"dropdown-menu_highlight___o21W",icon:"dropdown-menu_icon__HqlVs",separator:"dropdown-menu_separator__hTmo3",destructive:"dropdown-menu_destructive__sBler"}});if(typeof __m==="function"){__m(__module,__exports,__require);}else{__module.exports=__m;}
-}

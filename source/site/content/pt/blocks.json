@@ -1,0 +1,23 @@
+{
+  "blog-grid": "Índice de blog com post em destaque, filtro por categoria, cartões, paginação e leitor no próprio lugar.",
+  "login-centered": "Cartão de login centralizado, com passkey em primeiro lugar, que muda de e-mail para código sem trocar de tela.",
+  "changelog-feed": "Linha do tempo de novidades por mês, com versões, tipos de mudança e navegação lateral.",
+  "command-palette": "Paleta de comandos controlada pelo teclado, com busca, resultados agrupados e atalhos.",
+  "comparison-table": "Tabela comparativa com cabeçalho fixo, seções recolhíveis e filtro para ver só as diferenças.",
+  "contact-section": "Seção de contato com formulário, canais e escritórios, em três layouts à escolha.",
+  "empty-states": "Quatro estados vazios numa única ilustração, cujas formas se transformam ao trocar de aba.",
+  "faq-section": "Perguntas frequentes em acordeão, por categoria ou com busca, com um caminho para falar com alguém.",
+  "file-upload": "Envio de arquivos com arrastar e soltar, limite de tamanho, progresso e mensagens de erro.",
+  "hero-section": "Seção de abertura em tela cheia, com vários designs e entrada animada.",
+  "logo-marquee": "Faixa de logos de clientes que desliza sem parar e pausa quando você aponta.",
+  "newsletter-signup": "Cadastro de newsletter em dois layouts, com confirmação e tratamento de erro.",
+  "notification-center": "Central de notificações com estado de lido, avisos agrupados e abertura animada.",
+  "otp-input": "Campo de código de seis dígitos com suporte a colar e navegação pelo teclado.",
+  "page-header": "Cabeçalho de projeto que encolhe numa barra compacta ao rolar, com abas de contagem animada.",
+  "plan-comparison": "Comparação de planos com troca de cobrança mensal ou anual e foco nas diferenças reais.",
+  "sign-in": "Cartão de entrada que passa de e-mail para código de seis dígitos e depois para a sua conta.",
+  "signup-form": "Cadastro com validação por campo, força da senha e um estado de conclusão claro.",
+  "site-footer": "Rodapé de site em três layouts, com colunas de links, redes sociais, newsletter e status.",
+  "site-header": "Cabeçalho de site com menu mega, que ganha fundo ao rolar a página, em três layouts.",
+  "stats-band": "Faixa de números que contam até o valor final, em layout simples ou em cartões."
+}

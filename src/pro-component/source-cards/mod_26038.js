@@ -1,4 +1,0 @@
-function(__module,__exports,__require){
-"use strict";
-var __m=(e=>{e.exports={panel:"source-cards-simulation_panel__fvgwe",questionBox:"source-cards-simulation_questionBox__g8Uws",question:"source-cards-simulation_question__LLg0O",questionText:"source-cards-simulation_questionText__CSee3",body:"source-cards-simulation_body__Gtws9",answer:"source-cards-simulation_answer__2JPTX",chunk:"source-cards-simulation_chunk__zQXUU","sc-chunk":"source-cards-simulation_sc-chunk__XbuYX",code:"source-cards-simulation_code__Nqszp",note:"source-cards-simulation_note__iuHVF",noteText:"source-cards-simulation_noteText__cQk3g"}});if(typeof __m==="function"){__m(__module,__exports,__require);}else{__module.exports=__m;}
-}

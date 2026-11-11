@@ -1,0 +1,219 @@
+[
+  {
+    "name": "sankey-chart",
+    "type": "registry:ui",
+    "title": "Sankey chart",
+    "description": "Flow diagram with nodes in columns joined by curved ribbons sized by value: ribbons draw in column by column, and hovering a node or ribbon dims everything else.",
+    "categories": [
+      "data"
+    ],
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/sankey-chart/sankey-chart.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/sankey-chart/sankey-chart.tsx"
+      },
+      {
+        "path": "registry/components/sankey-chart/sankey-chart.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/sankey-chart/sankey-chart.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "chart",
+        "flow",
+        "sankey",
+        "data-viz"
+      ]
+    }
+  },
+  {
+    "name": "candlestick-chart",
+    "type": "registry:ui",
+    "title": "Candlestick chart",
+    "description": "OHLC candles with wicks in the status colors that grow in from left to right, with a crosshair that snaps to each candle and a tooltip of its open, high, low and close.",
+    "categories": [
+      "data"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/candlestick-chart/candlestick-chart.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/candlestick-chart/candlestick-chart.tsx"
+      },
+      {
+        "path": "registry/components/candlestick-chart/candlestick-chart.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/candlestick-chart/candlestick-chart.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "chart",
+        "finance",
+        "ohlc",
+        "crosshair"
+      ]
+    }
+  },
+  {
+    "name": "volume-profile",
+    "type": "registry:ui",
+    "title": "Volume profile",
+    "description": "Horizontal histogram of volume by price level beside a price line: bars grow outward from the point of control, which is highlighted along with the value area.",
+    "categories": [
+      "data"
+    ],
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/volume-profile/volume-profile.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/volume-profile/volume-profile.tsx"
+      },
+      {
+        "path": "registry/components/volume-profile/volume-profile.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/volume-profile/volume-profile.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "chart",
+        "finance",
+        "histogram",
+        "volume"
+      ]
+    }
+  },
+  {
+    "name": "funnel-chart",
+    "type": "registry:ui",
+    "title": "Funnel chart",
+    "description": "Conversion funnel with a value per stage and the drop-off percentage between stages: stages grow in one after another and morph when the data changes.",
+    "categories": [
+      "data"
+    ],
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/funnel-chart/funnel-chart.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/funnel-chart/funnel-chart.tsx"
+      },
+      {
+        "path": "registry/components/funnel-chart/funnel-chart.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/funnel-chart/funnel-chart.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "chart",
+        "funnel",
+        "conversion",
+        "data-viz"
+      ]
+    }
+  },
+  {
+    "name": "bump-chart",
+    "type": "registry:ui",
+    "title": "Bump chart",
+    "description": "Ranking over time: lines swap positions between periods, draw in from the first period, and hovering a series brings it forward with its rank at every period.",
+    "categories": [
+      "data"
+    ],
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/bump-chart/bump-chart.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/bump-chart/bump-chart.tsx"
+      },
+      {
+        "path": "registry/components/bump-chart/bump-chart.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/bump-chart/bump-chart.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "chart",
+        "ranking",
+        "time-series",
+        "data-viz"
+      ]
+    }
+  },
+  {
+    "name": "composition-chart",
+    "type": "registry:ui",
+    "title": "Composition chart",
+    "description": "100% stacked bar of the parts of a whole with a legend: segments slide to their new shares when the data changes, and legend rows switch parts off and on.",
+    "categories": [
+      "data"
+    ],
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/composition-chart/composition-chart.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/composition-chart/composition-chart.tsx"
+      },
+      {
+        "path": "registry/components/composition-chart/composition-chart.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/composition-chart/composition-chart.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "chart",
+        "stacked-bar",
+        "proportion",
+        "legend"
+      ]
+    }
+  }
+]

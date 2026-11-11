@@ -1,0 +1,145 @@
+/* The same card as Toast (surface, status circle, close button). The action and the countdown bar along the bottom are the additions. */
+.toast {
+  position: relative;
+  box-sizing: border-box;
+  width: min(100%, 26rem);
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+  background: color-mix(in oklab, var(--surface) 94%, var(--background));
+  color: var(--foreground);
+  font-family: var(--font-body);
+  letter-spacing: var(--tracking-body);
+  text-align: left;
+  box-shadow: var(--shadow-floating);
+  container-type: inline-size;
+  -webkit-tap-highlight-color: transparent;
+}
+/* Clips only while the height follows a change. */
+.frame[data-moving="true"] { overflow: hidden; }
+/* The extra space at the bottom is the lane of the countdown bar. */
+.content { position: relative; display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.875rem 0.875rem 1.125rem 1rem; }
+
+/* Pinned placements match ToastStack: bottom edge of the window, or of the nearest positioned ancestor when contained. */
+.bottom-right, .bottom-center, .bottom-left { position: fixed; z-index: 60; bottom: var(--space-6); width: min(24rem, calc(100% - var(--space-8))); }
+.bottom-right { right: var(--space-6); }
+.bottom-left { left: var(--space-6); }
+.bottom-center { right: 0; left: 0; margin-inline: auto; }
+.contained { position: absolute; z-index: 2; bottom: var(--space-4); }
+.contained.bottom-right { right: var(--space-4); }
+.contained.bottom-left { left: var(--space-4); }
+@media (max-width: 30rem) {
+  .bottom-right:not(.contained), .bottom-left:not(.contained), .bottom-center:not(.contained) { right: 0; bottom: var(--space-4); left: 0; margin-inline: auto; }
+}
+
+/* Neutral while the action is on offer; it takes the success tone once the action is confirmed. */
+.icon {
+  position: relative;
+  display: grid;
+  width: 1.875rem;
+  height: 1.875rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-muted);
+  color: var(--text-secondary);
+  transition: color var(--duration-standard) var(--ease-standard), background-color var(--duration-standard) var(--ease-standard), border-color var(--duration-standard) var(--ease-standard);
+}
+.toast[data-phase="confirmed"] .icon {
+  border-color: color-mix(in oklab, var(--success) 24%, var(--border));
+  background: color-mix(in oklab, var(--success) 10%, var(--surface));
+  color: var(--success);
+}
+.glyph { grid-area: 1 / 1; display: grid; place-items: center; }
+.glyph svg { display: block; }
+
+.copy {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  flex: 1;
+  gap: 0.125rem;
+  /* Centers the title's first line on the 30px status circle. */
+  padding-top: 0.3125rem;
+}
+.title { position: relative; display: block; min-width: 0; font-size: var(--text-sm); font-weight: 500; line-height: var(--leading-body); }
+.line { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.description { display: block; color: var(--text-secondary); font-size: var(--text-sm); line-height: var(--leading-body); }
+
+.actionSlot { display: flex; flex: none; }
+.action, .close {
+  flex: none;
+  border: 0;
+  border-radius: var(--radius-pill);
+  font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: scale var(--duration-spring) var(--ease-spring), background-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard);
+}
+/* The one thing to do here, so it carries the accent fill. */
+.action {
+  height: 1.875rem;
+  padding: 0 0.875rem;
+  background: var(--accent);
+  color: var(--accent-foreground);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: var(--tracking-body);
+  white-space: nowrap;
+}
+.close {
+  display: grid;
+  width: 1.875rem;
+  height: 1.875rem;
+  margin-right: -0.125rem;
+  place-items: center;
+  background: transparent;
+  color: var(--text-muted);
+}
+@media (hover: hover) and (pointer: fine) {
+  .action:hover { background: color-mix(in oklab, var(--accent) 86%, var(--foreground)); }
+  .close:hover { background: var(--surface-muted); color: var(--foreground); }
+}
+/* Quick press, spring release. */
+.action:active, .close:active { scale: 0.96; transition-duration: var(--duration-instant); transition-timing-function: var(--ease-standard); }
+
+/* A rounded lane inside the card instead of an edge strip, so the large corner radius never cuts the bar. The fill moves with a transform only. */
+.timer {
+  position: absolute;
+  right: 1.125rem;
+  bottom: 0.5rem;
+  left: 1.125rem;
+  height: 3px;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: color-mix(in oklab, var(--foreground) 9%, transparent);
+  pointer-events: none;
+  transition: opacity var(--duration-standard) var(--ease-standard);
+}
+.timerFill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent-strong);
+  will-change: transform;
+  transition: opacity var(--duration-standard) var(--ease-standard);
+}
+/* Held: the fill dims so the pause is visible, not only felt. */
+.toast[data-paused="true"] .timerFill { opacity: 0.45; }
+.toast[data-phase="confirmed"] .timer, .toast[data-timed="false"] .timer { opacity: 0; }
+
+/* A narrow toast keeps its copy wide: the copy takes the rest of the first row, so the action wraps under it. */
+@container (max-width: 23rem) {
+  .content { flex-wrap: wrap; row-gap: 0.5rem; }
+  .copy { flex-basis: calc(100% - 1.875rem - 1.875rem - 1.5rem); }
+  .close { order: 1; }
+  /* Padding, not margin: the slot keeps its place when it pops out of the flow to fade. */
+  .actionSlot { order: 2; padding-left: calc(1.875rem + 0.75rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon, .action, .close, .timer, .timerFill { transition: none; }
+  .action:active, .close:active { scale: none; }
+}

@@ -1,0 +1,68 @@
+.root { container-type: inline-size; width: 100%; min-width: 0; overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius-panel); background: var(--surface); color: var(--foreground); box-shadow: var(--shadow-resting); font-family: var(--font-body); font-size: var(--text-sm); letter-spacing: var(--tracking-body); }
+
+.header { display: flex; min-width: 0; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4); background: var(--surface-muted); }
+.root[data-open="true"] .header { border-bottom: 1px solid var(--border); }
+.fileIcon { flex: none; color: var(--text-muted); }
+.names { display: flex; min-width: 0; flex: 1; flex-direction: column; }
+/* When the path does not fit, the directory gives way first and the file name stays whole. */
+.path { display: flex; min-width: 0; font-family: var(--font-mono, ui-monospace, "SF Mono", Menlo, monospace); font-size: var(--text-xs); line-height: 1.5; white-space: nowrap; }
+.directory { min-width: 0; flex: 0 1 auto; overflow: hidden; color: var(--text-muted); text-overflow: ellipsis; }
+.basename { max-width: 100%; flex: 0 0 auto; overflow: hidden; color: var(--foreground); font-weight: 600; text-overflow: ellipsis; }
+.previous { overflow: hidden; color: var(--text-muted); font-size: var(--text-xs); line-height: 1.4; text-overflow: ellipsis; white-space: nowrap; }
+.status { flex: none; padding: 2px var(--space-2); border: 1px solid var(--border); border-radius: var(--radius-pill); color: var(--text-secondary); font-size: var(--text-xs); line-height: 1.4; white-space: nowrap; }
+
+.stats { display: flex; flex: none; align-items: center; gap: var(--space-2); font-family: var(--font-mono, ui-monospace, "SF Mono", Menlo, monospace); font-size: var(--text-xs); font-variant-numeric: tabular-nums; font-weight: 600; }
+.added { color: var(--success); }
+.removed { color: var(--danger); }
+.blocks { display: flex; gap: 2px; }
+/* The five blocks pop in one after another, then stay. */
+.block { width: 8px; height: 8px; border-radius: 2px; background: var(--border-strong); animation: block-in var(--duration-spring) var(--ease-spring) backwards; animation-delay: calc(var(--i) * 45ms + 120ms); }
+.block[data-kind="add"] { background: var(--success); }
+.block[data-kind="remove"] { background: var(--danger); }
+
+.iconButton { display: grid; width: 32px; height: 32px; flex: none; place-items: center; padding: 0; border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--text-secondary); cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard), scale var(--duration-spring) var(--ease-spring); }
+.iconButton:disabled { cursor: default; opacity: .4; }
+.iconButton:active:not(:disabled) { scale: .92; transition-duration: var(--duration-instant); }
+.chevron { transition: rotate var(--duration-spring) var(--ease-spring); }
+.root[data-open="false"] .chevron { rotate: -90deg; }
+@media (hover: hover) and (pointer: fine) { .iconButton:hover:not(:disabled) { background: var(--surface); color: var(--foreground); } }
+
+/* overflow: clip (not hidden) keeps the sticky gutter working while the height animates. */
+.collapse { overflow: clip; }
+.scroller { overflow: auto; overscroll-behavior-x: contain; scrollbar-width: thin; --focus-outline-offset: -2px; border-radius: 0 0 calc(var(--radius-panel) - 1px) calc(var(--radius-panel) - 1px); }
+.lines { width: max-content; min-width: 100%; padding: var(--space-2) 0; font-family: var(--font-mono, ui-monospace, "SF Mono", Menlo, monospace); font-size: var(--text-xs); line-height: 22px; }
+
+/* Row tints are mixed into the surface instead of being transparent, so the sticky gutter can cover the code that scrolls under it. */
+.row { --row: var(--surface); --gutter: var(--surface); display: flex; min-height: 22px; background: var(--row); animation: row-in var(--duration-standard) var(--ease-enter) backwards; animation-delay: calc(var(--i) * 14ms); }
+.row[data-type="add"] { --row: color-mix(in oklab, var(--success) 12%, var(--surface)); --gutter: color-mix(in oklab, var(--success) 20%, var(--surface)); }
+.row[data-type="remove"] { --row: color-mix(in oklab, var(--danger) 11%, var(--surface)); --gutter: color-mix(in oklab, var(--danger) 19%, var(--surface)); }
+.gutter { position: sticky; left: 0; z-index: 1; display: flex; flex: none; background: var(--gutter); color: var(--text-muted); font-variant-numeric: tabular-nums; user-select: none; }
+.no { width: 4ch; padding-right: .5ch; text-align: right; }
+.no:first-child { padding-left: var(--space-2); box-sizing: content-box; }
+.sign { width: 3ch; background: var(--row); color: var(--text-secondary); font-weight: 600; text-align: center; }
+.row[data-type="add"] .no, .row[data-type="add"] .sign { color: var(--success); }
+.row[data-type="remove"] .no, .row[data-type="remove"] .sign { color: var(--danger); }
+.code { flex: 1; padding-right: var(--space-4); color: var(--foreground); font: inherit; white-space: pre; tab-size: 2; }
+.row[data-type="same"] .code { color: var(--text-secondary); }
+.mark { border-radius: 3px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.row[data-type="add"] .mark { background: color-mix(in oklab, var(--success) 30%, transparent); }
+.row[data-type="remove"] .mark { background: color-mix(in oklab, var(--danger) 30%, transparent); }
+
+.fold { display: flex; width: 100%; height: 32px; align-items: center; padding: 0; border: 0; border-block: 1px solid var(--border-subtle); background: var(--surface-muted); color: var(--text-secondary); font-family: var(--font-body); font-size: var(--text-xs); cursor: pointer; -webkit-tap-highlight-color: transparent; --focus-outline-offset: -2px; transition: color var(--duration-fast) var(--ease-standard), background-color var(--duration-fast) var(--ease-standard); }
+/* The label stays in view while the code scrolls sideways. */
+.foldLabel { position: sticky; left: 0; display: inline-flex; align-items: center; gap: var(--space-2); padding-inline: var(--space-4); white-space: nowrap; }
+.foldRange { color: var(--text-muted); font-variant-numeric: tabular-nums; }
+@media (hover: hover) and (pointer: fine) { .fold:hover { background: color-mix(in oklab, var(--accent-strong) 8%, var(--surface-muted)); color: var(--foreground); } }
+.unfolded { overflow: clip; outline: none; }
+.empty { margin: 0; padding: var(--space-4); color: var(--text-muted); font-family: var(--font-body); }
+.srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+@container (max-width: 26rem) { .blocks { display: none; } .header { padding-left: var(--space-3); } }
+
+@keyframes row-in { from { opacity: 0; transform: translateY(4px); } }
+@keyframes block-in { from { opacity: 0; transform: scale(.3); } }
+@media (prefers-reduced-motion: reduce) {
+  .row, .block { animation: none; }
+  .iconButton, .chevron, .fold { transition: none; }
+  .iconButton:active:not(:disabled) { scale: none; }
+}

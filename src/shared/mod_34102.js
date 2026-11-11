@@ -1,4 +1,0 @@
-function(__module,__exports,__require){
-"use strict";
-var __m=(e=>{e.exports={surface:"swipe-actions_surface__D4_RO",list:"swipe-actions_list__z7d4P",row:"swipe-actions_row__3bMmE",content:"swipe-actions_content__kIMek",body:"swipe-actions_body__mmafj",more:"swipe-actions_more__Qm5of",layer:"swipe-actions_layer__2YfhD",anchor:"swipe-actions_anchor__cEL0x",glyph:"swipe-actions_glyph__pyQCi",icon:"swipe-actions_icon__16FOn",label:"swipe-actions_label__IC5KI",menu:"swipe-actions_menu__gMWu9","menu-fade-in":"swipe-actions_menu-fade-in__POQTm","menu-rise-in":"swipe-actions_menu-rise-in__PpIWi","menu-out":"swipe-actions_menu-out__s6std",item:"swipe-actions_item__HiOwa","menu-item-in":"swipe-actions_menu-item-in__1A5HA",itemIcon:"swipe-actions_itemIcon__I3wmj","menu-fade-out":"swipe-actions_menu-fade-out__MSuZk"}});if(typeof __m==="function"){__m(__module,__exports,__require);}else{__module.exports=__m;}
-}

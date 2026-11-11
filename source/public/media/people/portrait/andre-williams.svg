@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000" role="img" aria-label="">
+<defs>
+<linearGradient id="g" gradientTransform="rotate(171 .5 .5)"><stop offset="0" stop-color="oklch(78% 0.13 99.75)"/><stop offset="1" stop-color="oklch(62% 0.17 166.98)"/></linearGradient>
+<radialGradient id="h" cx="42.65%" cy="55.28%" r="65%"><stop offset="0" stop-color="oklch(93% 0.07 66.13)" stop-opacity=".85"/><stop offset="1" stop-color="oklch(93% 0.07 66.13)" stop-opacity="0"/></radialGradient>
+<radialGradient id="s" cx="57.35%" cy="72.36%" r="60%"><stop offset="0" stop-color="oklch(45% 0.16 193.88)" stop-opacity=".55"/><stop offset="1" stop-color="oklch(45% 0.16 193.88)" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="800" height="1000" fill="url(#g)"/><rect width="800" height="1000" fill="url(#s)"/><rect width="800" height="1000" fill="url(#h)"/>
+</svg>

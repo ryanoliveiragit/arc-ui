@@ -1,0 +1,327 @@
+[
+  {
+    "name": "aspect-ratio",
+    "type": "registry:ui",
+    "title": "Aspect ratio",
+    "description": "A box that holds a width to height ratio and springs to a new one when it changes, keeping the media inside covered.",
+    "categories": [
+      "data"
+    ],
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/aspect-ratio/aspect-ratio.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/aspect-ratio/aspect-ratio.tsx"
+      },
+      {
+        "path": "registry/components/aspect-ratio/aspect-ratio.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/aspect-ratio/aspect-ratio.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "layout",
+        "media",
+        "ratio",
+        "image"
+      ]
+    }
+  },
+  {
+    "name": "arc-picker",
+    "type": "registry:ui",
+    "title": "Arc picker",
+    "description": "A radial text picker: options sit on an arc, the wheel, a drag or the arrow keys turn the dial, and one bracket frame resizes around the active label.",
+    "categories": [
+      "inputs"
+    ],
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/arc-picker/arc-picker.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/arc-picker/arc-picker.tsx"
+      },
+      {
+        "path": "registry/components/arc-picker/arc-picker.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/arc-picker/arc-picker.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "picker",
+        "radial",
+        "dial",
+        "listbox",
+        "drag"
+      ]
+    }
+  },
+  {
+    "name": "wheel-picker",
+    "type": "registry:ui",
+    "title": "Wheel picker",
+    "description": "A vertical wheel picker with snap and drag momentum, like a phone time picker, with several columns, disabled options and full keyboard support.",
+    "categories": [
+      "inputs"
+    ],
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/wheel-picker/wheel-picker.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/wheel-picker/wheel-picker.tsx"
+      },
+      {
+        "path": "registry/components/wheel-picker/wheel-picker.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/wheel-picker/wheel-picker.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "picker",
+        "time",
+        "wheel",
+        "drag",
+        "listbox"
+      ]
+    }
+  },
+  {
+    "name": "color-swatches",
+    "type": "registry:ui",
+    "title": "Color swatches",
+    "description": "A radio group of color swatches whose selection ring glides between swatches on a spring, with press feedback.",
+    "categories": [
+      "inputs"
+    ],
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/color-swatches/color-swatches.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/color-swatches/color-swatches.tsx"
+      },
+      {
+        "path": "registry/components/color-swatches/color-swatches.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/color-swatches/color-swatches.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "color",
+        "radio",
+        "picker",
+        "swatch"
+      ]
+    }
+  },
+  {
+    "name": "tilt-card",
+    "type": "registry:ui",
+    "title": "Tilt card",
+    "description": "A card that tilts in 3D toward the cursor with a glare highlight and springs back flat on leave; it stays still on touch and with reduced motion.",
+    "categories": [
+      "data"
+    ],
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/components/tilt-card/tilt-card.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/tilt-card/tilt-card.tsx"
+      },
+      {
+        "path": "registry/components/tilt-card/tilt-card.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/tilt-card/tilt-card.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "card",
+        "3d",
+        "hover",
+        "glare"
+      ]
+    }
+  },
+  {
+    "name": "cta-buttons",
+    "type": "registry:ui",
+    "title": "CTA buttons",
+    "description": "Three call-to-action buttons: an arrow disc that expands to fill the button on hover, a slide-to-confirm thumb, and a magnetic button that leans toward the cursor.",
+    "categories": [
+      "actions"
+    ],
+    "dependencies": [
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/cta-buttons/cta-buttons.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/cta-buttons/cta-buttons.tsx"
+      },
+      {
+        "path": "registry/components/cta-buttons/cta-buttons.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/cta-buttons/cta-buttons.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "button",
+        "cta",
+        "magnetic",
+        "slide",
+        "hover"
+      ]
+    }
+  },
+  {
+    "name": "expandable-control",
+    "type": "registry:ui",
+    "title": "Expandable control",
+    "description": "An icon button or chip that widens on a spring when pressed to reveal its label and an optional trailing action.",
+    "categories": [
+      "actions"
+    ],
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/expandable-control/expandable-control.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/expandable-control/expandable-control.tsx"
+      },
+      {
+        "path": "registry/components/expandable-control/expandable-control.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/expandable-control/expandable-control.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "button",
+        "chip",
+        "expand",
+        "toolbar"
+      ]
+    }
+  },
+  {
+    "name": "adaptive-stepper",
+    "type": "registry:ui",
+    "title": "Adaptive stepper",
+    "description": "A numeric stepper with a fixed footprint: digits roll between values, and the minus or plus button folds away at the minimum or maximum.",
+    "categories": [
+      "inputs"
+    ],
+    "dependencies": [
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/adaptive-stepper/adaptive-stepper.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/adaptive-stepper/adaptive-stepper.tsx"
+      },
+      {
+        "path": "registry/components/adaptive-stepper/adaptive-stepper.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/adaptive-stepper/adaptive-stepper.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "number",
+        "quantity",
+        "stepper",
+        "spinbutton"
+      ]
+    }
+  },
+  {
+    "name": "marquee",
+    "type": "registry:ui",
+    "title": "Marquee",
+    "description": "An infinite horizontal or vertical scroller with speed and direction control, faded edges, and a pause on hover that eases to a stop.",
+    "categories": [
+      "data"
+    ],
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": [],
+    "files": [
+      {
+        "path": "registry/components/marquee/marquee.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/marquee/marquee.tsx"
+      },
+      {
+        "path": "registry/components/marquee/marquee.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/marquee/marquee.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "scroller",
+        "ticker",
+        "logos",
+        "loop"
+      ]
+    }
+  }
+]

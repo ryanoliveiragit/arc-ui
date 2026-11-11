@@ -1,0 +1,8 @@
+.overlay { position: fixed; inset: 0; z-index: 60; background: oklch(0% 0 0 / .32); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); animation: overlay-in var(--duration-standard) var(--ease-enter) both; }
+.overlay[data-state="closed"] { animation: overlay-out var(--duration-fast) var(--ease-standard) both; }
+.content { position: fixed; top: min(14vh, 8rem); left: 50%; z-index: 61; width: min(40rem, calc(100vw - 2 * var(--space-4))); transform: translateX(-50%); outline: none; }
+.content[data-state="closed"] { animation: overlay-out var(--duration-fast) var(--ease-standard) both; }
+.visuallyHidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@keyframes overlay-in { from { opacity: 0; } }
+@keyframes overlay-out { to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .overlay, .content { animation: none; } }

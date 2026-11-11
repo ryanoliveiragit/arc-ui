@@ -1,4 +1,0 @@
-function(__module,__exports,__require){
-"use strict";
-var __m=(e=>{e.exports={figure:"waffle-chart_figure__tpKNJ",body:"waffle-chart_body__jK6cp",board:"waffle-chart_board__P2psQ",grid:"waffle-chart_grid__PoVwn",cell:"waffle-chart_cell__dOvNx",swatch:"waffle-chart_swatch___FPr6",tipSwatch:"waffle-chart_tipSwatch__gJrGB",tooltip:"waffle-chart_tooltip__X_d19",tipRow:"waffle-chart_tipRow__VUtzj",tipName:"waffle-chart_tipName__Z76b_",tipValue:"waffle-chart_tipValue__BGaWc",tipMeta:"waffle-chart_tipMeta__7tEFT",message:"waffle-chart_message__XwMo_",legend:"waffle-chart_legend__bnBEs",item:"waffle-chart_item__Ddbg2",itemLabel:"waffle-chart_itemLabel__FPo1t",itemShare:"waffle-chart_itemShare__eqwk0",srOnly:"waffle-chart_srOnly__xZj_T"}});if(typeof __m==="function"){__m(__module,__exports,__require);}else{__module.exports=__m;}
-}

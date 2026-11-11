@@ -1,0 +1,1 @@
+{"exports":[{"name":"PageHeader","kind":"component","file":"registry/blocks/page-header/page-header.tsx","default":true}],"components":[{"name":"PageHeader","doc":"","props":"PageHeaderProps","defaults":{},"file":"registry/blocks/page-header/page-header.tsx"}],"types":[]}

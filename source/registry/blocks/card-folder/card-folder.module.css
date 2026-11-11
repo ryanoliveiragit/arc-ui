@@ -1,0 +1,56 @@
+.folder {
+  /* Cards further back fade toward this tone: a step darker in the dark theme, a step greyer in the light one. */
+  --far: var(--surface-muted);
+  --tab: 38px;
+  container: folder / inline-size; width: min(30rem, 100%); padding-top: calc(var(--rise) + 4px); color: var(--foreground); font-family: var(--font-body); letter-spacing: var(--tracking-body);
+}
+:global(:root[data-theme="dark"]) .folder { --far: var(--background); }
+.folder *, .folder *::before, .folder *::after { box-sizing: border-box; }
+.srOnly { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+.pile { position: relative; height: calc(var(--tab) + var(--body)); }
+/* Every card fills the pile and is placed by transforms. The tab's slot along the top edge is fixed by tab order, so tabs never swap places. */
+.card { --tone: color-mix(in oklab, var(--surface-raised), var(--far) min(100%, calc(var(--depth) * 36%))); position: absolute; inset: 0; transform-origin: 50% 0; will-change: transform; pointer-events: none; }
+.tab {
+  position: absolute; top: 0; left: calc(var(--radius-panel) + var(--index) * (100% - 2 * var(--radius-panel)) / var(--count)); z-index: 1; display: flex; width: calc((100% - 2 * var(--radius-panel)) / var(--count) - 4px); height: calc(var(--tab) + 1px); align-items: center; justify-content: center; gap: 6px; padding: 4px var(--space-2) 0;
+  border: 1px solid var(--border); border-bottom: 0; border-radius: var(--radius-control) var(--radius-control) 0 0; background: var(--tone); color: var(--text-muted); font: inherit; font-size: var(--text-sm); font-weight: 500; cursor: pointer; pointer-events: auto; -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--duration-standard) var(--ease-standard), color var(--duration-fast) var(--ease-standard);
+}
+.tab:hover { color: var(--foreground); }
+/* The keyboard outline sits inside the tab, so it does not cut across the card below. */
+.tab { --focus-outline-offset: -4px; }
+.tab[aria-selected="true"] { color: var(--foreground); }
+.tabIcon { display: grid; flex: none; place-items: center; }
+.tabLabel { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* The front card's tab carries the accent as a short bar that grows in along its top edge. */
+.marker { position: absolute; top: 5px; left: calc(50% - 9px); width: 18px; height: 3px; border-radius: var(--radius-pill); background: var(--accent-strong); opacity: 0; transform: scaleX(0); transition: transform var(--duration-spring) var(--ease-spring), opacity var(--duration-fast) var(--ease-standard); }
+.tab[aria-selected="true"] .marker { opacity: 1; transform: scaleX(1); }
+
+.body { position: absolute; inset: var(--tab) 0 0; overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius-panel); background: var(--tone); box-shadow: var(--shadow-raised); pointer-events: auto; transition: background-color var(--duration-standard) var(--ease-standard), box-shadow var(--duration-standard) var(--ease-standard); }
+.card[data-front="true"] .body { box-shadow: var(--shadow-floating); }
+.content { display: grid; align-content: start; gap: var(--space-3); height: 100%; padding: var(--space-6); transition: opacity var(--duration-standard) var(--ease-standard); }
+.card[data-shown="false"] .content { opacity: 0; }
+
+/* Sample content. */
+.kicker { margin: 0; color: var(--text-muted); font-size: var(--text-xs); font-weight: 500; letter-spacing: .04em; text-transform: uppercase; }
+.lead { max-width: 30ch; margin: 0; font-family: var(--font-display); font-size: var(--text-xl); font-weight: 500; letter-spacing: var(--tracking-display); line-height: 1.2; text-wrap: balance; }
+.meter { height: 8px; margin-top: var(--space-2); overflow: hidden; border-radius: var(--radius-pill); background: var(--surface-muted); }
+.meter span { display: block; height: 100%; border-radius: inherit; background: var(--accent); }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-3); margin: var(--space-2) 0 0; }
+.stats dt { color: var(--text-muted); font-size: var(--text-xs); }
+.stats dd { margin: 2px 0 0; font-family: var(--font-display); font-size: var(--text-xl); font-weight: 500; font-variant-numeric: tabular-nums; letter-spacing: var(--tracking-display); }
+.rows { display: grid; margin: 0; padding: 0; list-style: none; }
+.rows li { display: flex; min-height: 46px; align-items: center; gap: var(--space-3); border-top: 1px solid var(--border-subtle); font-size: var(--text-sm); }
+.rows li:first-child { border-top: 0; }
+.rows li > span:nth-child(2) { min-width: 0; flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rows li[data-done="true"] > span:nth-child(2) { color: var(--text-muted); text-decoration: line-through; }
+.box { display: grid; width: 18px; height: 18px; flex: none; place-items: center; border: 1.5px solid var(--border-strong); border-radius: 6px; }
+.rows li[data-done="true"] .box { border-color: var(--control-on); background: var(--control-on); color: var(--control-glyph); }
+.fileIcon { display: grid; width: 30px; height: 30px; flex: none; place-items: center; border-radius: var(--radius-pill); background: var(--surface-muted); color: var(--text-secondary); }
+.face { width: 30px; height: 30px; flex: none; border-radius: var(--radius-pill); object-fit: cover; }
+.aside { flex: none; color: var(--text-muted); font-size: var(--text-xs); font-variant-numeric: tabular-nums; }
+
+.preview { display: grid; min-height: 560px; flex: 1 1 auto; place-items: center; padding: var(--space-8) var(--space-4); background: var(--background); }
+
+@container folder (max-width: 26rem) { .tabIcon { display: none; } .content { padding: var(--space-5); } .tab { font-size: var(--text-xs); } }
+@media (prefers-reduced-motion: reduce) { .tab, .marker, .body, .content { transition: none; } }

@@ -1,0 +1,12 @@
+{
+  "infinite-masonry": "Mural em colunas com cartões de alturas diferentes que carrega mais conforme você rola, com os novos subindo em sequência.",
+  "notification-stack": "Pilha de notificações que se abre em leque ao passar o mouse; dispense arrastando ou pelo botão e as demais se reorganizam com mola.",
+  "project-folder": "Pasta que entreabre ao passar o mouse e, no clique, deixa os documentos subirem e se abrirem em leque.",
+  "card-folder": "Fichário de cartões com abas: ao escolher uma aba, o cartão sobe, vem para a frente e os outros se acomodam atrás.",
+  "knockout-bracket": "Chave de mata-mata em colunas: escolha o vencedor e ele avança pela linha de conexão até a próxima fase.",
+  "availability-scheduler": "Grade semanal para marcar horários livres com clique e arraste, com atalhos prontos e um resumo por dia que se atualiza na hora.",
+  "token-swap": "Cartão de troca de tokens com dois campos que trocam de lugar ao inverter, taxa e custos ao vivo e confirmação animada (dados fictícios).",
+  "dynamic-island": "Pílula no topo da tela que se transforma com mola entre repouso, atividade compacta e visões expandidas de chamada, timer e música.",
+  "morphing-search": "Ícone de busca que se estica em campo e depois abre um painel de resultados; Esc desfaz o caminho passo a passo.",
+  "expandable-action-bar": "Barra de ações flutuante que cresce de uma pílula compacta para uma grade com todas as ações e uma linha secundária."
+}

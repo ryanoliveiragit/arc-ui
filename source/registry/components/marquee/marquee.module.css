@@ -1,0 +1,18 @@
+.marquee { position: relative; display: flex; max-width: 100%; overflow: hidden; }
+.marquee[data-axis="y"] { height: 100%; flex-direction: column; }
+/* The edge fade is a mask, not a painted gradient: content dissolves into whatever is behind the marquee.
+   Only the alpha of the mask counts, so any opaque token works as the solid stop. */
+.marquee[data-fade][data-axis="x"] { mask-image: linear-gradient(to right, transparent, var(--foreground) var(--marquee-fade), var(--foreground) calc(100% - var(--marquee-fade)), transparent); }
+.marquee[data-fade][data-axis="y"] { mask-image: linear-gradient(to bottom, transparent, var(--foreground) var(--marquee-fade), var(--foreground) calc(100% - var(--marquee-fade)), transparent); }
+
+.track { display: flex; flex: none; gap: var(--marquee-gap); will-change: transform; }
+.group { display: flex; flex: none; align-items: center; gap: var(--marquee-gap); }
+.marquee[data-axis="x"] .track { min-width: max-content; }
+.marquee[data-axis="y"] .track, .marquee[data-axis="y"] .group { flex-direction: column; }
+.marquee[data-axis="y"] .group { align-items: stretch; }
+
+/* Reduced motion: nothing moves by itself, and the content is reached by scrolling instead. */
+.marquee[data-static] { scrollbar-width: thin; }
+.marquee[data-static][data-axis="x"] { overflow-x: auto; }
+.marquee[data-static][data-axis="y"] { overflow-y: auto; }
+.marquee[data-static] .track { will-change: auto; }

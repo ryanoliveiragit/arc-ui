@@ -1,0 +1,6 @@
+{
+  "crash-game": "Jogo de brincadeira em que o multiplicador sobe numa curva até quebrar; saia antes para ficar com a aposta multiplicada.",
+  "mines-game": "Campo 5×5 de mentirinha: vire as peças para achar gemas e aumentar o multiplicador, mas uma mina encerra a rodada.",
+  "plinko-game": "Tabuleiro de plinko de mentirinha: a bolinha quica nos pinos, para a esquerda ou a direita, e acende a casa do multiplicador.",
+  "slide-game": "Uma faixa de multiplicadores dispara, desacelera e para sob o marcador central: o valor sorteado multiplica a aposta de mentirinha."
+}

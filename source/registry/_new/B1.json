@@ -1,0 +1,398 @@
+[
+  {
+    "name": "infinite-masonry",
+    "type": "registry:block",
+    "title": "Infinite masonry",
+    "description": "Masonry feed of cards with different heights that loads the next page as the end scrolls into view, with new cards rising in on a stagger.",
+    "categories": [
+      "blocks"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/blocks/infinite-masonry/infinite-masonry.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/infinite-masonry/infinite-masonry.tsx"
+      },
+      {
+        "path": "registry/blocks/infinite-masonry/infinite-masonry.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/infinite-masonry/infinite-masonry.module.css"
+      },
+      {
+        "path": "lib/media.ts",
+        "type": "registry:lib",
+        "target": "@components/ryan-ui/lib/media.ts"
+      }
+    ],
+    "meta": {
+      "kind": "block",
+      "tags": [
+        "masonry",
+        "grid",
+        "infinite-scroll",
+        "feed"
+      ]
+    }
+  },
+  {
+    "name": "notification-stack",
+    "type": "registry:block",
+    "title": "Notification stack",
+    "description": "A pile of notification cards that fans out into a list on hover or focus; cards leave by swipe, close button or Delete, and the rest restack on a spring.",
+    "categories": [
+      "blocks"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/blocks/notification-stack/notification-stack.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/notification-stack/notification-stack.tsx"
+      },
+      {
+        "path": "registry/blocks/notification-stack/notification-stack.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/notification-stack/notification-stack.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "block",
+      "tags": [
+        "notifications",
+        "stack",
+        "swipe",
+        "dismiss"
+      ]
+    }
+  },
+  {
+    "name": "project-folder",
+    "type": "registry:block",
+    "title": "Project folder",
+    "description": "A folder whose flap leans open on hover while its documents peek out, then rise and fan out with a springy stagger on click.",
+    "categories": [
+      "blocks"
+    ],
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/blocks/project-folder/project-folder.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/project-folder/project-folder.tsx"
+      },
+      {
+        "path": "registry/blocks/project-folder/project-folder.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/project-folder/project-folder.module.css"
+      },
+      {
+        "path": "lib/media.ts",
+        "type": "registry:lib",
+        "target": "@components/ryan-ui/lib/media.ts"
+      }
+    ],
+    "meta": {
+      "kind": "block",
+      "tags": [
+        "folder",
+        "files",
+        "hover",
+        "3d"
+      ]
+    }
+  },
+  {
+    "name": "card-folder",
+    "type": "registry:block",
+    "title": "Card folder",
+    "description": "A tabbed pile of index cards: picking a tab pulls that card up, drops it in front with a small bounce, and lets the others settle behind it.",
+    "categories": [
+      "blocks"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/blocks/card-folder/card-folder.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/card-folder/card-folder.tsx"
+      },
+      {
+        "path": "registry/blocks/card-folder/card-folder.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/card-folder/card-folder.module.css"
+      },
+      {
+        "path": "lib/media.ts",
+        "type": "registry:lib",
+        "target": "@components/ryan-ui/lib/media.ts"
+      }
+    ],
+    "meta": {
+      "kind": "block",
+      "tags": [
+        "tabs",
+        "cards",
+        "stack",
+        "folder"
+      ]
+    }
+  },
+  {
+    "name": "knockout-bracket",
+    "type": "registry:block",
+    "title": "Knockout bracket",
+    "description": "Single-elimination bracket with rounds in columns and measured connector lines; picking a winner draws its line and slides the team into the next round.",
+    "categories": [
+      "blocks"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/blocks/knockout-bracket/knockout-bracket.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/knockout-bracket/knockout-bracket.tsx"
+      },
+      {
+        "path": "registry/blocks/knockout-bracket/knockout-bracket.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/knockout-bracket/knockout-bracket.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "block",
+      "tags": [
+        "bracket",
+        "tournament",
+        "sports",
+        "connectors"
+      ]
+    }
+  },
+  {
+    "name": "availability-scheduler",
+    "type": "registry:block",
+    "title": "Availability scheduler",
+    "description": "Week grid of one-hour slots chosen by click, rectangle drag or keyboard, with one-click presets and a live summary of merged ranges per day.",
+    "categories": [
+      "blocks"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/blocks/availability-scheduler/availability-scheduler.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/availability-scheduler/availability-scheduler.tsx"
+      },
+      {
+        "path": "registry/blocks/availability-scheduler/availability-scheduler.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/availability-scheduler/availability-scheduler.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "block",
+      "tags": [
+        "calendar",
+        "schedule",
+        "drag",
+        "grid"
+      ]
+    }
+  },
+  {
+    "name": "token-swap",
+    "type": "registry:block",
+    "title": "Token swap",
+    "description": "Play-money swap card: two amount fields with token pickers that trade places when flipped, live rate and fee rows, and a pending then confirmed state.",
+    "categories": [
+      "blocks"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react",
+      "@radix-ui/react-dropdown-menu"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/blocks/token-swap/token-swap.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/token-swap/token-swap.tsx"
+      },
+      {
+        "path": "registry/blocks/token-swap/token-swap.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/token-swap/token-swap.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "block",
+      "tags": [
+        "swap",
+        "tokens",
+        "finance",
+        "form"
+      ]
+    }
+  },
+  {
+    "name": "dynamic-island",
+    "type": "registry:block",
+    "title": "Dynamic island",
+    "description": "A pill at the top of the screen that morphs on one spring between a resting dot, a compact live activity and expanded call, timer and music views.",
+    "categories": [
+      "blocks"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens",
+      "segmented-control"
+    ],
+    "files": [
+      {
+        "path": "registry/blocks/dynamic-island/dynamic-island.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/dynamic-island/dynamic-island.tsx"
+      },
+      {
+        "path": "registry/blocks/dynamic-island/dynamic-island.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/dynamic-island/dynamic-island.module.css"
+      },
+      {
+        "path": "lib/media.ts",
+        "type": "registry:lib",
+        "target": "@components/ryan-ui/lib/media.ts"
+      }
+    ],
+    "meta": {
+      "kind": "block",
+      "tags": [
+        "island",
+        "morph",
+        "live-activity",
+        "mobile"
+      ]
+    }
+  },
+  {
+    "name": "morphing-search",
+    "type": "registry:block",
+    "title": "Morphing search",
+    "description": "A search icon that stretches into a field and then grows a results panel with a gliding highlight; Escape walks the same steps back.",
+    "categories": [
+      "blocks"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/blocks/morphing-search/morphing-search.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/morphing-search/morphing-search.tsx"
+      },
+      {
+        "path": "registry/blocks/morphing-search/morphing-search.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/morphing-search/morphing-search.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "block",
+      "tags": [
+        "search",
+        "combobox",
+        "morph",
+        "command"
+      ]
+    }
+  },
+  {
+    "name": "expandable-action-bar",
+    "type": "registry:block",
+    "title": "Expandable action bar",
+    "description": "Floating action bar that grows upward from a compact pill into a labeled grid of every action plus a secondary row, with the icons gliding to their new places.",
+    "categories": [
+      "blocks"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/blocks/expandable-action-bar/expandable-action-bar.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/expandable-action-bar/expandable-action-bar.tsx"
+      },
+      {
+        "path": "registry/blocks/expandable-action-bar/expandable-action-bar.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/expandable-action-bar/expandable-action-bar.module.css"
+      },
+      {
+        "path": "lib/media.ts",
+        "type": "registry:lib",
+        "target": "@components/ryan-ui/lib/media.ts"
+      }
+    ],
+    "meta": {
+      "kind": "block",
+      "tags": [
+        "toolbar",
+        "actions",
+        "floating",
+        "expand"
+      ]
+    }
+  }
+]

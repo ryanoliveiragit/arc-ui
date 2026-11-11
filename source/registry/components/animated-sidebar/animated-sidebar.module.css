@@ -1,0 +1,55 @@
+/* Width is animated by motion. Rows keep a 40px icon cell at the left, so icons hold still while the panel narrows around them. */
+.sidebar { --sidebar-cell: 2.5rem; --sidebar-row: 2.25rem; display: flex; box-sizing: border-box; height: 100%; min-height: 0; flex: none; flex-direction: column; overflow: hidden; border-right: 1px solid var(--border); background: var(--surface); color: var(--foreground); }
+.header { display: flex; height: 3.5rem; flex: none; align-items: center; padding-inline: var(--space-3); }
+.brand { display: flex; min-width: 0; flex: 1; align-items: center; gap: var(--space-3); overflow: hidden; transition: opacity var(--duration-fast) var(--ease-standard); }
+.sidebar[data-collapsed="true"] .brand { opacity: 0; }
+.logo { display: grid; width: 2rem; height: 2rem; flex: none; place-items: center; margin-left: var(--space-1); border-radius: var(--radius-control); background: var(--accent); color: var(--accent-foreground); font-family: var(--font-display); font-size: var(--text-sm); font-weight: 700; }
+.title { overflow: hidden; font-family: var(--font-display); font-size: var(--text-base); font-weight: 600; letter-spacing: var(--tracking-body); text-overflow: ellipsis; white-space: nowrap; }
+.toggle { display: grid; width: var(--sidebar-cell); height: var(--sidebar-row); flex: none; place-items: center; padding: 0; border: 0; border-radius: var(--radius-control); background: transparent; color: var(--text-muted); cursor: pointer; -webkit-tap-highlight-color: transparent; transition: color var(--duration-fast) var(--ease-standard), background-color var(--duration-fast) var(--ease-standard), scale var(--duration-spring) var(--ease-spring); }
+@media (hover: hover) and (pointer: fine) { .toggle:hover { background: color-mix(in oklab, var(--foreground) 8%, transparent); color: var(--foreground); } }
+.toggle:active { scale: .92; transition-duration: var(--duration-instant); }
+
+.scroller { min-height: 0; flex: 1; overflow: hidden auto; padding: 0 var(--space-3) var(--space-3); scrollbar-width: thin; }
+/* Three classes, to win over the highlight group's own gap. */
+.sidebar .scroller .rows { gap: var(--space-3); }
+.section { display: flex; flex-direction: column; gap: 2px; }
+.list, .group { display: flex; flex-direction: column; gap: 2px; margin: 0; padding: 0; list-style: none; }
+
+/* The heading keeps its height in the rail and turns into a hairline, so rows do not jump when the sidebar collapses. */
+.sectionTitle { position: relative; display: flex; height: 1.75rem; align-items: center; padding-inline: var(--space-3); color: var(--text-muted); font-size: var(--text-xs); font-weight: 500; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; }
+.sectionTitle span { transition: opacity var(--duration-fast) var(--ease-standard); }
+.sectionTitle::after { content: ""; position: absolute; top: 50%; right: var(--space-2); left: var(--space-2); height: 1px; background: var(--border); opacity: 0; transition: opacity var(--duration-fast) var(--ease-standard); }
+.sidebar[data-collapsed="true"] .sectionTitle span { opacity: 0; }
+.sidebar[data-collapsed="true"] .sectionTitle::after { opacity: 1; }
+
+.row { position: relative; z-index: 1; display: flex; width: 100%; min-width: 0; height: var(--sidebar-row); box-sizing: border-box; align-items: center; margin: 0; padding: 0 var(--space-2) 0 0; border: 0; border-radius: var(--radius-control); background: transparent; color: var(--text-secondary); font: inherit; font-size: var(--text-sm); font-weight: 500; letter-spacing: var(--tracking-body); text-align: left; text-decoration: none; white-space: nowrap; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: color var(--duration-fast) var(--ease-standard), background-color var(--duration-standard) var(--ease-standard); }
+.row[data-highlighted] { color: var(--foreground); }
+.row[data-active] { background: var(--accent-subtle); color: var(--foreground); }
+.row[data-active] .icon { color: var(--accent-strong); }
+.row[data-disabled] { opacity: .45; cursor: not-allowed; }
+.row:focus-visible { --focus-outline-offset: -2px; }
+.icon { display: grid; width: var(--sidebar-cell); height: 100%; flex: none; place-items: center; transition: color var(--duration-fast) var(--ease-standard); }
+.icon svg { display: block; }
+.label { min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; }
+.badge { display: grid; min-width: 1.25rem; height: 1.25rem; box-sizing: border-box; flex: none; place-items: center; margin-left: var(--space-2); padding: 0 6px; border-radius: var(--radius-pill); background: var(--surface-muted); color: var(--text-secondary); font-size: var(--text-xs); }
+.chevron { display: grid; width: 1.25rem; height: 1.25rem; flex: none; place-items: center; margin-left: var(--space-1); color: var(--text-muted); transition: rotate var(--duration-spring) var(--ease-spring); }
+.chevron[data-open="true"] { rotate: 90deg; }
+.label, .badge, .chevron { transition-property: opacity, rotate; transition-duration: var(--duration-fast), var(--duration-spring); transition-timing-function: var(--ease-standard), var(--ease-spring); }
+.sidebar[data-collapsed="true"] :is(.label, .badge, .chevron) { opacity: 0; }
+
+/* Nested rows hang from a guide line under the parent's icon; the active one marks its spot on the line. */
+.group { position: relative; overflow: hidden; margin-left: calc(var(--sidebar-cell) / 2); padding-left: calc(var(--sidebar-cell) / 2 - var(--space-2)); }
+.group::before { content: ""; position: absolute; top: var(--space-1); bottom: var(--space-1); left: 1px; width: 1px; background: var(--border); }
+.row[data-nested] { padding-left: var(--space-3); font-weight: 400; }
+.row[data-nested]::before { content: ""; position: absolute; top: 50%; left: calc(var(--space-2) - var(--sidebar-cell) / 2 + .5px); width: 2px; height: 1rem; translate: 0 -50%; border-radius: var(--radius-pill); background: var(--accent-strong); scale: 1 0; transition: scale var(--duration-spring) var(--ease-spring); }
+.row[data-nested][data-active] { font-weight: 500; }
+.row[data-nested][data-active]::before { scale: 1 1; }
+
+.tip { z-index: 90; padding: var(--space-1) var(--space-3); border-radius: var(--radius-pill); background: var(--foreground); color: var(--background); box-shadow: var(--shadow-raised); font-size: var(--text-xs); font-weight: 500; line-height: 1.6; white-space: nowrap; transform-origin: var(--radix-tooltip-content-transform-origin); animation: tip-in var(--duration-fast) var(--ease-enter) both; }
+@keyframes tip-in { from { opacity: 0; transform: translateX(-4px) scale(.96); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .brand, .toggle, .sectionTitle span, .sectionTitle::after, .row, .icon, .label, .badge, .chevron, .row[data-nested]::before { transition: none; }
+  .toggle:active { scale: none; }
+  .tip { animation: none; }
+}

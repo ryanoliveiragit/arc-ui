@@ -1,0 +1,11 @@
+{
+  "overflow-actions": "Barra de ações que mede a própria largura e guarda no menu “mais” o que não cabe, animando a cada ajuste.",
+  "expandable-tabs": "Abas de ícones em que só a aba ativa mostra o rótulo, que se abre com uma mola enquanto as outras se recolhem.",
+  "morphing-tabs": "Abas com uma pílula ativa que estica e muda de forma ao viajar, enquanto o painel troca na mesma direção.",
+  "prediction-market": "Cartão de mercado de previsões com preços de sim e não, linha de probabilidade, valor e estimativa de retorno (dados fictícios).",
+  "wallet-card": "Cartão de pagamento que inclina em 3D e vira para mostrar o verso, com saldo que pode ser ocultado e últimas transações.",
+  "card-dealer": "Um baralho que distribui cartas pelas posições da mesa em arco, virando cada uma; dá para embaralhar e recomeçar.",
+  "bloom-menu": "Botão flutuante cujas ações se abrem em arco, uma após a outra; Esc ou um clique fora fecha o menu.",
+  "feedback-widget": "Botão flutuante de feedback que vira um formulário com humor e mensagem, passa pelo envio e termina num agradecimento.",
+  "not-found": "Página 404 com uma ilustração animada feita de formas, um campo de busca e atalhos para voltar ao site."
+}

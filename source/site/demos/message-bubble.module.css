@@ -1,0 +1,9 @@
+.thread { display: flex; min-height: 330px; flex-direction: column; justify-content: flex-end; gap: var(--space-3); padding-inline: var(--space-2); }
+.composer { display: flex; align-items: center; gap: var(--space-2); padding: var(--space-1) var(--space-1) var(--space-1) var(--space-4); border: 1px solid var(--border); border-radius: var(--radius-pill); background: var(--surface); transition: border-color var(--duration-fast) var(--ease-standard); }
+.composer:focus-within { border-color: var(--border-strong); }
+.field { min-width: 0; flex: 1; border: 0; background: transparent; color: var(--foreground); font: inherit; font-size: var(--text-sm); outline: none; }
+.field::placeholder { color: var(--text-muted); }
+.send { display: grid; width: 36px; height: 36px; flex: none; place-items: center; border: 0; border-radius: var(--radius-pill); background: var(--accent); color: var(--accent-foreground); cursor: pointer; transition: scale var(--duration-spring) var(--ease-spring), background-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard); }
+.send:active { scale: .92; transition-duration: var(--duration-instant); }
+.send:disabled { background: var(--surface-muted); color: var(--text-muted); cursor: default; }
+@media (prefers-reduced-motion: reduce) { .composer, .send { transition: none; } .send:active { scale: none; } }

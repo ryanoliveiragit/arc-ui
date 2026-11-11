@@ -1,0 +1,22 @@
+/* One pill sits behind every item; items stay transparent so the pill is the only thing that moves. */
+.root { position: relative; display: flex; min-width: 0; isolation: isolate; }
+.root[data-orientation="vertical"] { flex-direction: column; gap: 2px; }
+.root[data-orientation="horizontal"] { flex-flow: row wrap; align-items: center; gap: 2px; }
+
+/* Positioned with transforms from the group's top left corner. Set --hover-highlight-radius to reshape it. */
+.pill { position: absolute; top: 0; left: 0; z-index: 0; border-radius: var(--hover-highlight-radius, var(--radius-control)); background: color-mix(in oklab, var(--foreground) 8%, transparent); pointer-events: none; will-change: transform; transition: scale var(--duration-spring) var(--ease-spring); }
+.root[data-tone="accent"] .pill { background: var(--accent); }
+/* Quick press, spring release. */
+.root:has(.item:active:not([data-disabled])) .pill { scale: .97; transition-duration: var(--duration-instant); transition-timing-function: var(--ease-standard); }
+
+.item { position: relative; z-index: 1; display: flex; min-width: 0; min-height: var(--control-height-sm); align-items: center; gap: var(--space-3); box-sizing: border-box; margin: 0; padding: 0 var(--space-3); border: 0; border-radius: var(--hover-highlight-radius, var(--radius-control)); background: transparent; color: var(--text-secondary); font: inherit; font-size: var(--text-sm); font-weight: 500; letter-spacing: var(--tracking-body); line-height: var(--leading-body); text-align: left; text-decoration: none; white-space: nowrap; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: color var(--duration-fast) var(--ease-standard); }
+.item svg { flex: none; }
+.item[data-highlighted], .item[data-active] { color: var(--foreground); }
+.root[data-tone="accent"] .item[data-highlighted] { color: var(--accent-foreground); }
+.item[data-disabled] { opacity: .45; cursor: not-allowed; }
+.item:focus-visible { --focus-outline-offset: -2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pill, .item { transition: none; }
+  .root:has(.item:active:not([data-disabled])) .pill { scale: none; }
+}

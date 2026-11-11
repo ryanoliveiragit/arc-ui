@@ -1,0 +1,8 @@
+{
+  "sankey-chart": "Diagrama de fluxo em colunas: as faixas têm a espessura do valor e, ao passar o mouse, só o caminho escolhido fica aceso.",
+  "candlestick-chart": "Velas de abertura, máxima, mínima e fechamento, com mira que acompanha o cursor e mostra os valores de cada período.",
+  "volume-profile": "Histograma horizontal do volume em cada faixa de preço, ao lado da linha de preço, com o ponto de controle em destaque.",
+  "funnel-chart": "Funil de conversão em que cada etapa surge depois da anterior, com o valor da etapa e a queda percentual entre elas.",
+  "bump-chart": "Ranking ao longo do tempo: as linhas trocam de posição a cada período e a série escolhida vem para a frente.",
+  "composition-chart": "Barra empilhada de 100% com legenda: mostra as partes de um todo e desliza os segmentos quando os dados mudam."
+}

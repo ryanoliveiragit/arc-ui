@@ -1,0 +1,20 @@
+.scroller { position: relative; height: 440px; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; border: 1px solid var(--border); border-radius: var(--radius-panel); background: var(--surface); --focus-outline-offset: 2px; }
+.page { display: grid; gap: var(--space-8); padding: var(--space-8) var(--space-6) var(--space-10); color: var(--foreground); }
+.kicker { display: inline-flex; align-items: center; gap: var(--space-2); margin: 0 0 var(--space-3); color: var(--accent-strong); font-size: var(--text-xs); font-weight: 500; }
+.title { margin: 0; font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 600; letter-spacing: var(--tracking-display); line-height: var(--leading-display); }
+.lead { margin: var(--space-3) 0 0; color: var(--text-secondary); font-size: var(--text-sm); line-height: 1.55; }
+.numbers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-3); }
+.number { display: grid; height: 100%; gap: var(--space-1); padding: var(--space-4); border: 1px solid var(--border); border-radius: var(--radius-control); background: var(--surface-raised); }
+.number strong { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 600; letter-spacing: var(--tracking-display); }
+.number span { color: var(--text-muted); font-size: var(--text-xs); line-height: var(--leading-body); }
+.features { display: grid; gap: var(--space-3); }
+.feature { display: flex; gap: var(--space-3); padding: var(--space-4); border: 1px solid var(--border); border-radius: var(--radius-control); background: var(--surface-raised); font-size: var(--text-sm); line-height: var(--leading-body); }
+.feature p { margin: 2px 0 0; color: var(--text-secondary); }
+.featureIcon { display: grid; width: var(--space-8); height: var(--space-8); flex: none; place-items: center; border-radius: var(--radius-pill); background: var(--accent); color: var(--accent-foreground); }
+.quote { display: grid; gap: var(--space-3); margin: 0; padding: var(--space-5); border-radius: var(--radius-panel); background: var(--surface-muted); color: var(--accent-strong); }
+.quote blockquote { margin: 0; color: var(--foreground); font-family: var(--font-display); font-size: var(--text-lg); letter-spacing: var(--tracking-body); line-height: 1.35; }
+.quote figcaption { color: var(--text-muted); font-size: var(--text-xs); }
+.subtitle { margin: 0 0 var(--space-3); font-size: var(--text-sm); font-weight: 600; }
+.fixes { display: grid; gap: var(--space-2); margin: 0; padding-left: var(--space-5); color: var(--text-secondary); font-size: var(--text-sm); line-height: var(--leading-body); }
+.end { margin: var(--space-6) 0 0; color: var(--text-muted); font-size: var(--text-xs); }
+@media (max-width: 420px) { .page { padding-inline: var(--space-4); } .number { padding: var(--space-3); } }

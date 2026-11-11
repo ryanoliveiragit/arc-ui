@@ -1,0 +1,25 @@
+/* Fixed footprint: two button slots plus room for the widest value. Nothing inside changes the outer size. */
+.stepper { --height: var(--control-height-md); --pad: 4px; --button: calc(var(--height) - var(--pad) * 2); position: relative; display: inline-block; flex: none; width: calc(var(--button) * 2 + var(--pad) * 2 + var(--slots, 2) * 1ch + var(--space-6)); height: var(--height); box-sizing: border-box; border: 1px solid var(--border); border-radius: var(--radius-pill); background: var(--surface); color: var(--foreground); font-family: var(--font-display); font-size: var(--text-base); font-weight: 600; font-variant-numeric: tabular-nums; perspective: 320px; vertical-align: middle; -webkit-tap-highlight-color: transparent; }
+.stepper[data-size="sm"] { --height: var(--control-height-sm); --pad: 3px; font-size: var(--text-sm); }
+.stepper[data-size="lg"] { --height: var(--control-height-lg); font-size: var(--text-lg); }
+.stepper[data-disabled] { opacity: .5; }
+
+/* Buttons hinge on the outer edge they sit against, so a fold reads as tucking into the rim. */
+.button { position: absolute; top: calc(var(--pad) - 1px); z-index: 1; display: grid; width: var(--button); height: var(--button); padding: 0; place-items: center; border: 0; border-radius: var(--radius-pill); background: var(--surface-muted); color: var(--foreground); cursor: pointer; touch-action: manipulation; transition: background-color var(--duration-fast) var(--ease-standard); }
+.button[data-side="minus"] { left: calc(var(--pad) - 1px); transform-origin: 0 50%; }
+.button[data-side="plus"] { right: calc(var(--pad) - 1px); transform-origin: 100% 50%; background: var(--accent); color: var(--accent-foreground); }
+.button:disabled { cursor: not-allowed; }
+@media (hover: hover) and (pointer: fine) {
+  .button[data-side="minus"]:hover:not(:disabled) { background: color-mix(in oklab, var(--foreground) 12%, var(--surface-muted)); }
+  .button[data-side="plus"]:hover:not(:disabled) { background: color-mix(in oklab, var(--accent) 88%, var(--foreground)); }
+}
+
+.value { position: absolute; inset: 0; display: grid; place-items: center; border-radius: inherit; cursor: default; user-select: none; --focus-outline-offset: 2px; }
+.value[data-quiet] { --focus-outline: transparent; }
+/* The whole number slides toward the side whose button folded away. Transform only, on the shared spring curve. */
+.digits { position: relative; display: block; width: 1ch; height: 1.5em; translate: calc(var(--lean, 0) * var(--button)) 0; transition: translate var(--duration-spring) var(--ease-spring); }
+/* Every character has its own cell, placed by its distance from the middle of the number, so adding a digit moves the others by transform. */
+.cell { position: absolute; inset: 0; display: grid; overflow: hidden; place-items: center; translate: calc(var(--offset, 0) * 1ch) 0; transition: translate var(--duration-spring) var(--ease-spring); }
+.char { grid-area: 1 / 1; display: block; line-height: 1.5; }
+
+@media (prefers-reduced-motion: reduce) { .digits, .cell, .button { transition: none; } }
