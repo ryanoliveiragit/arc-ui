@@ -1,0 +1,110 @@
+/* The same card as Toast (surface, status circle, close button). The number beside the title and the bar under the copy are the additions. */
+.toast {
+  position: relative;
+  box-sizing: border-box;
+  width: min(100%, 26rem);
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+  background: color-mix(in oklab, var(--surface) 94%, var(--background));
+  color: var(--foreground);
+  font-family: var(--font-body);
+  letter-spacing: var(--tracking-body);
+  text-align: left;
+  box-shadow: var(--shadow-floating);
+  container-type: inline-size;
+  -webkit-tap-highlight-color: transparent;
+}
+/* Clips only while the height follows a change. */
+.frame[data-moving="true"] { overflow: hidden; }
+/* One row (circle, copy, number or Retry, close); the bar wraps onto a row of its own under it. */
+.content { position: relative; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 0.625rem 0.75rem; padding: 0.875rem 0.875rem 0.875rem 1rem; }
+
+/* Pinned placements match ToastStack: bottom edge of the window, or of the nearest positioned ancestor when contained. */
+.bottom-right, .bottom-center, .bottom-left { position: fixed; z-index: 60; bottom: var(--space-6); width: min(24rem, calc(100% - var(--space-8))); }
+.bottom-right { right: var(--space-6); }
+.bottom-left { left: var(--space-6); }
+.bottom-center { right: 0; left: 0; margin-inline: auto; }
+.contained { position: absolute; z-index: 2; bottom: var(--space-4); }
+.contained.bottom-right { right: var(--space-4); }
+.contained.bottom-left { left: var(--space-4); }
+@media (max-width: 30rem) {
+  .bottom-right:not(.contained), .bottom-left:not(.contained), .bottom-center:not(.contained) { right: 0; bottom: var(--space-4); left: 0; margin-inline: auto; }
+}
+
+/* Neutral while the task runs; it takes the success or the danger tone with the result. */
+.icon {
+  position: relative;
+  display: grid;
+  width: 1.875rem;
+  height: 1.875rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-muted);
+  color: var(--text-secondary);
+  transition: color var(--duration-standard) var(--ease-standard), background-color var(--duration-standard) var(--ease-standard), border-color var(--duration-standard) var(--ease-standard);
+}
+.toast[data-status="success"] .icon { border-color: color-mix(in oklab, var(--success) 24%, var(--border)); background: color-mix(in oklab, var(--success) 10%, var(--surface)); color: var(--success); }
+.toast[data-status="error"] .icon { border-color: color-mix(in oklab, var(--danger) 24%, var(--border)); background: color-mix(in oklab, var(--danger) 10%, var(--surface)); color: var(--danger); }
+.glyph { grid-area: 1 / 1; display: grid; place-items: center; }
+.glyph svg { display: block; }
+/* Turns only while the task runs; the glyph swap is its stop. */
+.spinner { display: block; width: 0.875rem; height: 0.875rem; border: 1.75px solid var(--accent-strong); border-right-color: transparent; border-radius: var(--radius-pill); animation: toast-progress-spin 0.8s linear infinite; }
+
+.copy {
+  position: relative;
+  display: grid;
+  min-width: 0;
+  flex: 1;
+  gap: 0.125rem;
+  /* Centers the title's first line on the 30px status circle. */
+  padding-top: 0.3125rem;
+}
+.title { position: relative; display: block; min-width: 0; font-size: var(--text-sm); font-weight: 500; line-height: var(--leading-body); }
+.line { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.description { display: block; color: var(--text-secondary); font-size: var(--text-sm); font-variant-numeric: tabular-nums; line-height: var(--leading-body); }
+
+/* Tabular digits and a reserved width keep the title from shifting as the number gains a digit. */
+.value { display: block; min-width: 2.5rem; flex: none; color: var(--text-secondary); font-size: var(--text-sm); font-weight: 500; font-variant-numeric: tabular-nums; line-height: 1.875rem; text-align: right; }
+.retrySlot { display: flex; flex: none; }
+.retry, .close {
+  flex: none;
+  border: 0;
+  border-radius: var(--radius-pill);
+  font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: scale var(--duration-spring) var(--ease-spring), background-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard);
+}
+/* The one thing to do after a failure, so it carries the accent fill. */
+.retry { height: 1.875rem; padding: 0 0.875rem; background: var(--accent); color: var(--accent-foreground); font-size: var(--text-sm); font-weight: 600; letter-spacing: var(--tracking-body); white-space: nowrap; }
+.close { display: grid; width: 1.875rem; height: 1.875rem; margin-right: -0.125rem; place-items: center; background: transparent; color: var(--text-muted); }
+@media (hover: hover) and (pointer: fine) {
+  .retry:hover { background: color-mix(in oklab, var(--accent) 86%, var(--foreground)); }
+  .close:hover { background: var(--surface-muted); color: var(--foreground); }
+}
+/* Quick press, spring release. */
+.retry:active, .close:active { scale: 0.96; transition-duration: var(--duration-instant); transition-timing-function: var(--ease-standard); }
+
+/* The bar starts under the copy, not under the circle. Padding, not margin: the row keeps its place when it pops out of the flow to fade. */
+.barRow { order: 3; box-sizing: border-box; flex: 0 0 100%; padding: 0 0.125rem 0.25rem calc(1.875rem + 0.75rem); transform-origin: 50% 0; }
+/* The selection-control pair (fill on track), so the bar keeps its contrast in both themes and for every accent. The fill moves with a transform only. */
+.track { height: 6px; overflow: hidden; border-radius: var(--radius-pill); background: var(--control-track); }
+.fill { display: block; width: 100%; height: 100%; border-radius: inherit; background: var(--control-fill); will-change: transform; transition: background-color var(--duration-standard) var(--ease-standard); }
+.toast[data-status="error"] .fill { background: var(--danger); }
+
+/* A narrow toast keeps its copy wide: on failure the copy takes the rest of the first row, so Retry wraps under it. */
+@container (max-width: 23rem) {
+  .toast[data-status="error"] .copy { flex-basis: calc(100% - 1.875rem - 1.875rem - 1.5rem); }
+  .close { order: 1; }
+  .retrySlot { order: 2; padding-left: calc(1.875rem + 0.75rem); }
+}
+
+@keyframes toast-progress-spin { to { rotate: 360deg; } }
+@media (prefers-reduced-motion: reduce) {
+  .icon, .retry, .close, .fill { transition: none; }
+  .retry:active, .close:active { scale: none; }
+  .spinner { animation: none; }
+}

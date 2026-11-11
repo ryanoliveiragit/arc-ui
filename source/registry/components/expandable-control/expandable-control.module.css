@@ -1,0 +1,32 @@
+.control { --height: var(--control-height-md); --icon-box: var(--height); position: relative; display: inline-flex; height: var(--height); min-width: var(--height); max-width: 100%; box-sizing: border-box; flex: none; align-items: center; vertical-align: middle; border-radius: var(--radius-pill); background: var(--surface); box-shadow: inset 0 0 0 1px var(--border); color: var(--foreground); font-size: var(--text-sm); font-weight: 500; line-height: var(--leading-body); transition: background-color var(--duration-standard) var(--ease-standard), color var(--duration-standard) var(--ease-standard), box-shadow var(--duration-standard) var(--ease-standard); }
+.control[data-variant="chip"] { --height: 2rem; --icon-box: 2rem; background: var(--surface-muted); box-shadow: none; color: var(--text-secondary); font-size: var(--text-xs); }
+.control[data-expanded="true"] { background: var(--surface-muted); color: var(--foreground); }
+.control[data-variant="chip"][data-expanded="true"] { box-shadow: inset 0 0 0 1px var(--border-strong); }
+.control[data-tone="accent"][data-expanded="true"] { background: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); color: var(--accent-foreground); }
+.control[data-disabled] { opacity: .5; }
+
+.main, .action { display: inline-flex; flex: none; align-items: center; padding: 0; border: 0; background: transparent; color: inherit; font: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.main { height: 100%; min-width: 0; border-radius: var(--radius-pill); }
+.main:disabled, .action:disabled { cursor: not-allowed; }
+/* The icon keeps a square box the size of the closed control, so it never moves while the label unrolls beside it. */
+.icon { display: grid; width: var(--icon-box); height: var(--height); flex: none; place-items: center; transition: scale var(--duration-spring) var(--ease-spring); }
+.main:active:not(:disabled) .icon { scale: .86; transition-duration: var(--duration-instant); transition-timing-function: var(--ease-standard); }
+@media (hover: hover) and (pointer: fine) {
+  .control[data-expanded="false"]:not([data-disabled]):hover { background: var(--surface-muted); color: var(--foreground); }
+  .action:hover:not(:disabled) { background: color-mix(in oklab, currentColor 12%, transparent); }
+}
+
+/* Clips the label while the width springs open or shut. */
+.slot { display: inline-flex; overflow: hidden; align-items: center; white-space: nowrap; }
+.label { display: inline-flex; align-items: center; gap: var(--space-2); padding-right: var(--space-4); }
+.control[data-variant="chip"] .label { padding-right: var(--space-3); }
+/* The round button's icon box leaves more air than a label needs, so the label slot tucks under its edge. The margin is on the slot,
+   outside its own clip, so no letter is cut. */
+.control[data-variant="button"] .main > .slot { margin-left: calc(var(--space-1) * -1); }
+.detail { opacity: .7; font-variant-numeric: tabular-nums; }
+/* The trailing action sits behind a hairline, inset from the rounded end. */
+.actionWrap { display: inline-flex; align-items: center; height: var(--height); padding-right: 4px; box-shadow: inset 1px 0 0 color-mix(in oklab, currentColor 16%, transparent); }
+.action { width: calc(var(--height) - 8px); height: calc(var(--height) - 8px); margin-left: 4px; justify-content: center; border-radius: var(--radius-pill); transition: background-color var(--duration-fast) var(--ease-standard), scale var(--duration-spring) var(--ease-spring); --focus-outline-offset: -2px; }
+.action:active:not(:disabled) { scale: .9; transition-duration: var(--duration-instant); }
+
+@media (prefers-reduced-motion: reduce) { .control, .icon, .action { transition: none; } .main:active:not(:disabled) .icon, .action:active:not(:disabled) { scale: none; } }

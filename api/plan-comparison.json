@@ -1,0 +1,1 @@
+{"exports":[{"name":"PlanComparison","kind":"component","file":"registry/blocks/plan-comparison/plan-comparison.tsx","default":true}],"components":[{"name":"PlanComparison","doc":"","props":"PlanComparisonProps","defaults":{},"file":"registry/blocks/plan-comparison/plan-comparison.tsx"}],"types":[]}

@@ -1,0 +1,48 @@
+.root { --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace; display: grid; min-width: 0; grid-template-columns: auto minmax(0, 1fr); gap: var(--space-3); color: var(--foreground); font-family: var(--font-body); letter-spacing: var(--tracking-body); text-align: left; }
+.avatar { display: grid; width: 32px; height: 32px; overflow: hidden; place-items: center; border-radius: var(--radius-pill); background: var(--surface-muted); }
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+.mark { display: grid; width: 100%; height: 100%; place-items: center; background: var(--accent); color: var(--accent-foreground); }
+.main { display: flex; min-width: 0; flex-direction: column; }
+.header { display: flex; min-height: 32px; align-items: center; gap: var(--space-2); }
+.name { font-size: var(--text-sm); font-weight: 600; }
+.meta { color: var(--text-muted); font-size: var(--text-xs); }
+
+.body { display: flex; min-width: 0; flex-direction: column; gap: var(--space-3); padding-top: 2px; color: var(--foreground); font-size: var(--text-sm); line-height: 1.6; overflow-wrap: anywhere; }
+.block { min-width: 0; }
+.body :where(p, h4, ul, ol, pre) { margin: 0; }
+.body :where(h4) { font-family: var(--font-display); font-size: var(--text-base); font-weight: 600; letter-spacing: var(--tracking-display); line-height: 1.3; }
+.body :where(ul, ol) { display: grid; gap: var(--space-1); padding-left: 1.35em; }
+.body :where(li) { padding-left: .2em; }
+.body :where(li)::marker { color: var(--accent-strong); font-weight: 600; font-variant-numeric: tabular-nums; }
+.body :where(a) { color: var(--accent-strong); text-decoration: underline; text-decoration-color: color-mix(in oklab, currentColor 45%, transparent); text-underline-offset: 3px; }
+.body :where(strong) { font-weight: 600; }
+.code { padding: .1em .38em; border: 1px solid var(--border); border-radius: .45em; background: var(--surface-muted); font-family: var(--mono); font-size: .86em; letter-spacing: 0; }
+.body :where(pre) { overflow-x: auto; padding: var(--space-3) var(--space-4); border: 1px solid var(--border); border-radius: var(--radius-control); background: var(--surface-muted); font-family: var(--mono); font-size: .86em; line-height: 1.55; letter-spacing: 0; scrollbar-width: thin; }
+.body :where(pre code) { font: inherit; }
+
+/* Actions sit in the row's left gutter line and step in one after another when the row is hovered or focused. */
+.actions { display: flex; align-items: center; gap: 2px; margin: var(--space-2) 0 0 -7px; }
+.action { position: relative; display: grid; width: 30px; height: 30px; padding: 0; place-items: center; border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--text-muted); cursor: pointer; -webkit-tap-highlight-color: transparent; transition: opacity var(--duration-standard) var(--ease-enter), translate var(--duration-standard) var(--ease-enter), scale var(--duration-spring) var(--ease-spring), background-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard); }
+.action:active { scale: .9; transition-duration: var(--duration-instant); }
+.action[aria-pressed="true"] { background: var(--accent-subtle); color: var(--accent-strong); }
+.action[data-done] { color: var(--success); }
+.glyph { display: grid; place-items: center; }
+@media (hover: hover) and (pointer: fine) {
+  .action:hover { background: var(--surface-muted); color: var(--foreground); }
+  .action[aria-pressed="true"]:hover { background: var(--accent-subtle); color: var(--accent-strong); }
+  .root[data-actions="hover"]:not(:hover, :focus-within) .action { opacity: 0; translate: 0 4px; transition-duration: var(--duration-fast); }
+  .root[data-actions="hover"]:is(:hover, :focus-within) .action { transition-delay: calc(var(--i, 0) * 35ms), calc(var(--i, 0) * 35ms), 0s, 0s, 0s; }
+  /* A rating that was given stays visible, so the row still shows what was chosen. */
+  .root[data-actions="hover"]:not(:hover, :focus-within) .action[aria-pressed="true"] { opacity: 1; translate: none; }
+}
+/* Small name tag under an action (under, so it never covers the message text), for pointer hover and keyboard focus. */
+.action::after { content: attr(data-tip); position: absolute; top: calc(100% + 6px); left: 50%; z-index: 2; padding: 3px 8px; border-radius: var(--radius-pill); background: var(--foreground); color: var(--background); font-size: var(--text-xs); font-weight: 500; line-height: 1.4; white-space: nowrap; opacity: 0; translate: -50% -3px; pointer-events: none; transition: opacity var(--duration-fast) var(--ease-standard), translate var(--duration-fast) var(--ease-standard); }
+.action:focus-visible::after { opacity: 1; translate: -50% 0; }
+@media (hover: hover) and (pointer: fine) { .action:hover::after { opacity: 1; translate: -50% 0; transition-delay: .35s; } }
+.srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  .action, .action::after { transition: none; }
+  .action:active { scale: none; }
+  .root[data-actions="hover"]:not(:hover, :focus-within) .action { translate: none; }
+}

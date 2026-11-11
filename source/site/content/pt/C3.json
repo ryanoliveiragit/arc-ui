@@ -1,0 +1,10 @@
+{
+  "loader": "Cinco indicadores de carregamento em três tamanhos, com rótulo lido por leitores de tela.",
+  "collapsible": "Uma região que abre e fecha no lugar, com altura em mola, conteúdo que entra em foco e seta que gira.",
+  "bouncy-accordion": "Acordeão em que o item aberto se solta dos vizinhos: o espaço cresce e os cantos arredondam com um leve quique.",
+  "scroll-reveal": "Revela o conteúdo conforme ele entra na tela, em sequência, e acompanha a leitura com uma barra de progresso.",
+  "morphing-modal": "O botão se transforma no modal a partir do próprio lugar e volta a ser botão ao fechar.",
+  "center-morph-modal": "Um cartão da grade cresce até virar um modal no centro da tela, e o resumo dá lugar ao conteúdo completo.",
+  "shader-background": "Fundo animado em canvas: um campo de ruído que flui na cor de destaque e pausa quando sai da tela.",
+  "cylinder-carousel": "Cartões dispostos em volta de um cilindro 3D que gira com arraste, setas ou teclado e para sempre em um cartão."
+}

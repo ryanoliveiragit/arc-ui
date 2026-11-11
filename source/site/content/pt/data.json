@@ -1,0 +1,14 @@
+{
+  "chat-thread": "Conversa com mensagens agrupadas, reações, confirmação de leitura, indicador de digitação e campo de envio com anexos.",
+  "code-block": "Bloco de código com realce leve, nome do arquivo, botão de copiar e opção de expandir trechos longos.",
+  "comment-thread": "Comentários em fio, com respostas, reações, menções, edição no local e opção de resolver a conversa.",
+  "filter-toolbar": "Barra de filtros ativos que se removem com um toque, com um botão que vira menu para escolher campo e valor.",
+  "image-compare": "Arraste um divisor sobre duas imagens para ver o antes e o depois, também pelo teclado.",
+  "json-viewer": "Árvore de JSON recolhível, com busca, paginação de listas longas e cópia de valor ou caminho.",
+  "pagination": "Navegação entre páginas de uma coleção longa, com limites claros e reticências quando necessário.",
+  "reorderable-list": "Lista que se reorganiza arrastando, com alternativa pelo teclado para mover cada item.",
+  "sortable-data-table": "Tabela de registros com colunas ordenáveis, seleção de linhas e contagem de itens.",
+  "timeline": "Linha do tempo com os eventos mais recentes primeiro, agrupados por dia e com detalhes que se expandem.",
+  "tree-table": "Tabela com linhas aninhadas, seleção em três estados, ordenação que preserva a hierarquia e carga sob demanda.",
+  "tree-view": "Árvore de navegação para pastas e conteúdo aninhado, com suporte completo ao teclado."
+}

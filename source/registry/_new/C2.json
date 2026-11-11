@@ -1,0 +1,307 @@
+[
+  {
+    "name": "image-viewer",
+    "type": "registry:ui",
+    "title": "Image viewer",
+    "description": "A thumbnail gallery whose pictures grow into a lightbox with a shared-element zoom, with arrows, swipe, zoom and pan, a focus trap, and Escape closing back into the thumbnail.",
+    "categories": [
+      "data"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react",
+      "@radix-ui/react-dialog"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/image-viewer/image-viewer.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/image-viewer/image-viewer.tsx"
+      },
+      {
+        "path": "registry/components/image-viewer/image-viewer.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/image-viewer/image-viewer.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "gallery",
+        "lightbox",
+        "zoom",
+        "images",
+        "swipe"
+      ]
+    }
+  },
+  {
+    "name": "hover-highlight",
+    "type": "registry:ui",
+    "title": "Hover highlight",
+    "description": "A group in which one shared background pill glides to the hovered or focused item and returns to the selected one.",
+    "categories": [
+      "actions"
+    ],
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/hover-highlight/hover-highlight.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/hover-highlight/hover-highlight.tsx"
+      },
+      {
+        "path": "registry/components/hover-highlight/hover-highlight.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/hover-highlight/hover-highlight.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "hover",
+        "menu",
+        "nav",
+        "toolbar",
+        "highlight"
+      ]
+    }
+  },
+  {
+    "name": "dock",
+    "type": "registry:ui",
+    "title": "Dock",
+    "description": "An app dock whose tiles magnify around the cursor, show a tooltip, bounce when pressed and mark the active one with a dot.",
+    "categories": [
+      "actions"
+    ],
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/dock/dock.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/dock/dock.tsx"
+      },
+      {
+        "path": "registry/components/dock/dock.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/dock/dock.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "dock",
+        "toolbar",
+        "magnify",
+        "hover",
+        "launcher"
+      ]
+    }
+  },
+  {
+    "name": "preview-rail",
+    "type": "registry:ui",
+    "title": "Preview rail",
+    "description": "A rail of image cards in which the hovered or focused one widens to reveal its preview while the others shrink to a slice.",
+    "categories": [
+      "data"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/preview-rail/preview-rail.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/preview-rail/preview-rail.tsx"
+      },
+      {
+        "path": "registry/components/preview-rail/preview-rail.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/preview-rail/preview-rail.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "cards",
+        "gallery",
+        "hover",
+        "expand",
+        "preview"
+      ]
+    }
+  },
+  {
+    "name": "bounce-sidebar",
+    "type": "registry:ui",
+    "title": "Bounce sidebar",
+    "description": "An app sidebar that switches between an icon rail and a full panel on a slightly bouncy width spring, with staggered labels and a gliding active marker.",
+    "categories": [
+      "disclosure"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/bounce-sidebar/bounce-sidebar.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/bounce-sidebar/bounce-sidebar.tsx"
+      },
+      {
+        "path": "registry/components/bounce-sidebar/bounce-sidebar.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/bounce-sidebar/bounce-sidebar.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "sidebar",
+        "navigation",
+        "rail",
+        "collapse",
+        "spring"
+      ]
+    }
+  },
+  {
+    "name": "animated-sidebar",
+    "type": "registry:ui",
+    "title": "Animated sidebar",
+    "description": "A sidebar with nested groups that open on a height spring, one highlight that glides under the pointer, and a collapsed icon rail with tooltips.",
+    "categories": [
+      "disclosure"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react",
+      "@radix-ui/react-tooltip"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens",
+      "hover-highlight"
+    ],
+    "files": [
+      {
+        "path": "registry/components/animated-sidebar/animated-sidebar.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/animated-sidebar/animated-sidebar.tsx"
+      },
+      {
+        "path": "registry/components/animated-sidebar/animated-sidebar.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/animated-sidebar/animated-sidebar.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "sidebar",
+        "navigation",
+        "nested",
+        "collapse",
+        "tooltip"
+      ]
+    }
+  },
+  {
+    "name": "file-tree",
+    "type": "registry:ui",
+    "title": "File tree",
+    "description": "A file explorer tree whose folders open on a height spring, with file-type icons, selection, change markers and full keyboard navigation with type-ahead.",
+    "categories": [
+      "data"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/file-tree/file-tree.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/file-tree/file-tree.tsx"
+      },
+      {
+        "path": "registry/components/file-tree/file-tree.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/file-tree/file-tree.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "tree",
+        "files",
+        "explorer",
+        "folders",
+        "keyboard"
+      ]
+    }
+  },
+  {
+    "name": "pull-to-refresh",
+    "type": "registry:ui",
+    "title": "Pull to refresh",
+    "description": "A scroll container you drag down with a finger or the mouse: the indicator stretches, spins while the async refresh runs, confirms and settles.",
+    "categories": [
+      "feedback"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/pull-to-refresh/pull-to-refresh.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/pull-to-refresh/pull-to-refresh.tsx"
+      },
+      {
+        "path": "registry/components/pull-to-refresh/pull-to-refresh.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/pull-to-refresh/pull-to-refresh.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "refresh",
+        "scroll",
+        "gesture",
+        "drag",
+        "loading"
+      ]
+    }
+  }
+]

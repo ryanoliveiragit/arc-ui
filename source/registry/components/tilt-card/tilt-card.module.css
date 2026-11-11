@@ -1,0 +1,8 @@
+/* The slot never moves: it holds the perspective and reads the cursor, so the hit area stays put while the card leans inside it. */
+.slot { position: relative; display: block; }
+.card { position: relative; height: 100%; border: 1px solid var(--border); border-radius: var(--radius-panel); background: var(--surface-raised); color: var(--foreground); box-shadow: var(--shadow-raised); transform-style: preserve-3d; will-change: transform; }
+/* Floating parts keep their own 3D position; without preserve-3d on the way down they would flatten onto the face. */
+.layer { transform-style: preserve-3d; }
+/* Drawn over the card face and clipped to its corners. Floating layers pass in front of it, as they would in front of a real sheen. */
+.glare { position: absolute; inset: 0; z-index: 3; border-radius: inherit; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .card { will-change: auto; } }

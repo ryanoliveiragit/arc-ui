@@ -1,0 +1,23 @@
+{
+  "action-button": "Botão compacto para as ações mais usadas de uma barra de ferramentas.",
+  "action-swap": "Troca o rótulo de uma ação sem ela sair do lugar nem mudar de intenção.",
+  "button": "Uma ação clara e responsiva, com estados secundários discretos.",
+  "button-group": "Ações relacionadas numa só superfície, com realce que desliza entre os segmentos e menu acoplado.",
+  "confirm-morph": "Botão destrutivo que vira confirmação no próprio lugar, depois carregamento e resultado com desfazer.",
+  "context-menu": "Ações secundárias ao alcance do clique direito, junto do objeto selecionado.",
+  "copy-button": "Copia um valor e confirma na hora.",
+  "cta-section": "Chamada para ação como fecho centralizado, dividida ao lado de um cartão de configuração ou em faixa dispensável.",
+  "dropdown-menu": "Lista enxuta de ações ancorada a um botão.",
+  "theme-switch-eclipse": "O novo tema atravessa a página como um eclipse.",
+  "expanding-button-group": "Grupo de botões de ícone em que o apontado cresce para mostrar o rótulo e os vizinhos abrem espaço.",
+  "floating-button-group": "Botões soltos numa bandeja discreta, com um realce único que passa de um para o outro.",
+  "hold-to-confirm": "Confirma uma ação destrutiva ao segurar o botão, não com um toque.",
+  "icon-morph": "Ícones que se transformam entre estados: menu em fechar, play em pausa, copiar em confirmado e outros.",
+  "reactions": "Reage a uma publicação com um toque, com contadores que rolam.",
+  "theme-switch-rise": "O novo tema sobe até ocupar a página.",
+  "theme-switch-split": "O novo tema se abre a partir de uma fenda fina no centro.",
+  "split-button": "Ação principal com um menu de alternativas ao lado.",
+  "swipe-actions": "Revela as ações de uma linha ao deslizar, com as mesmas ações também num menu.",
+  "theme-switch": "Quatro transições suaves entre o tema claro e o escuro.",
+  "user-menu": "Conta, ajustes, tema e sair atrás do avatar; no celular abre como painel inferior."
+}

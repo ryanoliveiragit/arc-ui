@@ -1,0 +1,69 @@
+.scheduler { container: scheduler / inline-size; display: grid; min-height: 600px; flex: 1 1 auto; align-content: center; padding: var(--space-8) var(--space-6); background: var(--background); color: var(--foreground); font-family: var(--font-body); letter-spacing: var(--tracking-body); }
+.layout { display: grid; width: 100%; max-width: 59rem; grid-template-columns: minmax(0, 1fr) minmax(0, 19rem); align-items: start; gap: var(--space-8) var(--space-10); margin: 0 auto; }
+.scheduler *, .scheduler *::before, .scheduler *::after { box-sizing: border-box; }
+.main { display: grid; min-width: 0; gap: var(--space-4); }
+
+.header { display: grid; gap: var(--space-1); }
+.title { margin: 0; font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 500; letter-spacing: var(--tracking-display); line-height: var(--leading-display); }
+.help { margin: 0; color: var(--text-muted); font-size: var(--text-sm); line-height: var(--leading-body); text-wrap: pretty; }
+
+.presets { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.preset, .clear { display: inline-flex; height: 32px; align-items: center; gap: 6px; padding: 0 var(--space-3); border: 1px solid var(--border); border-radius: var(--radius-pill); background: var(--surface); color: var(--text-secondary); font: inherit; font-size: var(--text-sm); font-weight: 500; white-space: nowrap; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background-color var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard), transform var(--duration-fast) var(--ease-standard), opacity var(--duration-fast) var(--ease-standard); }
+.preset:hover, .clear:hover:not(:disabled) { background: var(--surface-muted); color: var(--foreground); }
+.preset:active, .clear:active:not(:disabled) { transform: scale(.97); }
+.preset[aria-pressed="true"] { border-color: transparent; background: var(--accent); color: var(--accent-foreground); }
+.clear { margin-left: auto; border-color: transparent; background: transparent; }
+.clear:disabled { cursor: default; opacity: .4; }
+
+/* Rows share one column template: a gutter for the hour, then one equal column per day. */
+.grid { --gutter: 3rem; display: grid; user-select: none; }
+.row { display: grid; grid-template-columns: var(--gutter) repeat(var(--days), minmax(0, 1fr)); }
+.dayCell { display: grid; padding: 0 2px var(--space-2); }
+.day { height: 30px; padding: 0; border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--text-muted); font: inherit; font-size: var(--text-xs); font-weight: 600; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard); }
+.day:hover { background: var(--surface-muted); color: var(--foreground); }
+.day[data-any] { color: var(--foreground); }
+.narrow { display: none; }
+/* Dragging selects, so the browser must not scroll or select text from inside the slots. */
+.body { display: grid; touch-action: none; cursor: cell; }
+.hour { align-self: center; padding-right: var(--space-2); color: var(--text-muted); font-size: 11px; font-variant-numeric: tabular-nums; text-align: end; white-space: nowrap; }
+
+/* A cell is a hit area; the slot drawn inside it leaves a hairline of space, which closes between neighbours that are both selected. */
+.cell { position: relative; height: 30px; outline-offset: -3px; }
+.cell::before { content: ""; position: absolute; inset: 1.5px; border-radius: 9px; background: var(--surface-muted); transition: background-color var(--duration-fast) var(--ease-standard); }
+.cell:hover::before { background: color-mix(in oklab, var(--foreground) 14%, var(--surface-muted)); }
+/* A slot pops in on a spring and leaves with a plain fade: the scale resets only after the fade, so nothing shrinks on the way out. */
+.fill { position: absolute; inset: 1.5px; border-radius: 9px; background: var(--accent); opacity: 0; transform: scale(.35); transition: opacity 140ms linear var(--wait, 0ms), transform 0s linear calc(var(--wait, 0ms) + 140ms); }
+.cell[data-on="true"] .fill { opacity: 1; transform: scale(1); transition: transform 320ms var(--ease-spring) var(--wait, 0ms), opacity var(--duration-instant) linear var(--wait, 0ms); }
+.cell[data-up] .fill { top: 0; border-top-left-radius: 0; border-top-right-radius: 0; }
+.cell[data-down] .fill { bottom: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; }
+.body[data-dragging] .fill { --wait: 0ms; }
+.cell { --focus-outline-offset: -4px; }
+.cell[data-on="true"] { --focus-outline: var(--accent-foreground); }
+
+.summary { display: grid; gap: var(--space-2); padding: var(--space-5); border: 1px solid var(--border); border-radius: var(--radius-panel); background: var(--surface); box-shadow: var(--shadow-resting); }
+.totalLabel { margin: 0; color: var(--text-muted); font-size: var(--text-xs); font-weight: 500; letter-spacing: .04em; text-transform: uppercase; }
+.total { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-2); margin: 0 0 var(--space-2); }
+.roller { display: inline-grid; overflow: hidden; }
+.digits { display: inline-block; font-family: var(--font-display); font-size: var(--text-4xl); font-weight: 500; font-variant-numeric: tabular-nums; letter-spacing: var(--tracking-display); line-height: 1; }
+.unit { color: var(--text-secondary); font-size: var(--text-sm); }
+.days { display: grid; margin: 0; padding: 0; list-style: none; }
+.dayRow { display: grid; grid-template-columns: 2.25rem minmax(0, 1fr); align-items: center; gap: 2px var(--space-2); padding: var(--space-2) 0; border-top: 1px solid var(--border-subtle); font-size: var(--text-xs); }
+.dayName { font-weight: 600; }
+.dayRow[data-empty] .dayName { color: var(--text-muted); }
+/* One tick per hour: the day at a glance. */
+.track { display: flex; gap: 2px; }
+.track span { height: 6px; flex: 1 1 0; border-radius: var(--radius-pill); background: var(--surface-muted); transition: background-color var(--duration-standard) var(--ease-standard); }
+.track span[data-on="true"] { background: var(--accent-strong); }
+.rangeText { grid-column: 2; color: var(--text-secondary); line-height: 1.35; font-variant-numeric: tabular-nums; }
+.dayRow[data-empty] .rangeText { color: var(--text-muted); }
+
+@container scheduler (max-width: 46rem) {
+  .layout { grid-template-columns: minmax(0, 1fr); }
+}
+@container scheduler (max-width: 30rem) {
+  .grid { --gutter: 2.75rem; }
+  .wide { display: none; }
+  .narrow { display: inline; }
+}
+@media (max-width: 30rem) { .scheduler { padding: var(--space-6) var(--space-4); } }
+@media (prefers-reduced-motion: reduce) { .fill, .preset, .clear, .day, .track span, .cell::before { transition: none; } }

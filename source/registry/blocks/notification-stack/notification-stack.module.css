@@ -1,0 +1,55 @@
+.stack { width: min(25rem, 100%); color: var(--foreground); font-family: var(--font-body); letter-spacing: var(--tracking-body); }
+.stack *, .stack *::before, .stack *::after { box-sizing: border-box; }
+.srOnly { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+.header { display: flex; min-height: 36px; align-items: center; gap: var(--space-2); margin-bottom: var(--space-3); padding-inline: var(--space-1); }
+.label { margin: 0; font-family: var(--font-display); font-size: var(--text-base); font-weight: 500; letter-spacing: var(--tracking-display); }
+.count { display: inline-grid; min-width: 22px; height: 22px; place-items: center; padding: 0 6px; border-radius: var(--radius-pill); background: var(--accent); color: var(--accent-foreground); font-size: var(--text-xs); font-weight: 600; font-variant-numeric: tabular-nums; }
+.spacer { flex: 1 1 auto; }
+.tool { display: inline-flex; height: 30px; align-items: center; gap: 5px; padding: 0 var(--space-2); border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--text-secondary); font: inherit; font-size: var(--text-xs); font-weight: 500; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard); }
+.tool:hover { background: var(--surface-muted); color: var(--foreground); }
+
+/* The zone keeps hover alive across the gaps between fanned cards. */
+.zone { position: relative; }
+.list { position: relative; margin: 0; padding: 0; list-style: none; }
+/* Every card hangs from the top of the list and is placed with transforms only. Tucked cards scale from the bottom edge. */
+.item { position: absolute; top: 0; right: 0; left: 0; transform-origin: 50% 100%; touch-action: pan-y; cursor: grab; will-change: transform; }
+.card { display: flex; align-items: flex-start; gap: var(--space-3); padding: var(--space-3) var(--space-2) var(--space-3) var(--space-3); border: 1px solid var(--border); border-radius: var(--radius-panel); background: var(--surface-raised); box-shadow: var(--shadow-raised); user-select: none; transition: background-color var(--duration-standard) var(--ease-standard), box-shadow var(--duration-standard) var(--ease-standard); }
+.item[data-front="true"][data-fanned="false"] .card { box-shadow: var(--shadow-floating); }
+/* Tucked cards step back in tone and hide their copy, so the pile reads as depth, not as clipped text. */
+.item[data-front="false"][data-fanned="false"] .card { background: var(--surface-muted); box-shadow: var(--shadow-resting); }
+.item[data-front="false"][data-fanned="false"] .card > * { opacity: 0; }
+.card > * { transition: opacity var(--duration-standard) var(--ease-standard); }
+
+.icon { display: grid; width: 34px; height: 34px; flex: none; place-items: center; border-radius: var(--radius-pill); --tone: var(--tone-sky); background: color-mix(in oklab, var(--tone) 15%, transparent); color: var(--tone); }
+.icon[data-kind="billing"] { --tone: var(--tone-green); }
+.icon[data-kind="review"] { --tone: var(--tone-violet); }
+.icon[data-kind="security"] { --tone: var(--tone-amber); }
+.icon[data-kind="team"] { --tone: var(--tone-teal); }
+
+.copy { display: grid; min-width: 0; flex: 1 1 auto; gap: 2px; padding-top: 1px; }
+.heading { display: flex; align-items: center; gap: var(--space-2); margin: 0; }
+.title { overflow: hidden; font-size: var(--text-sm); font-weight: 600; line-height: 1.35; text-overflow: ellipsis; white-space: nowrap; }
+.unread { width: 7px; height: 7px; flex: none; border-radius: var(--radius-pill); background: var(--accent-strong); }
+.time { flex: none; margin-left: auto; color: var(--text-muted); font-size: var(--text-xs); font-variant-numeric: tabular-nums; }
+/* Two lines always, so every card has the same height and the pile stays even. */
+.body { display: -webkit-box; min-height: calc(2 * 1.4em); margin: 0; overflow: hidden; color: var(--text-secondary); font-size: var(--text-sm); line-height: 1.4; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+
+.dismiss { display: grid; width: 28px; height: 28px; flex: none; place-items: center; border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--text-muted); cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard), transform var(--duration-fast) var(--ease-standard); }
+.dismiss:hover { background: var(--surface-muted); color: var(--foreground); }
+.dismiss:active { transform: scale(.9); }
+
+.reveal { position: absolute; inset: 0; z-index: 200; padding: 0; border: 0; background: transparent; }
+@media (hover: hover) and (pointer: fine) { .reveal { display: none; } }
+
+.empty { display: grid; justify-items: center; gap: var(--space-1); padding: var(--space-8) var(--space-4); border: 1px dashed var(--border-strong); border-radius: var(--radius-panel); text-align: center; }
+.emptyIcon { display: grid; width: 40px; height: 40px; margin-bottom: var(--space-2); place-items: center; border-radius: var(--radius-pill); background: var(--surface-muted); color: var(--text-secondary); }
+.emptyTitle { margin: 0; font-size: var(--text-sm); font-weight: 600; }
+.emptyBody { margin: 0; color: var(--text-muted); font-size: var(--text-sm); }
+.restore { height: 34px; margin-top: var(--space-3); padding: 0 var(--space-4); border: 0; border-radius: var(--radius-pill); background: var(--accent); color: var(--accent-foreground); font: inherit; font-size: var(--text-sm); font-weight: 500; cursor: pointer; transition: transform var(--duration-fast) var(--ease-standard); }
+.restore:active { transform: scale(.97); }
+
+.preview { display: flex; min-height: 600px; flex: 1 1 auto; flex-direction: column; align-items: center; gap: var(--space-6); padding: var(--space-12) var(--space-4) var(--space-8); background: var(--background); }
+.hint { max-width: 25rem; margin: auto 0 0; color: var(--text-muted); font-family: var(--font-body); font-size: var(--text-xs); line-height: var(--leading-body); text-align: center; text-wrap: balance; }
+
+@media (prefers-reduced-motion: reduce) { .card, .card > *, .tool, .dismiss, .restore { transition: none; } }

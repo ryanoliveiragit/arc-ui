@@ -1,0 +1,5 @@
+.frame { display: flex; height: 540px; min-width: 0; background: var(--background); }
+.page { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: var(--space-3); overflow: hidden; padding: var(--space-6); }
+.crumbs { margin: 0; color: var(--text-muted); font-size: var(--text-xs); }
+.heading { margin: 0; font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 600; letter-spacing: var(--tracking-display); line-height: var(--leading-display); }
+.lead { max-width: 48ch; margin: 0; color: var(--text-secondary); font-size: var(--text-sm); line-height: var(--leading-body); }

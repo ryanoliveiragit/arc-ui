@@ -1,0 +1,341 @@
+[
+  {
+    "name": "overflow-actions",
+    "type": "registry:block",
+    "title": "Overflow actions",
+    "description": "A toolbar that measures its width and moves the actions that do not fit into a \"more\" menu, with buttons that scale out and a menu button that glides into place.",
+    "categories": [
+      "blocks"
+    ],
+    "dependencies": [
+      "@radix-ui/react-dropdown-menu",
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/blocks/overflow-actions/overflow-actions.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/overflow-actions/overflow-actions.tsx"
+      },
+      {
+        "path": "registry/blocks/overflow-actions/overflow-actions.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/overflow-actions/overflow-actions.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "block",
+      "tags": [
+        "toolbar",
+        "overflow",
+        "menu",
+        "responsive"
+      ]
+    }
+  },
+  {
+    "name": "expandable-tabs",
+    "type": "registry:block",
+    "title": "Expandable tabs",
+    "description": "Icon tabs in which only the active tab shows its label, unfolding on a spring while the others fold back to icons.",
+    "categories": [
+      "blocks"
+    ],
+    "dependencies": [
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/blocks/expandable-tabs/expandable-tabs.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/expandable-tabs/expandable-tabs.tsx"
+      },
+      {
+        "path": "registry/blocks/expandable-tabs/expandable-tabs.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/expandable-tabs/expandable-tabs.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "block",
+      "tags": [
+        "tabs",
+        "navigation",
+        "icons",
+        "spring"
+      ]
+    }
+  },
+  {
+    "name": "morphing-tabs",
+    "type": "registry:block",
+    "title": "Morphing tabs",
+    "description": "Tabs whose active pill stretches, thins and squares off as it travels to the next tab, while the panel crossfades in the direction of travel.",
+    "categories": [
+      "blocks"
+    ],
+    "dependencies": [
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/blocks/morphing-tabs/morphing-tabs.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/morphing-tabs/morphing-tabs.tsx"
+      },
+      {
+        "path": "registry/blocks/morphing-tabs/morphing-tabs.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/morphing-tabs/morphing-tabs.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "block",
+      "tags": [
+        "tabs",
+        "morph",
+        "pill",
+        "navigation"
+      ]
+    }
+  },
+  {
+    "name": "prediction-market",
+    "type": "registry:block",
+    "title": "Prediction market",
+    "description": "A market card with yes and no prices, a probability line that flips to the picked outcome, an amount field and a payout estimate that counts to each new value (play money).",
+    "categories": [
+      "blocks"
+    ],
+    "dependencies": [
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/blocks/prediction-market/prediction-market.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/prediction-market/prediction-market.tsx"
+      },
+      {
+        "path": "registry/blocks/prediction-market/prediction-market.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/prediction-market/prediction-market.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "block",
+      "tags": [
+        "market",
+        "chart",
+        "trading",
+        "form"
+      ]
+    }
+  },
+  {
+    "name": "wallet-card",
+    "type": "registry:block",
+    "title": "Wallet card",
+    "description": "A payment card that leans toward the pointer in 3D and flips on a spring to show its back, with a balance that masks digit by digit and a short transaction list.",
+    "categories": [
+      "blocks"
+    ],
+    "dependencies": [
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/blocks/wallet-card/wallet-card.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/wallet-card/wallet-card.tsx"
+      },
+      {
+        "path": "registry/blocks/wallet-card/wallet-card.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/wallet-card/wallet-card.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "block",
+      "tags": [
+        "card",
+        "payment",
+        "3d",
+        "flip",
+        "finance"
+      ]
+    }
+  },
+  {
+    "name": "card-dealer",
+    "type": "registry:block",
+    "title": "Card dealer",
+    "description": "A deck that deals playing cards to table positions along an arc while they lift and flip face up, with a riffle shuffle, a reset and a named poker hand.",
+    "categories": [
+      "blocks"
+    ],
+    "dependencies": [
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/blocks/card-dealer/card-dealer.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/card-dealer/card-dealer.tsx"
+      },
+      {
+        "path": "registry/blocks/card-dealer/card-dealer.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/card-dealer/card-dealer.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "block",
+      "tags": [
+        "cards",
+        "deck",
+        "game",
+        "flip",
+        "deal"
+      ]
+    }
+  },
+  {
+    "name": "bloom-menu",
+    "type": "registry:block",
+    "title": "Bloom menu",
+    "description": "A floating button whose actions bloom outward along an arc with a staggered, slightly bouncy spring; Escape or a click outside folds them back.",
+    "categories": [
+      "blocks"
+    ],
+    "dependencies": [
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/blocks/bloom-menu/bloom-menu.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/bloom-menu/bloom-menu.tsx"
+      },
+      {
+        "path": "registry/blocks/bloom-menu/bloom-menu.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/bloom-menu/bloom-menu.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "block",
+      "tags": [
+        "fab",
+        "menu",
+        "radial",
+        "actions",
+        "floating"
+      ]
+    }
+  },
+  {
+    "name": "feedback-widget",
+    "type": "registry:block",
+    "title": "Feedback widget",
+    "description": "A floating feedback button that morphs into a small form with a mood picker and a message field, then walks through sending into a drawn check and a thank-you.",
+    "categories": [
+      "blocks"
+    ],
+    "dependencies": [
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/blocks/feedback-widget/feedback-widget.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/feedback-widget/feedback-widget.tsx"
+      },
+      {
+        "path": "registry/blocks/feedback-widget/feedback-widget.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/feedback-widget/feedback-widget.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "block",
+      "tags": [
+        "feedback",
+        "form",
+        "floating",
+        "mood",
+        "widget"
+      ]
+    }
+  },
+  {
+    "name": "not-found",
+    "type": "registry:block",
+    "title": "Not found",
+    "description": "A 404 page with an illustration built from shapes (a zero with eyes that follow the pointer between two fours), a search field that filters the suggested pages, and links back.",
+    "categories": [
+      "blocks"
+    ],
+    "dependencies": [
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/blocks/not-found/not-found.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/not-found/not-found.tsx"
+      },
+      {
+        "path": "registry/blocks/not-found/not-found.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/not-found/not-found.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "block",
+      "tags": [
+        "404",
+        "error",
+        "page",
+        "illustration",
+        "search"
+      ]
+    }
+  }
+]

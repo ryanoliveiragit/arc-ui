@@ -1,0 +1,70 @@
+/* The history and the median take the first series color; the high and low targets take the status tones. Override --fan-* to rebrand. */
+.root { --fan-line: var(--series-1); --fan-high: var(--success); --fan-median: var(--series-1); --fan-low: var(--danger); container-type: inline-size; position: relative; display: grid; min-width: 0; gap: var(--space-4); color: var(--foreground); font-family: var(--font-body); }
+
+.header { display: flex; min-width: 0; align-items: flex-end; justify-content: space-between; gap: var(--space-4); }
+.stat { display: grid; min-width: 0; gap: 2px; margin: 0; }
+.stat[data-align="end"] { justify-items: end; text-align: right; }
+.statLabel { color: var(--text-muted); font-size: var(--text-xs); line-height: var(--leading-body); white-space: nowrap; }
+.statValue { display: inline-flex; align-items: baseline; gap: var(--space-2); font-family: var(--font-display); font-size: var(--text-xl); font-weight: 600; letter-spacing: var(--tracking-display); line-height: 1.1; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.statChange { font-family: var(--font-body); font-size: var(--text-sm); font-weight: 500; letter-spacing: 0; }
+.root [data-sign="up"] { color: var(--fan-high); }
+.root [data-sign="down"] { color: var(--fan-low); }
+
+.frame { position: relative; min-width: 0; }
+.svg { display: block; overflow: visible; }
+.grid line { stroke: var(--border); stroke-width: 1; shape-rendering: crispEdges; }
+.grid text { fill: var(--text-muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+.today { stroke: var(--border-strong); stroke-width: 1; stroke-dasharray: 2 4; }
+.line { fill: none; stroke: var(--fan-line); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+/* A flat tint between the high and the low target: the range, not a decoration. */
+.cone { fill: var(--fan-median); fill-opacity: .1; stroke: none; }
+.ray { --tone: var(--fan-median); fill: none; stroke: var(--tone); stroke-width: 1.75; stroke-linecap: round; stroke-dasharray: 1 6; transition: stroke-opacity var(--duration-fast) var(--ease-standard), stroke-width var(--duration-fast) var(--ease-standard); }
+.ray[data-target="high"], .end[data-target="high"], .target[data-target="high"] { --tone: var(--fan-high); }
+.ray[data-target="low"], .end[data-target="low"], .target[data-target="low"] { --tone: var(--fan-low); }
+.end { --tone: var(--fan-median); transition: fill-opacity var(--duration-fast) var(--ease-standard), stroke-opacity var(--duration-fast) var(--ease-standard); }
+.end line { stroke: var(--border-strong); stroke-width: 1; }
+.end circle { fill: var(--tone); stroke: var(--surface); stroke-width: 2; }
+/* Bringing one scenario forward: its ray thickens and the other two step back. */
+.root[data-emphasis] .ray { stroke-opacity: .28; }
+.root[data-emphasis] .end { fill-opacity: .35; stroke-opacity: .35; }
+.root[data-emphasis="high"] .ray[data-target="high"], .root[data-emphasis="median"] .ray[data-target="median"], .root[data-emphasis="low"] .ray[data-target="low"] { stroke-opacity: 1; stroke-width: 2.5; }
+.root[data-emphasis="high"] .end[data-target="high"], .root[data-emphasis="median"] .end[data-target="median"], .root[data-emphasis="low"] .end[data-target="low"] { fill-opacity: 1; stroke-opacity: 1; }
+.now { fill: var(--fan-line); stroke: var(--surface); stroke-width: 2; }
+/* The last close breathes: a ring grows out of it and fades, on transform and opacity only. */
+.pulse { fill: var(--fan-line); transform-box: fill-box; transform-origin: center; animation: price-target-fan-pulse 2.4s var(--ease-standard) infinite; }
+@keyframes price-target-fan-pulse { 0% { opacity: .5; transform: scale(1); } 70%, 100% { opacity: 0; transform: scale(3.2); } }
+.cross { pointer-events: none; }
+.cross line { stroke: var(--border-strong); stroke-width: 1; }
+.cross circle { fill: var(--surface); stroke: var(--fan-line); stroke-width: 2; }
+
+.scrub { position: absolute; top: 0; left: 0; border-radius: 6px; cursor: crosshair; touch-action: pan-y; -webkit-tap-highlight-color: transparent; }
+.labels { position: absolute; inset: 0; pointer-events: none; }
+.target { --tone: var(--fan-median); position: absolute; top: 0; display: grid; min-width: 0; gap: 1px; margin: 0; padding: 4px 6px; border: 0; border-radius: 10px; background: transparent; color: var(--foreground); font: inherit; line-height: 1.2; text-align: left; translate: 0 -50%; cursor: pointer; pointer-events: auto; transition: background-color var(--duration-fast) var(--ease-standard); --focus-outline-offset: 0px; -webkit-tap-highlight-color: transparent; }
+.target > span { transition: opacity var(--duration-fast) var(--ease-standard); }
+.target[aria-pressed="true"] { background: var(--surface-muted); }
+@media (hover: hover) and (pointer: fine) { .target:hover { background: var(--surface-muted); } }
+.targetValue { font-size: var(--text-sm); font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.targetMeta { display: flex; gap: var(--space-1); color: var(--text-muted); font-size: 11px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.targetChange { color: var(--tone); font-weight: 500; }
+.root .targetChange[data-sign] { color: var(--tone); }
+.root[data-emphasis] .target > span { opacity: .45; }
+.root[data-emphasis="high"] .target[data-target="high"] > span, .root[data-emphasis="median"] .target[data-target="median"] > span, .root[data-emphasis="low"] .target[data-target="low"] > span { opacity: 1; }
+
+/* One bubble for the history. The outer layer glides between closes; the bubble fades and scales from its foot. */
+.tip { position: absolute; z-index: 5; top: 0; left: 0; width: 0; height: 0; pointer-events: none; }
+.tipShift { position: absolute; top: 0; left: 0; width: 0; height: 0; }
+.bubble { position: absolute; bottom: 12px; left: 0; display: grid; width: max-content; gap: 1px; padding: 8px 12px 9px; border: 1px solid var(--border-strong); border-radius: var(--radius-control); background: var(--surface-raised); box-shadow: var(--shadow-raised); translate: -50% 0; transform-origin: 50% 100%; will-change: transform, opacity; }
+.tipDate { color: var(--text-muted); font-size: var(--text-xs); line-height: 1.3; white-space: nowrap; }
+.tipValue { font-size: var(--text-sm); font-weight: 600; line-height: 1.3; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+@container (max-width: 400px) {
+  .statValue { font-size: var(--text-lg); }
+  .statChange { font-size: var(--text-xs); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse { animation: none; opacity: 0; }
+  .ray, .end, .target, .target > span { transition: none; }
+}

@@ -1,0 +1,321 @@
+[
+  {
+    "name": "file-diff",
+    "type": "registry:ui",
+    "title": "File diff",
+    "description": "A unified diff of one file with line numbers, tinted added and removed lines, header stats, and unchanged ranges that fold into a row and spring open.",
+    "categories": [
+      "ai"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/file-diff/file-diff.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/file-diff/file-diff.tsx"
+      },
+      {
+        "path": "registry/components/file-diff/file-diff.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/file-diff/file-diff.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "diff",
+        "code",
+        "ai",
+        "review"
+      ]
+    }
+  },
+  {
+    "name": "streaming-response",
+    "type": "registry:ui",
+    "title": "Streaming response",
+    "description": "Text that streams in word by word behind a caret, each word rising out of a soft blur, with pause, skip and replay controls; reduced motion shows the full text.",
+    "categories": [
+      "ai"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/streaming-response/streaming-response.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/streaming-response/streaming-response.tsx"
+      },
+      {
+        "path": "registry/components/streaming-response/streaming-response.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/streaming-response/streaming-response.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "ai",
+        "streaming",
+        "text",
+        "chat"
+      ]
+    }
+  },
+  {
+    "name": "image-generation",
+    "type": "registry:ui",
+    "title": "Image generation",
+    "description": "An image request card: a shimmering field of cells with progress and phase labels, then the image resolves from blurred to sharp and the footer becomes the actions row.",
+    "categories": [
+      "ai"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/image-generation/image-generation.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/image-generation/image-generation.tsx"
+      },
+      {
+        "path": "registry/components/image-generation/image-generation.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/image-generation/image-generation.module.css"
+      },
+      {
+        "path": "lib/use-copy-feedback.ts",
+        "type": "registry:lib",
+        "target": "@components/ryan-ui/lib/use-copy-feedback.ts"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "ai",
+        "image",
+        "progress",
+        "reveal"
+      ]
+    }
+  },
+  {
+    "name": "citations",
+    "type": "registry:ui",
+    "title": "Citations",
+    "description": "Numbered citation chips inside text that open a card with the source title, site and snippet, plus a sources list; chips and rows share one gliding highlight.",
+    "categories": [
+      "ai"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react",
+      "@radix-ui/react-popover"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/citations/citations.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/citations/citations.tsx"
+      },
+      {
+        "path": "registry/components/citations/citations.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/citations/citations.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "ai",
+        "sources",
+        "hover-card",
+        "text"
+      ]
+    }
+  },
+  {
+    "name": "agent-activity",
+    "type": "registry:ui",
+    "title": "Agent activity",
+    "description": "A live timeline of an agent at work: the current step pulses and collects what it finds as chips, and finished steps fold into one summary row that opens again.",
+    "categories": [
+      "ai"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/agent-activity/agent-activity.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/agent-activity/agent-activity.tsx"
+      },
+      {
+        "path": "registry/components/agent-activity/agent-activity.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/agent-activity/agent-activity.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "ai",
+        "agent",
+        "timeline",
+        "progress"
+      ]
+    }
+  },
+  {
+    "name": "loading-states",
+    "type": "registry:ui",
+    "title": "Loading states",
+    "description": "Thinking indicators for AI interfaces: shimmering text, bouncing dots, a rotating status phrase beside an orbiting mark, and a step counter with rolling digits and pips.",
+    "categories": [
+      "ai"
+    ],
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/loading-states/loading-states.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/loading-states/loading-states.tsx"
+      },
+      {
+        "path": "registry/components/loading-states/loading-states.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/loading-states/loading-states.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "ai",
+        "loading",
+        "thinking",
+        "status"
+      ]
+    }
+  },
+  {
+    "name": "ai-sidebar",
+    "type": "registry:ui",
+    "title": "AI sidebar",
+    "description": "A docked assistant panel that springs in beside the page and pushes it aside (or slides over it when narrow), with a header, a message list that follows new messages, suggestion chips and a growing prompt box.",
+    "categories": [
+      "ai"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens",
+      "loading-states"
+    ],
+    "files": [
+      {
+        "path": "registry/components/ai-sidebar/ai-sidebar.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/ai-sidebar/ai-sidebar.tsx"
+      },
+      {
+        "path": "registry/components/ai-sidebar/ai-sidebar.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/ai-sidebar/ai-sidebar.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "ai",
+        "sidebar",
+        "chat",
+        "panel"
+      ]
+    }
+  },
+  {
+    "name": "chat-app",
+    "type": "registry:block",
+    "title": "Chat app",
+    "description": "A complete chat screen: a conversation list with a gliding active marker, a thread whose simulated replies think, stream in and can be stopped, copied or regenerated, and a growing prompt box.",
+    "categories": [
+      "blocks"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens",
+      "streaming-response",
+      "loading-states"
+    ],
+    "files": [
+      {
+        "path": "registry/blocks/chat-app/chat-app.tsx",
+        "type": "registry:block",
+        "target": "@components/ryan-ui/blocks/chat-app/chat-app.tsx"
+      },
+      {
+        "path": "registry/blocks/chat-app/chat-app.module.css",
+        "type": "registry:block",
+        "target": "@components/ryan-ui/blocks/chat-app/chat-app.module.css"
+      },
+      {
+        "path": "registry/blocks/chat-app/chat-app-data.ts",
+        "type": "registry:block",
+        "target": "@components/ryan-ui/blocks/chat-app/chat-app-data.ts"
+      },
+      {
+        "path": "lib/use-copy-feedback.ts",
+        "type": "registry:lib",
+        "target": "@components/ryan-ui/lib/use-copy-feedback.ts"
+      },
+      {
+        "path": "lib/media.ts",
+        "type": "registry:lib",
+        "target": "@components/ryan-ui/lib/media.ts"
+      }
+    ],
+    "meta": {
+      "kind": "block",
+      "tags": [
+        "ai",
+        "chat",
+        "app",
+        "streaming"
+      ]
+    }
+  }
+]

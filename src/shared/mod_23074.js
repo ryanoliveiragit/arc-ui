@@ -1,4 +1,0 @@
-function(__module,__exports,__require){
-"use strict";
-var __m=(e=>{e.exports={section:"logo-marquee_section__AVvH4",intro:"logo-marquee_intro__YRkev",marquee:"logo-marquee_marquee__3HNRM",track:"logo-marquee_track__wyvIW",travel:"logo-marquee_travel__H8ryC",paused:"logo-marquee_paused__OHrih",brandList:"logo-marquee_brandList__77jcD",brand:"logo-marquee_brand__R5_b2",brandMark:"logo-marquee_brandMark__LL14h",brandName:"logo-marquee_brandName__PQxxH",footer:"logo-marquee_footer__aEnfB",motionButton:"logo-marquee_motionButton__qWvGn",motionStatus:"logo-marquee_motionStatus__e53bQ"}});if(typeof __m==="function"){__m(__module,__exports,__require);}else{__module.exports=__m;}
-}

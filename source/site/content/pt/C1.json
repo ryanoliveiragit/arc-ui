@@ -1,0 +1,11 @@
+{
+  "aspect-ratio": "Caixa que mantém a proporção e desliza suavemente para outra (16:9, 4:3, 1:1, 9:16) sem deixar a mídia descoberta.",
+  "arc-picker": "Seletor radial: as opções ficam em um arco, giram com a rolagem, o arraste ou as setas, e uma moldura abraça a opção ativa.",
+  "wheel-picker": "Seletor de roda como o de hora do celular: arraste, solte com impulso e ele encaixa na opção; aceita várias colunas e teclado.",
+  "color-swatches": "Amostras de cor em grupo de opções: um anel desliza com mola até a cor escolhida e cada amostra reage ao toque.",
+  "tilt-card": "Cartão que se inclina em 3D na direção do cursor, com um brilho que acompanha o movimento, e volta ao lugar com mola.",
+  "cta-buttons": "Três botões de chamada: seta que se expande e preenche o botão, deslize para confirmar e botão magnético que segue o cursor.",
+  "expandable-control": "Botão de ícone ou chip que se alarga com mola ao ser pressionado e revela o rótulo ou uma ação extra.",
+  "adaptive-stepper": "Contador que não muda de tamanho: os dígitos rolam até o novo valor e o botão de menos ou de mais se recolhe no limite.",
+  "marquee": "Faixa que rola sem fim na horizontal ou na vertical, com bordas esmaecidas, e desacelera até parar quando o cursor passa."
+}

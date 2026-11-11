@@ -1,0 +1,47 @@
+.root { --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace; --verdict: var(--success); position: relative; width: 100%; min-width: 0; box-sizing: border-box; overflow: hidden; container-type: inline-size; border: 1px solid var(--border); border-radius: var(--radius-control); background: var(--surface); color: var(--foreground); font-family: var(--font-body); letter-spacing: var(--tracking-body); text-align: left; transition: border-color var(--duration-standard) var(--ease-standard), background-color var(--duration-standard) var(--ease-standard); }
+.root[data-decision="pending"] { border-color: var(--border-strong); }
+.root:not([data-decision="pending"]) { background: transparent; }
+.root[data-decision="denied"] { --verdict: var(--danger); }
+/* The frame's height is animated from script; the content keeps its natural height so it can be measured. */
+.content { position: relative; }
+
+.request { display: flex; min-width: 0; flex-direction: column; gap: var(--space-3); padding: var(--space-3); }
+.head { display: flex; min-width: 0; align-items: flex-start; gap: var(--space-2); }
+.icon { display: grid; width: 26px; height: 26px; flex: none; place-items: center; border-radius: 9px; background: var(--accent); color: var(--accent-foreground); }
+.ask { min-width: 0; margin: 0; padding-top: 2px; font-size: var(--text-sm); font-weight: 500; line-height: 22px; }
+.tool { padding: 2px 7px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface-muted); font-family: var(--mono); font-size: .86em; font-weight: 500; letter-spacing: 0; overflow-wrap: anywhere; }
+.why { display: block; color: var(--text-secondary); font-weight: 400; }
+.args { display: grid; gap: 3px; padding: var(--space-2) var(--space-3); border-radius: 12px; background: var(--surface-muted); font-family: var(--mono); font-size: var(--text-xs); line-height: 1.6; letter-spacing: 0; }
+.arg { display: flex; min-width: 0; gap: var(--space-3); }
+.argName { flex: none; color: var(--text-muted); }
+.argName::after { content: ":"; }
+.argValue { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.actions { display: flex; min-width: 0; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.deny, .always, .once, .change { height: 32px; flex: none; padding: 0 var(--space-3); border: 1px solid transparent; border-radius: var(--radius-pill); font: inherit; font-size: var(--text-sm); font-weight: 500; white-space: nowrap; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: scale var(--duration-spring) var(--ease-spring), background-color var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard); }
+.deny { margin-right: auto; background: transparent; color: var(--text-secondary); }
+.always { border-color: var(--border); background: var(--surface); color: var(--foreground); }
+.once { background: var(--accent); color: var(--accent-foreground); font-weight: 600; }
+/* Quick press, spring release. */
+.deny:active, .always:active, .once:active, .change:active { scale: .95; transition-duration: var(--duration-instant); transition-timing-function: var(--ease-standard); }
+
+.result { display: flex; min-width: 0; min-height: 40px; box-sizing: border-box; align-items: center; gap: var(--space-2); padding: 4px 4px 4px var(--space-3); font-size: var(--text-sm); }
+.verdict { display: grid; width: 20px; height: 20px; flex: none; place-items: center; border-radius: var(--radius-pill); background: color-mix(in oklab, var(--verdict) 16%, transparent); color: var(--verdict); }
+.verdict svg { display: block; width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.resultText { flex: none; font-weight: 500; white-space: nowrap; }
+.resultTool { min-width: 0; flex: 0 1 auto; overflow: hidden; color: var(--text-secondary); font-family: var(--mono); font-size: var(--text-xs); letter-spacing: 0; text-overflow: ellipsis; white-space: nowrap; }
+.resultArgs { min-width: 0; flex: 1 1 0; overflow: hidden; color: var(--text-muted); font-family: var(--mono); font-size: var(--text-xs); letter-spacing: 0; text-overflow: ellipsis; white-space: nowrap; }
+.change { height: 30px; background: transparent; color: var(--text-secondary); }
+@media (hover: hover) and (pointer: fine) {
+  .deny:hover { background: color-mix(in oklab, var(--danger) 12%, transparent); color: var(--danger); }
+  .always:hover { border-color: var(--border-strong); background: var(--surface-muted); }
+  .once:hover { background: color-mix(in oklab, var(--accent), var(--accent-foreground) 9%); }
+  .change:hover { background: var(--surface-muted); color: var(--foreground); }
+}
+/* Narrow: the two allow buttons share a row and deny drops under them. */
+@container (max-width: 21rem) { .actions > * { flex: 1 1 auto; } .deny { order: 1; flex-basis: 100%; margin-right: 0; } .resultArgs { display: none; } .resultTool { flex: 1 1 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .root, .deny, .always, .once, .change { transition: none; }
+  .deny:active, .always:active, .once:active, .change:active { scale: none; }
+}

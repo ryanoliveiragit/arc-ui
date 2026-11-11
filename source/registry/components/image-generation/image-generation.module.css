@@ -1,0 +1,47 @@
+.root { position: relative; display: flex; width: 100%; min-width: 0; flex-direction: column; gap: var(--space-3); padding: var(--space-3); border: 1px solid var(--border); border-radius: var(--radius-surface); background: var(--surface); color: var(--foreground); box-shadow: var(--shadow-resting); font-family: var(--font-body); font-size: var(--text-sm); letter-spacing: var(--tracking-body); line-height: var(--leading-body); }
+
+.header { display: flex; min-width: 0; align-items: flex-start; gap: var(--space-3); padding: var(--space-1) var(--space-2) 0; }
+.badge { display: grid; width: 28px; height: 28px; flex: none; place-items: center; border-radius: var(--radius-pill); background: var(--accent); color: var(--accent-foreground); }
+.root[data-status="generating"] .badge svg { animation: twinkle 1.6s var(--ease-in-out) infinite alternate; }
+.heading { min-width: 0; flex: 1; }
+.prompt { display: -webkit-box; margin: 0; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; font-weight: 500; line-height: 1.4; padding-top: 4px; }
+.model { margin: 2px 0 0; color: var(--text-muted); font-size: var(--text-xs); }
+
+.frame { position: relative; overflow: hidden; border-radius: calc(var(--radius-surface) - var(--space-3)); background: var(--surface-muted); isolation: isolate; }
+/* A field of cells. While the image is being made a diagonal wave of the accent runs across it; only opacity animates. */
+.placeholder { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(8, 1fr); grid-template-rows: repeat(6, 1fr); gap: 3px; padding: 3px; }
+.cell { border-radius: 6px; background: var(--accent-strong); opacity: .05; }
+.placeholder[data-active="true"] .cell { animation: cell-wave 1.9s var(--ease-in-out) infinite; animation-delay: calc(var(--d) * 95ms); }
+.image { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; object-fit: cover; user-select: none; will-change: transform, filter; }
+.failed { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-2); padding: var(--space-4); color: var(--text-secondary); text-align: center; }
+.failed svg { color: var(--danger); }
+.progress { position: absolute; right: 0; bottom: 0; left: 0; z-index: 2; height: 3px; background: color-mix(in oklab, var(--foreground) 10%, transparent); opacity: 0; transition: opacity var(--duration-standard) var(--ease-standard); }
+.progress[data-visible="true"] { opacity: 1; }
+.progressFill { display: block; width: 100%; height: 100%; background: var(--accent-strong); transform-origin: 0 50%; transition: transform 120ms linear; }
+
+/* One row with a fixed height: progress while working, actions when done. Nothing below the card moves. */
+.footer { position: relative; display: flex; min-height: 36px; align-items: center; padding: 0 var(--space-1) var(--space-1); }
+.working { display: flex; width: 100%; min-width: 0; align-items: center; justify-content: space-between; gap: var(--space-3); padding-inline: var(--space-1); }
+.phase { position: relative; display: block; min-width: 0; flex: 1; color: var(--text-secondary); }
+.phaseText { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.percent { flex: none; color: var(--foreground); font-variant-numeric: tabular-nums; font-weight: 600; }
+.actions { display: flex; width: 100%; min-width: 0; flex-wrap: wrap; gap: var(--space-2); }
+.actionSlot { display: inline-flex; }
+.action { display: inline-flex; height: 36px; align-items: center; gap: var(--space-2); padding: 0 var(--space-3); border: 1px solid var(--border); border-radius: var(--radius-pill); background: var(--surface); color: var(--foreground); font: inherit; font-weight: 500; text-decoration: none; white-space: nowrap; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background-color var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard), scale var(--duration-spring) var(--ease-spring); }
+.action svg { color: var(--text-secondary); }
+.action[data-primary] { border-color: transparent; background: var(--accent); color: var(--accent-foreground); }
+.action[data-primary] svg { color: inherit; }
+.action:active { scale: .96; transition-duration: var(--duration-instant); }
+@media (hover: hover) and (pointer: fine) { .action:not([data-primary]):hover { border-color: var(--border-strong); background: var(--surface-muted); } }
+.swapIcon { position: relative; display: grid; width: 15px; height: 15px; place-items: center; }
+.swapGlyph { display: grid; place-items: center; }
+.srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+@keyframes cell-wave { 0%, 55%, 100% { opacity: .05; } 22% { opacity: .34; } }
+@keyframes twinkle { from { transform: scale(.82) rotate(-8deg); } to { transform: scale(1.08) rotate(8deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .placeholder[data-active="true"] .cell, .root[data-status="generating"] .badge svg { animation: none; }
+  .placeholder[data-active="true"] .cell { opacity: .12; }
+  .action, .progress { transition: none; }
+  .action:active { scale: none; }
+}

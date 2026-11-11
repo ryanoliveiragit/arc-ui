@@ -1,0 +1,28 @@
+.root { display: flex; width: 100%; min-width: 0; flex-direction: column; align-items: center; gap: var(--space-3); color: var(--foreground); font-family: var(--font-body); }
+/* The viewport clips the cards that swing past its sides; the mask is an edge fade, so they leave softly instead of being cut. */
+.viewport { --focus-outline-offset: -2px; position: relative; width: 100%; overflow: hidden; border-radius: var(--radius-panel); cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; -webkit-mask-image: linear-gradient(to right, transparent, black 9%, black 91%, transparent); mask-image: linear-gradient(to right, transparent, black 9%, black 91%, transparent); }
+.viewport[data-dragging] { cursor: grabbing; }
+/* No overflow, opacity or filter here: any of them would flatten the 3D space the cards live in. */
+.ring { position: absolute; inset: 0; transform-style: preserve-3d; will-change: transform; }
+/* The viewport is taller than the cards and they sit a little above its middle, so the front card's shadow is never clipped. */
+.slide { position: absolute; top: calc(50% - 10px); left: 50%; transform-style: preserve-3d; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.slide[data-front="false"] { cursor: pointer; }
+.viewport[data-dragging] .slide { cursor: grabbing; }
+/* No box-shadow on the cards: in Chromium a shadow on a card that is turned in 3D makes its layer cut into its neighbors. The plate below carries the shadow instead. */
+.card { width: 100%; height: 100%; box-sizing: border-box; overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius-panel); background: var(--surface-raised); backface-visibility: hidden; -webkit-backface-visibility: hidden; transition: border-color var(--duration-standard) var(--ease-standard); }
+.slide[data-front="true"] .card { border-color: var(--border-strong); }
+/* A flat, empty box exactly behind the front position. It stays put while the cylinder turns, so whichever card faces the viewer gets the lift. */
+.plate { position: absolute; top: calc(50% - 10px); left: 50%; border-radius: var(--radius-panel); box-shadow: var(--shadow-floating); pointer-events: none; }
+.card img { -webkit-user-drag: none; user-select: none; pointer-events: none; }
+
+.controls { display: flex; align-items: center; gap: var(--space-3); }
+.arrow { display: grid; width: var(--control-height-sm); height: var(--control-height-sm); place-items: center; padding: 0; border: 1px solid var(--border); border-radius: var(--radius-pill); background: var(--surface); color: var(--foreground); cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background-color var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard), scale var(--duration-spring) var(--ease-spring); }
+@media (hover: hover) and (pointer: fine) { .arrow:hover { border-color: var(--border-strong); background: var(--surface-muted); } }
+.arrow:active { scale: .94; transition-duration: var(--duration-instant); }
+.counter { display: inline-flex; min-width: 3.5rem; align-items: baseline; justify-content: center; gap: var(--space-1); font-size: var(--text-sm); font-variant-numeric: tabular-nums; line-height: var(--leading-body); }
+.current { position: relative; display: inline-flex; min-width: 1.2em; justify-content: flex-end; font-weight: 600; }
+.digit { display: inline-block; }
+.total { color: var(--text-muted); }
+.srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+@media (prefers-reduced-motion: reduce) { .card, .arrow { transition: none; } .arrow:active { scale: none; } }

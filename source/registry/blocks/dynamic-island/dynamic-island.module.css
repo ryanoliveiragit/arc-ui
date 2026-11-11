@@ -1,0 +1,80 @@
+/* The island is hardware: it stays near black in both themes, so it uses the fixed neutral scale instead of the theme surfaces. */
+.island {
+  --ink: var(--neutral-1);
+  --ink-soft: var(--neutral-6);
+  --well: color-mix(in oklab, var(--neutral-0) 14%, transparent);
+  /* Icon color on the status fills: those fills are deep in the light theme and bright in the dark one. */
+  --on-status: var(--neutral-0);
+  position: relative; max-width: calc(100vw - 1.5rem); flex: none; overflow: hidden; background: var(--neutral-11); box-shadow: 0 0 0 1px color-mix(in oklab, var(--neutral-0) 9%, transparent), var(--shadow-raised); color: var(--ink); font-family: var(--font-body); letter-spacing: var(--tracking-body); will-change: width, height;
+}
+:global(:root[data-theme="dark"]) .island { --on-status: var(--neutral-11); }
+.island *, .island *::before, .island *::after { box-sizing: border-box; }
+/* Each view is laid out at its final size and centered, so content never reflows while the pill stretches around it. */
+.view { position: absolute; top: 0; left: 50%; translate: -50% 0; }
+.lens { position: absolute; top: 50%; right: 14px; width: 10px; height: 10px; margin-top: -5px; border-radius: var(--radius-pill); background: color-mix(in oklab, var(--neutral-0) 12%, transparent); }
+
+.compact { display: flex; width: 100%; height: 100%; align-items: center; justify-content: space-between; gap: var(--space-2); padding: 0 12px 0 7px; border: 0; border-radius: inherit; background: transparent; color: inherit; font: inherit; cursor: pointer; --focus-outline-offset: -3px; --focus-outline: var(--accent); -webkit-tap-highlight-color: transparent; }
+.face, .cover { width: 22px; height: 22px; flex: none; object-fit: cover; }
+.face { border-radius: var(--radius-pill); }
+.cover { border-radius: 6px; }
+.glyph { display: grid; width: 22px; height: 22px; flex: none; place-items: center; color: var(--accent); }
+.digits { color: var(--ink); font-size: var(--text-xs); font-weight: 600; font-variant-numeric: tabular-nums; }
+.compact .digits { margin-left: auto; color: var(--accent); font-size: var(--text-sm); }
+.compact .bars { margin-left: auto; }
+.compact .bars + .digits { margin-left: var(--space-1); }
+.ringing { display: grid; width: 22px; height: 22px; place-items: center; border-radius: var(--radius-pill); background: var(--success); color: var(--on-status); animation: ring 1.2s var(--ease-in-out) infinite; }
+@keyframes ring { 0%, 55%, 100% { transform: rotate(0); } 10%, 30% { transform: rotate(-14deg); } 20%, 40% { transform: rotate(14deg); } }
+
+/* Sound bars: four strips that scale on their own beat while something is audible, and rest flat when it is not. */
+.bars { display: inline-flex; height: 16px; flex: none; align-items: center; gap: 2.5px; }
+.bars span { width: 3px; height: 100%; border-radius: var(--radius-pill); background: var(--accent); transform: scaleY(.25); }
+.bars[data-active="true"] span { animation: beat 900ms var(--ease-in-out) infinite alternate; }
+.bars span:nth-child(2) { animation-duration: 620ms; animation-delay: -200ms; }
+.bars span:nth-child(3) { animation-duration: 760ms; animation-delay: -420ms; }
+.bars span:nth-child(4) { animation-duration: 540ms; animation-delay: -100ms; }
+@keyframes beat { from { transform: scaleY(.25); } to { transform: scaleY(1); } }
+
+.round { display: grid; width: 44px; height: 44px; flex: none; place-items: center; padding: 0; border: 0; border-radius: var(--radius-pill); background: var(--well); color: var(--ink); cursor: pointer; --focus-outline: var(--neutral-0); -webkit-tap-highlight-color: transparent; transition: transform var(--duration-fast) var(--ease-standard), background-color var(--duration-fast) var(--ease-standard); }
+.round:hover { background: color-mix(in oklab, var(--neutral-0) 22%, transparent); }
+.round:active { transform: scale(.9); }
+.round[aria-pressed="true"] { background: var(--neutral-1); color: var(--neutral-11); }
+.round[data-tone="accept"] { background: var(--success); color: var(--on-status); }
+.round[data-tone="decline"] { background: var(--danger); color: var(--on-status); }
+.round[data-tone="accent"] { background: var(--accent); color: var(--accent-foreground); }
+
+.lines { display: grid; min-width: 0; flex: 1 1 auto; gap: 1px; margin: 0; }
+.lines span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.small { color: var(--ink-soft); font-size: var(--text-xs); font-variant-numeric: tabular-nums; }
+.strong { font-size: var(--text-base); font-weight: 600; line-height: 1.25; }
+
+.callView { display: flex; height: 100%; align-items: center; gap: var(--space-2); padding: 0 18px 0 16px; }
+.portrait { width: 46px; height: 46px; flex: none; margin-right: var(--space-1); border-radius: var(--radius-pill); object-fit: cover; }
+
+.timerView { position: relative; display: flex; height: 100%; align-items: center; gap: var(--space-2); padding: 0 22px 0 18px; }
+.countdown { display: grid; flex: 1 1 auto; justify-items: end; margin: 0; }
+.big { font-family: var(--font-display); font-size: var(--text-3xl); font-weight: 500; font-variant-numeric: tabular-nums; letter-spacing: var(--tracking-display); line-height: 1; }
+.meter { position: absolute; right: 40px; bottom: 9px; left: 40px; height: 3px; overflow: hidden; border-radius: var(--radius-pill); background: var(--well); }
+.meter span, .progress span { display: block; height: 100%; border-radius: inherit; background: var(--accent); transform-origin: 0 50%; transition: transform 1s linear; }
+
+.musicView { display: grid; height: 100%; align-content: center; gap: var(--space-3); padding: 20px 22px 16px; }
+.nowPlaying { display: flex; align-items: center; gap: var(--space-3); }
+.art { width: 52px; height: 52px; flex: none; border-radius: 14px; object-fit: cover; }
+.scrub { display: flex; align-items: center; gap: var(--space-2); }
+.scrub .digits { width: 2.6rem; color: var(--ink-soft); font-weight: 500; }
+.scrub .digits:last-child { text-align: end; }
+.progress { height: 5px; flex: 1 1 auto; overflow: hidden; border-radius: var(--radius-pill); background: var(--well); }
+.transport { display: flex; align-items: center; justify-content: center; gap: var(--space-5); }
+
+/* Preview stage: the top of a phone, the lock screen under it, and the activity switch. */
+.preview { display: flex; min-height: 600px; flex: 1 1 auto; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-5); padding: var(--space-8) var(--space-4); background: var(--background); font-family: var(--font-body); }
+.phone { position: relative; display: flex; width: min(23.5rem, 100%); height: 380px; flex-direction: column; align-items: center; overflow: hidden; border: 1px solid var(--border); border-bottom: 0; border-radius: 3.25rem 3.25rem 0 0; background: var(--surface-muted); color: var(--foreground); }
+.statusBar { position: absolute; top: 20px; right: 34px; left: 34px; display: flex; align-items: center; justify-content: space-between; font-size: var(--text-sm); font-weight: 600; font-variant-numeric: tabular-nums; }
+.battery { width: 25px; height: 12px; padding: 1.5px; border: 1.5px solid var(--text-muted); border-radius: 4px; }
+.battery span { display: block; width: 72%; height: 100%; border-radius: 1.5px; background: var(--foreground); }
+.dock { position: relative; z-index: 1; display: flex; justify-content: center; margin-top: 12px; }
+.lock { position: absolute; top: 128px; display: grid; justify-items: center; gap: var(--space-1); }
+.date { color: var(--text-secondary); font-size: var(--text-base); font-weight: 500; }
+.clock { font-family: var(--font-display); font-size: 5.5rem; font-weight: 500; font-variant-numeric: tabular-nums; letter-spacing: var(--tracking-display); line-height: 1; }
+.hint { margin: 0; color: var(--text-muted); font-size: var(--text-xs); text-align: center; text-wrap: balance; }
+
+@media (prefers-reduced-motion: reduce) { .bars[data-active="true"] span, .ringing { animation: none; } .bars[data-active="true"] span:nth-child(odd) { transform: scaleY(.9); } .bars[data-active="true"] span:nth-child(even) { transform: scaleY(.55); } .round, .meter span, .progress span { transition: none; } }

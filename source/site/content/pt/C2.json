@@ -1,0 +1,10 @@
+{
+  "hover-highlight": "Grupo em que um único fundo desliza até o item sob o cursor ou em foco, ideal para menus, navegação e barras de ferramentas.",
+  "dock": "Dock de aplicativos: os ícones crescem perto do cursor, mostram o nome, pulam ao clicar e o ativo ganha um ponto.",
+  "preview-rail": "Trilho de cartões em que o cartão sob o cursor ou em foco se alarga para mostrar a prévia enquanto os outros encolhem.",
+  "bounce-sidebar": "Barra lateral que alterna entre trilho de ícones e painel completo com uma mola elástica; o marcador ativo desliza.",
+  "animated-sidebar": "Barra lateral com grupos aninhados que abrem com animação de altura, destaque que desliza e modo recolhido com dicas.",
+  "file-tree": "Árvore de arquivos com pastas que abrem suavemente, ícones por tipo, seleção e navegação completa pelo teclado.",
+  "pull-to-refresh": "Área de rolagem que você puxa para baixo para atualizar: o indicador estica, gira durante a atualização e volta ao lugar.",
+  "image-viewer": "Galeria de miniaturas que se ampliam num visualizador com setas, gesto de deslizar, zoom e arraste; Esc devolve a imagem ao lugar."
+}

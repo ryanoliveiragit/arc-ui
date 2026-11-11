@@ -1,0 +1,67 @@
+/* Shared shell for the three hero designs. Every surface is a solid token; the only texture is a faint grid of solid dots.
+   --hero-ink is the accent as text or a thin stroke: the deep accent on a light page, the accent itself on a dark one. */
+.hero {
+  --hero-ink: var(--accent-strong);
+  --hero-dot: color-mix(in oklab, var(--foreground) 13%, transparent);
+  position: relative; container: hero / inline-size; isolation: isolate; overflow: clip;
+  background: var(--background); color: var(--foreground); font-family: var(--font-body); letter-spacing: var(--tracking-body);
+}
+:global(:root[data-theme="dark"]) .hero { --hero-ink: var(--accent); --hero-dot: color-mix(in oklab, var(--foreground) 11%, transparent); }
+
+/* The designed variants are at least one full screen, edge to edge. The small viewport unit keeps them from hiding under mobile
+   browser bars. Your own content (HeroContent) keeps its natural height inside your page. */
+.screen { width: 100%; min-height: 100vh; min-height: 100svh; }
+
+/* Dot grid: one flat color shown through a repeating mask of round dots, so no gradient is painted. The outer mask only fades
+   the grid out toward an edge; each design sets where with --dots-fade. */
+.dots {
+  position: absolute; z-index: -1; inset: 0; pointer-events: none;
+  -webkit-mask-image: var(--dots-fade, linear-gradient(to bottom, #000 35%, transparent 92%));
+  mask-image: var(--dots-fade, linear-gradient(to bottom, #000 35%, transparent 92%));
+}
+.dots::before {
+  content: ""; position: absolute; inset: 0; background: var(--hero-dot);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Ccircle cx='12' cy='12' r='1'/%3E%3C/svg%3E") 0 0 / 24px 24px repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Ccircle cx='12' cy='12' r='1'/%3E%3C/svg%3E") 0 0 / 24px 24px repeat;
+}
+
+/* Navigation bar: brand, links, and the way in. */
+.nav { position: relative; z-index: 2; display: flex; box-sizing: border-box; width: 100%; max-width: 1240px; height: 68px; flex: none; align-items: center; gap: var(--space-8); margin: 0 auto; padding: 0 var(--space-10); }
+.brand { display: inline-flex; flex: none; align-items: center; gap: 10px; color: var(--foreground); font-family: var(--font-display); font-size: var(--text-lg); font-weight: 600; letter-spacing: -.02em; text-decoration: none; }
+.brandMark { display: grid; width: 28px; height: 28px; flex: none; place-items: center; border-radius: 9px; background: var(--accent); color: var(--accent-foreground); }
+.navLinks { display: flex; min-width: 0; gap: 2px; margin: 0; padding: 0; list-style: none; }
+.navLink { display: inline-flex; height: 36px; align-items: center; border: 0; border-radius: var(--radius-pill); padding: 0 12px; background: transparent; color: var(--text-secondary); font: inherit; font-size: var(--text-sm); text-decoration: none; white-space: nowrap; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: color var(--duration-fast) var(--ease-standard), background-color var(--duration-fast) var(--ease-standard); }
+.navLink:active { color: var(--foreground); }
+@media (hover: hover) and (pointer: fine) { .navLink:hover { background: var(--surface-muted); color: var(--foreground); } }
+.navEnd { display: flex; flex: none; align-items: center; gap: var(--space-2); margin-left: auto; }
+
+.title { margin: 0; font-family: var(--font-display); font-size: clamp(2.25rem, 1.3rem + 4.4cqi, 4.5rem); font-weight: 500; letter-spacing: var(--tracking-display); line-height: var(--leading-display); text-wrap: balance; }
+.description { margin: 0; color: var(--text-secondary); font-size: var(--text-lg); line-height: var(--leading-body); text-wrap: pretty; }
+
+/* Marker: a solid accent block wipes over one phrase from left to right. The marked copy sits exactly above the plain one and
+   is revealed by a clip, so the letters turn dark where the marker has reached. The clip also trims the block's top, which keeps
+   it clear of the descenders on the line above, and rounds its corners. */
+.mark { position: relative; display: inline-block; white-space: nowrap; }
+.markInk { position: absolute; inset: 0 -.14em -.1em; padding: 0 .14em .1em; background: var(--accent); color: var(--accent-foreground); clip-path: inset(.08em 0 0 0 round .13em); animation: hero-mark .6s var(--ease-in-out) .34s backwards; }
+.markInk[data-still] { animation: none; }
+@keyframes hero-mark { from { clip-path: inset(.08em 100% 0 0 round .13em); } }
+
+@container hero (max-width: 760px) {
+  .nav { height: 60px; padding: 0 var(--space-4); }
+  .navLinks, .navQuiet { display: none; }
+}
+@container hero (max-width: 560px) {
+  .description { font-size: var(--text-base); }
+}
+
+/* Preview: a slim bar to choose the design, then the hero filling the rest of the screen. */
+.preview { --switcher-height: 56px; display: grid; width: 100%; min-height: 100vh; min-height: 100svh; grid-template-rows: auto minmax(0, 1fr); background: var(--background); }
+.preview > .screen { min-height: calc(100vh - var(--switcher-height)); min-height: calc(100svh - var(--switcher-height)); }
+.switcher { display: flex; box-sizing: border-box; height: var(--switcher-height); align-items: center; justify-content: center; border-bottom: 1px solid var(--border-subtle); padding: 0 var(--space-4); }
+
+.srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  .markInk { animation: none; }
+  .navLink { transition: none; }
+}

@@ -1,0 +1,343 @@
+[
+  {
+    "name": "voice-orb",
+    "type": "registry:ui",
+    "title": "Voice orb",
+    "description": "A voice assistant orb with idle, listening, thinking and speaking states whose rings and waveform bars follow a live level value.",
+    "categories": [
+      "ai"
+    ],
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/voice-orb/voice-orb.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/voice-orb/voice-orb.tsx"
+      },
+      {
+        "path": "registry/components/voice-orb/voice-orb.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/voice-orb/voice-orb.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "ai",
+        "voice",
+        "audio",
+        "status"
+      ]
+    }
+  },
+  {
+    "name": "message-bubble",
+    "type": "registry:ui",
+    "title": "Message bubble",
+    "description": "A chat bubble for the person and the assistant that pops in from its tail corner, groups consecutive messages, and draws delivery ticks under a timestamp.",
+    "categories": [
+      "ai"
+    ],
+    "dependencies": [
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/message-bubble/message-bubble.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/message-bubble/message-bubble.tsx"
+      },
+      {
+        "path": "registry/components/message-bubble/message-bubble.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/message-bubble/message-bubble.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "ai",
+        "chat",
+        "message"
+      ]
+    }
+  },
+  {
+    "name": "message",
+    "type": "registry:ui",
+    "title": "Message",
+    "description": "A full assistant message row with avatar, name and formatted content that staggers in, plus a copy, retry and rate bar that steps in on hover or focus.",
+    "categories": [
+      "ai"
+    ],
+    "dependencies": [
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/message/message.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/message/message.tsx"
+      },
+      {
+        "path": "registry/components/message/message.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/message/message.module.css"
+      },
+      {
+        "path": "lib/use-copy-feedback.ts",
+        "type": "registry:lib",
+        "target": "@components/ryan-ui/lib/use-copy-feedback.ts"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "ai",
+        "chat",
+        "message",
+        "actions"
+      ]
+    }
+  },
+  {
+    "name": "message-scroller",
+    "type": "registry:ui",
+    "title": "Message scroller",
+    "description": "A conversation scroll area that follows new messages while the reader is at the bottom, lets go when they scroll up, and offers a jump to latest pill with an unread count.",
+    "categories": [
+      "ai"
+    ],
+    "dependencies": [
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/message-scroller/message-scroller.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/message-scroller/message-scroller.tsx"
+      },
+      {
+        "path": "registry/components/message-scroller/message-scroller.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/message-scroller/message-scroller.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "ai",
+        "chat",
+        "scroll"
+      ]
+    }
+  },
+  {
+    "name": "prompt-input",
+    "type": "registry:ui",
+    "title": "Prompt input",
+    "description": "An auto-growing prompt box with attachment chips and a model menu whose send button morphs into stop while a response runs; Enter sends and Shift+Enter adds a line.",
+    "categories": [
+      "ai"
+    ],
+    "dependencies": [
+      "@radix-ui/react-dropdown-menu",
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/prompt-input/prompt-input.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/prompt-input/prompt-input.tsx"
+      },
+      {
+        "path": "registry/components/prompt-input/prompt-input.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/prompt-input/prompt-input.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "ai",
+        "chat",
+        "input",
+        "form"
+      ]
+    }
+  },
+  {
+    "name": "todo-list",
+    "type": "registry:ui",
+    "title": "Todo list",
+    "description": "An agent plan checklist whose steps move from pending to running with a shimmer to done with a drawn check and strike-through, under a live progress count.",
+    "categories": [
+      "ai"
+    ],
+    "dependencies": [
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/todo-list/todo-list.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/todo-list/todo-list.tsx"
+      },
+      {
+        "path": "registry/components/todo-list/todo-list.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/todo-list/todo-list.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "ai",
+        "agent",
+        "plan",
+        "progress"
+      ]
+    }
+  },
+  {
+    "name": "approval-card",
+    "type": "registry:ui",
+    "title": "Approval card",
+    "description": "A card that asks a person to approve or reject an agent's proposed action, with a summary, details that expand, and a resolved state the buttons morph into.",
+    "categories": [
+      "ai"
+    ],
+    "dependencies": [
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/approval-card/approval-card.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/approval-card/approval-card.tsx"
+      },
+      {
+        "path": "registry/components/approval-card/approval-card.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/approval-card/approval-card.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "ai",
+        "agent",
+        "approval",
+        "card"
+      ]
+    }
+  },
+  {
+    "name": "tool-approval",
+    "type": "registry:ui",
+    "title": "Tool approval",
+    "description": "A compact inline request to run a tool, with its arguments and allow once, always allow or deny, that collapses into a one-line result once decided.",
+    "categories": [
+      "ai"
+    ],
+    "dependencies": [
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/tool-approval/tool-approval.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/tool-approval/tool-approval.tsx"
+      },
+      {
+        "path": "registry/components/tool-approval/tool-approval.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/tool-approval/tool-approval.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "ai",
+        "agent",
+        "tool",
+        "permission"
+      ]
+    }
+  },
+  {
+    "name": "tool-result",
+    "type": "registry:ui",
+    "title": "Tool result",
+    "description": "A collapsible record of a tool call that shows its status, a live or final duration, and formatted input and output that expand with a height spring.",
+    "categories": [
+      "ai"
+    ],
+    "dependencies": [
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/tool-result/tool-result.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/tool-result/tool-result.tsx"
+      },
+      {
+        "path": "registry/components/tool-result/tool-result.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/tool-result/tool-result.module.css"
+      },
+      {
+        "path": "lib/use-copy-feedback.ts",
+        "type": "registry:lib",
+        "target": "@components/ryan-ui/lib/use-copy-feedback.ts"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "ai",
+        "agent",
+        "tool",
+        "log"
+      ]
+    }
+  }
+]

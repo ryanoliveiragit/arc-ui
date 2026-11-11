@@ -1,0 +1,53 @@
+.grid { display: grid; width: 100%; grid-template-columns: repeat(var(--viewer-columns), minmax(0, 1fr)); gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.cell { min-width: 0; }
+.thumb { position: relative; display: block; width: 100%; aspect-ratio: var(--viewer-ratio); overflow: hidden; padding: 0; border: 0; border-radius: var(--radius-control); background: var(--surface-muted); cursor: zoom-in; -webkit-tap-highlight-color: transparent; transition: scale var(--duration-spring) var(--ease-spring); }
+.thumb img { display: block; width: 100%; height: 100%; object-fit: cover; user-select: none; transition: scale var(--duration-considered) var(--ease-standard); }
+@media (hover: hover) and (pointer: fine) { .thumb:hover img { scale: 1.06; } }
+.thumb:active { scale: .97; transition-duration: var(--duration-instant); transition-timing-function: var(--ease-standard); }
+/* While its image is in the lightbox the thumbnail is an empty slot: the picture is one object that moved. */
+.thumb[data-open] img { visibility: hidden; }
+
+.scrim { position: fixed; inset: 0; z-index: 80; background: color-mix(in oklab, var(--background) 90%, transparent); backdrop-filter: blur(10px); }
+.lightbox { position: fixed; inset: 0; z-index: 81; color: var(--foreground); outline: none; }
+/* The stage owns every gesture, so the browser must not pan or zoom the page under it. */
+.stage { position: absolute; inset: 0; overflow: hidden; touch-action: none; user-select: none; -webkit-user-select: none; }
+.slide, .layer { position: absolute; inset: 0; }
+.layer { will-change: transform; }
+/* Positioned and sized by motion: from the thumbnail's box to the fitted box and back. The image covers it the whole way. */
+.frame { position: absolute; top: 0; left: 0; overflow: hidden; border-radius: var(--radius-control); background: var(--surface-muted); box-shadow: var(--shadow-floating); cursor: zoom-in; }
+.frame[data-zoomed] { cursor: grab; }
+.stage[data-zoomed]:active .frame { cursor: grabbing; }
+.image { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none; user-select: none; -webkit-user-drag: none; }
+
+.bar { position: absolute; top: 0; right: 0; left: 0; display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-3) var(--space-4); pointer-events: none; }
+.bar > * { pointer-events: auto; }
+.counter { padding: var(--space-2) var(--space-4); border: 1px solid var(--border); border-radius: var(--radius-pill); background: var(--surface); box-shadow: var(--shadow-resting); color: var(--text-secondary); font-size: var(--text-sm); font-variant-numeric: tabular-nums; font-weight: 500; line-height: 1.4; }
+.tools { display: flex; gap: 2px; padding: var(--space-1); border: 1px solid var(--border); border-radius: var(--radius-pill); background: var(--surface); box-shadow: var(--shadow-resting); }
+.tool, .arrow { display: grid; flex: none; place-items: center; padding: 0; color: var(--text-secondary); cursor: pointer; -webkit-tap-highlight-color: transparent; transition: color var(--duration-fast) var(--ease-standard), background-color var(--duration-fast) var(--ease-standard), scale var(--duration-spring) var(--ease-spring); }
+.tool { width: 2.25rem; height: 2.25rem; border: 0; border-radius: var(--radius-pill); background: transparent; }
+.arrow { position: absolute; top: 50%; width: 2.75rem; height: 2.75rem; margin-top: -1.375rem; border: 1px solid var(--border); border-radius: var(--radius-pill); background: var(--surface); box-shadow: var(--shadow-raised); }
+.arrow[data-side="previous"] { left: var(--space-4); }
+.arrow[data-side="next"] { right: var(--space-4); }
+@media (hover: hover) and (pointer: fine) { :is(.tool, .arrow):hover:not(:disabled) { background: var(--surface-muted); color: var(--foreground); } }
+:is(.tool, .arrow):active:not(:disabled) { scale: .92; transition-duration: var(--duration-instant); transition-timing-function: var(--ease-standard); }
+:is(.tool, .arrow):disabled { opacity: .4; cursor: default; }
+/* On a phone the arrows would sit on the picture; swiping and the filmstrip move between images there. */
+@media (max-width: 639px) { .arrow { display: none; } }
+
+.footer { position: absolute; right: 0; bottom: 0; left: 0; display: grid; justify-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4) var(--space-4); pointer-events: none; }
+.caption { max-width: 60ch; margin: 0; color: var(--text-secondary); font-size: var(--text-sm); line-height: var(--leading-body); text-align: center; animation: viewer-caption var(--duration-standard) var(--ease-enter) both; }
+.strip { position: relative; display: flex; max-width: 100%; box-sizing: border-box; gap: 6px; overflow: auto hidden; padding: var(--space-1); border: 1px solid var(--border); border-radius: var(--radius-control); background: var(--surface); box-shadow: var(--shadow-raised); pointer-events: auto; scrollbar-width: none; }
+.stripItem { width: 44px; height: 44px; flex: none; overflow: hidden; padding: 0; border: 0; border-radius: calc(var(--radius-control) - var(--space-1)); background: var(--surface-muted); opacity: .55; cursor: pointer; transition: opacity var(--duration-fast) var(--ease-standard); }
+.stripItem img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.stripItem[aria-current], .stripItem:hover { opacity: 1; }
+.stripItem:focus-visible { --focus-outline-offset: -2px; opacity: 1; }
+/* One ring for the whole filmstrip; it slides to the current tile. */
+.ring { position: absolute; top: var(--space-1); left: var(--space-1); z-index: 1; width: 44px; height: 44px; box-sizing: border-box; border: 2px solid var(--accent-strong); border-radius: calc(var(--radius-control) - var(--space-1)); pointer-events: none; }
+.srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+@keyframes viewer-caption { from { opacity: 0; transform: translateY(4px); } }
+@media (prefers-reduced-motion: reduce) {
+  .thumb, .thumb img, .tool, .arrow, .stripItem { transition: none; }
+  .thumb:hover img, .thumb:active, :is(.tool, .arrow):active:not(:disabled) { scale: none; }
+  .caption { animation: none; }
+}

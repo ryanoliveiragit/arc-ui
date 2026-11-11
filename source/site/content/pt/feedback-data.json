@@ -1,0 +1,20 @@
+{
+  "alert": "Uma mensagem persistente que ajuda a pessoa a se recuperar de um problema ou seguir em frente.",
+  "announcement-bar": "Faixa no topo que alterna mensagens, mostra contagem regressiva e recolhe com suavidade ao ser dispensada.",
+  "cookie-consent": "Barra de consentimento que vira painel de preferências e se recolhe em um botão para reabrir.",
+  "countdown": "Contagem regressiva com dígitos que rolam e se transformam em um estado ao vivo quando chega a zero.",
+  "onboarding-checklist": "Lista que guia um novo espaço de trabalho pela configuração, um passo de cada vez.",
+  "progress": "Barra que mostra quanto de uma tarefa conhecida já foi concluído.",
+  "skeleton": "Reserva o espaço enquanto o conteúdo carrega e some em transição suave quando ele chega.",
+  "stepper": "Indicador de etapas de um fluxo, com estados de concluída, atual, pendente e com erro.",
+  "toast": "Aviso rápido e discreto que aparece, some sozinho e pode ser dispensado com um gesto.",
+  "toast-stack": "Pilha de notificações que se empilha, se abre ao passar o mouse e transforma um aviso em seu resultado.",
+  "usage-meter": "Medidor de consumo dividido em partes, com alerta quando o uso se aproxima ou passa do limite do plano.",
+  "avatar": "Foto ou iniciais de uma pessoa, em vários tamanhos e com indicador de presença.",
+  "avatar-group": "Grupo de avatares sobrepostos que resume uma equipe e mostra quantos membros a mais existem.",
+  "badge": "Etiqueta compacta para status, categorias e destaques, em tons e cores variados.",
+  "card": "Cartão com imagem, autor e ação que cresce em uma visão rápida ao ser aberto.",
+  "card-stack": "Pilha de cartões para arrastar e decidir, com botões, desfazer e acessibilidade por teclado.",
+  "carousel": "Carrossel arrastável que centraliza o slide ativo, com indicadores, setas e rotação opcional.",
+  "empty-state": "Estado vazio com título, explicação e uma ação para ajudar a pessoa a começar."
+}

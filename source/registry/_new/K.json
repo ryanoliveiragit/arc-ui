@@ -1,0 +1,194 @@
+[
+  {
+    "name": "crash-game",
+    "type": "registry:ui",
+    "title": "Crash game",
+    "description": "A play-money crash game: the multiplier climbs along a live curve until it crashes at a random point, and you cash out first to keep your bet times the multiplier.",
+    "categories": [
+      "games"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/crash-game/crash-game.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/crash-game/crash-game.tsx"
+      },
+      {
+        "path": "registry/components/crash-game/crash-game.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/crash-game/crash-game.module.css"
+      },
+      {
+        "path": "registry/components/crash-game/play-money.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/crash-game/play-money.tsx"
+      },
+      {
+        "path": "registry/components/crash-game/play-money.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/crash-game/play-money.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "game",
+        "play money",
+        "multiplier",
+        "chart",
+        "bet"
+      ]
+    }
+  },
+  {
+    "name": "mines-game",
+    "type": "registry:ui",
+    "title": "Mines game",
+    "description": "A play-money mines game on a 5×5 grid: tiles flip to reveal gems that raise the multiplier, and a mine ends the round unless you cash out first.",
+    "categories": [
+      "games"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/mines-game/mines-game.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/mines-game/mines-game.tsx"
+      },
+      {
+        "path": "registry/components/mines-game/mines-game.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/mines-game/mines-game.module.css"
+      },
+      {
+        "path": "registry/components/mines-game/play-money.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/mines-game/play-money.tsx"
+      },
+      {
+        "path": "registry/components/mines-game/play-money.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/mines-game/play-money.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "game",
+        "play money",
+        "grid",
+        "flip",
+        "multiplier"
+      ]
+    }
+  },
+  {
+    "name": "plinko-game",
+    "type": "registry:ui",
+    "title": "Plinko game",
+    "description": "A play-money plinko board: each ball bounces left or right off every row of pegs and lights up the multiplier slot it lands in.",
+    "categories": [
+      "games"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/plinko-game/plinko-game.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/plinko-game/plinko-game.tsx"
+      },
+      {
+        "path": "registry/components/plinko-game/plinko-game.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/plinko-game/plinko-game.module.css"
+      },
+      {
+        "path": "registry/components/plinko-game/play-money.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/plinko-game/play-money.tsx"
+      },
+      {
+        "path": "registry/components/plinko-game/play-money.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/plinko-game/play-money.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "game",
+        "play money",
+        "pegs",
+        "ball",
+        "multiplier"
+      ]
+    }
+  },
+  {
+    "name": "slide-game",
+    "type": "registry:ui",
+    "title": "Slide game",
+    "description": "A play-money slide game: a strip of multiplier tiles shoots past a center marker, decelerates and stops on the multiplier that pays the bet.",
+    "categories": [
+      "games"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/slide-game/slide-game.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/slide-game/slide-game.tsx"
+      },
+      {
+        "path": "registry/components/slide-game/slide-game.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/slide-game/slide-game.module.css"
+      },
+      {
+        "path": "registry/components/slide-game/play-money.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/slide-game/play-money.tsx"
+      },
+      {
+        "path": "registry/components/slide-game/play-money.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/slide-game/play-money.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "game",
+        "play money",
+        "strip",
+        "multiplier",
+        "deceleration"
+      ]
+    }
+  }
+]

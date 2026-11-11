@@ -1,0 +1,45 @@
+.tree { --tree-indent: 1rem; --tree-row: 1.875rem; display: flex; min-width: 0; flex-direction: column; color: var(--foreground); font-size: var(--text-sm); letter-spacing: var(--tracking-body); user-select: none; }
+
+.row { position: relative; display: flex; height: var(--tree-row); min-width: 0; box-sizing: border-box; flex: none; align-items: center; gap: 6px; padding: 0 var(--space-2) 0 calc(var(--space-1) + var(--tree-depth) * var(--tree-indent)); border-radius: calc(var(--radius-control) / 2); color: var(--text-secondary); cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard); }
+@media (hover: hover) and (pointer: fine) { .row:hover:not([aria-disabled="true"], [data-selected]) { background: color-mix(in oklab, var(--foreground) 6%, transparent); color: var(--foreground); } }
+.row[data-selected] { background: var(--accent-subtle); color: var(--foreground); }
+.row[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
+/* The row is the focus target; its ring stays inside the tree so a clipped parent never cuts it. */
+.row:focus-visible { outline: 2px solid color-mix(in oklab, var(--accent-strong) 72%, transparent) !important; outline-offset: -2px !important; }
+/* The selected file marks its place with a short accent bar that grows from the middle. */
+.row::before { content: ""; position: absolute; top: 50%; left: 0; width: 2px; height: 1rem; translate: 0 -50%; border-radius: var(--radius-pill); background: var(--accent-strong); scale: 1 0; transition: scale var(--duration-spring) var(--ease-spring); }
+.row[data-selected]::before { scale: 1 1; }
+
+.chevron { display: grid; width: 1rem; height: 1rem; flex: none; place-items: center; color: var(--text-muted); transition: rotate var(--duration-spring) var(--ease-spring); }
+.chevron[data-open="true"] { rotate: 90deg; }
+.icon { display: grid; width: 1rem; height: 1rem; flex: none; place-items: center; color: var(--text-muted); transition: scale var(--duration-spring) var(--ease-spring); }
+.icon svg, .chevron svg { display: block; }
+.icon[data-kind="folder"] { color: var(--text-secondary); }
+.icon[data-kind="folder"][data-open="true"] { color: var(--accent-strong); }
+.icon[data-kind="code"] { color: var(--tone-sky); }
+.icon[data-kind="data"] { color: var(--tone-amber); }
+.icon[data-kind="style"] { color: var(--tone-orchid); }
+.icon[data-kind="image"] { color: var(--tone-green); }
+.icon[data-kind="config"] { color: var(--tone-violet); }
+.icon[data-kind="shell"] { color: var(--tone-teal); }
+.row:active:not([aria-disabled="true"]) .icon { scale: .86; transition-duration: var(--duration-instant); transition-timing-function: var(--ease-standard); }
+.name { min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.status { flex: none; font-family: ui-monospace, "Geist Mono Variable", monospace; font-size: var(--text-xs); font-weight: 600; }
+.row[data-status="modified"] { --tree-status: var(--warning); }
+.row[data-status="added"], .row[data-status="untracked"] { --tree-status: var(--success); }
+.row[data-status="deleted"] { --tree-status: var(--danger); }
+.row[data-status] .status { color: var(--tree-status); }
+.row[data-status="deleted"] .name { text-decoration: line-through; }
+.changed { width: 6px; height: 6px; flex: none; margin-right: 2px; border-radius: var(--radius-pill); background: var(--warning); }
+
+/* Children sit in a clipped box whose height motion animates. The guide line runs under the parent's chevron. */
+.group { position: relative; display: flex; flex: none; flex-direction: column; overflow: hidden; }
+.group::before { content: ""; position: absolute; top: 0; bottom: 0; left: calc(var(--space-1) + var(--tree-depth) * var(--tree-indent) + .5rem - .5px); width: 1px; background: var(--border); }
+.empty { display: flex; height: var(--tree-row); flex: none; align-items: center; padding-left: calc(var(--space-1) + var(--tree-depth) * var(--tree-indent) + 1rem + 6px); color: var(--text-muted); font-size: var(--text-xs); font-style: italic; }
+.srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  .row, .row::before, .chevron, .icon { transition: none; }
+  .row:active:not([aria-disabled="true"]) .icon { scale: none; }
+}

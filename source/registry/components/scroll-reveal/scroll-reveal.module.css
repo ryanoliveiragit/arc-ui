@@ -1,0 +1,11 @@
+.reveal { min-width: 0; }
+/* will-change is left to motion, which sets it only while an item animates. */
+.item { min-width: 0; }
+
+.progress { z-index: 5; width: 100%; flex: none; overflow: hidden; background: var(--border); }
+.sticky { position: sticky; top: 0; }
+.fixed { position: fixed; top: 0; right: 0; left: 0; z-index: 40; }
+.static { position: relative; border-radius: var(--radius-pill); }
+/* A thin stroke on a surface, so it uses the text-safe accent and stays visible in the light theme. */
+.bar { width: 100%; height: 100%; border-radius: 0 var(--radius-pill) var(--radius-pill) 0; background: var(--accent-strong); transform-origin: 0 50%; will-change: transform; }
+.static .bar { border-radius: var(--radius-pill); }

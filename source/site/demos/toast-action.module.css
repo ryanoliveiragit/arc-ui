@@ -1,0 +1,20 @@
+/* The scene keeps a fixed height so the toast has a bottom edge to pin to while the list above it shrinks. */
+.scene { position: relative; display: flex; width: 100%; max-width: 27rem; min-height: 24.5rem; flex-direction: column; gap: var(--space-3); }
+.panel { overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius-panel); background: var(--surface); box-shadow: var(--shadow-resting); }
+.header { display: flex; align-items: center; justify-content: space-between; padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--border-subtle); color: var(--foreground); font-size: var(--text-sm); font-weight: 500; }
+.count { min-width: 1.5rem; padding: 1px var(--space-2); border-radius: var(--radius-pill); background: var(--surface-muted); color: var(--text-secondary); font-size: var(--text-xs); font-variant-numeric: tabular-nums; text-align: center; }
+.list { margin: 0; padding: var(--space-2); list-style: none; }
+.item { overflow: hidden; }
+.row { display: flex; min-width: 0; align-items: center; gap: var(--space-3); padding: var(--space-2); border-radius: var(--radius-control); }
+.tile { display: grid; width: 2.25rem; height: 2.25rem; flex: none; place-items: center; border-radius: 0.75rem; background: var(--surface-muted); color: var(--text-secondary); }
+.text { display: grid; min-width: 0; flex: 1; }
+.name { overflow: hidden; color: var(--foreground); font-size: var(--text-sm); font-weight: 500; line-height: var(--leading-body); text-overflow: ellipsis; white-space: nowrap; }
+.detail { overflow: hidden; color: var(--text-muted); font-size: var(--text-xs); line-height: var(--leading-body); text-overflow: ellipsis; white-space: nowrap; }
+.remove { display: grid; width: 2.25rem; height: 2.25rem; flex: none; place-items: center; border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--text-muted); cursor: pointer; transition: background-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard), scale var(--duration-spring) var(--ease-spring); }
+.remove:active { scale: 0.94; transition-duration: var(--duration-instant); }
+@media (hover: hover) and (pointer: fine) { .remove:hover { background: color-mix(in oklab, var(--danger) 12%, transparent); color: var(--danger); } }
+.empty { display: grid; justify-items: center; gap: var(--space-3); padding: var(--space-5) var(--space-4) var(--space-6); color: var(--text-secondary); font-size: var(--text-sm); }
+.note { padding-inline: var(--space-2); text-align: center; }
+/* Pinned to the scene itself, edge to edge. */
+.scene .toast { bottom: 0; width: 100%; }
+@media (prefers-reduced-motion: reduce) { .remove { transition: none; } .remove:active { scale: none; } }

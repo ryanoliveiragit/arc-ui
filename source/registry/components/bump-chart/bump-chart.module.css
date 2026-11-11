@@ -1,0 +1,51 @@
+.figure { position: relative; display: grid; min-width: 0; margin: 0; color: var(--foreground); font-family: var(--font-body); letter-spacing: var(--tracking-body); }
+
+/* Rank numbers on the left, the lines in the middle, each name at the end of its line, and the periods beneath. */
+.chart { --rank: 16px; position: relative; display: grid; grid-template-columns: var(--rank) minmax(0, 1fr) fit-content(36%); grid-template-rows: auto 26px; column-gap: 6px; min-width: 0; }
+.ranks { position: relative; grid-area: 1 / 1; }
+.rank { position: absolute; left: 0; width: var(--rank); transform: translateY(-50%); color: var(--text-muted); font-size: var(--text-xs); line-height: 1; text-align: center; font-variant-numeric: tabular-nums; transition: color var(--duration-fast) var(--ease-standard); }
+.rank[data-on] { color: var(--foreground); }
+
+.plot { position: relative; grid-area: 1 / 2; min-width: 0; }
+.svg { display: block; overflow: visible; }
+.grid { stroke: var(--border-subtle); stroke-width: 1; shape-rendering: crispEdges; transition: stroke var(--duration-fast) var(--ease-standard); }
+.grid[data-on] { stroke: var(--border-strong); }
+
+/* Series colors (--series-1 to --series-4) come from registry/foundation.css and are set inline. A halo in the surface color lets a line pass cleanly over the ones it overtakes. */
+.series { transition: opacity var(--duration-standard) var(--ease-standard); }
+.chart[data-active] .series { opacity: .16; }
+.line, .lineOn { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.line { stroke-width: 3; }
+.lineOn { stroke-width: 4.5; }
+.dot { stroke: var(--surface); stroke-width: 2; }
+.ring { fill: var(--surface); stroke-width: 2.5; }
+.ring[data-on] { fill: var(--surface-muted); stroke-width: 3.5; }
+.place { fill: var(--foreground); font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.ends { position: relative; grid-area: 1 / 3; min-width: 0; }
+.end { position: absolute; top: 0; right: 0; left: 0; display: block; height: 0; }
+.endText { display: block; overflow: hidden; transform: translateY(-50%); color: var(--text-secondary); font-size: var(--text-sm); line-height: 20px; text-overflow: ellipsis; white-space: nowrap; transition: color var(--duration-fast) var(--ease-standard), opacity var(--duration-standard) var(--ease-standard); }
+.end[data-on] .endText { color: var(--foreground); }
+.chart[data-active] .end:not([data-on]) .endText { opacity: .4; }
+.sizer { display: grid; height: 0; overflow: hidden; visibility: hidden; font-size: var(--text-sm); white-space: nowrap; }
+
+.axis { position: relative; grid-area: 2 / 2; min-width: 0; }
+.axisLabel { position: absolute; top: 10px; transform: translateX(-50%); color: var(--text-muted); font-size: var(--text-xs); line-height: 1; white-space: nowrap; transition: color var(--duration-fast) var(--ease-standard); }
+.axisLabel[data-on] { color: var(--foreground); }
+
+.scrubber { position: absolute; top: 0; right: 0; left: calc(var(--rank) + 6px); border-radius: calc(var(--radius-control) / 2); outline: none; touch-action: pan-y; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
+
+.tooltip { position: absolute; top: 0; left: 0; z-index: 2; display: grid; width: max-content; min-width: 164px; max-width: 240px; gap: 3px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 14px; background: var(--surface-raised); box-shadow: var(--shadow-floating); opacity: 0; pointer-events: none; scale: .96; transition: opacity var(--duration-fast) var(--ease-standard), scale var(--duration-fast) var(--ease-standard); }
+.chart[data-active] .tooltip { opacity: 1; scale: 1; }
+.tipTitle { display: flex; align-items: center; gap: 8px; margin: 0 0 2px; color: var(--foreground); font-size: var(--text-sm); font-weight: 500; line-height: var(--leading-body); }
+.swatch { width: 8px; height: 8px; flex: none; border-radius: 3px; }
+.tipRow { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0; font-size: var(--text-sm); line-height: 1.3; }
+.tipName { color: var(--text-secondary); }
+.tipValue { color: var(--foreground); font-weight: 500; font-variant-numeric: tabular-nums; }
+.tipMeta { margin: 2px 0 0; color: var(--text-muted); font-size: var(--text-xs); line-height: var(--leading-body); }
+
+.srOnly { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rank, .grid, .series, .endText, .axisLabel, .tooltip { transition: none; }
+}

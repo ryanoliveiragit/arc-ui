@@ -1,0 +1,4 @@
+.members { display: grid; gap: var(--space-1); margin: 0; padding: 0; list-style: none; }
+.member { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-2) 0; }
+.memberName { min-width: 0; flex: 1; color: var(--foreground); font-weight: 500; }
+.memberRole { flex: none; color: var(--text-muted); font-size: var(--text-xs); }

@@ -1,0 +1,183 @@
+[
+  {
+    "name": "status-bar",
+    "type": "registry:ui",
+    "title": "Status bar",
+    "description": "An uptime strip with one bar per day colored by status, bars that lift around the pointer, a gliding tooltip and an overall percentage that counts up.",
+    "categories": [
+      "data"
+    ],
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/status-bar/status-bar.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/status-bar/status-bar.tsx"
+      },
+      {
+        "path": "registry/components/status-bar/status-bar.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/status-bar/status-bar.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "chart",
+        "uptime",
+        "status",
+        "monitoring"
+      ]
+    }
+  },
+  {
+    "name": "liquidity-heatmap",
+    "type": "registry:ui",
+    "title": "Liquidity heatmap",
+    "description": "A price by time grid tinted by resting size, with columns that sweep in, a traded price line, a crosshair that glides to the cell being read, and a stepped legend.",
+    "categories": [
+      "data"
+    ],
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/liquidity-heatmap/liquidity-heatmap.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/liquidity-heatmap/liquidity-heatmap.tsx"
+      },
+      {
+        "path": "registry/components/liquidity-heatmap/liquidity-heatmap.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/liquidity-heatmap/liquidity-heatmap.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "chart",
+        "heatmap",
+        "trading",
+        "order-book"
+      ]
+    }
+  },
+  {
+    "name": "order-book",
+    "type": "registry:ui",
+    "title": "Order book",
+    "description": "Bids and asks side by side with cumulative depth bars, a spread row, rows that flash when their size changes and slide when the price moves, plus a seeded feed hook.",
+    "categories": [
+      "data"
+    ],
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/order-book/order-book.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/order-book/order-book.tsx"
+      },
+      {
+        "path": "registry/components/order-book/order-book.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/order-book/order-book.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "chart",
+        "trading",
+        "order-book",
+        "live"
+      ]
+    }
+  },
+  {
+    "name": "returns-calendar",
+    "type": "registry:ui",
+    "title": "Returns calendar",
+    "description": "Small month calendars of daily returns tinted by gain or loss, with month totals, months and cells that wave in, and a tooltip that glides between days.",
+    "categories": [
+      "data"
+    ],
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/returns-calendar/returns-calendar.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/returns-calendar/returns-calendar.tsx"
+      },
+      {
+        "path": "registry/components/returns-calendar/returns-calendar.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/returns-calendar/returns-calendar.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "chart",
+        "calendar",
+        "heatmap",
+        "finance"
+      ]
+    }
+  },
+  {
+    "name": "price-target-fan",
+    "type": "registry:ui",
+    "title": "Price target fan",
+    "description": "A price history line that draws to the last close and fans out into dashed high, median and low target lines with labeled end points you can bring forward.",
+    "categories": [
+      "data"
+    ],
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens"
+    ],
+    "files": [
+      {
+        "path": "registry/components/price-target-fan/price-target-fan.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/price-target-fan/price-target-fan.tsx"
+      },
+      {
+        "path": "registry/components/price-target-fan/price-target-fan.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/price-target-fan/price-target-fan.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "component",
+      "tags": [
+        "chart",
+        "line",
+        "forecast",
+        "finance"
+      ]
+    }
+  }
+]

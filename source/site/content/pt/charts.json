@@ -1,0 +1,16 @@
+{
+  "activity-heatmap": "Um ano de atividade num relance, com um quadradinho para cada dia.",
+  "animated-counter": "Totais que mudam com movimento claro, dígito por dígito.",
+  "bar-chart": "Compare uma medida ao longo dos dias e passe o dedo por qualquer barra para ver o valor.",
+  "brush-chart": "Série temporal densa com faixa de visão geral: arraste a janela para dar zoom e leia eventos no próprio gráfico.",
+  "donut-chart": "Gráfico de rosca cujos arcos se transformam entre conjuntos de dados, com o valor ativo rolando no centro.",
+  "gauge": "Mostra um valor dentro de um intervalo conhecido, com faixas de estado.",
+  "line-chart": "Gráfico de várias linhas com mira deslizante, legenda interativa e curvas que se transformam entre períodos.",
+  "metric-card": "Um resumo compacto para um número que precisa de contexto.",
+  "ridgeline": "Distribuições sobrepostas, uma crista por grupo: passe o mouse para destacar e ver os quartis.",
+  "slope-chart": "Antes e depois em dois eixos, com variação de posição ao lado de cada valor.",
+  "sparkline": "Uma tendência compacta ao lado de um valor, com leitura ponto a ponto.",
+  "streamgraph": "Camadas fluidas que se transformam entre períodos, com uma camada para isolar e ler semana a semana.",
+  "treemap": "Mapa de árvore em blocos: clique para detalhar e os blocos crescem até preencher a vista.",
+  "waffle-chart": "Gráfico de unidades 10 por 10 em que cada célula vale um por cento e voa para o novo grupo quando os dados mudam."
+}

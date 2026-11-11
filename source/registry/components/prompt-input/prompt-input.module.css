@@ -1,0 +1,75 @@
+.root { position: relative; display: flex; container-type: inline-size; width: 100%; min-width: 0; box-sizing: border-box; flex-direction: column; padding: var(--space-2); border: 1px solid var(--border); border-radius: var(--radius-panel); background: var(--surface); color: var(--foreground); box-shadow: var(--shadow-resting); font-family: var(--font-body); letter-spacing: var(--tracking-body); cursor: text; transition: border-color var(--duration-fast) var(--ease-standard), box-shadow var(--duration-standard) var(--ease-standard); }
+.root:focus-within { border-color: var(--border-strong); box-shadow: var(--shadow-raised); }
+.root[data-disabled] { cursor: not-allowed; opacity: .6; }
+
+.tray { overflow: hidden; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: var(--space-1) var(--space-1) var(--space-2); list-style: none; }
+.chip { display: inline-flex; max-width: 100%; height: 30px; box-sizing: border-box; align-items: center; gap: 6px; padding: 0 4px 0 9px; border: 1px solid var(--border); border-radius: var(--radius-pill); background: var(--surface-muted); font-size: var(--text-xs); cursor: default; }
+.chipIcon { flex: none; color: var(--accent-strong); }
+.chipName { min-width: 0; max-width: 11rem; overflow: hidden; font-weight: 500; text-overflow: ellipsis; white-space: nowrap; }
+.chipDetail { flex: none; color: var(--text-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.chipRemove { display: grid; width: 20px; height: 20px; flex: none; padding: 0; place-items: center; border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--text-muted); cursor: pointer; transition: background-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard), scale var(--duration-spring) var(--ease-spring); }
+.chipRemove:active { scale: .85; transition-duration: var(--duration-instant); }
+
+/* The wrapper springs to the measured height; the textarea inside already has it, so text never reflows mid-animation. */
+.grow { overflow: hidden; }
+.area { display: block; width: 100%; box-sizing: border-box; margin: 0; padding: var(--space-2) var(--space-2) var(--space-1); overflow: hidden; border: 0; background: transparent; color: inherit; font: inherit; font-size: var(--text-base); line-height: 1.5; outline: none; resize: none; scrollbar-width: thin; }
+.area[data-scrolls] { overflow-y: auto; }
+.area::placeholder { color: var(--text-muted); }
+.area:disabled { cursor: not-allowed; }
+
+.bar { display: flex; min-width: 0; align-items: center; gap: var(--space-1); padding-top: var(--space-1); cursor: default; }
+.tool, .model { display: inline-flex; height: 36px; flex: none; align-items: center; border: 0; border-radius: var(--radius-pill); background: transparent; color: var(--text-secondary); font: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background-color var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard), scale var(--duration-spring) var(--ease-spring); }
+.tool { width: 36px; justify-content: center; padding: 0; }
+.tool:active { scale: .92; transition-duration: var(--duration-instant); }
+.model { min-width: 0; flex: 0 1 auto; gap: 4px; padding: 0 10px 0 12px; font-size: var(--text-sm); font-weight: 500; }
+.model[data-state="open"] { background: var(--surface-muted); color: var(--foreground); }
+.modelLabel { position: relative; display: inline-flex; min-width: 0; overflow: hidden; }
+.modelText { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chevron { flex: none; color: var(--text-muted); transition: rotate var(--duration-spring) var(--ease-spring); }
+.model[data-state="open"] .chevron { rotate: 180deg; }
+.tool:disabled, .model:disabled, .chipRemove:disabled { cursor: not-allowed; }
+@media (hover: hover) and (pointer: fine) {
+  .tool:hover:not(:disabled), .model:hover:not(:disabled) { background: var(--surface-muted); color: var(--foreground); }
+  .chipRemove:hover:not(:disabled) { background: var(--border); color: var(--foreground); }
+}
+.spacer { min-width: 0; flex: 1; }
+.hint { padding-right: var(--space-2); color: var(--text-muted); font-size: var(--text-xs); white-space: nowrap; opacity: 0; transition: opacity var(--duration-standard) var(--ease-standard); }
+.hint kbd { padding: 1px 5px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface-muted); font: inherit; font-weight: 500; }
+.root:focus-within .hint { opacity: 1; }
+@container (max-width: 22rem) { .hint { display: none; } }
+
+.send { position: relative; display: grid; width: 36px; height: 36px; flex: none; margin-left: 0; padding: 0; place-items: center; border: 0; border-radius: var(--radius-pill); background: var(--accent); color: var(--accent-foreground); cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background-color var(--duration-standard) var(--ease-standard), color var(--duration-standard) var(--ease-standard), scale var(--duration-spring) var(--ease-spring); }
+.send:active:not(:disabled) { scale: .9; transition-duration: var(--duration-instant); }
+.send[data-mode="send"]:disabled { background: var(--surface-muted); color: var(--text-muted); cursor: default; }
+.send[data-mode="stop"] { background: var(--foreground); color: var(--background); }
+.glyph { display: grid; grid-area: 1 / 1; place-items: center; }
+.square { display: block; width: 11px; height: 11px; border-radius: 3px; background: currentColor; }
+/* A quarter arc circling the button, clear of its edge, says a response is still coming. 34 + 101.1 is the circumference of r = 21.5. */
+.spinner { position: absolute; inset: -6px; width: calc(100% + 12px); height: calc(100% + 12px); overflow: visible; fill: none; stroke: var(--accent-strong); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 34 101.1; animation: prompt-spin 1s linear infinite; pointer-events: none; }
+
+.menu { z-index: 60; min-width: 15rem; max-width: var(--radix-dropdown-menu-content-available-width); box-sizing: border-box; padding: 5px; border: 1px solid var(--border); border-radius: var(--radius-panel); background: var(--surface-raised); color: var(--foreground); box-shadow: var(--shadow-floating); font-family: var(--font-body); letter-spacing: var(--tracking-body); transform-origin: var(--radix-dropdown-menu-content-transform-origin); animation: prompt-menu-in var(--duration-standard) var(--ease-enter) both; }
+.menu[data-state="closed"] { animation: prompt-menu-out 130ms var(--ease-standard) both; }
+.menuLabel { padding: 6px 11px 4px; color: var(--text-muted); font-size: var(--text-xs); font-weight: 500; }
+.option { display: flex; min-height: 44px; align-items: center; gap: var(--space-3); padding: 6px 11px; border-radius: calc(var(--radius-panel) - 6px); cursor: pointer; outline: none; animation: prompt-option-in var(--duration-standard) var(--ease-enter) both; animation-delay: calc(var(--i, 0) * 35ms); transition: background-color var(--duration-instant) var(--ease-standard); }
+.option[data-highlighted] { background: var(--surface-muted); }
+.optionCopy { display: grid; min-width: 0; flex: 1; gap: 1px; }
+.optionName { font-size: var(--text-sm); font-weight: 500; }
+.optionNote { color: var(--text-muted); font-size: var(--text-xs); }
+.optionCheck { display: grid; flex: none; place-items: center; color: var(--accent-strong); animation: prompt-check-in var(--duration-standard) var(--ease-enter) both; }
+.srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+@keyframes prompt-spin { to { rotate: 360deg; } }
+@keyframes prompt-menu-in { from { opacity: 0; transform: translateY(6px) scale(.97); } }
+@keyframes prompt-menu-out { to { opacity: 0; transform: translateY(3px) scale(.985); } }
+@keyframes prompt-option-in { from { opacity: 0; transform: translateY(4px); } }
+@keyframes prompt-check-in { from { opacity: 0; scale: .5; } }
+@media (prefers-reduced-motion: reduce) {
+  .root, .chipRemove, .tool, .model, .chevron, .hint, .send, .option { transition: none; }
+  .tool:active, .chipRemove:active, .send:active:not(:disabled) { scale: none; }
+  .spinner { animation: none; }
+  .menu { animation-name: prompt-fade; animation-duration: var(--duration-instant); }
+  .menu[data-state="closed"] { animation: none; }
+  .option, .optionCheck { animation: none; }
+}
+@keyframes prompt-fade { from { opacity: 0; } }

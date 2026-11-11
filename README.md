@@ -1,42 +1,44 @@
-# arc-ui — espelho do uiarc.dev/components
+# ryan-ui
 
-Espelho **não oficial** e navegável do catálogo completo do [uiarc.dev/components](https://uiarc.dev/components): **385 itens** (244 componentes + 141 blocos, free e Pro), cada um abrindo com **demo ao vivo**, documentação (uso, exemplos, quando usar/evitar, dependências, acessibilidade, movimento) e instruções de instalação.
+Componentes e blocos React com movimento, prontos para copiar: CSS modules, tokens de design e `motion`. Cada item tem demo ao vivo, código, tabela de props e instalação pela CLI do shadcn.
 
-- Site: <https://ryanoliveiragit.github.io/arc-ui/>
-- Original: <https://uiarc.dev/components>
+- **221 itens**: 179 componentes e 42 blocos (ações, entradas, revelação, feedback, dados e gráficos, texto, interfaces de IA, jogos e blocos de página).
+- **Tema escuro e claro**, com nove cores de destaque; a padrão é a lima `#DDFC74`, sempre como preenchimento sólido.
+- **Versões**: alguns itens têm mais de uma versão (Toast, Hero section, Theme switch) e a página do item deixa escolher.
+- **Sem pacote para manter**: a CLI copia o código para o seu projeto.
 
-## Funcionalidades
+## Instalar um item
 
-- Navegação por hash: `#/c/<slug>` (componentes) e `#/b/<slug>` (blocos) — deep-link direto para qualquer item.
-- Busca instantânea (título, descrição, tags, keywords, categoria; tecla `/` foca o campo).
-- Filtros por tipo (componente/bloco), nível (free/Pro) e categoria.
-- Tema claro/escuro (segue o sistema, persistido em `localStorage`).
-- Tabs por item: **Demo** (ao vivo), **Docs**, **Instalação**.
-
-## Como funciona
-
-- `catalog.json` — um registro por item (metadados ricos do site + localização do demo).
-- **325 itens (Pro + free cross-ref):** os módulos webpack originais do site, extraídos dos bundles públicos, rodam sobre um runtime mini (`runtime/arc-runtime.js`) usando o próprio React do site (`runtime/vendor-dom.js`). Os 173 itens cujo factory de demo original foi capturado usam exatamente o demo que roda no site; os demais montam o componente exportado pela entrada.
-- **60 itens free:** reconstruídos dos arquivos-fonte com esbuild em bundles ESM autossuficientes (`demos/free/<slug>/bundle.js` + `bundle.css`), com props de demonstração derivadas do tipo Props (parser) e curadas manualmente onde o componente exige dados.
-- Um único instância de React (a do site, normalizada) é compartilhada entre registry e bundles, então os dois mundos convivem na mesma página.
-
-## Aviso legal
-
-Leia [NOTICE.md](NOTICE.md). Os itens **Pro** foram extraídos dos bundles públicos publicados pelo site; os termos do uiarc.dev se aplicam ao conteúdo.
-
-## Estrutura
-
+```bash
+npx shadcn@latest add https://<endereço-do-site>/r/button.json
 ```
-index.html app.js style.css     — casca da aplicação (roteamento, busca, tabs)
-tokens.css .tokens.json         — design tokens extraídos do site
-catalog.json                    — catálogo dos 385 itens
-assets/                         — favicon e fontes (Geist/Inter)
-runtime/                        — arc-runtime.js (runtime webpack mini) + vendor-dom.js (React do site)
-src/shared.registry.js          — módulos compartilhados (React shim, jsx-runtime, etc.)
-src/component/*.registry.js     — módulos originais: 188 (123 Pro + 65 free cross-ref)
-src/block/*.registry.js         — módulos originais: 137 (119 Pro + 18 free cross-ref)
-src/pro-block/<slug>/           — artefatos extras de alguns blocos Pro
-demos/free/<slug>/              — bundles reconstruídos dos 60 free (bundle.js + bundle.css + meta.json)
-vendor/npm/                     — shims ESM para react/react-dom/jsx-runtime (apontam para o __ARC__.dom)
-NOTICE.md                       — aviso legal sobre o conteúdo Pro
+
+Troque `button` pelo nome do item. A página de cada item mostra o comando pronto, e `Instalação` no menu explica como instalar os tokens (`foundation.css`) na primeira vez.
+
+## O que há neste repositório
+
+- **Raiz**: o site já compilado, servido pelo GitHub Pages (`index.html`, `assets/`, `r/` com o registro de cada item, `api/`, `thumbs/`, `media/`).
+- **`source/`**: o código-fonte do site e da biblioteca (Vite + React 19 + TypeScript).
+  - `source/registry/` — os componentes (`components/`) e blocos (`blocks/`), mais `foundation.css` (tokens) e `motion-tokens.ts`.
+  - `source/site/` — o site: páginas, demos (`site/demos/<item>.tsx`) e textos.
+  - `source/scripts/` — geração do catálogo, da API, do registro e das miniaturas, e o teste dos demos.
+
+## Rodar e publicar
+
+```bash
+cd source
+npm install
+npm run dev          # http://127.0.0.1:5199
+npm run typecheck
+npm run build        # gera source/dist
 ```
+
+Para publicar, copie o conteúdo de `source/dist/` para a raiz do repositório (mantendo `.nojekyll`, `README.md`, `LICENSE` e `source/`).
+
+As miniaturas da galeria não são geradas pelo build. Com o `npm run dev` no ar, rode `node scripts/build-thumbs.mjs` (usa o Chromium do Playwright) antes do build, ou copie a pasta `thumbs/` da raiz para `source/public/thumbs/`.
+
+`node scripts/test-demos.mjs --poke` abre o demo de todos os itens nos dois temas e falha se algum quebrar.
+
+## Licença e créditos
+
+MIT (veja `LICENSE`). O ryan-ui parte do núcleo de código aberto (MIT) do Arc, de Elia Kuratli — repositório e commit de origem em `source/UPSTREAM.json`; o aviso de copyright original é mantido. Os demais itens e o site foram escritos para o ryan-ui e seguem a mesma licença.

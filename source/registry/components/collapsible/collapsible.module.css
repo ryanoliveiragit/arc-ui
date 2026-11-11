@@ -1,0 +1,27 @@
+.collapsible { width: 100%; min-width: 0; color: var(--foreground); font-family: var(--font-body); }
+.card { overflow: hidden; border: 1px solid var(--border); border-radius: var(--radius-panel); background: var(--surface); box-shadow: var(--shadow-resting); transition: border-color var(--duration-standard) var(--ease-standard); }
+.card[data-state="open"] { border-color: var(--border-strong); }
+
+.trigger { display: flex; width: 100%; min-height: var(--control-height-lg); align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); border: 0; background: transparent; color: inherit; font: inherit; font-size: var(--text-sm); line-height: var(--leading-body); text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background-color var(--duration-fast) var(--ease-standard); }
+.plain .trigger { padding-inline: var(--space-2); border-radius: var(--radius-control); }
+/* The ring sits inside the card's clipped edge. */
+.card .trigger { --focus-outline-offset: -3px; border-radius: calc(var(--radius-panel) - 1px); }
+.trigger:disabled { cursor: not-allowed; opacity: .55; }
+@media (hover: hover) and (pointer: fine) {
+  .trigger:hover:not(:disabled) { background: var(--surface-muted); }
+  .trigger:hover:not(:disabled) .chevron { color: var(--foreground); }
+}
+.icon { display: grid; width: var(--space-8); height: var(--space-8); flex: none; place-items: center; border-radius: var(--radius-control); background: var(--accent-subtle); color: var(--accent-strong); }
+.copy { display: flex; min-width: 0; flex: 1; flex-direction: column; gap: 1px; }
+.label { font-weight: 500; letter-spacing: var(--tracking-body); overflow-wrap: anywhere; }
+.hint { color: var(--text-muted); font-size: var(--text-xs); overflow-wrap: anywhere; }
+/* Rotation is a spring in collapsible.tsx; CSS only handles color. */
+.chevron { display: grid; width: var(--space-6); height: var(--space-6); flex: none; place-items: center; color: var(--text-muted); transition: color var(--duration-fast) var(--ease-standard); }
+.trigger[data-state="open"] .chevron { color: var(--foreground); }
+
+/* Clips while the height moves. The inner element carries the padding, so a closed panel is exactly 0 tall. */
+.panel { overflow: hidden; }
+.inner { padding: var(--space-1) var(--space-4) var(--space-4); color: var(--text-secondary); font-size: var(--text-sm); line-height: var(--leading-body); overflow-wrap: anywhere; }
+.plain .inner { padding-inline: var(--space-2); }
+
+@media (prefers-reduced-motion: reduce) { .card, .trigger, .chevron { transition: none; } }

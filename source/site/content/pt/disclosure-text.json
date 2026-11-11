@@ -1,0 +1,20 @@
+{
+  "accordion": "Revela informações de apoio no próprio lugar, uma seção por vez.",
+  "bottom-sheet": "Painel inferior que repousa em alturas definidas e acompanha o dedo ao arrastar.",
+  "breadcrumb": "Mostra onde a página está dentro da hierarquia do produto.",
+  "dialog": "Uma janela focada para decisões que pedem atenção.",
+  "drawer": "Painel lateral temporário para tarefas focadas.",
+  "expandable-card": "Dá mais espaço a um cartão denso quando a pessoa pede.",
+  "expandable-text": "Texto longo recolhido em poucas linhas, com ler mais e mostrar menos.",
+  "hover-card": "Pré-visualiza uma pessoa ou link ao passar o mouse ou focar, sem sair da página.",
+  "popover": "Pequena superfície ancorada para informações de contexto.",
+  "resizable-panels": "Painéis que trocam espaço entre si ao arrastar o divisor.",
+  "scroll-area": "Área de rolagem nativa com barras finas e esmaecimento só quando há overflow.",
+  "tabs": "Alterna entre conteúdos relacionados no mesmo contexto.",
+  "tooltip": "Texto curto de apoio para controles pouco familiares.",
+  "in-view-title": "Título que entra com animação ao aparecer na rolagem.",
+  "text-morph": "Transforma um rótulo no próximo estado, letra por letra.",
+  "text-reveal": "Revela um trecho curto de conteúdo com movimento discreto.",
+  "text-shimmer": "Indica trabalho em andamento com uma luz calma passando pelo texto.",
+  "slot-text": "Textos e números que giram até o novo valor, como rolos de caça-níqueis."
+}

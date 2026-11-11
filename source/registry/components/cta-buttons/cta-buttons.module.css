@@ -1,0 +1,60 @@
+/* ---------- ArrowButton ---------- */
+.arrow { --height: var(--control-height-lg); --inset: 5px; --disc: calc(var(--height) - var(--inset) * 2); position: relative; display: inline-flex; height: var(--height); max-width: 100%; box-sizing: border-box; flex: none; padding: 0; border: 0; border-radius: var(--radius-pill); background: var(--surface); box-shadow: inset 0 0 0 1px var(--border-strong); color: var(--foreground); font: inherit; font-size: var(--text-base); font-weight: 500; letter-spacing: var(--tracking-body); text-decoration: none; cursor: pointer; isolation: isolate; -webkit-tap-highlight-color: transparent; transition: scale var(--duration-spring) var(--ease-spring); }
+.arrow[data-size="md"] { --height: var(--control-height-md); --inset: 4px; font-size: var(--text-sm); }
+.arrow:disabled { cursor: not-allowed; opacity: .5; }
+.arrowRow { display: flex; height: 100%; min-width: 0; box-sizing: border-box; align-items: center; gap: var(--space-4); padding: 0 var(--inset) 0 var(--space-6); }
+.arrow[data-size="md"] .arrowRow { gap: var(--space-3); padding-left: var(--space-5); }
+.arrowLabel { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.arrowGap, .arrowDisc { width: var(--disc); height: var(--disc); flex: none; }
+/* At rest the clip is exactly the disc. Hover widens the same circle past the far corner of the button. */
+.arrowFill { position: absolute; inset: 0; border-radius: inherit; background: var(--accent); color: var(--accent-foreground); clip-path: circle(calc(var(--disc) / 2) at calc(100% - var(--inset) - var(--disc) / 2) 50%); transition: clip-path var(--duration-considered) var(--ease-in-out); }
+.arrowDisc { position: relative; display: grid; overflow: hidden; place-items: center; border-radius: var(--radius-pill); }
+.arrowOut, .arrowIn { grid-area: 1 / 1; display: grid; place-items: center; transition: translate var(--duration-considered) var(--ease-in-out); }
+.arrowIn { translate: -220% 0; }
+@media (hover: hover) and (pointer: fine) {
+  .arrow:hover:not(:disabled) .arrowFill { clip-path: circle(150% at calc(100% - var(--inset) - var(--disc) / 2) 50%); }
+  .arrow:hover:not(:disabled) .arrowOut { translate: 220% 0; }
+  .arrow:hover:not(:disabled) .arrowIn { translate: 0 0; }
+}
+.arrow:focus-visible .arrowFill, .arrow:active:not(:disabled) .arrowFill { clip-path: circle(150% at calc(100% - var(--inset) - var(--disc) / 2) 50%); }
+.arrow:focus-visible .arrowOut, .arrow:active:not(:disabled) .arrowOut { translate: 220% 0; }
+.arrow:focus-visible .arrowIn, .arrow:active:not(:disabled) .arrowIn { translate: 0 0; }
+.arrow:active:not(:disabled) { scale: .97; transition-duration: var(--duration-instant); transition-timing-function: var(--ease-standard); }
+
+/* ---------- MagneticButton ---------- */
+.magnetAnchor { display: inline-flex; flex: none; max-width: 100%; }
+.magnet { display: inline-flex; height: var(--control-height-lg); max-width: 100%; box-sizing: border-box; align-items: center; justify-content: center; padding: 0 var(--space-8); border: 0; border-radius: var(--radius-pill); font: inherit; font-size: var(--text-base); font-weight: 600; letter-spacing: var(--tracking-body); text-decoration: none; white-space: nowrap; cursor: pointer; will-change: transform; -webkit-tap-highlight-color: transparent; transition: box-shadow var(--duration-standard) var(--ease-standard), background-color var(--duration-fast) var(--ease-standard); }
+.magnet[data-variant="accent"] { background: var(--accent); color: var(--accent-foreground); box-shadow: var(--shadow-resting); }
+.magnet[data-variant="outline"] { background: var(--surface); color: var(--foreground); box-shadow: inset 0 0 0 1px var(--border-strong); }
+.magnet:disabled { cursor: not-allowed; opacity: .5; }
+.magnetLabel { display: inline-flex; align-items: center; gap: var(--space-2); pointer-events: none; }
+@media (hover: hover) and (pointer: fine) {
+  .magnet[data-variant="accent"]:hover:not(:disabled) { box-shadow: var(--shadow-raised); }
+  .magnet[data-variant="outline"]:hover:not(:disabled) { background: var(--surface-muted); }
+}
+
+/* ---------- SlideToConfirm ---------- */
+/* Thumb 44 px and inset 4 px: keep in sync with THUMB and PAD in cta-buttons.tsx. */
+.slide { --thumb: 44px; --pad: 4px; position: relative; display: block; width: 100%; max-width: 20rem; height: calc(var(--thumb) + var(--pad) * 2); box-sizing: border-box; border-radius: var(--radius-pill); background: var(--surface-muted); box-shadow: inset 0 0 0 1px var(--border); color: var(--text-secondary); font-size: var(--text-sm); font-weight: 500; user-select: none; -webkit-tap-highlight-color: transparent; transition: background-color var(--duration-standard) var(--ease-standard), box-shadow var(--duration-standard) var(--ease-standard); }
+.slide[data-disabled] { opacity: .5; }
+/* The trail is a bar the height of the thumb, so at rest it hides exactly behind it. Once confirmed, the track itself takes the accent. */
+.slideTrail { position: absolute; inset: var(--pad); border-radius: inherit; background: var(--accent); }
+.slide[data-confirmed="true"] { background: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.slidePrompt, .slideDone { position: absolute; inset: 0; display: grid; place-items: center; padding: 0 calc(var(--thumb) + var(--pad) * 2 + var(--space-1)); overflow: hidden; text-align: center; white-space: nowrap; pointer-events: none; }
+.slideDone { padding-left: var(--space-5); color: var(--accent-foreground); font-weight: 600; }
+.slideThumb { position: absolute; top: var(--pad); left: var(--pad); display: grid; width: var(--thumb); height: var(--thumb); padding: 0; place-items: center; border: 0; border-radius: var(--radius-pill); background: var(--accent); box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent-foreground) 16%, transparent); color: var(--accent-foreground); cursor: grab; touch-action: pan-y; }
+.slide[data-dragging] .slideThumb { cursor: grabbing; }
+.slide[data-confirmed="true"] .slideThumb, .slideThumb:disabled { cursor: default; }
+.slideIcon { display: grid; place-items: center; }
+/* An idle nudge on the chevrons says which way to go, without moving the thumb itself. */
+.slide[data-confirmed="false"]:not([data-dragging], [data-disabled]) .slideIcon svg { animation: slideHint 1.8s var(--ease-in-out) infinite; }
+@keyframes slideHint { 0%, 55%, 100% { translate: 0 0; } 28% { translate: 3px 0; } }
+.srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  .arrow, .arrowFill, .arrowOut, .arrowIn, .magnet, .slide { transition: none; }
+  .arrow:active:not(:disabled) { scale: none; }
+  .arrowIn { display: none; }
+  .arrow:hover:not(:disabled) .arrowOut, .arrow:focus-visible .arrowOut, .arrow:active:not(:disabled) .arrowOut { translate: 0 0; }
+  .slide .slideIcon svg { animation: none !important; }
+}

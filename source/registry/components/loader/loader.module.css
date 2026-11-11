@@ -1,0 +1,72 @@
+/* One box for every variant: the glyph is always --loader-size square, so swapping variants never shifts the layout around it. */
+.loader { --loader-size: 24px; --loader-speed: 1; --loader-color: var(--accent-strong); display: inline-flex; align-items: center; gap: var(--space-2); color: var(--text-secondary); font-family: var(--font-body); font-size: var(--text-sm); line-height: var(--leading-body); vertical-align: middle; }
+.sm { --loader-size: 16px; font-size: var(--text-xs); }
+.lg { --loader-size: 40px; gap: var(--space-3); font-size: var(--text-base); }
+/* Inside a button or a sentence the loader takes the text color around it. */
+.current { --loader-color: currentColor; color: inherit; }
+.glyph { position: relative; display: block; flex: none; width: var(--loader-size); height: var(--loader-size); color: var(--loader-color); }
+.label { letter-spacing: var(--tracking-body); }
+.srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Spinner: the arc breathes from a short dash to a long one while the whole ring turns, so it never looks like a fixed wedge. */
+.spinner { display: block; width: 100%; height: 100%; animation: loader-turn calc(1.5s / var(--loader-speed)) linear infinite; }
+.track, .arc { stroke: currentColor; stroke-width: 2.5; }
+.track { opacity: .16; }
+.arc { stroke-linecap: round; stroke-dasharray: 22 78; transform-origin: 50% 50%; animation: loader-arc calc(1.5s / var(--loader-speed)) var(--ease-in-out) infinite; }
+
+/* Dots: a wave that travels left to right. */
+.dots { display: flex; width: 100%; height: 100%; align-items: center; justify-content: space-between; }
+.dot { width: 24%; aspect-ratio: 1; border-radius: var(--radius-pill); background: currentColor; animation: loader-hop calc(1.1s / var(--loader-speed)) var(--ease-in-out) infinite; animation-delay: calc(var(--i) * .17s / var(--loader-speed) - 1.1s / var(--loader-speed)); }
+
+/* Bars: an equalizer; each bar grows from its center. */
+.bars { display: flex; width: 100%; height: 100%; align-items: center; justify-content: space-between; padding-inline: 4%; box-sizing: border-box; }
+.bar { width: 15%; height: 88%; border-radius: var(--radius-pill); background: currentColor; animation: loader-stretch calc(1s / var(--loader-speed)) var(--ease-in-out) infinite; animation-delay: calc(var(--i) * .15s / var(--loader-speed) - 1s / var(--loader-speed)); }
+
+/* Pulse ring: two waves leave a steady core, half a beat apart. */
+.ring { display: grid; width: 100%; height: 100%; place-items: center; }
+.ring > * { grid-area: 1 / 1; border-radius: var(--radius-pill); }
+.core { width: 30%; height: 30%; background: currentColor; animation: loader-beat calc(1.8s / var(--loader-speed)) var(--ease-in-out) infinite; }
+.wave { width: 100%; height: 100%; box-sizing: border-box; border: max(1.5px, calc(var(--loader-size) / 14)) solid currentColor; opacity: 0; animation: loader-wave calc(1.8s / var(--loader-speed)) var(--ease-standard) infinite; animation-delay: calc(var(--i) * .9s / var(--loader-speed) - 1.8s / var(--loader-speed)); }
+
+/* Orbit: three satellites share one path and one easing but start a moment apart, so they bunch up and spread out like a comet tail. */
+.orbit { display: block; position: relative; width: 100%; height: 100%; }
+.path { position: absolute; inset: 9%; box-sizing: border-box; border: max(1px, calc(var(--loader-size) / 20)) solid currentColor; border-radius: var(--radius-pill); opacity: .16; }
+.arm { position: absolute; inset: 0; animation: loader-turn calc(1.6s / var(--loader-speed)) var(--ease-in-out) infinite; animation-delay: calc(var(--i) * .11s / var(--loader-speed)); }
+.satellite { position: absolute; top: 0; left: 50%; width: 22%; aspect-ratio: 1; border-radius: var(--radius-pill); background: currentColor; translate: -50% 0; scale: calc(1 - var(--i) * .22); opacity: calc(1 - var(--i) * .3); }
+
+@keyframes loader-turn { to { transform: rotate(360deg); } }
+@keyframes loader-arc {
+  0% { stroke-dasharray: 6 94; transform: rotate(0deg); }
+  50% { stroke-dasharray: 62 38; transform: rotate(90deg); }
+  100% { stroke-dasharray: 6 94; transform: rotate(360deg); }
+}
+@keyframes loader-hop {
+  0%, 100% { transform: translateY(45%) scale(.8); opacity: .36; }
+  50% { transform: translateY(-55%) scale(1); opacity: 1; }
+}
+@keyframes loader-stretch {
+  0%, 100% { transform: scaleY(.3); opacity: .4; }
+  50% { transform: scaleY(1); opacity: 1; }
+}
+@keyframes loader-beat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(.78); }
+}
+@keyframes loader-wave {
+  0% { transform: scale(.3); opacity: .85; }
+  100% { transform: scale(1); opacity: 0; }
+}
+@keyframes loader-breathe {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .4; }
+}
+
+/* Reduced motion: nothing travels. Each loader holds a readable still shape and the whole glyph breathes slowly, so it still says "working". */
+@media (prefers-reduced-motion: reduce) {
+  .spinner, .arc, .dot, .bar, .core, .wave, .arm { animation: none; }
+  .arc { stroke-dasharray: 30 70; }
+  .wave { opacity: .4; transform: scale(calc(.62 + var(--i) * .38)); }
+  .arm { transform: rotate(calc(var(--i) * -34deg)); }
+  .bar { transform: scaleY(calc(.5 + var(--i) * .15)); }
+  .glyph { animation: loader-breathe 2s var(--ease-in-out) infinite; }
+}

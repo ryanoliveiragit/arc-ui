@@ -1,4 +1,0 @@
-function(__module,__exports,__require){
-"use strict";
-var __m=(e=>{e.exports={demo:"expandable-text_demo__BmW_x",product:"expandable-text_product__D8Xaf",photo:"expandable-text_photo__Mokl9",productCopy:"expandable-text_productCopy__PvxTQ",productHead:"expandable-text_productHead___kpai",productName:"expandable-text_productName__LzyXV",price:"expandable-text_price__oVls9",reviews:"expandable-text_reviews__AY_t9",reviewsTitle:"expandable-text_reviewsTitle__N5gI7",list:"expandable-text_list__ndrco",review:"expandable-text_review__9AaPM",author:"expandable-text_author__qxBvM",name:"expandable-text_name__2JWb1",date:"expandable-text_date__WjIIZ",reviewHead:"expandable-text_reviewHead__VKekN",rating:"expandable-text_rating__VNuUi",starOn:"expandable-text_starOn__J_bnD",starOff:"expandable-text_starOff__UKEcj",reviewTitle:"expandable-text_reviewTitle__vyTJV"}});if(typeof __m==="function"){__m(__module,__exports,__require);}else{__module.exports=__m;}
-}

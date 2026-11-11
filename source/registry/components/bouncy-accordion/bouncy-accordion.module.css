@@ -1,0 +1,24 @@
+.accordion { display: flex; width: 100%; min-width: 0; flex-direction: column; color: var(--foreground); font-family: var(--font-body); }
+/* Margins and the four corner radii are springs in bouncy-accordion.tsx. The item clips its panel, so the panel needs no radius of its own. */
+.item { position: relative; overflow: hidden; border: 1px solid var(--border); background: var(--surface); transition: background-color var(--duration-standard) var(--ease-standard), border-color var(--duration-standard) var(--ease-standard), box-shadow var(--duration-standard) var(--ease-standard); }
+.item[data-state="open"] { border-color: var(--border-strong); background: var(--surface-raised); box-shadow: var(--shadow-raised); }
+.heading { margin: 0; font: inherit; }
+.trigger { --focus-outline-offset: -4px; display: flex; width: 100%; min-height: 3.5rem; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4) var(--space-3) var(--space-5); border: 0; border-radius: inherit; background: transparent; color: inherit; font: inherit; font-size: var(--text-sm); font-weight: 500; letter-spacing: var(--tracking-body); line-height: var(--leading-body); text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.trigger:disabled { cursor: not-allowed; opacity: .5; }
+.icon { display: grid; flex: none; place-items: center; color: var(--text-muted); transition: color var(--duration-fast) var(--ease-standard); }
+.item[data-state="open"] .icon { color: var(--accent-strong); }
+.title { min-width: 0; flex: 1; overflow-wrap: anywhere; }
+/* The plus sits in a chip that fills with the accent while its item is open; the glyph turns into a close mark on the same spring. */
+.toggle { display: grid; width: var(--space-8); height: var(--space-8); flex: none; place-items: center; border-radius: var(--radius-pill); background: var(--surface-muted); color: var(--text-secondary); transition: background-color var(--duration-standard) var(--ease-standard), color var(--duration-standard) var(--ease-standard), scale var(--duration-spring) var(--ease-spring); }
+.item[data-state="open"] .toggle { background: var(--accent); color: var(--accent-foreground); }
+.glyph { display: grid; place-items: center; }
+@media (hover: hover) and (pointer: fine) {
+  .item[data-state="closed"]:not([data-disabled]):hover { border-color: var(--border-strong); }
+  .trigger:hover:not(:disabled) .toggle { scale: 1.08; }
+}
+.trigger:active:not(:disabled) .toggle { scale: .94; transition-duration: var(--duration-instant); }
+.panel { overflow: hidden; }
+.content { padding: 0 var(--space-5) var(--space-5); color: var(--text-secondary); font-size: var(--text-sm); line-height: 1.55; overflow-wrap: anywhere; }
+.content > :first-child { margin-top: 0; }
+.content > :last-child { margin-bottom: 0; }
+@media (prefers-reduced-motion: reduce) { .item, .icon, .toggle { transition: none; } .trigger:hover .toggle, .trigger:active .toggle { scale: none; } }

@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1067 1600" width="1067" height="1600">
+<defs><radialGradient id="glow" cx="22.53%" cy="30%" r="70%"><stop offset="0" stop-color="oklch(96% 0.05 30)"/><stop offset="1" stop-color="oklch(86% 0.07 15)"/></radialGradient></defs>
+<rect width="1067" height="1600" fill="url(#glow)"/><path d="M165.79 1037.5 A106.84 106.84 0 0 0 379.48 1037.5 Z" fill="oklch(79.61% 0.1 341.27)" transform="translate(0 106.84)"/><rect x="489.82" y="940.74" width="17.07" height="203.6" fill="oklch(35% 0.02 15)"/><path d="M397.94 940.74 L431.41 792.7 H565.29 L598.76 940.74 Z" fill="oklch(64.77% 0.14 356.6)"/><rect x="800.22" y="939.56" width="17.07" height="204.78" fill="oklch(35% 0.02 15)"/><path d="M721.56 939.56 L750.62 788.53 H866.9 L895.97 939.56 Z" fill="oklch(57.75% 0.14 345.2)"/><rect y="1144.34" width="1067" height="455.66" fill="oklch(70% 0.1 0)"/><rect y="1144.34" width="1067" height="12.8" fill="oklch(60% 0.11 0)"/>
+</svg>

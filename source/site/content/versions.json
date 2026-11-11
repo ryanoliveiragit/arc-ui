@@ -1,0 +1,55 @@
+{
+ "toast": [
+  {
+   "name": "toast",
+   "label": "Padrão"
+  },
+  {
+   "name": "toast-stack",
+   "label": "Pilha"
+  },
+  {
+   "name": "toast-action",
+   "label": "Com ação"
+  },
+  {
+   "name": "toast-progress",
+   "label": "Progresso"
+  }
+ ],
+ "hero-section": [
+  {
+   "name": "hero-section",
+   "label": "Produto",
+   "variant": "product"
+  },
+  {
+   "name": "hero-section",
+   "label": "Fluxo",
+   "variant": "workflow"
+  },
+  {
+   "name": "hero-section",
+   "label": "Editorial",
+   "variant": "editorial"
+  }
+ ],
+ "theme-switch": [
+  {
+   "name": "theme-switch",
+   "label": "Padrão"
+  },
+  {
+   "name": "theme-switch-eclipse",
+   "label": "Eclipse"
+  },
+  {
+   "name": "theme-switch-split",
+   "label": "Split"
+  },
+  {
+   "name": "theme-switch-rise",
+   "label": "Rise"
+  }
+ ]
+}

@@ -1,0 +1,6 @@
+.stack { display: flex; flex-direction: column; min-width: 0; }
+.row { display: flex; min-width: 0; }
+.caption { margin: 0; color: var(--text-muted); font-size: var(--text-xs); line-height: var(--leading-body); }
+.field { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+.fieldLabel { color: var(--text-secondary); font-size: var(--text-sm); font-weight: 500; line-height: var(--leading-body); }
+.surface { min-width: 0; border: 1px solid var(--border); border-radius: var(--radius-panel); background: var(--surface); box-shadow: var(--shadow-resting); }

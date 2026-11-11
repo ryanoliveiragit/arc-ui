@@ -1,0 +1,181 @@
+[
+  {
+    "name": "hero-section",
+    "type": "registry:block",
+    "title": "Hero section",
+    "description": "A landing page hero in three versions on a solid page with a faint dot grid: a live product window with counting figures, a self-drawing chart and floating cards; an automation graph with a pulse travelling along its lines; and editorial type over a marquee of words.",
+    "categories": [
+      "blocks"
+    ],
+    "dependencies": [
+      "lucide-react",
+      "motion"
+    ],
+    "registryDependencies": [
+      "ryan-motion-tokens",
+      "animated-counter",
+      "avatar",
+      "badge",
+      "button",
+      "copy-button",
+      "marquee",
+      "segmented-control"
+    ],
+    "files": [
+      {
+        "path": "registry/blocks/hero-section/hero-section.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/hero-section/hero-section.tsx"
+      },
+      {
+        "path": "registry/blocks/hero-section/hero-section.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/hero-section/hero-section.module.css"
+      },
+      {
+        "path": "registry/blocks/hero-section/hero-parts.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/hero-section/hero-parts.tsx"
+      },
+      {
+        "path": "registry/blocks/hero-section/hero-content.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/hero-section/hero-content.tsx"
+      },
+      {
+        "path": "registry/blocks/hero-section/hero-content.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/hero-section/hero-content.module.css"
+      },
+      {
+        "path": "registry/blocks/hero-section/hero-motion.ts",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/hero-section/hero-motion.ts"
+      },
+      {
+        "path": "registry/blocks/hero-section/hero-lumen.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/hero-section/hero-lumen.tsx"
+      },
+      {
+        "path": "registry/blocks/hero-section/hero-lumen.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/hero-section/hero-lumen.module.css"
+      },
+      {
+        "path": "registry/blocks/hero-section/hero-lumen-data.ts",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/hero-section/hero-lumen-data.ts"
+      },
+      {
+        "path": "registry/blocks/hero-section/hero-relay.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/hero-section/hero-relay.tsx"
+      },
+      {
+        "path": "registry/blocks/hero-section/hero-relay.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/hero-section/hero-relay.module.css"
+      },
+      {
+        "path": "registry/blocks/hero-section/hero-cadence.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/hero-section/hero-cadence.tsx"
+      },
+      {
+        "path": "registry/blocks/hero-section/hero-cadence.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/blocks/hero-section/hero-cadence.module.css"
+      },
+      {
+        "path": "registry/components/animated-counter/animated-counter.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/animated-counter/animated-counter.tsx"
+      },
+      {
+        "path": "registry/components/animated-counter/animated-counter.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/animated-counter/animated-counter.module.css"
+      },
+      {
+        "path": "registry/components/avatar/avatar.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/avatar/avatar.tsx"
+      },
+      {
+        "path": "registry/components/avatar/avatar.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/avatar/avatar.module.css"
+      },
+      {
+        "path": "lib/ryan-provider.tsx",
+        "type": "registry:lib",
+        "target": "@components/ryan-ui/lib/ryan-provider.tsx"
+      },
+      {
+        "path": "registry/components/badge/badge.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/badge/badge.tsx"
+      },
+      {
+        "path": "registry/components/badge/badge.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/badge/badge.module.css"
+      },
+      {
+        "path": "registry/components/button/button.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/button/button.tsx"
+      },
+      {
+        "path": "registry/components/button/button.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/button/button.module.css"
+      },
+      {
+        "path": "registry/components/copy-button/copy-button.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/copy-button/copy-button.tsx"
+      },
+      {
+        "path": "registry/components/copy-button/copy-button.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/copy-button/copy-button.module.css"
+      },
+      {
+        "path": "lib/use-copy-feedback.ts",
+        "type": "registry:lib",
+        "target": "@components/ryan-ui/lib/use-copy-feedback.ts"
+      },
+      {
+        "path": "registry/components/marquee/marquee.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/marquee/marquee.tsx"
+      },
+      {
+        "path": "registry/components/marquee/marquee.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/marquee/marquee.module.css"
+      },
+      {
+        "path": "registry/components/segmented-control/segmented-control.tsx",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/segmented-control/segmented-control.tsx"
+      },
+      {
+        "path": "registry/components/segmented-control/segmented-control.module.css",
+        "type": "registry:component",
+        "target": "@components/ryan-ui/segmented-control/segmented-control.module.css"
+      }
+    ],
+    "meta": {
+      "kind": "block",
+      "tags": [
+        "hero",
+        "landing",
+        "marketing",
+        "dashboard"
+      ]
+    }
+  }
+]

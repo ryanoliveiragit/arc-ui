@@ -1,0 +1,21 @@
+{
+  "phone-input": "Campo de telefone com seletor de país, formatação enquanto você digita e saída no padrão E.164.",
+  "radio-cards": "Cartões selecionáveis com anel deslizante, preço e descrição, com o teclado de um grupo de rádio.",
+  "radio-group": "Escolha uma opção entre várias visíveis, com um destaque que desliza até a linha escolhida.",
+  "range-histogram-slider": "Faixa de preço sobre um histograma dos dados, acendendo as barras dentro do intervalo escolhido.",
+  "rating": "Avaliação por estrelas acessível, com meias estrelas, teclado e opção de limpar.",
+  "rich-text-editor": "Editor leve com atalhos de markdown, barra flutuante, menu de barra e saída em HTML ou markdown.",
+  "ruler-slider": "Uma fita de marcas que desliza sob uma agulha fixa, com inércia, encaixe e valor rolante.",
+  "scrub-input": "Campo numérico estilo Figma: arraste o rótulo para ajustar ou digite valores, unidades e contas.",
+  "search-field": "Campo de busca reconhecível, com ícone, botão de limpar e foco bem marcado.",
+  "segmented-control": "Alterne entre poucas visões relacionadas com um seletor segmentado de destaque deslizante.",
+  "select": "Campo de escolha compacto com um menu que funciona bem pelo teclado.",
+  "shortcut-recorder": "Grave atalhos de teclado em teclas visuais, com aviso de conflito e uma lista de atalhos pesquisável.",
+  "signature-pad": "Quadro de assinatura com traço suave que afina com a velocidade, desfazer, replay e exportação em PNG ou SVG.",
+  "slider": "Escolha um valor ou um intervalo numa trilha que acompanha o dedo, com balão de dígitos rolantes.",
+  "switch": "Um interruptor tátil para ajustes que passam a valer na hora.",
+  "tag-input": "Transforma textos curtos em etiquetas removíveis, com animação suave ao adicionar e remover.",
+  "textarea": "Campo de várias linhas para notas, descrições e textos mais longos.",
+  "time-picker": "Escolha um horário com um comportamento de teclado sensato, em formato 12h ou 24h.",
+  "toggle-group": "Uma fileira de botões de alternância, única ou múltipla, como numa barra de formatação."
+}
