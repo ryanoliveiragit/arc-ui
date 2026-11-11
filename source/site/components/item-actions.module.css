@@ -1,0 +1,29 @@
+/* Botões do topo: 36px, raio 11, superfície com borda de 1px, 13px/500. */
+.button, .split { height: 2.25rem; flex: none; border: 1px solid var(--border); border-radius: 11px; background: var(--surface); }
+.button, .splitMain, .splitMore { display: inline-flex; align-items: center; color: var(--foreground); font-size: .8125rem; font-weight: 500; line-height: 1; white-space: nowrap; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: background-color var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard); }
+.button { gap: .5rem; padding: 0 .75rem 0 .6875rem; }
+.button > svg, .splitMain > svg { flex: none; color: var(--text-secondary); }
+.button[aria-pressed="true"] > svg { color: var(--foreground); }
+
+/* Botão duplo: a ação principal e, depois de um divisor, a seta que abre o menu. */
+.split { display: inline-flex; align-items: stretch; }
+.splitMain, .splitMore { border: 0; background: transparent; }
+.splitMain { gap: .5rem; border-radius: 10px 0 0 10px; padding: 0 .875rem 0 .6875rem; --focus-outline-offset: -2px; }
+.splitMain[data-state="error"] > svg { color: var(--danger); }
+.splitMore { width: 2.0625rem; justify-content: center; border-left: 1px solid var(--border); border-radius: 0 10px 10px 0; padding: 0; color: var(--text-secondary); --focus-outline-offset: -2px; }
+.swap { display: inline-grid; justify-items: start; }
+.swap > span { grid-area: 1 / 1; }
+.ghost { visibility: hidden; }
+
+/* Menu: painel elevado, itens de 34px com o destaque num tom acima. */
+.menu { z-index: 60; min-width: 14.5rem; border: 1px solid var(--border); border-radius: 14px; padding: .3125rem; background: var(--surface-raised); box-shadow: var(--shadow-floating); }
+.menuItem { display: flex; min-height: 2.125rem; align-items: center; gap: .625rem; border-radius: 9px; padding: 0 .625rem; color: var(--foreground); font-size: .8125rem; line-height: 1.2; text-decoration: none; cursor: pointer; outline: none; user-select: none; }
+.menuItem > svg { flex: none; color: var(--text-muted); }
+.menuItem[data-highlighted] { background: var(--surface-muted); }
+
+@media (hover: hover) and (pointer: fine) {
+  .button:hover { border-color: var(--border-strong); background: var(--surface-muted); }
+  .splitMain:hover, .splitMore:hover { background: var(--surface-muted); }
+}
+.splitMore[data-state="open"] { background: var(--surface-muted); }
+@media (prefers-reduced-motion: reduce) { .button, .splitMain, .splitMore { transition: none; } }

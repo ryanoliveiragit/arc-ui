@@ -11,6 +11,11 @@ export function CategoryTag({ category }: { category: string }) {
   return <span className={styles.tag} data-toned={tone ? "true" : undefined} style={tone ? ({ "--tone": tone } as CSSProperties) : undefined}>{categoryLabel(category)}</span>;
 }
 
+/** A pílula contornada dos itens escritos para o ryan-ui. A mesma da barra lateral. */
+export function NewPill() {
+  return <span className={styles.pill}>Novo</span>;
+}
+
 /** Um item da galeria: miniatura do demo no tema atual, nome, categoria e descrição. O cartão inteiro é o link. `layout="row"` é a visão em lista. */
 export function ItemCard({ item, priority = false, layout = "card" }: { item: CatalogItem; priority?: boolean; layout?: "card" | "row" }) {
   const { theme } = useTheme();
@@ -29,6 +34,7 @@ export function ItemCard({ item, priority = false, layout = "card" }: { item: Ca
       <span className={styles.body}>
         <span className={styles.heading}>
           <span className={styles.title}>{item.title}</span>
+          {item.isNew ? <NewPill /> : null}
           <CategoryTag category={item.category} />
         </span>
         <span className={styles.description}>{describe(item)}</span>

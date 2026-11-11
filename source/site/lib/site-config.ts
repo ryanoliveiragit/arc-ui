@@ -1,10 +1,10 @@
 import { catalog } from "@/site/lib/catalog";
 
-/** Dados do site num lugar só. `repository` fica vazio até o projeto ter um repositório público. */
+/** Dados do site num lugar só. */
 export const site = {
   name: "ryan-ui",
   tagline: "Componentes e blocos React com movimento, prontos para copiar.",
-  repository: "",
+  repository: "https://github.com/ryanoliveiragit/arc-ui",
   upstream: catalog.upstream,
   counts: catalog.counts,
 } as const;

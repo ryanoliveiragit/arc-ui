@@ -20,6 +20,10 @@ export interface CatalogItem {
   files: string[];
   ownFiles: string[];
   hasDemo: boolean;
+  /** Escrito para o ryan-ui (não veio do núcleo importado). */
+  isNew: boolean;
+  /** Tem guia escrito (quando usar, teclado, acessibilidade…) em docs/<nome>.json. */
+  hasGuide: boolean;
 }
 
 export const catalog = data as { upstream: { repository: string; commit: string; copyright: string }; counts: { components: number; blocks: number }; items: CatalogItem[] };
@@ -93,3 +97,18 @@ const groupOf = new Map<string, ItemVersion[]>();
 for (const group of groups) for (const entry of group) groupOf.set(entry.item.name, group);
 /** As versões do grupo do item, na ordem do arquivo. Um item sem grupo devolve só ele mesmo. */
 export const versionsOf = (item: CatalogItem): ItemVersion[] => groupOf.get(item.name) ?? [{ item, label: item.title }];
+
+/**
+ * Itens relacionados, para o fim da página de item: primeiro os que ele usa, depois os que o usam, depois os da mesma
+ * categoria com mais tags em comum. As outras versões do mesmo grupo ficam de fora (têm a própria faixa na página).
+ */
+export function relatedItems(item: CatalogItem, limit = 4): CatalogItem[] {
+  const sameGroup = new Set(versionsOf(item).map(version => version.item.name));
+  const picked = new Map<string, CatalogItem>();
+  const add = (entry: CatalogItem | undefined) => { if (entry && entry.name !== item.name && !sameGroup.has(entry.name) && !picked.has(entry.name)) picked.set(entry.name, entry); };
+  item.requires.forEach(name => add(byName.get(name)));
+  items.filter(entry => entry.requires.includes(item.name)).forEach(add);
+  const shared = (entry: CatalogItem) => entry.tags.filter(tag => item.tags.includes(tag)).length;
+  items.filter(entry => entry.category === item.category).sort((a, b) => shared(b) - shared(a) || a.title.localeCompare(b.title)).forEach(add);
+  return [...picked.values()].slice(0, limit);
+}

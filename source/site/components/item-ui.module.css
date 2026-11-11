@@ -1,0 +1,71 @@
+/* Peças pequenas da página de item, no desenho do site. Medidas em rem com o equivalente em px ao lado (raiz de 16px). */
+.srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Seção: 48px acima do título, 18px abaixo; com linha de apoio, ela fica a 6px do título. A margem de rolagem deixa o título livre do cabeçalho fixo. */
+.section { min-width: 0; margin-top: 3rem; scroll-margin-top: calc(var(--site-header-height) + 1.5rem); }
+.sectionTitle { margin: 0 0 1.125rem; color: var(--foreground); font-family: var(--font-display); font-size: 1.375rem; font-weight: 500; letter-spacing: -.02em; line-height: 1.1; }
+.sectionTitle[data-intro] { margin-bottom: .375rem; }
+.sectionIntro { margin: 0 0 1.0625rem; color: var(--text-secondary); font-size: .875rem; line-height: 1.6; }
+
+/* Chips de código e de tecla. */
+.code { border-radius: 6px; padding: .0625rem .3125rem; color: var(--foreground); background: var(--surface-muted); font-family: var(--font-mono); font-size: .857em; letter-spacing: 0; overflow-wrap: anywhere; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.kbd { display: inline-flex; min-width: 1.375rem; height: 1.375rem; align-items: center; justify-content: center; border: 1px solid var(--border); border-radius: 6px; padding: 0 .375rem; color: var(--foreground); background: var(--surface); font-family: var(--font-body); font-size: .75rem; font-weight: 500; line-height: 1; white-space: nowrap; }
+/* Nome de item entre crases que vira link: o chip de código com sublinhado visível; no hover e no foco o chip acende. */
+.itemLink { border-radius: 6px; color: inherit; text-decoration: none; }
+.itemLink > .code { text-decoration: underline; text-decoration-color: var(--text-muted); text-decoration-thickness: 1px; text-underline-offset: 3px; transition: background-color var(--duration-fast) var(--ease-standard), text-decoration-color var(--duration-fast) var(--ease-standard); }
+.itemLink:focus-visible > .code { background: var(--border); text-decoration-color: var(--foreground); }
+@media (hover: hover) and (pointer: fine) { .itemLink:hover > .code { background: var(--border); text-decoration-color: var(--foreground); } }
+@media (prefers-reduced-motion: reduce) { .itemLink > .code { transition: none; } }
+
+/* Lista de frases: 14px/22.4px, 10px entre itens, marcador redondo, recuo de 20px. */
+.bullets { display: grid; gap: .625rem; margin: 0; padding: 0; list-style: none; }
+.bullets > li { position: relative; min-width: 0; padding-left: 1.25rem; color: var(--text-secondary); font-size: .875rem; line-height: 1.6; overflow-wrap: break-word; }
+.bullets > li::before { position: absolute; top: .75rem; left: .25rem; width: .3125rem; height: .3125rem; border-radius: 50%; background: var(--border-strong); content: ""; }
+
+/* Cartão de tabela: raio 18, borda de 1px; linhas divididas por uma linha fina. A tabela rola de lado dentro do cartão. */
+.tableCard { --focus-outline-offset: -2px; min-width: 0; overflow-x: auto; border: 1px solid var(--border); border-radius: 18px; }
+.tableCard > table { width: 100%; border-collapse: collapse; border-spacing: 0; text-align: left; }
+.tableCard th, .tableCard td { border-bottom: 1px solid var(--border-subtle); padding: .75rem 1rem; font-weight: 400; text-align: left; vertical-align: top; }
+.tableCard tbody > tr:last-child > * { border-bottom: 0; }
+
+/* Abas. Sublinhadas: 13px/500, 34px de altura, 18px entre elas, marca de 2px na aba ativa. */
+.tabs { display: flex; min-width: 0; align-items: stretch; }
+.tab { position: relative; display: inline-flex; flex: none; align-items: center; border: 0; background: none; color: var(--text-muted); font-weight: 500; white-space: nowrap; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: color var(--duration-fast) var(--ease-standard), background-color var(--duration-fast) var(--ease-standard); }
+.tab[aria-selected="true"] { color: var(--foreground); }
+.tabs[data-variant="underline"] { gap: 1.125rem; }
+.tabs[data-variant="underline"] .tab { height: 2.125rem; gap: .375rem; border-radius: 4px; padding: 0 1px; font-size: .8125rem; line-height: 1.4; }
+.tabs[data-variant="underline"] .tab > svg { flex: none; }
+.tabs[data-variant="underline"] .tab[aria-selected="true"]::after { position: absolute; right: 0; bottom: -1px; left: 0; height: 2px; border-radius: 1px; background: var(--site-mark); content: ""; }
+/* Com linha fina de ponta a ponta (sub-abas CLI / Manual): 36px de altura, 20px entre elas. */
+.tabs[data-variant="underline"][data-hairline] { gap: 1.25rem; border-bottom: 1px solid var(--border-subtle); }
+.tabs[data-variant="underline"][data-hairline] .tab { height: 2.25rem; }
+/* Em pílula (gerenciador de pacotes, arquivos): mono 12px, 30px de altura, raio 9. A lista rola de lado quando não cabe. */
+.tabs[data-variant="pill"] { gap: .25rem; overflow-x: auto; scrollbar-width: none; }
+.tabs[data-variant="pill"]::-webkit-scrollbar { display: none; }
+.tabs[data-variant="pill"][data-hidden="end"] { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 2.5rem), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 2.5rem), transparent); }
+.tabs[data-variant="pill"][data-hidden="start"] { -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 2.5rem), transparent); mask-image: linear-gradient(to left, #000 calc(100% - 2.5rem), transparent); }
+.tabs[data-variant="pill"][data-hidden="both"] { -webkit-mask-image: linear-gradient(to right, transparent, #000 2.5rem, #000 calc(100% - 2.5rem), transparent); mask-image: linear-gradient(to right, transparent, #000 2.5rem, #000 calc(100% - 2.5rem), transparent); }
+.tabs[data-variant="pill"] .tab { --focus-outline-offset: -2px; height: 1.875rem; border-radius: 9px; padding: 0 .5625rem; font-family: var(--font-mono); font-size: .75rem; font-weight: 400; letter-spacing: 0; }
+.tabs[data-variant="pill"] .tab[aria-selected="true"] { background: var(--surface-muted); }
+
+/* Controle segmentado discreto, igual ao filtro da barra lateral: trilho um tom acima com borda fina e raio 10; opções de 22px,
+   11.5px/500, raio 8; a ativa numa pílula da cor da superfície (não a cor de destaque). */
+.segmented { display: inline-flex; max-width: 100%; flex: none; align-items: center; gap: 1px; border: 1px solid var(--border-subtle); border-radius: 10px; padding: 2px; background: var(--surface-muted); }
+.segment { display: inline-flex; height: 1.375rem; flex: none; align-items: center; justify-content: center; gap: .375rem; border: 1px solid transparent; border-radius: 8px; padding: 0 .5625rem; background: transparent; color: var(--text-muted); font-size: .71875rem; font-weight: 500; line-height: 1; text-decoration: none; white-space: nowrap; cursor: pointer; --focus-outline-offset: -1px; -webkit-tap-highlight-color: transparent; transition: color var(--duration-fast) var(--ease-standard), background-color var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard); }
+.segment[aria-checked="true"], .segment[aria-current] { border-color: var(--border); color: var(--foreground); background: var(--surface); }
+/* Só com ícones (larguras do palco): opções de 30 × 26px, grupo de 32px de altura. */
+.segmented[data-icons] { gap: 0; }
+.segmented[data-icons] .segment { width: 1.875rem; height: 1.625rem; padding: 0; }
+
+/* Botão de ícone: 30px, sem borda; e botão de texto pequeno (ícone + rótulo de 12px). */
+.iconButton { display: inline-grid; width: 1.875rem; height: 1.875rem; flex: none; place-items: center; border: 0; border-radius: 8px; padding: 0; background: transparent; color: var(--text-muted); text-decoration: none; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: color var(--duration-fast) var(--ease-standard), background-color var(--duration-fast) var(--ease-standard); }
+.textButton { display: inline-flex; height: 1.875rem; flex: none; align-items: center; gap: .5rem; border: 0; border-radius: 8px; padding: 0 .625rem; background: transparent; color: var(--text-secondary); font-size: .75rem; font-weight: 400; line-height: 1; white-space: nowrap; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: color var(--duration-fast) var(--ease-standard), background-color var(--duration-fast) var(--ease-standard); }
+.iconButton[data-state="copied"], .textButton[data-state="copied"] { color: var(--foreground); }
+.iconButton[data-state="error"], .textButton[data-state="error"] { color: var(--danger); }
+
+@media (hover: hover) and (pointer: fine) {
+  .tab:hover, .segment:hover, .iconButton:hover, .textButton:hover { color: var(--foreground); }
+  .iconButton:hover, .textButton:hover { background: var(--surface-muted); }
+}
+@media (prefers-reduced-motion: reduce) { .tab, .segment, .iconButton, .textButton { transition: none; } }
+@media (max-width: 640px) { .sectionTitle { font-size: 1.25rem; } }

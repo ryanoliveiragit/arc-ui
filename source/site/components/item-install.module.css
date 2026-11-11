@@ -1,0 +1,25 @@
+/* Chip do comando no topo: 34px, raio 10, um tom acima da página. Encolhe e corta o comando com reticências; nunca quebra linha. */
+.chip { display: flex; min-width: 0; max-width: 100%; height: 2.125rem; flex: 0 1 auto; align-items: center; border: 1px solid var(--border); border-radius: 10px; padding: 0 .25rem 0 .6875rem; background: var(--surface-muted); font-family: var(--font-mono); font-size: .78125rem; letter-spacing: 0; line-height: 1; }
+.prompt { flex: none; margin-right: .5625rem; color: var(--text-muted); user-select: none; }
+.command { display: flex; min-width: 0; flex: 0 1 auto; color: var(--foreground); font: inherit; white-space: nowrap; }
+.head { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.tail { flex: none; }
+.chip .chipCopy { width: 1.625rem; height: 1.625rem; margin-left: .625rem; border-radius: 7px; }
+@media (hover: hover) and (pointer: fine) { .chip .chipCopy:hover { background: var(--border); } }
+
+/* Seção "Instalação": o painel fica 14px abaixo da linha das sub-abas. */
+.modes { margin-top: .125rem; }
+.panel { margin-top: .875rem; min-width: 0; }
+.note { margin: .75rem 0 0; color: var(--text-muted); font-size: .8125rem; line-height: 1.55; }
+.note a, .steps a { border-radius: 4px; color: var(--foreground); text-decoration: underline; text-decoration-color: var(--border-strong); text-underline-offset: 3px; }
+.muted { color: var(--text-muted); }
+
+/* Passo a passo manual: números em círculos discretos, à esquerda de cada passo. */
+.steps { display: grid; gap: 1.25rem; margin: 0; padding: 0; color: var(--text-secondary); font-size: .875rem; line-height: 1.6; list-style: none; counter-reset: step; }
+.steps > li { position: relative; display: grid; min-width: 0; grid-template-columns: minmax(0, 1fr); gap: .75rem; padding-left: 2.25rem; counter-increment: step; }
+.steps > li::before { position: absolute; top: 0; left: 0; display: grid; width: 1.375rem; height: 1.375rem; place-items: center; border: 1px solid var(--border); border-radius: 50%; color: var(--text-secondary); background: var(--surface); font-size: .71875rem; font-weight: 500; line-height: 1; content: counter(step); }
+.steps p { margin: 0; }
+.files { display: grid; gap: .375rem; margin: 0; padding: 0; font-size: .8125rem; list-style: none; }
+.inlineButton { border: 0; border-radius: 4px; padding: 0; background: none; color: var(--foreground); font: inherit; text-decoration: underline; text-decoration-color: var(--border-strong); text-underline-offset: 3px; cursor: pointer; }
+
+@media (hover: hover) and (pointer: fine) { .note a:hover, .steps a:hover, .inlineButton:hover { text-decoration-color: var(--foreground); } }

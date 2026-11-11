@@ -14,6 +14,11 @@ const descriptionsDir = path.join(root, "site", "content", "pt");
 const descriptions = {};
 if (fs.existsSync(descriptionsDir)) for (const file of fs.readdirSync(descriptionsDir).filter(name => name.endsWith(".json")).sort()) Object.assign(descriptions, JSON.parse(fs.readFileSync(path.join(descriptionsDir, file), "utf8")));
 
+/** Guias escritos por item (quando usar, teclado, acessibilidade…): um .json por lote em site/content/docs, no formato { "nome-do-item": { … } }. Ver scripts/build-docs.mjs. */
+const guidesDir = path.join(root, "site", "content", "docs");
+const guides = {};
+if (fs.existsSync(guidesDir)) for (const file of fs.readdirSync(guidesDir).filter(name => name.endsWith(".json")).sort()) Object.assign(guides, JSON.parse(fs.readFileSync(path.join(guidesDir, file), "utf8")));
+
 const items = [];
 for (const item of registry.items) {
   if (item.type === "registry:item") continue; // fundação: tokens de design e de movimento
@@ -32,6 +37,10 @@ for (const item of registry.items) {
     files: item.files.map(file => file.path),
     ownFiles: item.files.map(file => file.path).filter(file => file.includes(ownFolder) || file.includes(`/${item.name}.`)),
     hasDemo: fs.existsSync(path.join(root, "site", "demos", `${item.name}.tsx`)),
+    /** Escrito para o ryan-ui (não veio do núcleo importado). */
+    isNew: item.meta?.origin === "ryan-ui" && item.meta?.batch !== "hero",
+    /** Tem guia escrito em site/content/docs (publicado em public/docs/<nome>.json). */
+    hasGuide: Boolean(guides[item.name]),
   });
 }
 items.sort((a, b) => a.title.localeCompare(b.title, "en"));

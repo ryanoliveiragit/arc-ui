@@ -1,0 +1,754 @@
+{
+  "password-strength": {
+    "quandoUsar": [
+      "Cadastro de conta ou troca de senha, quando a pessoa precisa ver as regras sendo cumpridas enquanto digita.",
+      "Políticas de senha próprias: regras, rótulos, mínimo de caracteres e textos são configuráveis por props.",
+      "Fluxos que reagem à força em código, já que `onValueChange` entrega o nível e as regras cumpridas junto do valor."
+    ],
+    "quandoEvitar": [
+      "Use `password-field` no login, onde medir a força só atrapalha quem já tem senha.",
+      "Use `signup-form` quando precisa do cadastro inteiro, com validação dos campos e estado de conclusão."
+    ],
+    "teclado": [
+      { "teclas": ["Enter", "Espaço"], "acao": "No botão de olho, que vem logo depois do campo na ordem de tabulação, mostram ou escondem a senha." }
+    ],
+    "acessibilidade": [
+      "O medidor tem `role=\"meter\"` com `aria-valuenow` de 0 a 4 e `aria-valuetext` com a palavra da força, e cada regra leva “, met” ou “, not met” escondido para leitores de tela.",
+      "Uma região `role=\"status\"` lê um resumo depois de cada mudança (“Strength: Good. 3 of 4 requirements met.”), e o campo aponta para a lista de regras e para o erro com `aria-describedby`.",
+      "O botão de olho tem nome fixo e informa o estado com `aria-pressed`; todos os textos vêm em inglês, então traduza com `messages`, inclusive `levels` e `summary`."
+    ],
+    "movimento": [
+      "Os quatro segmentos entram da esquerda numa mola sem ultrapassagem, em onda: uma senha colada enche da esquerda para a direita e, ao apagar, eles esvaziam no sentido contrário.",
+      "A palavra da força sobe quando melhora e desce quando piora, cada regra cumprida desenha um tique, a contagem do que falta rola os dígitos e um erro novo sacode o campo uma vez.",
+      "Com “reduzir movimento” ligado, as trocas viram esmaecimentos curtos ou instantâneos e o campo não sacode."
+    ],
+    "responsivo": [
+      "Em telas de toque (`pointer: coarse`) o texto do campo sobe para 16px, para o teclado do celular não dar zoom ao focar."
+    ],
+    "notasIA": [
+      "As regras padrão pedem 12 caracteres, maiúsculas e minúsculas, número e símbolo; mude com `createPasswordRules({ minLength, labels })` ou passe `rules` próprias com `test` e, para a contagem, `remaining`.",
+      "Abaixo de `shortLength` (8) o medidor fica no primeiro passo, com “Too short”, mesmo que as outras regras passem; os testes rodam a cada tecla, então mantenha `test` barato.",
+      "`onValueChange(valor, força)` traz `level` de 0 a 4 e os ids das regras cumpridas, mas a pontuação roda no aparelho e só orienta quem digita, então valide a política também no servidor."
+    ]
+  },
+  "phone-input": {
+    "quandoUsar": [
+      "Cadastro, checkout ou verificação por SMS que precisa do telefone em E.164 (`+5511961234567`).",
+      "Públicos de vários países: a pessoa escolhe o país na lista ou cola um número com `+` e o país se ajusta sozinho.",
+      "Formulários em que formatar enquanto se digita evita erro, com a máscara do país e uma sombra do formato que falta."
+    ],
+    "quandoEvitar": [
+      "Use `input` com `type=\"tel\"` quando o público é de um país só e o E.164 não importa.",
+      "Para países fora da tabela embutida (49) ou para saber se o número existe, use uma biblioteca de telefonia, porque aqui só a quantidade de dígitos é conferida."
+    ],
+    "teclado": [
+      { "teclas": ["+"], "acao": "No campo do número, abre a lista de países já buscando por código de discagem." },
+      { "teclas": ["↓", "↑"], "acao": "No botão do país, abrem a lista; dentro dela, movem o destaque enquanto o foco continua na busca." },
+      { "teclas": ["Page Up", "Page Down"], "acao": "Pulam oito países por vez na lista." },
+      { "teclas": ["Home", "End"], "acao": "Vão ao primeiro ou ao último país, quando a busca está vazia." },
+      { "teclas": ["Enter"], "acao": "Escolhe o país em destaque e devolve o foco ao número, com o cursor no fim." },
+      { "teclas": ["Esc"], "acao": "Fecha a lista sem trocar o país e devolve o foco ao botão do país." }
+    ],
+    "acessibilidade": [
+      "O botão do país diz país e código (“Country, Brazil +55”), e a busca é um `combobox` com `aria-activedescendant`, então o foco fica no campo de busca enquanto o destaque anda pela lista.",
+      "Uma região `role=\"status\"` anuncia a troca de país ao colar, o número de resultados da busca e “Valid … number” quando o número fecha, e a mensagem de erro tem `role=\"alert\"`.",
+      "Com `hideLabel`, o rótulo some da tela mas continua como nome do campo para leitores de tela."
+    ],
+    "movimento": [
+      "O botão do país e a lista são uma superfície só: largura, altura e cantos crescem numa mola sem ultrapassagem ao abrir e encolhem ao fechar.",
+      "Ao trocar de país, bandeira e código rolam na direção da lista (um país mais abaixo entra por baixo), e o destaque desliza entre as linhas com mola própria.",
+      "Com “reduzir movimento” ligado, a superfície troca de tamanho na hora e bandeira, mensagens e o sinal de válido só esmaecem."
+    ],
+    "responsivo": [
+      "A lista abre com a largura do campo, até 340px, e rola por dentro com no máximo 280px de altura, sem arrastar a página.",
+      "O número usa `type=\"tel\"`, `inputMode=\"tel\"` e `autoComplete=\"tel\"`, então o celular mostra o teclado de telefone e o preenchimento automático funciona."
+    ],
+    "desempenho": [
+      "A tabela de países vem dentro do componente, sem baixar metadados nem depender de biblioteca, e cada campo mantém um `ResizeObserver` para medir a superfície."
+    ],
+    "notasIA": [
+      "O valor entra e sai em E.164; `onValueChange(valor, details)` traz também país, texto formatado, `status` e `valid`, e com `name` um campo oculto envia o E.164 no formulário.",
+      "O país padrão é `US`: no Brasil passe `defaultCountry=\"BR\"`; `countries` limita a lista e `preferredCountries` fixa países no topo, em “Suggested”.",
+      "Nomes de países, busca e mensagens são em inglês e não há prop de tradução; `error` substitui a mensagem de validação, que aparece depois de sair do campo."
+    ]
+  },
+  "radio-cards": {
+    "quandoUsar": [
+      "Escolha de plano, frete ou região em que cada opção precisa de descrição e preço à vista.",
+      "Seleção única entre poucas opções que merecem peso visual, como num checkout ou num onboarding.",
+      "Quando uma opção indisponível deve continuar visível com o motivo, via `disabledReason`."
+    ],
+    "quandoEvitar": [
+      "Use `radio-group` quando cada opção cabe num rótulo curto e uma linha de apoio.",
+      "Use `select` quando há muitas opções ou pouco espaço na tela.",
+      "Use `chip-group` quando a pessoa pode marcar mais de uma opção."
+    ],
+    "teclado": [
+      { "teclas": ["→", "↓"], "acao": "Movem o foco para o próximo cartão e já o selecionam, pulando os desabilitados e voltando ao primeiro depois do último." },
+      { "teclas": ["←", "↑"], "acao": "Fazem o mesmo para o cartão anterior; em layout da direita para a esquerda, ← e → se invertem." },
+      { "teclas": ["Home", "End"], "acao": "Selecionam o primeiro ou o último cartão disponível." },
+      { "teclas": ["Espaço", "Enter"], "acao": "Selecionam o cartão em foco." },
+      { "teclas": ["Tab"], "acao": "Entra no grupo pelo cartão selecionado, ou pelo primeiro disponível, e sai dele numa tecla só." }
+    ],
+    "acessibilidade": [
+      "O grupo tem `role=\"radiogroup\"` e cada cartão `role=\"radio\"` com `aria-checked`, nomeado pelo rótulo e descrito pela descrição.",
+      "Não há prop de rótulo: passe `aria-label` ou `aria-labelledby` ao `RadioCards`, senão o grupo fica sem nome para leitores de tela.",
+      "Opções desabilitadas recebem `aria-disabled` e mostram `disabledReason` no lugar da descrição, então o motivo também é lido."
+    ],
+    "movimento": [
+      "Um anel único desliza de cartão em cartão numa mola sem ultrapassagem e o ponto do indicador cresce no cartão novo; o cartão em si nunca muda de tamanho.",
+      "Quando o grupo muda de tamanho, o anel acompanha o novo layout na hora, sem repetir o deslize.",
+      "Com “reduzir movimento” ligado, anel e ponto mudam de lugar na hora e as transições de cor são desligadas."
+    ],
+    "responsivo": [
+      "No `layout=\"grid\"` as colunas se ajustam à largura e caem uma a uma quando ficariam menores que `minColumnWidth` (180px por padrão); em `list` cada opção ocupa a linha inteira.",
+      "O rótulo não quebra linha e corta com reticências; o texto longo vai em `description`, que quebra normalmente."
+    ],
+    "notasIA": [
+      "Cada opção aceita `label`, `description`, `meta` (preço ou prazo) e `icon`; `meta` fica no fim da linha em `list` e embaixo do texto em `grid`.",
+      "Controlado com `value` e `onValueChange`, ou não controlado com `defaultValue`; com `name`, um campo oculto leva o valor no formulário.",
+      "Não esqueça o `aria-label` no grupo; para opções só de texto, `radio-group` é mais simples e usa rádios nativos."
+    ]
+  },
+  "radio-group": {
+    "quandoUsar": [
+      "Escolha única entre poucas opções que devem ficar todas à vista, como plano de cobrança ou frequência de envio.",
+      "Formulários em que cada opção tem uma linha de explicação embaixo do nome.",
+      "Quando você quer o comportamento nativo do rádio (setas, Tab e envio de formulário) com um destaque animado."
+    ],
+    "quandoEvitar": [
+      "Use `radio-cards` quando cada opção precisa de preço, ícone ou aparência de cartão.",
+      "Use `select` quando a lista é longa ou o espaço é curto.",
+      "Use `segmented-control` para alternar entre visões de uma mesma tela."
+    ],
+    "teclado": [
+      { "teclas": ["↓", "→"], "acao": "Selecionam a opção seguinte, como em qualquer rádio nativo, e o destaque desliza junto." },
+      { "teclas": ["↑", "←"], "acao": "Selecionam a opção anterior." },
+      { "teclas": ["Espaço"], "acao": "Marca a opção em foco quando nenhuma está marcada." },
+      { "teclas": ["Tab"], "acao": "Entra no grupo pela opção marcada e sai numa tecla só." }
+    ],
+    "acessibilidade": [
+      "É um `fieldset` com `legend` e rádios nativos que compartilham o mesmo `name`, então papel, nome do grupo e navegação vêm do navegador.",
+      "Nome e descrição de cada opção ficam dentro do `<label>`, e os dois entram no nome acessível do rádio."
+    ],
+    "movimento": [
+      "Um único destaque viaja até a linha escolhida numa mola sem ultrapassagem, enquanto o ponto novo cresce e o antigo encolhe; linhas e textos nunca mudam de tamanho.",
+      "Ao apertar, a marca afunda rápido e mostra um ponto fraco de prévia, e o ponto de verdade cresce ao soltar.",
+      "Com “reduzir movimento” ligado, destaque e ponto mudam na hora e as transições de cor e de pressão são desligadas."
+    ],
+    "notasIA": [
+      "É sempre controlado: `value` e `onValueChange` são obrigatórios e não existe `defaultValue`, então guarde a escolha num `useState`.",
+      "Import nomeado, `import { RadioGroup } from \"@/components/ryan-ui/radio-group/radio-group\"`; `label` vira a `legend` e cada opção é `{ value, label, description? }`, só texto.",
+      "Passe `name` dentro de um formulário nativo; sem ele, os rádios usam um nome gerado."
+    ]
+  },
+  "range-histogram-slider": {
+    "quandoUsar": [
+      "Filtro de faixa de preço ou de outra medida em que ver a distribuição ajuda a escolher, como diárias, salários ou tamanhos.",
+      "Buscas com filtro ao vivo, em que as barras acesas mostram quanto do conjunto fica dentro do intervalo."
+    ],
+    "quandoEvitar": [
+      "Use `slider` quando não há dados para mostrar a distribuição ou quando basta um valor só.",
+      "Use `number-field` quando a pessoa já sabe os limites exatos e prefere digitar.",
+      "Use `chip-group` para filtrar por categorias em vez de números."
+    ],
+    "teclado": [
+      { "teclas": ["→", "↑"], "acao": "Aumentam o polegar em foco em um `step`." },
+      { "teclas": ["←", "↓"], "acao": "Diminuem o polegar em foco; num limite, ele força contra a borda e volta numa mola." },
+      { "teclas": ["Shift + →", "Shift + ←", "Page Up", "Page Down"], "acao": "Levam o polegar até a próxima borda de barra naquela direção, percorrendo o histograma barra a barra." },
+      { "teclas": ["Home", "End"], "acao": "Levam o polegar ao seu limite: a ponta da escala ou o outro polegar, respeitando a distância mínima." },
+      { "teclas": ["Tab"], "acao": "Passa do polegar do mínimo para o do máximo." }
+    ],
+    "acessibilidade": [
+      "Cada polegar é um `role=\"slider\"` próprio, chamado “{label}, minimum” e “{label}, maximum” (troque com `thumbLabels`), com `aria-valuetext` vindo de `format`.",
+      "`aria-valuemin` e `aria-valuemax` de cada polegar acompanham o outro, então o leitor de tela ouve só o trecho que ainda está livre.",
+      "O histograma e o texto do intervalo são `aria-hidden`; se a quantidade de itens no intervalo importa, mostre-a em texto fora do componente, como faz a demo."
+    ],
+    "movimento": [
+      "Os polegares seguem o ponteiro 1:1, nunca se cruzam, esticam como elástico além das pontas e, ao soltar, assentam numa borda de barra próxima levando a velocidade do gesto.",
+      "As barras dentro do intervalo acendem por um recorte que corta exatamente no polegar, no mesmo quadro, e tocar no gráfico ou no trilho leva o polegar mais próximo até lá numa mola.",
+      "Com “reduzir movimento” ligado, os polegares vão direto ao valor, sem elástico nem tranco nos limites."
+    ],
+    "responsivo": [
+      "Ocupa a largura do contêiner, e no toque arrastar na vertical continua rolando a página (`touch-action: pan-y`)."
+    ],
+    "desempenho": [
+      "As barras são recontadas quando muda a identidade de `data`, `min`, `max` ou `bins`; memorize o array com `useMemo` para não recontar a cada render.",
+      "Sem `min` e `max`, os limites saem de `Math.min(...data)` e `Math.max(...data)` a cada render; com muitos valores, passe os dois."
+    ],
+    "notasIA": [
+      "`data` são os valores brutos (o preço de cada anúncio), não as contagens; o componente distribui os valores em `bins` barras, 32 por padrão.",
+      "Passe `min` e `max` explícitos, como a demo faz: o mínimo padrão inclui o zero, então preços de 40 a 600 abririam a escala em 0.",
+      "Use `onValueChange` para o texto ao vivo e `onValueCommit` para filtrar ou buscar, porque ele dispara ao soltar ou a cada tecla; `snapToBins={false}` desliga o encaixe nas bordas."
+    ]
+  },
+  "rating": {
+    "quandoUsar": [
+      "Pedir uma nota rápida depois de uma compra, estadia ou atendimento.",
+      "Mostrar a média de avaliações com meias estrelas, em modo `readOnly`.",
+      "Formulários com vários critérios, cada um com sua nota e uma linha de apoio em `description`."
+    ],
+    "quandoEvitar": [
+      "Use `reactions` para reconhecer um post com um toque, sem escala de nota.",
+      "Use `slider` quando a escala tem muitos pontos, como de 0 a 100.",
+      "Use `radio-group` quando cada ponto da escala precisa de um texto próprio visível, como numa escala de concordância."
+    ],
+    "teclado": [
+      { "teclas": ["→", "↑"], "acao": "Sobem a nota em um passo (meia estrela com `allowHalf`) e levam o foco junto." },
+      { "teclas": ["←", "↓"], "acao": "Descem um passo; abaixo da primeira estrela, a nota é apagada se `allowClear` estiver ligado." },
+      { "teclas": ["Home", "End"], "acao": "Vão à menor nota ou à máxima." },
+      { "teclas": ["1–9"], "acao": "Dão essa nota direto, até o valor de `max`." },
+      { "teclas": ["Backspace", "Delete"], "acao": "Apagam a nota quando `allowClear` está ligado, que é o padrão." },
+      { "teclas": ["Espaço", "Enter"], "acao": "Escolhem a estrela em foco." }
+    ],
+    "acessibilidade": [
+      "As estrelas formam um `radiogroup` ligado ao rótulo, com um botão `role=\"radio\"` por valor (dois por estrela com `allowHalf`) lido como “Great, 4 of 5 stars”, e só o valor atual entra no Tab.",
+      "Com `readOnly`, o grupo vira `role=\"img\"` com a nota no nome (“… 4.5 out of 5”) e nada recebe foco.",
+      "Escolhas com ponteiro e a nota apagada são anunciadas numa região `aria-live`; as palavras padrão (“Poor” a “Excellent”, “Not rated”) são em inglês, troque com `valueLabels` e `emptyLabel`."
+    ],
+    "movimento": [
+      "Ao escolher, o preenchimento varre as estrelas da esquerda para a direita e cada uma dá um pulinho em onda; escolhas seguidas e rápidas, como uma seta segurada, fazem pular só a estrela escolhida.",
+      "Passar o mouse mostra uma prévia sobre a nota guardada, que fica como marca fraca, e a palavra do valor rola na direção da mudança.",
+      "Com “reduzir movimento” ligado, preenchimento, pulo e palavras trocam na hora."
+    ],
+    "responsivo": [
+      "As células de `sm`, `md` e `lg` medem 28, 36 e 44px; em telas de toque prefira `lg`, e o dedo pode deslizar pelas estrelas, valendo a nota ao soltar.",
+      "Quando falta largura, a palavra do valor desce para a linha de baixo; ela reserva o espaço da palavra mais longa e não empurra nada ao mudar."
+    ],
+    "notasIA": [
+      "`onChange` recebe a nota confirmada e 0 significa apagada; clicar de novo na nota atual também apaga, a menos que `allowClear={false}`.",
+      "Para média de avaliações, use `readOnly` com `allowHalf` e um valor como 4.5; valores são arredondados ao passo, meia estrela ou inteira.",
+      "As palavras padrão só aparecem com `max={5}` sem meias estrelas, e nos outros casos o texto é “4 out of 5”, então em português passe `valueLabels` ou `showValue={false}`."
+    ]
+  },
+  "rich-text-editor": {
+    "quandoUsar": [
+      "Notas, comentários longos, descrições de produto ou notas de versão que precisam de títulos, listas e links.",
+      "Quem escreve já conhece Markdown: atalhos como `## `, `- `, `1. ` e `> ` viram formatação enquanto digita.",
+      "Quando você precisa guardar o texto como Markdown ou HTML limpo sem trazer uma biblioteca de editor."
+    ],
+    "quandoEvitar": [
+      "Use `textarea` para texto simples, sem formatação.",
+      "Use `mention-input` quando o que importa são menções a pessoas e canais, não a formatação.",
+      "Documentos longos, tabelas, imagens ou edição colaborativa pedem um editor completo; este cobre títulos, listas, citações, código e links."
+    ],
+    "teclado": [
+      { "teclas": ["Ctrl + Z"], "acao": "Desfaz pelo histórico próprio do editor; Ctrl + Shift + Z ou Ctrl + Y refazem (⌘ no Mac)." },
+      { "teclas": ["Ctrl + B"], "acao": "Negrito; Ctrl + I faz itálico, Ctrl + Shift + X tachado e Ctrl + E código na linha." },
+      { "teclas": ["Ctrl + K"], "acao": "Abre o campo de link na barra flutuante, onde Enter aplica e Esc volta à formatação." },
+      { "teclas": ["/"], "acao": "No começo da linha ou depois de um espaço, abre o menu de blocos: ↑ e ↓ escolhem, Enter ou Tab inserem e Esc fecha." },
+      { "teclas": ["Tab", "Shift + Tab"], "acao": "Numa lista, aumentam ou diminuem o recuo do item; num bloco de código, Tab insere dois espaços, e fora deles o foco sai do editor." },
+      { "teclas": ["Alt + F10"], "acao": "Com a barra flutuante aberta, leva o foco a ela; ← e → andam entre os botões e Esc volta ao texto." }
+    ],
+    "acessibilidade": [
+      "A área de escrita é `role=\"textbox\"` com `aria-multiline`; passe `aria-label` com o nome do campo, porque o padrão é “Editor”.",
+      "A barra é um `role=\"toolbar\"` com botões nomeados e `aria-pressed`, e o menu de blocos é uma `listbox` ligada ao texto por `aria-activedescendant`, então o foco não sai do texto ao escolher.",
+      "Uma região `aria-live` anuncia desfazer, refazer, atalhos de Markdown aplicados, blocos inseridos e links; os textos da interface são em inglês e fixos no código."
+    ],
+    "movimento": [
+      "A barra flutuante surge com uma mola curta junto da seleção, desliza quando a seleção muda e troca de tamanho numa mola quando vira o campo de link, com as faces deslizando de lado.",
+      "No menu de blocos, um destaque desliza entre as opções e o painel acompanha a altura dos resultados filtrados.",
+      "Com “reduzir movimento” ligado, barra e menu só esmaecem e mudam de tamanho e de posição na hora."
+    ],
+    "responsivo": [
+      "Com o editor abaixo de 330px de largura (consulta de contêiner), a barra esconde os botões de bloco e fica só com as marcas de texto; os blocos seguem no menu de barra.",
+      "Barra e menu abrem para cima ou para baixo conforme o espaço visível no ancestral que rola ou corta, para não ficarem escondidos."
+    ],
+    "desempenho": [
+      "A cada mudança o editor gera HTML, Markdown e texto do documento inteiro, e o desfazer guarda até 300 cópias do HTML; ele foi feito para notas e descrições, não para documentos longos."
+    ],
+    "notasIA": [
+      "Comece com `defaultMarkdown` ou `defaultValue` (HTML) e leia `onChange`, que entrega `{ html, markdown, text, empty }`; o `value` controlado só reescreve o conteúdo quando difere do último HTML emitido.",
+      "Não há `name` nem campo de formulário: guarde `html` ou `markdown` no estado; pelo `ref` há `getHTML`, `getMarkdown`, `setMarkdown`, `clear`, `undo` e `redo`.",
+      "Trate o `html` como entrada do usuário e sanitize no servidor antes de mostrar a outras pessoas, porque a limpeza embutida vale para o que é colado; não há sublinhado nem imagens."
+    ]
+  },
+  "ruler-slider": {
+    "quandoUsar": [
+      "Medidas como altura, peso ou temperatura, em que a metáfora da fita métrica ajuda e o valor exato importa.",
+      "Telas de toque, onde arrastar e arremessar uma fita é mais confortável que acertar um polegar pequeno.",
+      "Onboarding com uma medida por tela, com o número grande e a unidade em destaque."
+    ],
+    "quandoEvitar": [
+      "Use `slider` quando a faixa é curta ou quando ver a posição no trilho importa mais que o número exato.",
+      "Use `number-field` quando a pessoa já sabe o número e prefere digitar.",
+      "Use `range-histogram-slider` ou um `slider` com dois valores para escolher um intervalo."
+    ],
+    "teclado": [
+      { "teclas": ["→", "↑"], "acao": "Avançam uma marca pequena (`step`), e a fita desliza até ela numa mola." },
+      { "teclas": ["←", "↓"], "acao": "Voltam uma marca pequena." },
+      { "teclas": ["Page Up", "Page Down", "Shift + →", "Shift + ←"], "acao": "Andam uma marca rotulada (`largeStep`, por padrão `step` vezes `majorEvery`)." },
+      { "teclas": ["Home", "End"], "acao": "Vão ao mínimo ou ao máximo." }
+    ],
+    "acessibilidade": [
+      "A fita inteira é um único `role=\"slider\"` focável, nomeado pelo rótulo, com `aria-valuetext` que junta o valor formatado e a `unit` (“172 cm”).",
+      "O número grande e as marcas são `aria-hidden`, e o leitor de tela ouve só o valor do slider, então ponha em `format` e `unit` o texto que deve ser falado."
+    ],
+    "movimento": [
+      "A fita segue o dedo 1:1, continua deslizando com inércia depois de um arremesso e sempre para numa marca; puxada além das pontas, estica como elástico e volta.",
+      "Um toque leva a marca tocada até a agulha numa mola, e os dígitos do número rolam cada um na sua coluna enquanto a fita passa.",
+      "Com “reduzir movimento” ligado, a fita vai direto ao valor, sem inércia nem elástico, e os dígitos trocam sem rolar."
+    ],
+    "responsivo": [
+      "Ocupa a largura do contêiner com as pontas da fita esmaecidas; no toque, arrastar na vertical rola a página, e no trackpad a rolagem horizontal move a fita."
+    ],
+    "desempenho": [
+      "As marcas pequenas são um fundo em CSS, mas cada marca rotulada é um elemento e a fita tem a largura da faixa inteira; para faixas enormes com `step` pequeno, aumente `majorEvery` ou divida a faixa."
+    ],
+    "notasIA": [
+      "Feito para valores físicos com `unit` (cm, kg, °C): `min`, `max` e `step` definem a fita, e `spacing` (px por marca) controla a precisão do arraste.",
+      "`onValueChange` dispara a cada marca que passa pela agulha, inclusive durante a inércia; salve ou busque em `onValueCommit`, que vem quando a fita para.",
+      "A altura vem de `--ruler-height` e a largura é 100%, então limite a largura no elemento pai."
+    ]
+  },
+  "scrub-input": {
+    "quandoUsar": [
+      "Painéis de propriedades e inspetores (largura, posição, rotação, opacidade), em que arrastar é mais rápido que digitar.",
+      "Campos numéricos que ganham com contas e unidades digitadas, como `320/2 + 8` ou `50%`.",
+      "Valores circulares, como rotação de 0 a 360, com `wrap`."
+    ],
+    "quandoEvitar": [
+      "Use `number-field` em formulários comuns, onde as pessoas esperam botões de mais e menos à vista.",
+      "Use `slider` quando a posição dentro da faixa importa mais que o número.",
+      "Use `money-input` para valores em dinheiro."
+    ],
+    "teclado": [
+      { "teclas": ["↑", "↓"], "acao": "Somam ou subtraem um `step`; com Shift usam `coarseStep` (10× por padrão) e caem na grade grossa, como 13 indo a 20, e com Alt usam `fineStep` (um décimo)." },
+      { "teclas": ["Enter"], "acao": "Confirma o texto digitado, inclusive contas como `(100-24)/2` e unidades de `units`." },
+      { "teclas": ["Esc"], "acao": "Descarta o texto digitado e volta ao último valor; durante um arraste do rótulo, cancela o arraste." },
+      { "teclas": ["Tab"], "acao": "Sair do campo confirma o texto digitado, como o Enter." }
+    ],
+    "acessibilidade": [
+      "O campo é um `role=\"spinbutton\"` com `aria-valuetext` que fala a unidade por extenso (“50 percent”, “45 degrees”) e `aria-invalid` por um instante quando uma conta é recusada.",
+      "Com texto no `label`, o `<label>` nomeia o campo; com um ícone, passe `aria-label`, e o botão de unidade se anuncia como “Unit: px. Change unit”.",
+      "Arrastar o rótulo é só para ponteiro; pelo teclado, o mesmo ajuste é feito com as setas e os modificadores."
+    ],
+    "movimento": [
+      "Nos limites, o campo estica como elástico na direção do arraste e volta numa mola ao soltar, e uma conta inválida faz o campo tremer uma vez.",
+      "A faixa de preenchimento acompanha o arraste 1:1 e desliza até valores digitados; segurar Shift ou Alt mostra uma etiqueta “×10” ou “×0.1”.",
+      "Com “reduzir movimento” ligado, não há elástico nem tremor, a faixa salta para o valor e etiquetas e unidade só esmaecem."
+    ],
+    "responsivo": [
+      "Ocupa a coluna inteira (fixe com `--scrub-input-width`); no toque, o rótulo arrasta na horizontal e a rolagem vertical segue para a página, e o travamento do ponteiro vale só para mouse."
+    ],
+    "notasIA": [
+      "Pensado para linhas densas: `label` curto (“W”, “X” ou um ícone de 16px com `aria-label`), `min`, `max`, `unit` e `size=\"sm\"`.",
+      "`unit` deixa a unidade controlada, então trate `onUnitChange`; para o botão de unidades e o `50%` digitado trocarem a unidade sozinhos, use `defaultUnit`.",
+      "`onValueChange` dispara a cada passo do arraste, com `details.source`; salve em `onValueCommit`, que vem ao soltar, no Enter, ao sair do campo e a cada seta."
+    ]
+  },
+  "search-field": {
+    "quandoUsar": [
+      "Filtrar uma lista ou tabela que já está na tela, como destinos, pessoas ou arquivos.",
+      "Campo de busca fixo no topo de uma página ou de uma barra lateral, com rótulo visível."
+    ],
+    "quandoEvitar": [
+      "Use `combobox` quando a busca termina na escolha de um item da lista.",
+      "Use `expanding-search` ou `morphing-search` quando o espaço é curto e a busca começa como um ícone.",
+      "Use `command-palette` para buscar ações e navegar pela aplicação inteira pelo teclado."
+    ],
+    "teclado": [
+      { "teclas": ["Enter", "Espaço"], "acao": "No botão de limpar, que entra na ordem de tabulação depois do campo quando há texto, apagam a busca e devolvem o foco ao campo." }
+    ],
+    "acessibilidade": [
+      "O rótulo é um `<label>` visível ligado ao campo `type=\"search\"`, e a lupa é `aria-hidden`.",
+      "O botão de limpar tem `aria-label=\"Clear search\"`, fixo em inglês, e devolve o foco ao campo porque some debaixo do ponteiro.",
+      "O componente não anuncia resultados: se a lista filtra ao vivo, informe a contagem numa região `aria-live` sua."
+    ],
+    "movimento": [
+      "O botão de limpar entra com uma mola curta e um leve desfoque e sai rápido; ele tem um espaço reservado, então o campo nunca muda de largura.",
+      "A lupa passa de apagada para a cor do texto quando o campo recebe foco ou tem texto.",
+      "Com “reduzir movimento” ligado, o botão só esmaece e as transições de cor são desligadas."
+    ],
+    "notasIA": [
+      "É sempre controlado: `value` e `onValueChange(texto)` são obrigatórios; filtre no pai e, se for chamar a rede, use seu próprio debounce.",
+      "Import nomeado, `import { SearchField } from \"@/components/ryan-ui/search-field/search-field\"`; `label` é obrigatório, e as outras props de `<input>`, como `placeholder`, passam direto."
+    ]
+  },
+  "segmented-control": {
+    "quandoUsar": [
+      "Alternar entre poucas visões da mesma informação, como Dia, Semana, Mês e Ano, ou Gráfico e Tabela.",
+      "Filtros de um valor só em barras de ferramentas, onde a opção ativa precisa ficar visível o tempo todo."
+    ],
+    "quandoEvitar": [
+      "Use `tabs` quando cada opção mostra um painel de conteúdo próprio e precisa dos papéis de aba e painel.",
+      "Use `toggle-group` quando a barra é de ícones ou permite várias opções ligadas ao mesmo tempo.",
+      "Use `select` quando há muitas opções ou os rótulos são longos."
+    ],
+    "teclado": [
+      { "teclas": ["→", "↓"], "acao": "Selecionam o próximo segmento e levam o foco a ele, voltando ao primeiro depois do último." },
+      { "teclas": ["←", "↑"], "acao": "Selecionam o anterior, também em ciclo." },
+      { "teclas": ["Home", "End"], "acao": "Selecionam o primeiro ou o último segmento." },
+      { "teclas": ["Tab"], "acao": "Entra direto no segmento selecionado; os outros ficam fora da ordem de tabulação." }
+    ],
+    "acessibilidade": [
+      "É um `role=\"group\"` de botões com `aria-pressed` e uma só parada de Tab; passe `label`, que vira o `aria-label` do grupo.",
+      "Os segmentos são botões de alternância, não abas: não há `tabpanel` ligado a eles, então o conteúdo que muda é responsabilidade da página."
+    ],
+    "movimento": [
+      "Uma única pílula desliza até o segmento escolhido numa mola sem ultrapassagem; os rótulos nunca mudam de tamanho nem de peso, só a cor acompanha.",
+      "Com “reduzir movimento” ligado, a pílula muda de lugar na hora e a rolagem até o segmento escolhido deixa de ser animada."
+    ],
+    "responsivo": [
+      "Quando os segmentos não cabem, a trilha rola na horizontal dentro do controle, esmaece só o lado que tem mais conteúdo e rola o segmento escolhido para a vista.",
+      "Em telas com menos de 380px de largura, o espaçamento interno de cada segmento diminui."
+    ],
+    "notasIA": [
+      "Export padrão e sempre controlado: `import SegmentedControl from \"@/components/ryan-ui/segmented-control/segmented-control\"`, com `options`, `value` e `onValueChange`.",
+      "`onOptionIntent` dispara quando o ponteiro ou o foco chega a um segmento, antes da escolha; use para pré-carregar o que ele vai mostrar.",
+      "`accessory` põe um badge ou contador depois do rótulo; as setas já selecionam, então cada passo do teclado chama `onValueChange`."
+    ]
+  },
+  "select": {
+    "quandoUsar": [
+      "Escolher um valor de uma lista média num formulário, como fuso horário, país ou categoria.",
+      "Quando o espaço é curto e as opções não precisam ficar à vista o tempo todo.",
+      "Formulários que pedem teclado completo e envio nativo, com `name` e `required` do Radix."
+    ],
+    "quandoEvitar": [
+      "Use `radio-group` ou `segmented-control` quando são poucas opções e vale mostrar todas.",
+      "Use `combobox` quando a lista é longa e a pessoa prefere digitar para filtrar.",
+      "Use `multi-select` quando dá para escolher mais de um valor."
+    ],
+    "teclado": [
+      { "teclas": ["Enter", "Espaço", "↓", "↑"], "acao": "No botão, abrem o menu com o foco na opção escolhida." },
+      { "teclas": ["↓", "↑"], "acao": "No menu, movem entre as opções, pulando as desabilitadas." },
+      { "teclas": ["Home", "End"], "acao": "Vão à primeira ou à última opção." },
+      { "teclas": ["Enter", "Espaço"], "acao": "Escolhem a opção em foco, fecham o menu e devolvem o foco ao botão." },
+      { "teclas": ["Esc"], "acao": "Fecha o menu sem mudar o valor." },
+      { "teclas": ["A–Z"], "acao": "Digitar o começo de um rótulo pula para essa opção; com o menu fechado, já troca o valor." }
+    ],
+    "acessibilidade": [
+      "O botão é o `combobox` do Radix, ligado ao `<label>` visível e à `description` por `aria-describedby`; o valor real fica num texto oculto para leitores de tela enquanto a cópia visível anima.",
+      "Com o menu aberto, o foco fica preso nas opções e o resto da página fica oculto para tecnologia assistiva, e ao fechar o foco volta ao botão."
+    ],
+    "movimento": [
+      "O menu cresce a partir da borda do botão com um leve deslocamento e escala, e a seta gira; o botão nunca escala, para o menu medir a posição certa.",
+      "O valor exibido rola na direção da lista, com uma opção mais abaixo entrando por baixo e uma mais acima por cima, e o tique da opção marcada surge com leve desfoque.",
+      "Com “reduzir movimento” ligado, menu e valor só esmaecem e o tique aparece sem animação."
+    ],
+    "responsivo": [
+      "O menu acompanha a largura do botão e tem no máximo 320px de altura ou o espaço que sobra na tela, com setas de rolagem nas pontas, e o Radix o reposiciona para não sair da tela."
+    ],
+    "notasIA": [
+      "Import nomeado `Select`; passe `options` como `{ value, label, disabled? }` e use `value` com `onValueChange` ou `defaultValue`.",
+      "Não use `value=\"\"` numa opção: o valor vazio é o estado que mostra o `placeholder`.",
+      "Para busca dentro da lista prefira `combobox`, e para várias escolhas, `multi-select`; `className` vai para o botão, não para o campo inteiro."
+    ]
+  },
+  "shortcut-recorder": {
+    "quandoUsar": [
+      "Telas de preferências em que a pessoa redefine os atalhos de teclado do produto.",
+      "Apps com muitos atalhos que precisam de uma folha de referência pesquisável, via `ShortcutList`.",
+      "Mostrar atalhos em menus e textos com teclas desenhadas, via `ShortcutKeys` e `ShortcutKbd`."
+    ],
+    "quandoEvitar": [
+      "Use `command-palette` quando o objetivo é executar ações pelo teclado, não configurá-las.",
+      "Para só exibir um atalho fixo, use `ShortcutKeys` deste mesmo arquivo, sem o gravador.",
+      "Em apps usados quase só por toque, atalhos de teclado têm pouco uso e a tela de configuração pode ficar de fora."
+    ],
+    "teclado": [
+      { "teclas": ["Enter", "Espaço"], "acao": "No campo, começam a gravar; a próxima combinação com modificador vira o atalho." },
+      { "teclas": ["Esc"], "acao": "Cancela a gravação e mantém o atalho anterior." },
+      { "teclas": ["Backspace", "Delete"], "acao": "Apagam o atalho, durante a gravação ou fora dela." },
+      { "teclas": ["Tab"], "acao": "Durante a gravação, para de gravar e segue para o próximo controle." },
+      { "teclas": ["Ctrl", "Alt", "Shift", "⌘"], "acao": "Segurados com a `ShortcutList` na tela, acendem essa tecla em todas as linhas e esmaecem as linhas que não a usam." },
+      { "teclas": ["Esc"], "acao": "Na busca da `ShortcutList`, apaga o texto digitado." }
+    ],
+    "acessibilidade": [
+      "O campo é um botão com `aria-pressed` durante a gravação, nomeado pelo rótulo mais o atalho falado (“Control Shift L”) e descrito pela mensagem de baixo.",
+      "Uma região `role=\"status\"` narra cada passo: início da gravação, atalho definido, conflito, limpeza e cancelamento; os textos são em inglês e fixos.",
+      "`ShortcutKeys` tem `role=\"img\"` com o nome falado da combinação, e os botões de restaurar e limpar têm `aria-label` próprio."
+    ],
+    "movimento": [
+      "As teclas entram uma depois da outra com uma mola curta e afundam um pixel quando estão seguradas, e um ponto pulsa devagar enquanto grava.",
+      "A linha de mensagem abre a altura numa mola medindo o texto, e os botões de restaurar e limpar crescem no lugar.",
+      "Com “reduzir movimento” ligado, as teclas só esmaecem, o ponto fica parado e nada afunda."
+    ],
+    "responsivo": [
+      "A `ShortcutList` usa consulta de contêiner: a partir de 520px de largura, os grupos ficam em duas colunas."
+    ],
+    "desempenho": [
+      "Com `highlightPressed` ligado (padrão), a `ShortcutList` escuta `keydown` e `keyup` da janela inteira na fase de captura; desligue se não usar as linhas acesas."
+    ],
+    "notasIA": [
+      "Guarde o valor como texto (`\"mod+shift+k\"`), em que `mod` é ⌘ no Mac e Ctrl no resto; para disparar a ação, use `matchesShortcut(evento, atalho, plataforma)` com `usePlatform()`.",
+      "Passe em `bindings` os atalhos já usados para avisar conflitos; em “Use anyway”, `onValueChange` traz `details.replaced` para você desligar o atalho antigo.",
+      "`requireModifier` (padrão) exige ⌘, Ctrl ou ⌥, exceto em teclas F, e `warnReserved` avisa sobre atalhos do navegador como ⌘W e ⌘C."
+    ]
+  },
+  "signature-pad": {
+    "quandoUsar": [
+      "Aceite de contrato, termo ou entrega em que a pessoa assina com o dedo, uma caneta ou o mouse.",
+      "Fluxos que guardam a assinatura como PNG ou SVG recortados na tinta.",
+      "Tablets e celulares em balcão, recepção ou entrega."
+    ],
+    "quandoEvitar": [
+      "Quando basta confirmar, use `checkbox` de aceite ou `hold-to-confirm`; desenhar é lento e não tem alternativa por teclado.",
+      "Assinatura com validade jurídica forte pede certificado e verificação de identidade, e o quadro só captura um desenho."
+    ],
+    "teclado": [
+      { "teclas": ["Ctrl + Z"], "acao": "Com o quadro em foco, desfaz o último traço (⌘ no Mac)." },
+      { "teclas": ["Ctrl + Shift + Z", "Ctrl + Y"], "acao": "Com o quadro em foco, refazem." },
+      { "teclas": ["Delete", "Backspace"], "acao": "Com o próprio quadro em foco, limpam a assinatura, que desfazer traz de volta." },
+      { "teclas": ["Esc"], "acao": "Com o quadro em foco, para a reprodução." },
+      { "teclas": ["←", "→", "↑", "↓"], "acao": "Nos grupos de cor e de espessura, trocam a opção e levam o foco junto, em ciclo." }
+    ],
+    "acessibilidade": [
+      "O quadro é focável, com `role=\"img\"` e `aria-roledescription=\"signature pad\"`; o nome diz quantos traços há, e uma descrição oculta ensina os atalhos.",
+      "Uma região `role=\"status\"` anuncia traço adicionado, desfazer, limpeza, reprodução e exportação, e os botões só de ícone têm `aria-label` e `title`.",
+      "Desenhar não tem alternativa por teclado: em fluxos com valor legal, ofereça também outro meio de assinar, como digitar o nome."
+    ],
+    "movimento": [
+      "O traço afina com a velocidade, ou segue a pressão da caneta, e as pontas afinam como um bico que se levanta; limpar passa um rodo pelo quadro, cortando a tinta da esquerda para a direita.",
+      "A reprodução redesenha os traços no ritmo original, com pausas limitadas e assinaturas longas aceleradas para uns três segundos, e um ponto de tinta acompanha a ponta.",
+      "Com “reduzir movimento” ligado, limpar é imediato e a dica “Sign here” e os botões só esmaecem."
+    ],
+    "responsivo": [
+      "O quadro mantém a proporção 600 × 260 e os traços escalam com a largura; a barra de ferramentas quebra em linhas quando falta espaço.",
+      "No toque, o quadro bloqueia a rolagem (`touch-action: none`) para o dedo desenhar, então deixe área fora dele para a página rolar."
+    ],
+    "desempenho": [
+      "O traço ao vivo é escrito direto no SVG a cada movimento, sem re-render do React, e usa os eventos agrupados do ponteiro para uma linha lisa."
+    ],
+    "notasIA": [
+      "Não há `value` e o quadro sempre começa vazio: guarde os traços de `onChange` e gere o arquivo com `signatureToPng(traços)` ou `signatureToSvg(traços)` para enviar ao servidor, em vez do download.",
+      "As exportações são recortadas na tinta, com fundo transparente e cores de impressão fixas, então saem legíveis em papel branco mesmo no tema escuro.",
+      "`signer` imprime o nome sob a linha, `hint` troca o “Sign here” e `label` dá o nome acessível; os demais textos internos são em inglês."
+    ]
+  },
+  "slider": {
+    "quandoUsar": [
+      "Ajustes contínuos em que a posição relativa importa: volume, brilho, zoom, opacidade.",
+      "Faixas de filtro com dois limites, como orçamento ou preço, com distância mínima entre os polegares.",
+      "Escalas com poucos pontos nomeados, como Rascunho, Bom e Ótimo, usando `marks` com rótulo e `step`."
+    ],
+    "quandoEvitar": [
+      "Use `number-field` quando o valor exato importa e a pessoa prefere digitar.",
+      "Use `range-histogram-slider` quando ver a distribuição dos dados ajuda a escolher a faixa.",
+      "Use `ruler-slider` para medidas precisas com unidade, como altura ou peso, em telas de toque."
+    ],
+    "teclado": [
+      { "teclas": ["→", "↑"], "acao": "Aumentam um `step`." },
+      { "teclas": ["←", "↓"], "acao": "Diminuem um `step`; num limite, o polegar força contra a borda e volta." },
+      { "teclas": ["Page Up", "Page Down", "Shift + →", "Shift + ←"], "acao": "Movem `largeStep`, por padrão um décimo da faixa." },
+      { "teclas": ["Home", "End"], "acao": "Vão ao limite do polegar: a ponta da faixa ou, num intervalo, o outro polegar." },
+      { "teclas": ["Tab"], "acao": "Num intervalo, passa de um polegar para o outro." }
+    ],
+    "acessibilidade": [
+      "Cada polegar é um `role=\"slider\"` com `aria-valuetext` vindo de `format`; um valor único é nomeado pelo rótulo, e num intervalo cada polegar ganha nome próprio (`thumbLabels` ou “…, minimum” e “…, maximum”).",
+      "O número ao lado do rótulo e o balão são `aria-hidden`, porque o slider já fala o valor; ícones em `start` e `end` devem ser `aria-hidden` ou botões com nome."
+    ],
+    "movimento": [
+      "O polegar segue o ponteiro 1:1, estica como elástico além dos limites e assenta na grade de `step` levando a velocidade do gesto; tocar no trilho leva o polegar mais próximo até lá numa mola.",
+      "Um balão com dígitos de hodômetro acompanha o polegar ao arrastar e no foco por teclado, mas não no foco vindo do ponteiro, e colunas novas de dígitos abrem a largura numa mola.",
+      "Com “reduzir movimento” ligado, o polegar vai direto ao valor, sem elástico nem tranco, e os dígitos trocam sem rolar."
+    ],
+    "responsivo": [
+      "Em telas de toque o balão fica mais alto, para o dedo não cobri-lo, e nunca passa das bordas do componente; arrastar na vertical continua rolando a página."
+    ],
+    "notasIA": [
+      "O tipo do valor define o modo: `defaultValue={60}` dá um polegar, `defaultValue={[800, 2400]}` dá um intervalo, e `onValueChange` devolve o mesmo formato.",
+      "`onValueChange` dispara a cada passo do arraste; trabalho pesado, como filtrar ou salvar, vai em `onValueCommit`, que vem ao soltar ou a cada tecla.",
+      "`marks` aceita números (só o tique) ou `{ value, label }` (rótulo clicável), e `start` e `end` recebem ícones, como volume baixo e alto."
+    ]
+  },
+  "switch": {
+    "quandoUsar": [
+      "Preferências que passam a valer na hora, como notificações, sincronização ou recursos em teste.",
+      "Listas de ajustes ligados e desligados, um por linha, com o rótulo ao lado."
+    ],
+    "quandoEvitar": [
+      "Use `checkbox` quando a escolha só vale depois de enviar um formulário ou faz parte de uma lista de opções.",
+      "Use `segmented-control` quando os dois estados têm nomes próprios, como Mensal e Anual.",
+      "Use `theme-switch` para trocar entre tema claro e escuro com transição de página."
+    ],
+    "teclado": [
+      { "teclas": ["Espaço", "Enter"], "acao": "Ligam ou desligam; segurando Espaço, o polegar se alarga como sob um dedo e viaja ao soltar." }
+    ],
+    "acessibilidade": [
+      "É o `Switch` do Radix: um `<button role=\"switch\">` com `aria-checked`, e dentro de um `<form>` um campo oculto envia `name` e `value`.",
+      "O `label` fica dentro do botão, então clicar no texto também alterna, e vira o nome acessível; sem `label`, passe `aria-label` ou `aria-labelledby`."
+    ],
+    "movimento": [
+      "O polegar viaja numa mola sem ultrapassagem e para exatamente no estado que anuncia; ao pressionar, ele se alarga na direção do outro lado, como sob um dedo.",
+      "Mudanças sem pressão, como pelo Enter ou vindas do estado, ganham um esticão curto no meio do caminho, e a trilha passa para a cor de ligado.",
+      "Com “reduzir movimento” ligado, o polegar muda de lado na hora e as transições de cor são desligadas."
+    ],
+    "notasIA": [
+      "Use para ajustes que valem na hora, sem botão de salvar: `checked` com `onCheckedChange` controlado, ou `defaultChecked`.",
+      "Para o texto à esquerda e o switch à direita numa linha de ajustes, deixe `label` de fora, escreva seu texto e ligue os dois com `aria-labelledby`.",
+      "Aceita as props do Radix (`disabled`, `required`, `name`, `value`); num formulário, o valor enviado quando ligado é `on`, a menos que você passe `value`."
+    ]
+  },
+  "tag-input": {
+    "quandoUsar": [
+      "Palavras-chave, tópicos ou rótulos livres digitados pela pessoa, como as tags de um post.",
+      "Listas curtas de valores digitados, como domínios ou e-mails num filtro ou convite."
+    ],
+    "quandoEvitar": [
+      "Use `multi-select` quando as opções vêm de uma lista conhecida.",
+      "Use `chip-group` para filtros com facetas fixas que a pessoa liga e desliga.",
+      "Use `mention-input` quando os itens são menções a pessoas ou canais dentro de um texto."
+    ],
+    "teclado": [
+      { "teclas": ["Enter", ","], "acao": "Transformam o texto digitado em etiqueta; sair do campo também adiciona, e uma repetida só faz pulsar a que já existe." },
+      { "teclas": ["Backspace"], "acao": "Com o cursor no início do campo, seleciona a última etiqueta; com uma selecionada, remove-a, como o Delete." },
+      { "teclas": ["←", "→"], "acao": "Movem a seleção entre as etiquetas (← a partir do início do campo); passando da última, voltam ao texto." },
+      { "teclas": ["Esc"], "acao": "Desfaz a seleção da etiqueta sem remover." }
+    ],
+    "acessibilidade": [
+      "Cada etiqueta tem um botão “Remove {tag}” na ordem de tabulação, e remover devolve o foco ao campo.",
+      "Uma região `aria-live` anuncia adicionar, remover, selecionar e repetidas (“react is already added”); os textos são em inglês e fixos no código.",
+      "O `label` visível nomeia o campo e a `description` entra por `aria-describedby`."
+    ],
+    "movimento": [
+      "Uma etiqueta nova aparece com desfoque onde o texto foi digitado enquanto o cursor desliza para o lado, e ao remover as outras deslizam para ocupar o lugar.",
+      "A caixa acompanha as linhas que quebram numa mola, um anel desliza entre as etiquetas selecionadas pelo teclado e uma repetida pulsa.",
+      "Com “reduzir movimento” ligado, as etiquetas só esmaecem, nada desliza e a caixa muda de altura na hora."
+    ],
+    "responsivo": [
+      "As etiquetas quebram em várias linhas e a caixa cresce com elas, sem limite de altura nem rolagem interna."
+    ],
+    "notasIA": [
+      "O valor é `string[]`, com `value` e `onValueChange` ou `defaultValue`; não há limite de quantidade, sugestões nem validação, então filtre em `onValueChange` se precisar.",
+      "Repetidas são ignoradas sem diferenciar maiúsculas, e a vírgula sempre separa, então uma etiqueta não pode conter vírgula.",
+      "Import nomeado, `import { TagInput } from \"@/components/ryan-ui/tag-input/tag-input\"`; o `placeholder` some depois da primeira etiqueta."
+    ]
+  },
+  "textarea": {
+    "quandoUsar": [
+      "Comentários, descrições, observações de pedido e outros textos de várias linhas sem formatação.",
+      "Campos de feedback ou suporte com uma linha de ajuda e um erro de validação animados."
+    ],
+    "quandoEvitar": [
+      "Use `input` para respostas de uma linha, como nome ou assunto.",
+      "Use `rich-text-editor` quando o texto precisa de títulos, listas ou links.",
+      "Use `prompt-input` para caixas de mensagem de chat ou IA que crescem e enviam com Enter."
+    ],
+    "acessibilidade": [
+      "O `label` é um `<label>` ligado ao campo, e `description` e `error` entram em `aria-describedby` junto de qualquer `aria-describedby` que você passar.",
+      "Com `error`, o campo recebe `aria-invalid` e a mensagem tem `role=\"alert\"`, então é lida assim que aparece."
+    ],
+    "movimento": [
+      "As mensagens de ajuda e de erro abrem a altura numa mola e as palavras sobem com desfoque; só as palavras que mudaram se movem.",
+      "Números dentro da mensagem, como em “12 characters over the limit”, rolam só os dígitos que mudaram.",
+      "Com “reduzir movimento” ligado, as mensagens já aparecem na altura final e só esmaecem."
+    ],
+    "notasIA": [
+      "Aceita as props de `<textarea>` (`rows`, `maxLength`, `value`, `onChange`) mais `label`, `description` e `error`; não há contador embutido.",
+      "A altura mínima é 110px, redimensionável só na vertical e sem crescer com o texto; use `rows` para a altura inicial.",
+      "Por estar num `role=\"alert\"`, o `error` é relido a cada mudança; evite um erro que muda a cada tecla e mostre contadores fora dele."
+    ]
+  },
+  "time-picker": {
+    "quandoUsar": [
+      "Agendar reunião, lembrete ou entrega com horários em passos fixos de 5, 15 ou 30 minutos.",
+      "Formulários compactos em que um campo com lista é mais rápido que digitar horas e minutos."
+    ],
+    "quandoEvitar": [
+      "Use `wheel-picker` em telas de toque, onde o gesto de roda é o esperado, ou quando alguns horários estão indisponíveis.",
+      "Use `date-picker` quando a escolha principal é o dia; para dia e hora, combine os dois.",
+      "Use `select` quando os horários possíveis são poucos e fixos, como turnos."
+    ],
+    "teclado": [
+      { "teclas": ["Enter", "Espaço"], "acao": "No botão, abrem a lista centrada no horário atual; com a lista aberta, escolhem o horário em destaque." },
+      { "teclas": ["↓", "↑"], "acao": "Abrem a lista; aberta, movem o destaque, voltando ao começo depois do fim." },
+      { "teclas": ["Esc"], "acao": "Fecha a lista sem mudar o horário." }
+    ],
+    "acessibilidade": [
+      "O botão tem `aria-haspopup=\"listbox\"`, `aria-expanded` e `aria-controls`, e seu nome junta o rótulo ao horário escolhido (“Meeting starts 2:30 PM”).",
+      "O foco fica no botão enquanto as setas movem o destaque, sem `aria-activedescendant`, então o leitor de tela só ouve o novo horário depois da escolha.",
+      "A lista é uma `listbox` chamada “{label} options”, e a opção escolhida tem `aria-selected`."
+    ],
+    "movimento": [
+      "O horário exibido rola como num relógio: um horário mais tarde sobe por baixo e um mais cedo desce por cima.",
+      "A lista surge com uma mola curta, um leve deslocamento e escala, já centrada no horário escolhido, e a seta gira.",
+      "Com “reduzir movimento” ligado, a lista e o horário só esmaecem."
+    ],
+    "responsivo": [
+      "A lista tem a largura do campo e no máximo 250px de altura, rolando por dentro sem arrastar a página."
+    ],
+    "desempenho": [
+      "A lista renderiza todos os horários do dia como botões: 96 com `minuteStep` de 15, mas 1.440 com 1, então prefira passos de 5 ou mais."
+    ],
+    "notasIA": [
+      "O valor é sempre `\"HH:MM\"` em 24 horas, mesmo com `format=\"12h\"`, que só muda a exibição para AM e PM.",
+      "Use `value` com `onChange` ou `defaultValue` (padrão `\"09:00\"`); um horário fora da grade de `minuteStep` é exibido, mas não aparece marcado na lista.",
+      "Não há `name`, horário mínimo nem horários bloqueados; para bloquear horários, use `wheel-picker` com opções desabilitadas ou valide no pai."
+    ]
+  },
+  "toggle-group": {
+    "quandoUsar": [
+      "Barras de formatação em que negrito, itálico e sublinhado ficam ligados ao mesmo tempo (`type=\"multiple\"`).",
+      "Alinhamento, ferramenta ativa ou modo de exibição, em que só um vale por vez (modo `single`, o padrão).",
+      "Grupos compactos de ícones dentro de editores e painéis, com `size=\"sm\"`."
+    ],
+    "quandoEvitar": [
+      "Use `segmented-control` para alternar entre visões de uma tela, com rótulos de texto e um destaque mais forte.",
+      "Use `button-group` quando os botões disparam ações em vez de guardar um estado ligado ou desligado.",
+      "Use `chip-group` para filtros de uma lista, com muitos itens que quebram linha."
+    ],
+    "teclado": [
+      { "teclas": ["→", "↓"], "acao": "Levam o foco ao próximo item, em ciclo, sem mudar o que está pressionado." },
+      { "teclas": ["←", "↑"], "acao": "Levam o foco ao item anterior." },
+      { "teclas": ["Home", "End"], "acao": "Vão ao primeiro ou ao último item habilitado." },
+      { "teclas": ["Espaço", "Enter"], "acao": "Pressionam o item em foco: no `multiple` alternam, e no `single` escolhem, sem desmarcar o que já está escolhido." },
+      { "teclas": ["Tab"], "acao": "Entra no grupo pelo último item focado, ou pelo pressionado, e sai numa tecla só." }
+    ],
+    "acessibilidade": [
+      "No modo `single` o grupo é um `radiogroup` com itens `role=\"radio\"` e `aria-checked`; no `multiple`, é um `group` de botões com `aria-pressed`.",
+      "O `label` do grupo é obrigatório e vira `aria-label`; em itens só com ícone, passe `label` no item, que também vira a dica (`title`)."
+    ],
+    "movimento": [
+      "No `single`, um único preenchimento desliza até a opção escolhida numa mola sem ultrapassagem.",
+      "No `multiple`, cada preenchimento aparece no lugar e vizinhos ligados se juntam numa forma só por cima do espaço entre eles; o ícone afunda um pouco ao apertar.",
+      "Com “reduzir movimento” ligado, o preenchimento muda de lugar na hora e só cor e opacidade trocam, sem escala."
+    ],
+    "notasIA": [
+      "Importe `ToggleGroup` (export padrão) e `ToggleGroupItem` de `@/components/ryan-ui/toggle-group/toggle-group`; `type=\"multiple\"` muda o valor para `string[]`, e sem `type` ele é uma `string`.",
+      "No `single` não dá para desmarcar clicando de novo; se “nenhum” for uma opção válida, use `multiple` ou um item próprio para ela.",
+      "As setas só movem o foco, mesmo no `single`, ao contrário de um rádio nativo; a escolha acontece com Espaço, Enter ou clique."
+    ]
+  },
+  "wheel-picker": {
+    "quandoUsar": [
+      "Escolher hora, duração ou data em telas de toque, com o gesto de roda que as pessoas conhecem do celular.",
+      "Combinações de várias colunas, como hora, minuto e AM/PM, ou dia e turno.",
+      "Listas curtas com opções indisponíveis que precisam continuar visíveis, como dias lotados."
+    ],
+    "quandoEvitar": [
+      "Use `time-picker` em formulários de desktop, onde um campo com lista ocupa menos espaço.",
+      "Use `select` ou `combobox` para listas longas de texto, em que ler ou digitar é mais rápido que girar.",
+      "Use `date-picker` para escolher datas num calendário."
+    ],
+    "teclado": [
+      { "teclas": ["↓", "↑"], "acao": "Giram a coluna em foco uma opção, pulando as desabilitadas." },
+      { "teclas": ["Page Down", "Page Up"], "acao": "Giram uma tela de opções (`visibleCount` menos uma)." },
+      { "teclas": ["Home", "End"], "acao": "Vão à primeira ou à última opção habilitada." },
+      { "teclas": ["←", "→"], "acao": "Levam o foco à coluna anterior ou à seguinte." },
+      { "teclas": ["A–Z", "0–9"], "acao": "Digitar o começo de um rótulo pula para ele, como numa lista nativa." }
+    ],
+    "acessibilidade": [
+      "Cada coluna é uma `listbox` vertical focável, com o `label` da coluna e `aria-activedescendant` apontando a opção escolhida; opções desabilitadas têm `aria-disabled`.",
+      "O conjunto é um `role=\"group\"`: passe `label` no `WheelPicker`, como “Alarm time”, e um `label` claro em cada coluna, como “Hour” e “Minute”.",
+      "O `suffix` (como “:” ou “min”) é `aria-hidden`; se a unidade importa para entender a coluna, coloque-a no `label` da coluna."
+    ],
+    "movimento": [
+      "Arrastar gira a coluna com o dedo; solta com impulso, ela segue com inércia e para na opção habilitada mais próxima, com uma pequena folga elástica nas pontas.",
+      "As linhas inclinam, encolhem e esmaecem conforme se afastam da faixa central, como num tambor, e teclas e roda do mouse giram com uma mola curta.",
+      "Com “reduzir movimento” ligado, não há inércia nem inclinação: a coluna para onde foi solta e as teclas saltam direto."
+    ],
+    "responsivo": [
+      "No toque, a coluna bloqueia a rolagem da página (`touch-action: none`) para o arraste girar a roda; com o mouse, a roda gira uma linha por passo e, nas pontas, deixa a página rolar."
+    ],
+    "desempenho": [
+      "Cada opção recalcula inclinação e opacidade a cada quadro do giro, então colunas com centenas de opções, como uma lista de anos, pesam mais que as de horas e minutos."
+    ],
+    "notasIA": [
+      "Descreva as colunas em `columns` (`id`, `label`, `options`, `suffix`); o valor é um objeto por coluna, como `{ hour: \"7\", minute: \"30\", period: \"AM\" }`, e `onValueChange` traz o `columnId` que mudou.",
+      "Toda coluna sempre tem valor: sem um valor válido, ela assume a primeira opção habilitada, e opções `disabled` aparecem riscadas e nunca são a parada da roda.",
+      "`itemHeight` (38px) e `visibleCount` (5, sempre ímpar) definem a altura; cada coluna se ajusta à opção mais larga, ou use `width`."
+    ]
+  }
+}

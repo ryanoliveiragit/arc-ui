@@ -1,0 +1,679 @@
+{
+ "price-target-fan": {
+  "quandoUsar": [
+   "Página de um ativo que mostra no mesmo gráfico o histórico de fechamentos e os alvos de analistas (alto, mediano e baixo) para uma data futura.",
+   "Quando o leitor compara cenários: passar o ponteiro ou focar um rótulo traz aquele alvo para a frente, e o clique o mantém em destaque.",
+   "Quando a distância até o último fechamento importa: cada rótulo traz o preço-alvo e a variação percentual em relação a ele."
+  ],
+  "quandoEvitar": [
+   "Use `line-chart` quando só há histórico, sem alvos, ou várias séries para comparar.",
+   "Use `candlestick-chart` quando o leitor precisa de abertura, máxima, mínima e fechamento de cada período.",
+   "Projeções com mais ou menos de três cenários não cabem: o componente recebe exatamente `high`, `median` e `low`."
+  ],
+  "teclado": [
+   { "teclas": ["←", "↓"], "acao": "Com o foco no histórico, recua um fechamento e mostra data e preço na dica." },
+   { "teclas": ["→", "↑"], "acao": "Avança um fechamento." },
+   { "teclas": ["Page Up", "Page Down"], "acao": "Avança ou recua dez fechamentos." },
+   { "teclas": ["Home", "End"], "acao": "Vai ao primeiro ou ao último fechamento." },
+   { "teclas": ["Enter", "Espaço"], "acao": "Num rótulo de alvo, fixa aquele cenário em destaque; de novo, solta." },
+   { "teclas": ["Esc"], "acao": "Fecha a dica do histórico." }
+  ],
+  "acessibilidade": [
+   "O SVG tem `role=\"img\"` com o `label` e um resumo oculto (último fechamento e os três alvos); o histórico é um `role=\"slider\"` cujo `aria-valuetext` lê data e preço.",
+   "Cada alvo é um `<button>` com `aria-pressed`, nomeado com preço e variação; o alvo em destaque no cabeçalho fica numa região `aria-live=\"polite\"`.",
+   "Os textos fixos (`Last close`, `Today`, `High`, `Median`, `Low`) e os nomes para leitor de tela estão em inglês, sem prop de tradução; `locale` só muda números e datas."
+  ],
+  "movimento": [
+   "Ao entrar na tela, a linha do histórico se desenha até o último fechamento; em seguida o cone e as três linhas tracejadas se abrem a partir dele com mola e os rótulos surgem em sequência.",
+   "Um anel pulsa continuamente no último fechamento; a mira e a dica deslizam com mola entre fechamentos, e novos `targets` fazem o leque deslizar até os novos valores.",
+   "Com “reduzir movimento” ligado, tudo aparece no estado final, o pulso é desligado e a mira salta de um ponto ao outro."
+  ],
+  "responsivo": [
+   "A largura acompanha o contêiner e a altura é fixa em `height` (300 px por padrão); a coluna de rótulos à direita reserva pelo menos 72 px.",
+   "No toque, arrastar na horizontal percorre o histórico e o gesto vertical continua rolando a página; abaixo de 400 px de contêiner os números do cabeçalho diminuem."
+  ],
+  "notasIA": [
+   "Passe `history` (`{ date: \"YYYY-MM-DD\", value }`), `targets` (`{ high, median, low }`) e `label`; sem `targetDate`, o horizonte é de um ano após o último fechamento.",
+   "Mantenha `history` com referência estável (constante ou `useMemo`): um array novo a cada render faz a linha se redesenhar toda vez.",
+   "`activeTarget` com `onActiveTargetChange` controla o cenário fixado (`null` = nenhum); para valores em reais, passe `currency=\"BRL\"` e `locale=\"pt-BR\"`."
+  ]
+ },
+ "reorderable-list": {
+  "quandoUsar": [
+   "Lista curta em que a ordem é o próprio dado: prioridades do dia, etapas de um fluxo, campos de um formulário.",
+   "Quando a pessoa deve reorganizar arrastando pela alça, com mouse ou dedo, e também pelo teclado com as setas."
+  ],
+  "quandoEvitar": [
+   "Use `sortable-data-table` quando a ordem vem do valor de uma coluna, e não de uma escolha manual.",
+   "Linhas com conteúdo próprio (controles, imagens, várias colunas) não cabem: cada item mostra só `title` e `detail`.",
+   "Mover itens entre listas ou colunas, como num quadro kanban, fica de fora: aqui existe uma única lista vertical."
+  ],
+  "teclado": [
+   { "teclas": ["↑", "↓"], "acao": "Com o foco na alça, move o item uma posição para cima ou para baixo; o foco continua na mesma alça." },
+   { "teclas": ["Tab", "Shift + Tab"], "acao": "Passa de uma alça para a outra." }
+  ],
+  "acessibilidade": [
+   "A lista é um `<ul>` com `aria-label` vindo de `label`; cada alça é um `<button>` cujo nome traz o título, a posição atual e a instrução de usar as setas.",
+   "Depois de mover pelo teclado, o foco é devolvido à alça do item movido, porque a reordenação troca os nós de lugar no DOM.",
+   "O nome da alça é fixo em inglês (“Reorder [título]. Position 2 of 5. Use arrow keys.”) e não há região `aria-live` anunciando a nova posição; como o código fica no seu projeto, traduza ali."
+  ],
+  "movimento": [
+   "Ao pressionar a alça, a linha se eleva: cresce para 1,02 e ganha uma sombra que entra por opacidade; ao soltar, assenta no lugar com uma mola curta.",
+   "As outras linhas deslizam para abrir espaço, e o número da posição rola na direção em que a linha andou.",
+   "Com “reduzir movimento” ligado, a linha ainda segue o ponteiro, mas cai direto no lugar, sem escala, e o número troca sem rolar."
+  ],
+  "responsivo": [
+   "A lista ocupa toda a largura do pai; título e detalhe são cortados com reticências em vez de quebrar linha.",
+   "A alça tem 40 px de lado e `touch-action: none`: arrastar por ela no celular não rola a página, e o resto da linha continua rolando normalmente."
+  ],
+  "desempenho": [
+   "Todas as linhas ficam no DOM, cada uma com animação de layout, e não há virtualização; mantenha a lista curta."
+  ],
+  "notasIA": [
+   "É controlado e só tem export nomeado: `import { ReorderableList } from \"@/components/ryan-ui/reorderable-list/reorderable-list\"`, com `items` no estado do pai e `onReorder={setItems}`.",
+   "Cada item precisa de `id` único e estável e de `title`; `detail` é opcional, e `label` dá o nome da lista para leitor de tela.",
+   "`onReorder` recebe o array já na nova ordem a cada troca de posição, inclusive no meio do arrasto, e não só ao soltar: guarde no estado e adie a gravação no servidor."
+  ]
+ },
+ "returns-calendar": {
+  "quandoUsar": [
+   "Mostrar o retorno diário de uma carteira, fundo ou estratégia ao longo de vários meses, com o total de cada mês ao lado do nome.",
+   "Quando o padrão importa mais que a curva: sequências de dias bons ou ruins, o melhor e o pior dia, quantos dias fecharam em alta.",
+   "Como seletor de um pregão para detalhar em outro ponto da tela, com `onSelectDate`."
+  ],
+  "quandoEvitar": [
+   "Use `activity-heatmap` para contagens diárias sem sinal, como contribuições ou acessos ao longo de um ano.",
+   "Use `calendar` ou `date-picker` quando a pessoa precisa escolher uma data qualquer; aqui só os dias com dado são clicáveis.",
+   "Use `line-chart` quando o que importa é a evolução acumulada, e não cada dia isolado."
+  ],
+  "teclado": [
+   { "teclas": ["←", "→"], "acao": "Leva o foco ao dia com dado anterior ou seguinte, atravessando os meses, e mostra a dica desse dia." },
+   { "teclas": ["↑", "↓"], "acao": "Recua ou avança cinco dias com dado (sete com `weekends`), o que equivale a uma semana quando não há feriados no caminho." },
+   { "teclas": ["Home", "End"], "acao": "Vai ao primeiro ou ao último dia do período." },
+   { "teclas": ["Enter", "Espaço"], "acao": "Seleciona o dia em foco; de novo, desfaz a seleção." },
+   { "teclas": ["Esc"], "acao": "Fecha a dica." },
+   { "teclas": ["Tab"], "acao": "Entra no calendário por um único dia (o último focado ou o mais recente) e sai dele." }
+  ],
+  "acessibilidade": [
+   "O conjunto é um `role=\"group\"` nomeado por `label`; cada mês é uma `<section>` com mês e total no nome, e cada dia com dado é um `<button>` com `aria-pressed`.",
+   "O foco usa tabindex itinerante: só um dia fica na ordem de `Tab` e as setas levam aos outros; dias sem dado são decorativos e ficam fora da navegação.",
+   "O nome de cada dia traz a data por extenso e o retorno (`up`, `down` ou `flat` mais o percentual); esses termos e os rótulos visíveis, como `Best day` e `Closed`, são fixos em inglês."
+  ],
+  "movimento": [
+   "Ao entrar na tela, os meses sobem um após o outro e as células de cada um aparecem em onda diagonal, crescendo a partir da metade do tamanho; o total geral conta de zero até o valor.",
+   "A dica é uma só: aparece já no lugar e depois desliza com mola de um dia para o outro; com mouse, o dia sob o cursor cresce um pouco.",
+   "Com “reduzir movimento” ligado, meses e células apenas esmaecem, o total aparece direto e a dica não desliza."
+  ],
+  "responsivo": [
+   "Os meses se distribuem em colunas de pelo menos 128 px conforme a largura do contêiner; abaixo de 420 px ficam sempre em duas colunas.",
+   "No toque, a dica continua visível por cerca de dois segundos depois que o dedo sai, para dar tempo de ler."
+  ],
+  "desempenho": [
+   "Cada dia com dado é um `<button>` (um ano de pregões dá cerca de 250), e a entrada em onda usa só transições CSS com atraso, sem JavaScript por célula."
+  ],
+  "notasIA": [
+   "Passe `returns` como `{ date: \"YYYY-MM-DD\", value }`, com `value` em pontos percentuais (`1.2` = +1,2%); dias sem entrada aparecem como fechados e meses sem entrada não são desenhados.",
+   "Os totais são compostos por padrão: `compound={false}` soma os retornos, `weekends` mostra sábado e domingo e `scale` fixa o percentual em que a cor satura.",
+   "Seleção controlada com `selectedDate` e `onSelectDate` (`null` = nenhuma) ou interna com `defaultSelectedDate`; guarde `returns` em `useMemo`, pois o calendário inteiro é recalculado quando o array muda."
+  ]
+ },
+ "ridgeline": {
+  "quandoUsar": [
+   "Comparar a forma de várias distribuições de uma vez: temperaturas diárias por mês, tempos de resposta por região.",
+   "Quando a pergunta é sobre deslocamento e espalhamento: onde está a mediana de cada grupo e quão larga é a metade central.",
+   "Mostrar como as distribuições mudam entre dois conjuntos de dados: com os mesmos `id`, cada curva se transforma na nova."
+  ],
+  "quandoEvitar": [
+   "Use `bar-chart` quando cada grupo tem um único valor, e não uma coleção de observações.",
+   "Use `line-chart` ou `streamgraph` quando o eixo horizontal é o tempo e você quer ver evolução, não distribuição.",
+   "Com poucas observações por grupo, a curva suavizada sugere uma forma que os dados não sustentam; prefira mostrar os valores."
+  ],
+  "teclado": [
+   { "teclas": ["↑", "↓"], "acao": "Com o foco no gráfico, escolhe a crista anterior ou a seguinte e a levanta." },
+   { "teclas": ["←", "→"], "acao": "Move o cursor de leitura ao longo dos valores, um passo do eixo por vez." },
+   { "teclas": ["Home", "End"], "acao": "Vai à primeira ou à última crista." },
+   { "teclas": ["Esc"], "acao": "Solta a crista levantada e esconde a dica." }
+  ],
+  "acessibilidade": [
+   "A `<figure>` leva o `label`; a área do gráfico é um grupo focável com `aria-roledescription=\"ridgeline chart\"` e as instruções de teclado no nome, em inglês.",
+   "Uma região `aria-live=\"polite\"` lê a série ativa (mediana, metade central, faixa e contagem) e, com o cursor, a fração de valores até aquele ponto.",
+   "Uma tabela oculta lista mediana, quartis, mínimo, máximo e contagem de cada série, de modo que leitor de tela não depende do desenho."
+  ],
+  "movimento": [
+   "Ao entrar na tela, as cristas crescem da linha de base em onda, de cima para baixo; ao trocar os dados, cada curva e o eixo se transformam com mola até a nova forma.",
+   "A crista sob o ponteiro sobe 6 px numa cópia desenhada por cima, com a faixa entre os quartis realçada, enquanto as outras esmaecem; a dica segue o ponteiro com mola.",
+   "Com “reduzir movimento” ligado, as formas são pintadas direto no estado final e a dica acompanha o ponteiro sem mola."
+  ],
+  "responsivo": [
+   "A largura segue o contêiner e a altura vem do conteúdo: `rowHeight` por série mais o espaço da sobreposição e do eixo; não há prop de altura total.",
+   "Abaixo de 420 px de largura a coluna de nomes encolhe de 52 para 36 px, com reticências, e o eixo mostra menos marcas (cerca de uma a cada 72 px)."
+  ],
+  "desempenho": [
+   "A densidade é calculada no navegador (96 amostras por série, cada uma contra todas as observações) e `series` é serializado a cada render, inclusive ao mover o ponteiro; com muitos milhares de valores, amostre antes."
+  ],
+  "notasIA": [
+   "Passe observações brutas em `values`, não densidades prontas: o componente estima a curva com a regra de Silverman por série, ou com `bandwidth` em unidades do valor.",
+   "Use `id` estável por série para as curvas se transformarem na troca de dados, e fixe `domain` quando dois conjuntos precisam do mesmo eixo.",
+   "`active` com `onActiveChange` controla a crista levantada; `tint` (ligado por padrão) colore cada crista pela mediana e mostra a escala abaixo do gráfico."
+  ]
+ },
+ "sankey-chart": {
+  "quandoUsar": [
+   "Mostrar como um total se divide e se recombina em duas ou mais etapas: origem do tráfego, página de entrada e resultado.",
+   "Quando o leitor precisa seguir um caminho: apontar um nó acende suas faixas e os nós nas pontas; apontar uma faixa acende os dois nós que ela liga.",
+   "Comparar dois períodos com os mesmos nós: ao trocar `links`, barras e faixas deslizam até os novos tamanhos."
+  ],
+  "quandoEvitar": [
+   "Use `funnel-chart` quando o fluxo é uma sequência única de etapas e o que interessa é a perda entre uma e a próxima.",
+   "Use `composition-chart` ou `donut-chart` quando o total se divide uma única vez, sem etapas seguintes.",
+   "Fluxos que voltam a uma etapa anterior não cabem: o layout põe cada nó numa coluna, da esquerda para a direita, pelo caminho mais longo desde a origem."
+  ],
+  "teclado": [
+   { "teclas": ["↑", "↓"], "acao": "Com o foco no gráfico, passa ao nó anterior ou seguinte, coluna por coluna." },
+   { "teclas": ["←", "→"], "acao": "Salta para o nó mais próximo, na vertical, da coluna anterior ou da seguinte." },
+   { "teclas": ["Home", "End"], "acao": "Vai ao primeiro ou ao último nó." },
+   { "teclas": ["Esc"], "acao": "Tira o destaque." }
+  ],
+  "acessibilidade": [
+   "O gráfico é um `role=\"slider\"` vertical focável: ao receber foco pelo teclado, destaca o primeiro nó, e `aria-valuetext` lê nome, valor e coluna do nó atual.",
+   "O teclado percorre só os nós; as faixas respondem ao ponteiro ou a `activeId`, e todos os fluxos estão numa tabela oculta para leitor de tela.",
+   "O `label` vira a legenda oculta da `<figure>`; os textos da dica (`Total`, `To`, `From`, `Flow`) e o nome do slider são fixos em inglês."
+  ],
+  "movimento": [
+   "Na primeira vez em tela, as barras dos nós crescem a partir do centro e as faixas se desenham saindo da origem, uma coluna depois da outra.",
+   "Depois disso, mudanças de dados não repetem a entrada: nós, faixas e rótulos que continuam existindo deslizam com mola até a nova posição e espessura.",
+   "Com “reduzir movimento” ligado, tudo é desenhado direto no estado final e o destaque troca sem transição."
+  ],
+  "responsivo": [
+   "A largura segue o contêiner e a altura é a prop `height` (300 px); as colunas dividem a largura por igual, então muitas etapas em pouco espaço apertam os rótulos.",
+   "Quando o espaço entre colunas aperta, os rótulos passam para `--text-xs` e são cortados com reticências; o valor ao lado do nome só aparece com 100 px livres."
+  ],
+  "desempenho": [
+   "O layout é recalculado quando `nodes`, `links` ou a largura mudam; mantenha os dois arrays estáveis (constante ou `useMemo`) para não refazê-lo a cada render."
+  ],
+  "notasIA": [
+   "Passe `nodes` (`{ id, label, color? }`) e `links` (`{ source, target, value }`), com um único link por par de origem e destino: o id do link é `source>target`.",
+   "A ordem de `nodes` define o empilhamento da primeira coluna e `columns` dá os títulos; nós sem fluxo e links com valor zero ou negativo são ignorados.",
+   "Só os quatro primeiros nós da primeira coluna recebem cor de série (`--series-1` a `--series-4`); os demais ficam em tom neutro, a menos que você passe `color`."
+  ]
+ },
+ "slope-chart": {
+  "quandoUsar": [
+   "Mostrar como vários itens mudaram entre exatamente dois momentos: antes e depois, um trimestre e o seguinte.",
+   "Quando a troca de posição conta tanto quanto o valor: a seta ao lado de cada valor final diz quantas posições o item subiu ou desceu.",
+   "Contar a história de um item no meio dos outros: `highlightKey` pinta uma linha na cor de destaque e deixa as demais neutras."
+  ],
+  "quandoEvitar": [
+   "Use `bump-chart` quando o ranking muda ao longo de três ou mais períodos.",
+   "Use `line-chart` quando existem valores intermediários e a trajetória entre os extremos importa.",
+   "Use `bar-chart` para comparar os itens num único momento, sem antes e depois."
+  ],
+  "teclado": [
+   { "teclas": ["↓", "→"], "acao": "Com o foco no gráfico, destaca o item seguinte, na ordem do valor final." },
+   { "teclas": ["↑", "←"], "acao": "Destaca o item anterior." },
+   { "teclas": ["Home", "End"], "acao": "Vai ao primeiro ou ao último item dessa ordem." },
+   { "teclas": ["Esc"], "acao": "Desfaz o destaque e esconde a dica." }
+  ],
+  "acessibilidade": [
+   "A área do gráfico é um grupo focável com `aria-roledescription=\"slope chart\"`; ao receber foco pelo teclado, destaca o primeiro item na ordem do valor final.",
+   "Uma região `aria-live=\"polite\"` lê o item em destaque (nome, os dois valores, variação e mudança de posição), e um resumo e uma tabela ocultos trazem todos os itens.",
+   "As frases de posição, como `up 2 to rank 1`, são fixas em inglês e aparecem também na dica visível."
+  ],
+  "movimento": [
+   "Ao entrar na tela, os pontos iniciais surgem em sequência, cada linha se desenha da esquerda para a direita e só então aparecem o ponto e o rótulo finais.",
+   "Ao trocar `data` mantendo as mesmas `key`, linhas, pontos e rótulos deslizam com mola até a nova inclinação, e o número de posições rola para o novo valor.",
+   "Com “reduzir movimento” ligado, o gráfico aparece pronto e as trocas de dados e de destaque são imediatas."
+  ],
+  "responsivo": [
+   "A largura segue o contêiner; abaixo de 440 px as colunas de rótulos encolhem e o texto passa para `--text-xs`, com reticências nos nomes longos.",
+   "A altura padrão é de 44 px por item, com mínimo de 200 px (`height` fixa outro valor); rótulos que se sobreporiam são afastados e ligados ao ponto por um traço."
+  ],
+  "notasIA": [
+   "Passe `data` como `{ key, label, start, end }` e os títulos das colunas em `startLabel` e `endLabel`; os dois lados usam o mesmo eixo de valor.",
+   "Mantenha `key` estável entre conjuntos para as linhas se transformarem em vez de sumir e reaparecer; `formatValue` e `formatChange` cuidam de unidade e sinal.",
+   "`activeKey` só existe na forma controlada, com `onActiveChange`; sem ele o destaque é interno e some ao sair do gráfico, e `ranks={false}` esconde as setas de posição."
+  ]
+ },
+ "sortable-data-table": {
+  "quandoUsar": [
+   "Comparar registros estruturados em colunas, deixando a pessoa ordenar por qualquer uma: projetos, faturas, membros de uma equipe.",
+   "Selecionar várias linhas para uma ação em lote: `selectable` acrescenta a coluna de caixas, a seleção por clique na linha, o intervalo com `Shift` e a contagem no rodapé.",
+   "Tabelas que cabem inteiras na página, em que a ordenação pode acontecer no navegador."
+  ],
+  "quandoEvitar": [
+   "Use `tree-table` quando as linhas têm filhos e a ordenação precisa respeitar a hierarquia.",
+   "Use `comparison-table` para comparar planos ou produtos recurso a recurso, com uma coluna em destaque.",
+   "Coleções grandes ou ordenadas no servidor pedem outra solução: a ordenação é local, todas as linhas vão para o DOM e não há prop para controlar a ordem por fora."
+  ],
+  "teclado": [
+   { "teclas": ["Enter", "Espaço"], "acao": "Num cabeçalho, ordena pela coluna; de novo, inverte entre crescente e decrescente." },
+   { "teclas": ["Espaço"], "acao": "Numa caixa de seleção, marca ou desmarca a linha; na caixa do cabeçalho, todas as linhas." },
+   { "teclas": ["←", "→"], "acao": "No cabeçalho, move o foco entre a caixa de selecionar tudo e os botões de ordenação." },
+   { "teclas": ["↑", "↓"], "acao": "Move o foco entre as caixas das linhas; da primeira linha, `↑` sobe para a caixa de selecionar tudo, e dela `↓` desce de volta." },
+   { "teclas": ["Home", "End"], "acao": "Vai ao primeiro ou ao último controle do cabeçalho, ou à primeira ou última caixa de linha." },
+   { "teclas": ["Esc"], "acao": "Limpa a seleção quando há linhas marcadas." }
+  ],
+  "acessibilidade": [
+   "É uma `<table>` nativa com `caption` oculta e papéis ARIA explícitos, que mantêm a semântica quando o CSS a redesenha em telas estreitas; cabeçalhos ordenáveis levam `aria-sort`.",
+   "Uma região `role=\"status\"` anuncia a coluna e o sentido da ordenação e quantas linhas estão selecionadas; a caixa do cabeçalho usa o estado indeterminado.",
+   "A caixa de cada linha é nomeada pelo valor da primeira coluna; os textos fixos (`Sort by`, `Select all rows`, `Clear selection`) estão em inglês."
+  ],
+  "movimento": [
+   "Ao ordenar, as linhas deslizam com mola até a nova posição sobre uma faixa fixa que tinge a coluna ordenada; a seta surge na coluna e gira quando o sentido inverte.",
+   "A marca da caixa se desenha e, no cabeçalho, se transforma entre visto e traço; a contagem do rodapé troca de texto subindo ou descendo, com a largura acompanhando.",
+   "Com “reduzir movimento” ligado, as linhas trocam de lugar na hora e os textos apenas alternam, sem deslocamento nem desfoque."
+  ],
+  "responsivo": [
+   "Em janelas de até 620 px o cabeçalho vira uma faixa rolável de botões de ordenação e cada linha se dobra em duas: primeira coluna e primeiro número em cima, o resto embaixo.",
+   "A regra é uma media query da janela, não do contêiner: num painel estreito em tela larga a tabela mantém 560 px de largura mínima e rola na horizontal."
+  ],
+  "desempenho": [
+   "Não há paginação nem virtualização, e cada linha é um `motion.tr` com animação de layout: para coleções longas, fatie `rows` e combine com `pagination`.",
+   "As larguras das colunas são medidas uma vez e travadas com `table-layout: fixed`, para a ordenação não causar reflow; a medição só se repete se as colunas mudarem."
+  ],
+  "notasIA": [
+   "Passe `rows`, `columns` (`{ key, label, render?, numeric?, width? }`) e `rowKey`; toda coluna é ordenável, a menos que tenha `sortable: false`.",
+   "A ordenação usa o valor bruto de `row[key]`, não o que `render` devolve: guarde números e `Date` nos dados e formate só no `render`; valores vazios ficam sempre no fim.",
+   "A ordenação é só interna (`defaultSort` e `onSortChange`); a seleção pode ser controlada com `selectedKeys` e `onSelectionChange`, e a primeira coluna deve identificar a linha."
+  ]
+ },
+ "sparkline": {
+  "quandoUsar": [
+   "Uma tendência compacta com rótulo, valor atual e variação num bloco só, em painéis com vários indicadores lado a lado.",
+   "Quando basta a forma da série, mas a pessoa ainda pode querer ler um ponto: o ponteiro ou as setas mostram o valor e o rótulo daquele ponto.",
+   "Indicadores que se atualizam: dados novos fazem a linha se transformar a partir do desenho atual, mesmo com outro número de pontos."
+  ],
+  "quandoEvitar": [
+   "Use `line-chart` quando o leitor precisa de eixos, de várias séries ou de legenda.",
+   "Use `metric-card` quando bastam o número, uma frase de contexto e a variação, sem a série.",
+   "Dentro de uma célula de tabela ou no meio de um texto ele não serve: o `label` sempre aparece acima da linha e não há prop para escondê-lo."
+  ],
+  "teclado": [
+   { "teclas": ["←", "↓"], "acao": "Com o foco no gráfico, vai ao ponto anterior e mostra seu valor no cabeçalho." },
+   { "teclas": ["→", "↑"], "acao": "Vai ao ponto seguinte." },
+   { "teclas": ["Page Up", "Page Down"], "acao": "Avança ou recua cerca de um sexto da série." },
+   { "teclas": ["Home", "End"], "acao": "Vai ao primeiro ou ao último ponto." },
+   { "teclas": ["Esc"], "acao": "Encerra a leitura e volta ao valor mais recente." }
+  ],
+  "acessibilidade": [
+   "A `<figure>` tem um `aria-label` montado com `label`, `value` e `change`, e o SVG é decorativo.",
+   "Com `interactive` (padrão), a área do gráfico é um `role=\"slider\"` focável cujo `aria-valuetext` lê o rótulo do ponto e o valor formatado; com `interactive={false}` não há parada de `Tab`.",
+   "`tone` só muda a cor: escreva sinal e unidade em `change` e passe `labels`, para cada ponto ser lido com sua data, e não como `Point 3 of 14`."
+  ],
+  "movimento": [
+   "Quando metade do componente entra na tela, a linha se desenha da esquerda para a direita, o preenchimento acompanha a ponta e o ponto final pousa no último valor.",
+   "Na leitura, o cursor vai com mola até o ponto e corre sobre a linha, o trecho depois dele esmaece e os textos do cabeçalho rolam dígito a dígito.",
+   "Com “reduzir movimento” ligado, a linha aparece pronta, a troca de dados e o cursor saltam e os textos apenas alternam."
+  ],
+  "responsivo": [
+   "`width` e `height` definem só a proporção e o primeiro desenho: o gráfico ocupa a largura do contêiner, e numa linha flex sem largura definida fica com 300 px, o padrão do navegador para um SVG sem tamanho.",
+   "No toque, arrastar na horizontal percorre os pontos e soltar encerra a leitura; o gesto vertical continua rolando a página."
+  ],
+  "desempenho": [
+   "Cada instância cria até três `ResizeObserver` (o gráfico e os dois textos que rolam) e reescreve os atributos do SVG a cada quadro enquanto desenha, se transforma ou segue o cursor."
+  ],
+  "notasIA": [
+   "Passe `data` (números) e `label`; `value` e `change` são textos que você já entrega formatados, e `formatValue` formata o ponto mostrado durante a leitura.",
+   "Dê a largura pelo pai (coluna de grid ou um wrapper com largura): a prop `width` não fixa o tamanho na tela, só a proporção junto com `height`.",
+   "Quando o gráfico é só ilustração, `interactive={false}` tira a parada de `Tab` e a leitura por ponteiro, e `area={false}` remove o preenchimento sob a linha."
+  ]
+ },
+ "status-bar": {
+  "quandoUsar": [
+   "Página de status: a disponibilidade de um serviço nos últimos dias, uma barra por dia, com o percentual geral e o estado atual no cabeçalho.",
+   "Quando cada dia pode trazer uma nota de incidente: a dica mostra data, estado, disponibilidade e o texto de `note`.",
+   "Como seletor de dia para abrir o detalhe do incidente em outro ponto da tela, com `onSelectDate`."
+  ],
+  "quandoEvitar": [
+   "Use `activity-heatmap` para volume de atividade por dia ao longo de um ano, sem estados de serviço.",
+   "Use `line-chart` ou `sparkline` para uma métrica contínua, como latência, em vez de um estado por dia.",
+   "Estados fora dos cinco previstos (`operational`, `degraded`, `outage`, `maintenance`, `unknown`) não têm como ser representados."
+  ],
+  "teclado": [
+   { "teclas": ["←", "→"], "acao": "Leva o foco ao dia anterior ou seguinte e mostra a dica desse dia." },
+   { "teclas": ["↑", "Page Up"], "acao": "Recua sete dias." },
+   { "teclas": ["↓", "Page Down"], "acao": "Avança sete dias." },
+   { "teclas": ["Home", "End"], "acao": "Vai ao primeiro ou ao último dia." },
+   { "teclas": ["Enter", "Espaço"], "acao": "Num dia, seleciona ou desfaz a seleção; na legenda, fixa ou solta o realce daquele estado." },
+   { "teclas": ["Esc"], "acao": "Fecha a dica." }
+  ],
+  "acessibilidade": [
+   "A faixa é um `role=\"group\"` nomeado com o serviço e o número de dias; cada dia é um `<button>` com `aria-pressed` cujo nome traz data por extenso, estado, disponibilidade e nota.",
+   "O foco usa tabindex itinerante (um só dia na ordem de `Tab`, a princípio o mais recente); a legenda é um grupo de botões de alternância com a contagem de dias de cada estado.",
+   "Os nomes de estado e as frases do cabeçalho (`All systems operational`, `Degraded performance`) são fixos em inglês; só `caption` e os formatos de `locale` mudam."
+  ],
+  "movimento": [
+   "Quando metade da faixa entra na tela, as barras sobem em onda da esquerda para a direita (cerca de meio segundo no total) e o percentual conta até o valor.",
+   "A barra sob o ponteiro se alonga e as duas vizinhas de cada lado a acompanham cada vez menos; a dica única desliza com mola entre os dias e um anel pulsa sem parar no ponto do estado atual.",
+   "Com “reduzir movimento” ligado, as barras apenas esmaecem, sem escala, o pulso é desligado e o percentual aparece direto."
+  ],
+  "responsivo": [
+   "As barras dividem a largura do contêiner por igual, com vão de 1 a 3 px: muitos dias num contêiner estreito dão barras muito finas, então encurte o período no celular.",
+   "Abaixo de 380 px de contêiner o percentual diminui; a dica desliza de lado para não sair do componente e, no toque, fica visível por cerca de dois segundos."
+  ],
+  "desempenho": [
+   "Cada dia é um `<button>`, e o realce em volta do ponteiro é calculado em CSS a partir de uma variável, sem JavaScript por barra; o custo cresce com o número de dias."
+  ],
+  "notasIA": [
+   "Passe `days` do mais antigo para o mais recente (`{ date, status, uptime?, note? }`) e `label` com o nome do serviço; o estado do cabeçalho é o do último dia.",
+   "Sem `uptime` em cada dia, a média usa valores presumidos por estado (99,4 para `degraded`, 96 para `outage`); informe o valor real por dia ou o total na prop `uptime`.",
+   "Apesar do nome, não é a barra de status de um aplicativo: é a faixa de disponibilidade de um serviço; a seleção é controlada com `selectedDate` e `onSelectDate`."
+  ]
+ },
+ "streamgraph": {
+  "quandoUsar": [
+   "Mostrar como a mistura de várias partes muda ao longo do tempo, quando a forma geral importa mais que valores exatos: chamados por assunto, tráfego por canal.",
+   "Quando o leitor quer isolar uma parte: apontar uma camada ou sua entrada na legenda esmaece as outras, e a dica lê os valores ponto a ponto.",
+   "Alternar entre períodos de tamanhos diferentes: as camadas são reamostradas numa grade comum e se transformam de um conjunto no outro."
+  ],
+  "quandoEvitar": [
+   "Use `line-chart` quando o leitor precisa comparar valores exatos entre séries: aqui só a espessura da camada é legível, e a linha de base ondula.",
+   "Use `bump-chart` quando o que importa é a posição de cada série no ranking a cada período.",
+   "Use `composition-chart` ou `donut-chart` para a divisão de um total num único momento."
+  ],
+  "teclado": [
+   { "teclas": ["←", "→"], "acao": "Com o foco no gráfico, recua ou avança um ponto no tempo." },
+   { "teclas": ["↑", "↓"], "acao": "Troca a camada em destaque, seguindo a ordem de `series`." },
+   { "teclas": ["Page Up", "Page Down"], "acao": "Avança ou recua cerca de um sexto do período." },
+   { "teclas": ["Home", "End"], "acao": "Vai ao primeiro ou ao último ponto." },
+   { "teclas": ["Enter", "Espaço"], "acao": "Na legenda, esconde ou mostra a camada do botão em foco." },
+   { "teclas": ["Esc"], "acao": "Encerra a leitura e esconde a dica." }
+  ],
+  "acessibilidade": [
+   "A área do gráfico é um grupo focável com `aria-roledescription=\"stream graph\"`; ao receber foco pelo teclado, a leitura começa no ponto mais recente.",
+   "Uma região `aria-live=\"polite\"` lê o ponto atual, a camada em destaque com seu valor e o total; um resumo e uma tabela ocultos trazem todos os dados.",
+   "A legenda é um grupo de botões com `aria-pressed` (pressionado = camada visível); o cabeçalho da primeira coluna da tabela vem de `categoryLabel`, que por padrão é `Date`."
+  ],
+  "movimento": [
+   "Na primeira vez em tela, o fluxo se abre a partir de um fio ao longo do centro; dados novos fazem cada camada se transformar com mola a partir da forma atual.",
+   "Esconder uma camada pela legenda a afina até sumir enquanto as outras fecham o espaço; a mira desliza entre pontos e a dica segue numa mola própria.",
+   "Com “reduzir movimento” ligado, as camadas vão direto ao estado final e a mira e a dica saltam."
+  ],
+  "responsivo": [
+   "A largura segue o contêiner e a altura é a prop `height` (260 px); o eixo mostra no máximo um `axisLabel` a cada 72 px, contando a partir do mais recente.",
+   "O nome dentro da camada só aparece onde ela tem ao menos 19 px de espessura e o texto cabe; nas camadas finas a identificação fica com a legenda e a dica."
+  ],
+  "desempenho": [
+   "O desenho é imperativo: a cada quadro de animação todas as camadas têm o caminho refeito com 161 amostras e a linha de base recalculada, então o custo cresce com o número de camadas."
+  ],
+  "notasIA": [
+   "Passe `series` (`{ key, label, color? }`) e `data` com um objeto `values` por ponto, indexado pela `key` da série; valores ausentes ou negativos contam como zero.",
+   "A ordem de `series` vai do centro para fora: a primeira corre pelo meio e as demais alternam acima e abaixo; só as quatro primeiras recebem cor de série, e o resto fica neutro sem `color`.",
+   "`offset=\"zero\"` empilha a partir de uma base reta e `offset=\"silhouette\"` centraliza a pilha; `hiddenSeries` com `onHiddenSeriesChange` controla as camadas escondidas."
+  ]
+ },
+ "tilt-card": {
+  "quandoUsar": [
+   "Cartões de destaque numa vitrine ou página de produto, como um destino de viagem ou um cartão de embarque, em que a profundidade chama a atenção para poucos itens.",
+   "Quando partes do conteúdo devem flutuar acima da face: cada `TiltCardLayer` sobe `depth` px durante o hover e se desloca contra o fundo conforme o cartão inclina."
+  ],
+  "quandoEvitar": [
+   "Use `card` para cartões comuns em listas e painéis, em que o movimento só distrairia.",
+   "Use `wallet-card` para um cartão de pagamento que também vira para mostrar o verso.",
+   "Em interfaces usadas sobretudo no toque o efeito some: o cartão só se inclina com mouse."
+  ],
+  "acessibilidade": [
+   "É um contêiner visual, sem papel nem foco próprios: se o cartão inteiro leva a algum lugar, ponha dentro dele um link ou botão com o texto da ação.",
+   "A inclinação só responde ao mouse; teclado, toque, caneta e leitor de tela não a percebem, então nenhuma informação deve depender dela.",
+   "O brilho é `aria-hidden` e tem `pointer-events: none`, então links e botões sob ele continuam clicáveis."
+  ],
+  "movimento": [
+   "O cartão gira até `maxTilt` graus (10 por padrão) nas bordas, seguindo o cursor com uma mola firme e sem balanço, cresce até `hoverScale` e mostra um brilho na posição do cursor.",
+   "Ao sair, volta a ficar plano com mola; as camadas `TiltCardLayer` sobem com o hover e voltam à face em repouso, onde o texto fica nítido.",
+   "Com “reduzir movimento” ligado, assim como com `disabled`, o cartão fica plano: sem giro, sem escala, sem brilho e sem camadas elevadas."
+  ],
+  "desempenho": [
+   "O cartão mantém `will-change: transform` o tempo todo (exceto com “reduzir movimento”), o que reserva uma camada de composição por instância; numa grade com dezenas deles, use o efeito só nos destaques."
+  ],
+  "notasIA": [
+   "Importe `TiltCard` (e `TiltCardLayer`, se quiser camadas) de `@/components/ryan-ui/tilt-card/tilt-card`; dê largura e altura por `className` ou `style`, porque o cartão interno preenche a altura do contêiner.",
+   "Todo elemento entre o cartão e as camadas precisa de `transform-style: preserve-3d`, como o corpo do cartão de embarque no demo; sem isso as camadas achatam na face.",
+   "O cartão não recorta o conteúdo: numa imagem de capa, use `position: absolute`, `inset: 0` e `border-radius: inherit`; `onTiltChange` dispara a cada movimento do mouse, então evite estado pesado ali."
+  ]
+ },
+ "timeline": {
+  "quandoUsar": [
+   "Histórico de um projeto, log de auditoria ou sequência de deploys, em que a ordem e a recência importam mais que comparar campos.",
+   "Feeds que recebem novidades com a tela aberta: o evento novo entra no topo, os demais descem e o título dele é anunciado ao leitor de tela.",
+   "Quando só parte dos eventos tem detalhes que valem abrir: com `detail`, a linha vira um botão que expande no lugar."
+  ],
+  "quandoEvitar": [
+   "Use `sortable-data-table` quando as pessoas precisam ordenar ou comparar registros por coluna.",
+   "Use `stepper` para mostrar as etapas de um fluxo e o que já foi concluído, e não eventos datados.",
+   "Use `notification-center` para avisos com estado de lido e não lido."
+  ],
+  "teclado": [
+   { "teclas": ["↑", "↓"], "acao": "Move o foco para a linha anterior ou seguinte que tem `detail`; linhas sem detalhe não recebem foco." },
+   { "teclas": ["Home", "End"], "acao": "Vai à primeira ou à última linha com detalhe." },
+   { "teclas": ["Enter", "Espaço"], "acao": "Abre ou fecha o detalhe da linha em foco." }
+  ],
+  "acessibilidade": [
+   "O feed é uma `region` nomeada por `label`; cada dia é uma `<section>` ligada ao seu título (`role=\"heading\"` no nível `headingLevel`, 3 por padrão), e os eventos formam uma lista ordenada.",
+   "Linhas com `detail` são `<button>` com `aria-expanded` e `aria-controls`; o horário é um `<time>` com a data completa em texto oculto, e eventos novos são anunciados numa região `role=\"status\"`.",
+   "`tone` só muda a cor do marcador: escreva o resultado no `title` (“Deploy falhou”); o avatar tem `alt` vazio porque o nome já vem em `actor`."
+  ],
+  "movimento": [
+   "Cada linha se revela uma vez, ao entrar na tela: o marcador surge crescendo e o traço vertical se desenha até o próximo; linhas que aparecem juntas entram com 90 ms de intervalo.",
+   "Eventos novos entram no topo abrindo espaço enquanto os outros descem; o detalhe abre com mola na altura, a seta gira, e o horário relativo e a contagem do dia trocam rolando.",
+   "Com “reduzir movimento” ligado, não há intervalo nem deslocamento: marcadores, traços e detalhes aparecem na hora ou com um esmaecer curto, e a volta ao topo é instantânea."
+  ],
+  "responsivo": [
+   "Com `maxHeight`, o feed rola por dentro, os títulos de dia ficam presos no topo e a borda de baixo esmaece enquanto há mais eventos; sem ele, o feed cresce com a página.",
+   "Se um evento novo chega com o feed rolado para baixo, ele volta sozinho ao topo; desligue com `scrollToNew={false}`."
+  ],
+  "desempenho": [
+   "Não há virtualização: todos os eventos ficam no DOM e cada linha detecta uma única vez sua entrada na tela; em históricos longos, limite o que passa em `events`."
+  ],
+  "notasIA": [
+   "Passe `events`, `label` e `now` (epoch ms); o componente não tem relógio próprio, então atualize `now` de tempos em tempos (a cada minuto, por exemplo) para os tempos relativos não envelhecerem.",
+   "Dias e horas usam `timeZone=\"UTC\"` por padrão: passe o fuso local (`\"America/Sao_Paulo\"`) e `locale`; “Today”, “Yesterday”, “updates” e os tempos `8m` e `Now` ficam em inglês.",
+   "Use `id` estável: é por ele que um evento é reconhecido como novo, anima a entrada e é anunciado; sobre outra superfície, defina `--timeline-surface` para o fundo dos títulos de dia."
+  ]
+ },
+ "tree-table": {
+  "quandoUsar": [
+   "Dados hierárquicos com colunas para comparar: pastas e arquivos com dono e tamanho, orçamento por área e subárea, equipes e pessoas.",
+   "Seleção em lote numa hierarquia: marcar um pai marca tudo abaixo dele, e o pai fica em estado misto quando só parte dos filhos está marcada.",
+   "Árvores grandes cujos filhos vêm do servidor ao abrir, com `loadChildren`, uma linha de carregamento e um botão de nova tentativa quando a carga falha."
+  ],
+  "quandoEvitar": [
+   "Use `tree-view` para navegar numa hierarquia só pelos nomes, sem colunas de dados.",
+   "Use `sortable-data-table` quando os registros não têm filhos.",
+   "Milhares de linhas abertas ao mesmo tempo pedem virtualização, que este componente não tem."
+  ],
+  "teclado": [
+   { "teclas": ["↑", "↓", "Page Up", "Page Down"], "acao": "Move o foco uma linha para cima ou para baixo; Page Up e Page Down saltam dez linhas." },
+   { "teclas": ["Home", "End"], "acao": "Vai à primeira ou à última linha visível." },
+   { "teclas": ["→", "←"], "acao": "→ abre a linha ou, se ela já está aberta, desce ao primeiro filho; ← fecha a linha ou, se ela já está fechada, sobe ao pai." },
+   { "teclas": ["Enter"], "acao": "Abre ou fecha uma linha com filhos, chama `onRowActivate` numa folha e, depois de uma falha de carga, tenta de novo." },
+   { "teclas": ["Espaço", "Ctrl + A"], "acao": "Com `selectable`, Espaço marca ou desmarca a linha e seus descendentes; Ctrl + A (⌘ + A no Mac) marca tudo ou limpa a seleção." },
+   { "teclas": ["*"], "acao": "Abre todas as linhas irmãs da linha em foco, carregando os filhos que faltam." }
+  ],
+  "acessibilidade": [
+   "Segue o padrão `treegrid`: as linhas têm `aria-level`, `aria-posinset`, `aria-setsize` e `aria-expanded`, e o foco é itinerante, com uma única linha na ordem de `Tab`.",
+   "Com `selectable`, a grade é `aria-multiselectable` e as linhas marcadas têm `aria-selected`; as caixas ficam fora do `Tab` (a marcação é pelo Espaço) e recebem nome de `rowLabel`.",
+   "Uma região `aria-live` anuncia ordenação, abrir ou fechar tudo e o resultado das cargas; se a linha em foco some ao fechar um ramo, o foco sobe para o ancestral visível mais próximo."
+  ],
+  "movimento": [
+   "Abrir uma linha faz os filhos crescerem em altura com mola e aparecerem em leve sequência; fechar recolhe na mesma mola, e a seta gira 90°.",
+   "Ao ordenar, as linhas deslizam até a nova posição dentro do seu nível; quando os filhos chegam de `loadChildren`, o primeiro ocupa o lugar da linha de carregamento, sem empurrão.",
+   "Com “reduzir movimento” ligado, as linhas aparecem e somem com um esmaecer curto, sem crescer em altura; o esqueleto de carga para de pulsar e o indicador gira mais devagar."
+  ],
+  "responsivo": [
+   "`hideBelow` esconde uma coluna enquanto a tabela for mais estreita que aquele valor em px; a medida é da própria tabela, então vale também para painéis estreitos em telas largas.",
+   "Com `maxHeight`, o corpo rola por dentro e o cabeçalho fica fixo; a linha que recebe foco pelo teclado é rolada para a vista sem ficar escondida sob o cabeçalho."
+  ],
+  "desempenho": [
+   "Só as linhas dos ramos abertos vão para o DOM, mas sem virtualização: abrir tudo numa árvore de milhares de nós renderiza todos, cada um com animação de altura e de posição."
+  ],
+  "notasIA": [
+   "Cada linha é `{ id, data, children? }`; para carga sob demanda, deixe `children` indefinido, marque `hasChildren: true` e passe `loadChildren`, que devolve uma `Promise` com os filhos.",
+   "A primeira coluna leva a árvore; `sortValue` torna a coluna ordenável (crescente, decrescente, sem ordem), `width` aceita uma trilha de grid (`\"90px\"`, `\"minmax(0, 2fr)\"`) e `align: \"end\"` alinha números.",
+   "Depende do item `checkbox`, instalado junto; `Loading`, `Couldn't load` e `Retry` são fixos em inglês, e para abrir tudo por fora use `collectExpandableIds(rows)` com `expanded` e `onExpandedChange`."
+  ]
+ },
+ "tree-view": {
+  "quandoUsar": [
+   "Navegar em pastas e conteúdo aninhado num painel lateral: arquivos de um projeto, seções de uma documentação, categorias de um catálogo.",
+   "Quando cada nó precisa só de nome e ícone, e a pessoa abre e fecha ramos para chegar a um item.",
+   "Quando se espera o teclado do padrão de árvore: setas para mover, abrir e fechar, e Enter para escolher."
+  ],
+  "quandoEvitar": [
+   "Use `tree-table` quando cada nó tem colunas de dados, seleção múltipla ou filhos carregados sob demanda.",
+   "Use `file-tree` para um explorador de arquivos com marcadores de alteração e busca por digitação.",
+   "Use `animated-sidebar` para o menu de navegação de um aplicativo, com grupos que abrem e um trilho de ícones recolhido."
+  ],
+  "teclado": [
+   { "teclas": ["↑", "↓"], "acao": "Move o foco para o item visível anterior ou seguinte." },
+   { "teclas": ["Home", "End"], "acao": "Vai ao primeiro ou ao último item visível." },
+   { "teclas": ["→"], "acao": "Abre a pasta fechada; numa pasta aberta, leva o foco ao primeiro filho." },
+   { "teclas": ["←"], "acao": "Fecha a pasta aberta; num arquivo ou numa pasta fechada, leva o foco à pasta pai." },
+   { "teclas": ["Enter", "Espaço"], "acao": "Seleciona o item e chama `onSelect`; numa pasta, também abre ou fecha." },
+   { "teclas": ["Tab"], "acao": "Entra na árvore pelo último item focado e sai dela; os outros itens ficam fora da ordem de `Tab`." }
+  ],
+  "acessibilidade": [
+   "É um `role=\"tree\"` de seleção única em que cada linha é um `<button>` com `role=\"treeitem\"`, `aria-level`, `aria-posinset`, `aria-setsize`, `aria-selected` e, nas pastas, `aria-expanded`.",
+   "O foco é itinerante: só um item fica na ordem de `Tab`, e se ele some porque a pasta fechou, a parada passa ao primeiro item visível.",
+   "O nome padrão é `File tree`, em inglês: passe `aria-label` descrevendo o conteúdo; os ícones são decorativos (`aria-hidden`)."
+  ],
+  "movimento": [
+   "Ao abrir uma pasta, o espaço se abre numa só mola e os filhos novos entram em sequência, deslizando da esquerda; ao fechar, recolhem em altura e somem rápido.",
+   "O fundo da seleção desliza de um item a outro, a seta gira 90°, o ícone troca entre pasta fechada e aberta e a guia de recuo cresce de cima para baixo.",
+   "Com “reduzir movimento” ligado, os itens aparecem e somem sem altura nem deslocamento, a seleção salta e os ícones trocam na hora."
+  ],
+  "responsivo": [
+   "Cada nível recua 18 px e o nome é cortado com reticências, então árvores profundas num painel estreito deixam pouco espaço para o texto."
+  ],
+  "desempenho": [
+   "Todos os itens das pastas abertas ficam no DOM, cada um com animação de entrada, saída e posição; pastas com centenas de itens devem começar fechadas."
+  ],
+  "notasIA": [
+   "Passe `nodes` (`{ id, label, children?, icon? }`) e `aria-label`; um nó com `children` não vazio vira pasta, e o ícone dos arquivos ganha cor pela extensão (`.ts`, `.tsx`, `.css`, `.md`, `.json`).",
+   "A abertura pode ser controlada (`expandedIds` com `onExpandedChange`) ou não (`defaultExpandedIds`); a seleção é sempre interna, começa vazia e não pode ser definida por prop.",
+   "Clicar numa pasta também a seleciona e chama `onSelect`: se só arquivos devem abrir conteúdo, confira `node.children` no handler."
+  ]
+ },
+ "treemap": {
+  "quandoUsar": [
+   "Mostrar uma hierarquia de partes de um todo, como receita por linha de negócio e produto, quando o tamanho relativo importa mais que comparações exatas.",
+   "Explorar por níveis: clicar num bloco amplia aquele ramo até preencher a vista, e a trilha no topo volta a qualquer nível acima.",
+   "Mostrar uma segunda medida, como crescimento, na intensidade da cor, com `colorLabel` e uma escala em degraus abaixo do gráfico."
+  ],
+  "quandoEvitar": [
+   "Use `bar-chart` quando o leitor precisa comparar valores com precisão: áreas são difíceis de comparar a olho.",
+   "Use `composition-chart` ou `donut-chart` para poucas partes num único nível.",
+   "Use `tree-table` quando cada nó da hierarquia precisa de números exatos em colunas."
+  ],
+  "teclado": [
+   { "teclas": ["←", "→", "↑", "↓"], "acao": "Com o foco no gráfico, salta para o bloco de primeiro nível mais próximo naquela direção." },
+   { "teclas": ["Home", "End"], "acao": "Vai ao primeiro ou ao último bloco de primeiro nível, na ordem de `data`." },
+   { "teclas": ["Enter", "Espaço"], "acao": "Amplia o bloco em foco, quando ele tem filhos, e passa o destaque ao primeiro filho." },
+   { "teclas": ["Esc", "Backspace"], "acao": "Volta um nível e destaca o bloco de onde veio; na raiz, tira o destaque." }
+  ],
+  "acessibilidade": [
+   "A área dos blocos é um grupo focável com `aria-roledescription=\"treemap\"` e as instruções no nome, em inglês; o teclado percorre só os blocos do primeiro nível da vista.",
+   "Uma região `aria-live=\"polite\"` lê o bloco ativo (caminho, valor, fatia do pai e a medida de cor), e uma tabela oculta lista todos os nós com caminho e valores.",
+   "A trilha é um `<nav>` com lista ordenada e `aria-current=\"location\"` no nível atual; a dica é decorativa (`aria-hidden`)."
+  ],
+  "movimento": [
+   "Na primeira vez em tela, os blocos crescem a partir do próprio centro, numa onda rápida que começa pelos maiores.",
+   "Ao ampliar, o bloco escolhido cresce até preencher a vista e os filhos surgem; ao voltar, a vista encolhe até ele; com dados novos, cada bloco muda de tamanho no lugar.",
+   "Com “reduzir movimento” ligado, cada mudança vai direto ao layout final, a dica não desliza e a trilha troca sem deslocamento."
+  ],
+  "responsivo": [
+   "A largura segue o contêiner e a altura é fixa em `height` (420 px); nome e valor só aparecem em blocos com espaço (mais de 64 × 38 px), e os pequenos dependem da dica.",
+   "No toque não há dica ao passar: tocar num bloco amplia o ramo dele, e tocar numa folha do primeiro nível mostra seus números."
+  ],
+  "desempenho": [
+   "Todos os nós da árvore têm um elemento no DOM, mesmo fora da vista, `data` é serializado a cada render e a animação reposiciona os blocos por JavaScript a cada quadro; com milhares de folhas, agregue antes."
+  ],
+  "notasIA": [
+   "Passe uma raiz em `data` (`{ id, label, children }`) com `value` só nas folhas: o valor de um ramo é a soma dos filhos, e o `label` da raiz abre a trilha.",
+   "Para colorir pela segunda medida, dê `color` às folhas e passe `colorLabel` (e `formatColor`); os quatro primeiros ramos ganham matiz de série e os seguintes ficam neutros.",
+   "`focus` com `onFocusChange` controla o ramo ampliado (um id de folha mostra a raiz); mantenha os `id` estáveis entre conjuntos para os blocos se transformarem em vez de reaparecerem."
+  ]
+ },
+ "volume-profile": {
+  "quandoUsar": [
+   "Mostrar em que preços a negociação se concentrou num pregão ou em poucas sessões, ao lado de como o preço andou no tempo.",
+   "Destacar o ponto de controle, o nível com mais volume, e a área de valor, que por padrão reúne 70% do volume em volta dele.",
+   "Ler cada faixa de preço com volume, fatia do total e posição em relação à área de valor, pelo ponteiro ou pelas setas."
+  ],
+  "quandoEvitar": [
+   "Use `candlestick-chart` quando o foco é abertura, máxima, mínima e fechamento de cada período.",
+   "Use `order-book` para a profundidade das ordens de compra e venda em aberto, e não para o que já foi negociado.",
+   "Use `bar-chart` para volume por período, como por dia ou por hora; aqui o volume é agrupado por preço."
+  ],
+  "teclado": [
+   { "teclas": ["↑", "→"], "acao": "Com o foco no gráfico, sobe para a faixa de preço seguinte." },
+   { "teclas": ["↓", "←"], "acao": "Desce para a faixa anterior." },
+   { "teclas": ["Page Up", "Page Down"], "acao": "Sobe ou desce quatro faixas." },
+   { "teclas": ["Home", "End"], "acao": "Vai à faixa de preço mais baixa ou à mais alta." },
+   { "teclas": ["Esc"], "acao": "Encerra a leitura e esconde a dica." }
+  ],
+  "acessibilidade": [
+   "O gráfico é um `role=\"slider\"` vertical: ao receber foco pelo teclado começa no ponto de controle, e `aria-valuetext` lê a faixa, o volume, a fatia do total e se ela está na área de valor.",
+   "A `<figure>` tem legenda oculta e uma tabela oculta com todas as faixas, da mais alta para a mais baixa, com volume e fatia; o SVG, o cabeçalho e a dica ficam ocultos para leitor de tela.",
+   "As frases lidas e o cabeçalho (`point of control`, `Inside the value area`, `Value area`) são fixos em inglês; `formatPrice` e `formatVolume` mudam só os números."
+  ],
+  "movimento": [
+   "Ao entrar na tela, as barras crescem a partir do eixo, começando pelo ponto de controle e se espalhando para os níveis mais distantes, enquanto a linha de preço se desenha da esquerda para a direita.",
+   "Depois disso, dados novos não repetem a entrada: barras, linha e marca do ponto de controle deslizam com mola, e uma série com outro número de pontos redesenha a linha desde o início.",
+   "Com “reduzir movimento” ligado, tudo aparece no estado final, e a faixa realçada e a dica saltam de um nível ao outro."
+  ],
+  "responsivo": [
+   "A largura segue o contêiner: o histograma fica com 32% dela (entre 64 e 190 px), a linha de preço com o resto, e uma coluna fixa de 62 px à direita guarda os preços; a altura é `height` (260 px).",
+   "No toque, tocar numa altura lê aquela faixa; arrastar na vertical rola a página e encerra a leitura."
+  ],
+  "desempenho": [
+   "A linha de preço é refeita a cada render, inclusive quando o ponteiro muda de faixa; com milhares de negócios, agregue em intervalos antes, como o demo faz com 5 e 15 minutos."
+  ],
+  "notasIA": [
+   "Passe `data` em ordem de tempo com `{ key, label, price, volume }` e `axisLabel` só em alguns pontos; cada ponto soma seu volume à faixa em que o preço cai, e `levels` (16) define quantas faixas há.",
+   "`valueArea` (0,7) é a fração do volume que forma a área de valor; `formatPrice` e `formatVolume` formatam eixo, cabeçalho e dica, e `hideHeader` esconde o título com o ponto de controle.",
+   "`activeLevel` com `onActiveChange` controla a faixa lida, contada a partir do preço mais baixo (0), ou `null` para nenhuma; sem controle, `defaultActiveLevel` define a inicial."
+  ]
+ },
+ "waffle-chart": {
+  "quandoUsar": [
+   "Mostrar partes de um todo como quadradinhos contáveis, em que cada célula vale um por cento: matriz de energia, respostas de uma pesquisa, orçamento por área.",
+   "Comparar dois momentos com as mesmas categorias: ao trocar `data`, as células que mudam de grupo voam para o lugar novo e a legenda rola as porcentagens.",
+   "Quando a cor não pode ser o único canal: além da cor, as categorias alternam entre células quadradas, redondas e com moldura."
+  ],
+  "quandoEvitar": [
+   "Use `donut-chart` ou `composition-chart` quando há muitas categorias pequenas: abaixo de meio por cento, uma categoria pode ficar sem nenhuma célula.",
+   "Use `bar-chart` para comparar valores que não somam um todo.",
+   "Use `progress` ou `usage-meter` para uma única fração, como o uso de uma cota."
+  ],
+  "teclado": [
+   { "teclas": ["↑", "↓"], "acao": "Com o foco na grade, sobe ou desce uma célula na coluna e lê a categoria dela." },
+   { "teclas": ["←", "→"], "acao": "Passa para a célula ao lado, na coluna anterior ou na seguinte." },
+   { "teclas": ["Page Up", "Page Down"], "acao": "Page Down salta para o início da categoria seguinte; Page Up volta ao início da atual ou, se já está nele, da anterior." },
+   { "teclas": ["Home", "End"], "acao": "Vai à primeira ou à última célula preenchida." },
+   { "teclas": ["Esc"], "acao": "Encerra a leitura e esconde a dica." },
+   { "teclas": ["Enter", "Espaço"], "acao": "Na legenda, fixa ou solta o destaque da categoria." }
+  ],
+  "acessibilidade": [
+   "A grade é um grupo focável com `aria-roledescription=\"waffle chart\"` e as instruções no nome, em inglês; uma região `aria-live=\"polite\"` lê a categoria da célula atual com fatia e valor.",
+   "A legenda é uma lista de botões com `aria-pressed`; um resumo e uma tabela ocultos trazem valor, fatia e número de células de cada categoria.",
+   "A forma da célula é um segundo canal além da cor: fora a categoria de destaque, as categorias alternam entre quadrada, redonda e com moldura, e a legenda repete a forma."
+  ],
+  "movimento": [
+   "Ao entrar na tela, as células crescem e aparecem em onda curta, na ordem de preenchimento: de baixo para cima, coluna a coluna.",
+   "Quando os dados mudam, as células que trocam de grupo ou de posição voam até o novo lugar, encolhendo no meio do voo, e mudam de cor e forma no caminho; as porcentagens da legenda rolam.",
+   "Com “reduzir movimento” ligado, as células vão direto ao lugar e à cor finais e as porcentagens trocam sem rolar."
+  ],
+  "responsivo": [
+   "Em contêiner de 420 px ou mais, a legenda fica ao lado da grade; abaixo disso, desce para uma lista de uma coluna.",
+   "A grade tem no máximo 300 px de largura (232 px com a legenda ao lado) e as células acompanham essa medida; no toque, arrastar na horizontal percorre as células e o gesto vertical rola a página."
+  ],
+  "desempenho": [
+   "Cada célula é um elemento animado com `will-change: transform`: a grade padrão tem 100, e `rows` × `columns` maiores multiplicam esse número."
+  ],
+  "notasIA": [
+   "Passe `data` como `{ key, label, value }` na ordem de preenchimento, com valores brutos: as fatias são calculadas e arredondadas para células inteiras que sempre somam a grade (10 × 10, uma por cento).",
+   "Mantenha `key` estável entre conjuntos para as células voarem em vez de repintar; `unit` e `formatValue` formatam a dica e a tabela, e `decimals` as porcentagens.",
+   "A cor de destaque vai para `accentKey` (a primeira categoria, por padrão) e as três seguintes usam as outras cores de série; `activeKey` com `onActiveChange` controla a categoria fixada."
+  ]
+ }
+}

@@ -1,0 +1,26 @@
+/* Página Salvos. O quadro, o título e a grade vêm de catalog.module.css; aqui só o que é próprio dela. */
+.bar { display: flex; align-items: center; margin-top: 1.5rem; }
+.bar p { margin-left: 0; }
+.grid { margin-top: .75rem; }
+
+/* O cartão é o link; o botão de remover fica por cima, no canto da miniatura. */
+.entry { position: relative; }
+.remove { position: absolute; top: .75rem; left: .75rem; display: inline-grid; width: 1.75rem; height: 1.75rem; place-items: center; border: 1px solid var(--border); border-radius: .5rem; padding: 0; color: var(--text-secondary); background: var(--surface); cursor: pointer; transition: color var(--duration-fast) var(--ease-standard), background var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard); }
+@media (hover: hover) and (pointer: fine) { .remove:hover { border-color: var(--border-strong); color: var(--foreground); background: var(--surface-muted); } }
+
+/* Vazio: explica de onde vêm os itens. */
+.empty { display: grid; max-width: 34rem; justify-items: start; gap: .75rem; margin-top: 2rem; border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; background: var(--surface); }
+.emptyIcon { display: inline-grid; width: 2.5rem; height: 2.5rem; place-items: center; border: 1px solid var(--border); border-radius: .75rem; color: var(--text-secondary); background: var(--surface-muted); }
+.empty h2 { margin-top: .25rem; font-size: 1.125rem; font-weight: 500; letter-spacing: -.02em; line-height: 1.5rem; }
+.empty p { color: var(--text-secondary); font-size: .875rem; line-height: 1.7; }
+/* Uma cópia pequena do botão, para a pessoa reconhecer na página de item. */
+.sample { display: inline-flex; height: 1.5rem; align-items: center; gap: .3125rem; border: 1px solid var(--border); border-radius: .4375rem; padding: 0 .5rem; color: var(--foreground); background: var(--background); font-size: .75rem; font-weight: 500; line-height: 1; vertical-align: middle; white-space: nowrap; }
+.emptyActions { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .5rem; }
+.primary, .secondary { display: inline-flex; height: 2.25rem; align-items: center; border-radius: .6875rem; padding: 0 .875rem; font-size: .8125rem; font-weight: 500; line-height: 1; text-decoration: none; }
+.primary { color: var(--accent-foreground); background: var(--accent); transition: opacity var(--duration-fast) var(--ease-standard); }
+.secondary { border: 1px solid var(--border); color: var(--foreground); background: var(--surface); transition: border-color var(--duration-fast) var(--ease-standard), background var(--duration-fast) var(--ease-standard); }
+@media (hover: hover) and (pointer: fine) {
+  .primary:hover { opacity: .88; }
+  .secondary:hover { border-color: var(--border-strong); background: var(--surface-muted); }
+}
+@media (prefers-reduced-motion: reduce) { .remove, .primary, .secondary { transition: none; } }
