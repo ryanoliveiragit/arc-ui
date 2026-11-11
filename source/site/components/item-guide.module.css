@@ -1,0 +1,24 @@
+/* Teclado: duas colunas no mesmo cartão das tabelas; teclas em chips, depois o que fazem (13.5px). */
+.keys { table-layout: fixed; }
+.keys th, .keys td { padding-block: .875rem; }
+.keys th { width: 14rem; }
+.keys td { color: var(--text-secondary); font-size: .84375rem; line-height: 1.5; }
+.combo { display: flex; flex-wrap: wrap; align-items: center; gap: .375rem; }
+.join { color: var(--text-muted); font-size: .6875rem; }
+
+/* Notas para IA: o arquivo Markdown do item numa linha (borda de 1px, raio 12) e a linha do índice llms.txt. */
+.file { display: flex; min-height: 2.75rem; align-items: center; gap: .625rem; margin-top: 1.0625rem; border: 1px solid var(--border); border-radius: 12px; padding: .375rem .4375rem .375rem .9375rem; color: var(--text-muted); }
+.file[data-alone] { margin-top: 0; }
+.file > svg { flex: none; }
+.path { min-width: 0; flex: 1; overflow: hidden; border-radius: 4px; color: var(--foreground); font-family: var(--font-mono); font-size: .8125rem; letter-spacing: 0; text-decoration: none; text-overflow: ellipsis; white-space: nowrap; }
+.index { margin: .75rem 0 0; color: var(--text-muted); font-size: .8125rem; line-height: 1.55; }
+.index a { border-radius: 4px; color: var(--text-secondary); text-decoration: underline; text-decoration-color: var(--border-strong); text-underline-offset: 3px; }
+
+@media (hover: hover) and (pointer: fine) { .path:hover { text-decoration: underline; text-underline-offset: 3px; } .index a:hover { color: var(--foreground); } }
+@media (max-width: 640px) {
+  /* No celular as teclas ficam em cima do texto, cada par numa linha do cartão. */
+  .keys, .keys tbody, .keys tr, .keys th, .keys td { display: block; width: auto; }
+  .keys th { border-bottom: 0; padding-bottom: 0; }
+  .keys td { padding-top: .5rem; }
+  .keys tr:last-child > td { border-bottom: 0; }
+}

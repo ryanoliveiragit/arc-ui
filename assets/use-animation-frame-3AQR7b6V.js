@@ -1,1 +1,0 @@
-import{K as e,o as t,q as n}from"./react-BQGSCqUm.js";import{D as r,E as i}from"./index-kjJGCf8a.js";var a=r(i(),1);function o(r){let i=(0,a.useRef)(0),{isStatic:o}=(0,a.useContext)(t);(0,a.useEffect)(()=>{if(o)return;let t=({timestamp:e,delta:t})=>{i.current||=e,r(e-i.current,t)};return n.update(t,!0),()=>e(t)},[r])}export{o as t};

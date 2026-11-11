@@ -1,0 +1,37 @@
+/* Cartão de código: cabeçalho de 42px na superfície, corpo um tom acima, raio 18, borda de 1px. */
+.card { min-width: 0; overflow: hidden; border: 1px solid var(--border); border-radius: 18px; background: var(--surface-muted); }
+.header { display: flex; min-height: 2.625rem; align-items: center; justify-content: space-between; gap: .75rem; border-bottom: 1px solid var(--border-subtle); padding: .375rem 1.125rem .375rem .375rem; background: var(--surface); }
+.header[data-plain] { padding-left: .875rem; }
+.header > :first-child { min-width: 0; }
+.file { display: inline-flex; align-items: center; gap: .5rem; color: var(--text-secondary); font-family: var(--font-mono); font-size: .78125rem; letter-spacing: 0; line-height: 1.4; }
+.file > svg { flex: none; color: var(--text-muted); }
+.file > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.body { min-width: 0; }
+/* Código: mono 12.5px / 21.875px. Rola de lado dentro do cartão; a página nunca ganha rolagem lateral. */
+.pre { --focus-outline-offset: -2px; margin: 0; overflow-x: auto; padding: .9375rem 1.125rem 1.25rem; color: var(--foreground); font-family: var(--font-mono); font-size: .78125rem; font-variant-ligatures: none; letter-spacing: 0; line-height: 1.75; tab-size: 2; white-space: pre; counter-reset: line; }
+.pre > code { display: block; width: max-content; min-width: 100%; font: inherit; }
+.line { display: block; min-height: 1.75em; }
+/* O número da linha é desenhado pelo CSS: fica fora da seleção e da cópia. */
+.pre[data-gutter="lines"] .line::before { display: inline-block; width: calc(var(--digits, 2) * 1ch); margin-right: 1.2em; color: color-mix(in oklab, var(--text-muted) 70%, transparent); text-align: right; content: counter(line); counter-increment: line; user-select: none; }
+/* Comando de terminal: 13px, com o `$` discreto na frente. */
+.pre[data-gutter="prompt"] { padding-block: 1rem; font-size: .8125rem; line-height: 1.7; }
+.pre[data-gutter="prompt"] .line { min-height: 1.7em; }
+.pre[data-gutter="prompt"] .line::before { margin-right: .75em; color: var(--text-muted); content: "$"; user-select: none; }
+/* Recolhido: as últimas linhas somem aos poucos (máscara, não gradiente de cor). */
+.pre[data-clipped] { padding-bottom: .25rem; -webkit-mask-image: linear-gradient(#000 calc(100% - 4.5rem), transparent); mask-image: linear-gradient(#000 calc(100% - 4.5rem), transparent); }
+
+.more { display: flex; width: 100%; min-height: 2.5rem; align-items: center; justify-content: center; gap: .375rem; border: 0; border-top: 1px solid var(--border-subtle); padding: 0 1rem; color: var(--text-secondary); background: var(--surface); font-size: .78125rem; font-weight: 500; cursor: pointer; --focus-outline-offset: -3px; transition: color var(--duration-fast) var(--ease-standard), background-color var(--duration-fast) var(--ease-standard); }
+.more > svg { color: var(--text-muted); transition: transform var(--duration-standard) var(--ease-standard); }
+.more[aria-expanded="true"] > svg { transform: rotate(180deg); }
+@media (hover: hover) and (pointer: fine) { .more:hover { color: var(--foreground); background: var(--surface-muted); } }
+
+/* Cores do código: a paleta categórica dos tokens, que já tem contraste nos dois temas. A cor apoia, não substitui, o texto. */
+.comment { color: var(--text-muted); font-style: italic; }
+.string { color: var(--tone-green); }
+.keyword { color: var(--tone-orchid); }
+.number { color: var(--tone-amber); }
+.tag { color: var(--tone-sky); }
+.prop { color: var(--tone-violet); }
+
+@media (prefers-reduced-motion: reduce) { .more, .more > svg { transition: none; } }

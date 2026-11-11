@@ -1,13 +1,93 @@
-.sidebar { position: sticky; top: calc(var(--site-header-height) + var(--space-6)); height: calc(100dvh - var(--site-header-height) - var(--space-10)); min-width: 0; }
-.scroll { height: 100%; }
-.viewport { position: relative; padding: 0 var(--space-3) var(--space-8) 0; }
-.group + .group { margin-top: var(--space-6); }
-.heading { margin: 0 0 var(--space-2); padding: 0 var(--space-3); font-family: var(--font-body); font-size: var(--text-xs); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
-.heading a { color: var(--text-muted); text-decoration: none; }
-.list { display: grid; gap: 1px; margin: 0; padding: 0; list-style: none; }
-.list a { display: block; border-radius: .75rem; padding: .4rem var(--space-3); color: var(--text-secondary); font-size: var(--text-sm); line-height: 1.4; text-decoration: none; transition: color var(--duration-fast) var(--ease-standard), background var(--duration-fast) var(--ease-standard); }
-.list a { position: relative; }
-.list a[aria-current="page"] { color: var(--foreground); background: var(--surface-muted); font-weight: 500; }
-.list a[aria-current="page"]::before { position: absolute; top: 50%; left: 0; width: 3px; height: 1rem; border-radius: var(--radius-pill); background: var(--accent); transform: translateY(-50%); content: ""; }
-@media (hover: hover) and (pointer: fine) { .list a:hover, .heading a:hover { color: var(--foreground); } }
-@media (prefers-reduced-motion: reduce) { .list a { transition: none; } }
+/* A barra lateral em árvore. No computador é uma coluna presa abaixo do cabeçalho; em telas estreitas o mesmo conteúdo vai dentro da gaveta. */
+.sidebar { --sidebar-bg: var(--background); display: flex; min-width: 0; min-height: 0; flex-direction: column; color: var(--foreground); font-size: .8125rem; line-height: 1.1; }
+.sidebar[data-variant="rail"] { position: sticky; top: var(--site-header-height); width: var(--site-sidebar-width); height: calc(100dvh - var(--site-header-height)); border-right: 1px solid var(--border-subtle); padding: 1.25rem .875rem .875rem 0; }
+.sidebar[data-variant="drawer"] { flex: 1; padding: .875rem .875rem .875rem 1.125rem; }
+
+/* 1. Busca: filtra a árvore enquanto se digita. */
+.search { display: flex; height: 2rem; flex: none; align-items: center; gap: .4375rem; border: 1px solid var(--border); border-radius: .625rem; padding: 0 .3125rem 0 .6875rem; color: var(--text-muted); background: var(--surface-muted); cursor: text; transition: border-color var(--duration-fast) var(--ease-standard); }
+/* Campo de texto não ganha o contorno global de foco: a borda faz esse papel, na mesma cor dele. */
+.search:has(.searchInput:focus) { border-color: color-mix(in oklab, var(--accent-strong) 72%, transparent); }
+@media (hover: hover) and (pointer: fine) { .search:hover:not(:has(.searchInput:focus)) { border-color: var(--border-strong); } }
+.search svg { flex: none; }
+.searchInput { width: 100%; min-width: 0; flex: 1; border: 0; padding: 0; color: var(--foreground); background: transparent; font-size: .8125rem; line-height: 1.25rem; outline: none; appearance: none; }
+.searchInput::placeholder { color: var(--text-muted); opacity: 1; }
+.searchInput::-webkit-search-cancel-button, .searchInput::-webkit-search-decoration { display: none; -webkit-appearance: none; }
+.kbd { display: inline-grid; min-width: 1.25rem; height: 1.25rem; flex: none; place-items: center; border: 1px solid var(--border); border-radius: .375rem; padding: 0 .3125rem; color: var(--text-muted); background: var(--surface); font-family: var(--font-body); font-size: .6875rem; font-weight: 500; line-height: 1; }
+.clear { display: inline-grid; width: 1.25rem; height: 1.25rem; flex: none; place-items: center; border: 0; border-radius: .375rem; padding: 0; color: var(--text-muted); background: transparent; cursor: pointer; }
+@media (hover: hover) and (pointer: fine) { .clear:hover { color: var(--foreground); background: var(--surface); } }
+
+/* 2. Filtro: segmentos discretos, sem a cor de destaque. */
+.filter { display: grid; height: 1.75rem; flex: none; grid-auto-columns: minmax(0, 1fr); grid-auto-flow: column; gap: 1px; margin-top: .5rem; border: 1px solid var(--border-subtle); border-radius: .625rem; padding: 2px; background: var(--surface-muted); }
+.filterOption { min-width: 0; height: 1.375rem; overflow: hidden; border: 1px solid transparent; border-radius: .5rem; padding: 0 .375rem; color: var(--text-muted); background: transparent; font-size: .71875rem; font-weight: 500; line-height: 1; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; transition: color var(--duration-fast) var(--ease-standard), background var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard); }
+.filterOption[aria-pressed="true"] { border-color: var(--border); color: var(--foreground); background: var(--surface); }
+@media (hover: hover) and (pointer: fine) { .filterOption:hover { color: var(--foreground); } }
+.filterOption:focus-visible { --focus-outline-offset: -1px; }
+
+/* 3. Salvos. */
+.saved { display: flex; height: 2rem; flex: none; align-items: center; gap: .5rem; margin-top: .625rem; border-radius: .5rem; padding: 0 .375rem 0 .5rem; color: var(--text-secondary); text-decoration: none; transition: color var(--duration-fast) var(--ease-standard), background var(--duration-fast) var(--ease-standard); }
+.saved svg { flex: none; color: var(--text-muted); }
+.saved[aria-current="page"] { color: var(--foreground); background: color-mix(in oklab, var(--foreground) 7%, transparent); font-weight: 500; }
+.saved[aria-current="page"] svg { color: var(--foreground); }
+@media (hover: hover) and (pointer: fine) { .saved:hover { color: var(--foreground); } }
+
+/* 4. Pular para uma seção da lista. */
+.jump { display: flex; flex: none; align-items: center; gap: 2px; margin-top: .5rem; }
+.jumpButton { height: 1.625rem; flex: none; border: 0; border-radius: .5rem; padding: 0 .5rem; color: var(--text-muted); background: transparent; font-size: .8125rem; line-height: 1; cursor: pointer; transition: color var(--duration-fast) var(--ease-standard), background var(--duration-fast) var(--ease-standard); }
+.jumpButton[aria-current="true"] { color: var(--foreground); background: var(--surface-muted); font-weight: 500; }
+@media (hover: hover) and (pointer: fine) { .jumpButton:hover { color: var(--foreground); } }
+
+/* 5. A lista: só ela rola. A borda de baixo some com máscara, acima do cartão de novidades. */
+.list { position: relative; min-height: 0; flex: 1; margin-top: .375rem; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; padding-bottom: 1.75rem; scrollbar-width: none; -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 1.75rem), transparent); mask-image: linear-gradient(to bottom, #000 calc(100% - 1.75rem), transparent); }
+.list::-webkit-scrollbar { display: none; }
+.list :is(a, button):focus-visible { --focus-outline-offset: -2px; }
+
+.section + .section { margin-top: .625rem; }
+.heading { display: flex; height: 2rem; align-items: center; gap: .5rem; margin: 0; padding: 0 .375rem 0 .5rem; color: var(--foreground); font-family: var(--font-body); font-size: .8125rem; font-weight: 500; letter-spacing: var(--tracking-body); line-height: 1.1; }
+.heading svg { flex: none; color: var(--text-muted); }
+.heading a { min-width: 0; overflow: hidden; border-radius: .25rem; color: inherit; text-decoration: none; text-overflow: ellipsis; white-space: nowrap; }
+.count { flex: none; margin-left: auto; color: var(--text-muted); font-size: .75rem; font-weight: 400; font-variant-numeric: tabular-nums; }
+
+/* 6. Grupos recolhíveis. O título do grupo gruda no topo da lista enquanto o grupo está à vista. */
+.groupHead { position: sticky; top: 0; z-index: 1; margin: 0; background: var(--sidebar-bg); font: inherit; letter-spacing: inherit; container-type: scroll-state; }
+.groupToggle { position: relative; display: flex; width: 100%; height: 1.625rem; align-items: center; gap: .3125rem; border: 0; border-radius: .5rem; padding: 0 .375rem 0 .8125rem; color: var(--text-muted); background: transparent; font-family: var(--font-body); font-size: .75rem; font-weight: 500; letter-spacing: var(--tracking-body); line-height: 1.1; text-align: left; cursor: pointer; transition: color var(--duration-fast) var(--ease-standard); }
+.groupLabel { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chevron { flex: none; transition: transform var(--duration-fast) var(--ease-standard); }
+.groupToggle[aria-expanded="false"] .chevron { transform: rotate(-90deg); }
+@media (hover: hover) and (pointer: fine) { .groupToggle:hover { color: var(--foreground); } }
+/* Com o título grudado, as linhas que passam por baixo dele somem aos poucos em vez de serem cortadas. */
+.groupToggle::after { position: absolute; top: 100%; right: 0; left: 0; height: .875rem; background: var(--sidebar-bg); content: ""; opacity: 0; pointer-events: none; -webkit-mask-image: linear-gradient(to bottom, #000, transparent); mask-image: linear-gradient(to bottom, #000, transparent); }
+@container scroll-state(stuck: top) { .groupToggle::after { opacity: 1; } }
+
+/* 7. Linhas de item. */
+.items { display: grid; margin: 0; padding: 0 0 .375rem 1.375rem; list-style: none; }
+.items[hidden] { display: none; }
+.item { display: flex; min-width: 0; height: 1.75rem; align-items: center; gap: .5rem; border-radius: .5rem; padding: 0 .375rem 0 .5rem; color: var(--text-secondary); text-decoration: none; transition: color var(--duration-fast) var(--ease-standard), background var(--duration-fast) var(--ease-standard); }
+.itemTitle { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.item svg { flex: none; color: var(--text-muted); }
+.item[aria-current="page"] { color: var(--foreground); background: color-mix(in oklab, var(--foreground) 7%, transparent); font-weight: 500; }
+@media (hover: hover) and (pointer: fine) { .item:hover { color: var(--foreground); } }
+.pill { flex: none; margin-left: auto; border: 1px solid var(--site-mark); border-radius: var(--radius-pill); padding: .15625rem .4375rem; color: var(--text-secondary); font-size: .6875rem; font-weight: 500; line-height: 1; }
+.item[aria-current="page"] .pill { color: var(--foreground); }
+
+.empty { display: grid; justify-items: start; gap: .625rem; padding: .75rem .5rem; color: var(--text-muted); font-size: .8125rem; line-height: 1.45; }
+.emptyButton { height: 1.75rem; border: 1px solid var(--border); border-radius: .5rem; padding: 0 .625rem; color: var(--foreground); background: var(--surface); font-size: .75rem; font-weight: 500; cursor: pointer; transition: background var(--duration-fast) var(--ease-standard); }
+@media (hover: hover) and (pointer: fine) { .emptyButton:hover { background: var(--surface-muted); } }
+
+/* 8. Novidades: preso embaixo, fora da rolagem. */
+.news { display: flex; height: 2.625rem; flex: none; align-items: center; gap: .5625rem; margin-top: .5rem; border: 1px solid var(--border-subtle); border-radius: .625rem; padding: 0 .625rem 0 .875rem; color: var(--foreground); background: var(--surface); font-weight: 500; text-decoration: none; transition: border-color var(--duration-fast) var(--ease-standard), background var(--duration-fast) var(--ease-standard); }
+.newsDot { width: .375rem; height: .375rem; flex: none; border-radius: 50%; background: var(--accent); }
+/* A lima quase some no branco: no tema claro o ponto ganha um contorno. */
+:global(:root[data-theme="light"]) .newsDot { box-shadow: 0 0 0 1px color-mix(in oklab, var(--site-mark) 55%, transparent); }
+.newsCount { margin-left: auto; color: var(--text-muted); font-size: .75rem; font-weight: 400; font-variant-numeric: tabular-nums; }
+.news svg { flex: none; color: var(--text-muted); transition: transform var(--duration-fast) var(--ease-standard); }
+@media (hover: hover) and (pointer: fine) {
+  .news:hover { border-color: var(--border); }
+  .news:hover svg { transform: translateX(2px); }
+}
+
+.visuallyHidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  .search, .filterOption, .saved, .jumpButton, .groupToggle, .chevron, .item, .emptyButton, .news, .news svg { transition: none; }
+  .news:hover svg { transform: none; }
+}

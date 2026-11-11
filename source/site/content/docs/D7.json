@@ -1,0 +1,834 @@
+{
+ "cylinder-carousel": {
+  "quandoUsar": [
+   "Vitrine de um conjunto pequeno de cartões visuais (salas, produtos, planos) em que um fica de frente por vez e os vizinhos aparecem em perspectiva.",
+   "Escolha de um item entre poucos, quando o resto da tela reage ao cartão da frente: `onValueChange` informa em qual cartão o cilindro vai parar."
+  ],
+  "quandoEvitar": [
+   "Use `carousel` para uma fileira comum de slides, com indicador de página e rotação automática opcional.",
+   "Use `card-stack` quando a pessoa decide cartão a cartão, descartando ou escolhendo, com opção de desfazer.",
+   "Evite com dezenas de cartões: o raio do cilindro cresce com a quantidade e todos ficam montados; uma grade ou lista serve melhor."
+  ],
+  "teclado": [
+   {
+    "teclas": ["←", "→"],
+    "acao": "Com o foco no palco, giram para o cartão anterior ou o próximo; toques rápidos se acumulam."
+   },
+   {
+    "teclas": ["Home", "End"],
+    "acao": "Giram até o primeiro ou o último cartão pelo caminho mais curto."
+   },
+   {
+    "teclas": ["Tab"],
+    "acao": "Passa pelo palco, pelos controles do cartão da frente e pelos botões de anterior e próximo; os outros cartões ficam fora da ordem de foco."
+   },
+   {
+    "teclas": ["Enter", "Espaço"],
+    "acao": "Nos botões de anterior e próximo, giram um cartão."
+   }
+  ],
+  "acessibilidade": [
+   "A raiz é um grupo com `aria-roledescription=\"carousel\"` nomeado por `label`; cada cartão é um grupo `slide` rotulado “N of M”, e só o da frente fica exposto: os demais recebem `aria-hidden` e `inert`.",
+   "Uma região `aria-live=\"polite\"` anuncia “Card N of M” a cada troca, e os botões de anterior e próximo têm `aria-label` próprio.",
+   "Passe `label` com o nome do conjunto; os demais textos lidos (“Previous card”, “Card 2 of 8”) estão fixos em inglês no código."
+  ],
+  "movimento": [
+   "O cartão da frente acompanha o arraste ponto a ponto; ao soltar, um arremesso leva o giro um pouco adiante e uma mola com leve ultrapassagem o assenta no cartão mais próximo.",
+   "Os cartões escurecem conforme se afastam da frente e os de trás somem; na entrada, o cilindro chega girando pouco mais de um cartão e para no inicial.",
+   "Com “reduzir movimento”, o giro salta direto para o cartão de destino, sem mola nem entrada, e o contador troca só com um esmaecer."
+  ],
+  "responsivo": [
+   "Um `ResizeObserver` mede o palco: o cartão usa `cardWidth` ou 58% da largura disponível, o que for menor, e a altura encolhe na mesma proporção.",
+   "O palco usa `touch-action: pan-y`: no toque, arrastar na horizontal gira o cilindro e a rolagem vertical da página continua livre."
+  ],
+  "desempenho": [
+   "Todos os cartões ficam montados (os de trás só são ocultados por `backface-visibility`) e cada um acompanha o giro para calcular a própria opacidade; prefira poucos cartões e imagens leves."
+  ],
+  "notasIA": [
+   "Cada filho vira um cartão: passe três ou mais (com dois, ficam frente e verso; sem filhos, nada é renderizado).",
+   "Controle com `value` e `onValueChange` (índice do cartão da frente) ou deixe livre com `defaultValue`; `onValueChange` dispara quando o destino é decidido, antes de a mola terminar.",
+   "Dê largura ao pai (a raiz ocupa 100%) e deixe a altura por conta de `cardHeight` mais 96 px; dentro do cartão, marque com `data-no-drag` as áreas que não devem iniciar o arraste."
+  ]
+ },
+ "donut-chart": {
+  "quandoUsar": [
+   "Poucas partes de um todo (até umas seis), quando a fatia de cada uma importa mais que a comparação exata entre valores.",
+   "Alternar entre conjuntos de dados com as mesmas chaves (mês a mês, plano a plano): os arcos se transformam em vez de redesenhar.",
+   "Quando a pessoa precisa esconder categorias na legenda para ver como o restante do anel se redistribui."
+  ],
+  "quandoEvitar": [
+   "Use `composition-chart` quando o espaço é uma faixa horizontal: as mesmas partes cabem numa barra empilhada com legenda.",
+   "Use `treemap` quando há muitas partes ou níveis de hierarquia; aqui, o que fica abaixo de `groupBelow` ou além de `maxSegments` é agrupado em “Other”.",
+   "Use `gauge` para um único valor contra uma faixa conhecida; a rosca divide um total em partes."
+  ],
+  "teclado": [
+   {
+    "teclas": ["↑", "↓", "←", "→"],
+    "acao": "Movem o foco entre as linhas da legenda, dando a volta nas pontas; a linha em foco destaca o arco e aparece no centro."
+   },
+   {
+    "teclas": ["Home", "End"],
+    "acao": "Vão à primeira e à última linha da legenda."
+   },
+   {
+    "teclas": ["Enter", "Espaço"],
+    "acao": "Na legenda, escondem ou mostram o segmento (`legendAction=\"toggle\"`) ou o fixam como selecionado (`legendAction=\"select\"`)."
+   },
+   {
+    "teclas": ["Esc"],
+    "acao": "Desfaz a seleção fixada."
+   }
+  ],
+  "acessibilidade": [
+   "O SVG é decorativo (`aria-hidden`): o leitor de tela recebe um resumo com total e fatias, uma tabela oculta com segmento, valor e participação, e anúncios `aria-live` quando um segmento é mostrado ou escondido.",
+   "Cada linha da legenda é um botão com `aria-pressed` e `aria-label` com nome, valor e porcentagem; com `legend={false}`, o anel vira um grupo focável em que as setas leem cada segmento e `Enter` ou `Espaço` o fixam.",
+   "`label` é obrigatório e nomeia a figura; os textos gerados para leitor de tela (“hidden”, “Segment”, “Includes…”) estão fixos em inglês."
+  ],
+  "movimento": [
+   "Na primeira vez que 35% do gráfico entra na tela, os arcos abrem a partir do topo numa varredura única, com a borda final de cada um um instante atrás da anterior.",
+   "Ao trocar `data` ou esconder um segmento, cada arco vai de onde está até o novo ângulo numa mola sem ultrapassagem; chaves iguais mantêm lugar e cor, e o segmento que sai fecha até sumir.",
+   "O segmento ativo desliza para fora e engrossa enquanto os outros esmaecem, e o centro troca de leitura rolando como um tambor; com “reduzir movimento”, tudo isso muda na hora."
+  ],
+  "responsivo": [
+   "A figura é um contêiner (`container-type: inline-size`): com 460 px ou mais a legenda fica ao lado do anel; abaixo disso, vai para baixo dele.",
+   "O anel tem `size` px de diâmetro (208 por padrão) e encolhe para caber em contêineres mais estreitos; rótulos longos no centro são cortados com reticências."
+  ],
+  "desempenho": [
+   "Durante as animações, as formas são escritas direto no DOM, uma pintura por quadro, e os números direto no texto: nenhum quadro re-renderiza o React."
+  ],
+  "notasIA": [
+   "`label` é obrigatório, e cada item de `data` precisa de `key` estável, `label` e `value`; valores zero ou negativos são descartados.",
+   "Seleção (`activeKey`, `onActiveChange`) e ocultos (`hiddenKeys`, `onHiddenKeysChange`) podem ser controlados ou não; o cursor só pré-visualiza, clicar num arco fixa ou solta a seleção, e o último segmento visível nunca é escondido.",
+   "As cores seguem `--series-1` a `--series-4` e depois tons neutros (passe `color` no item para ir além); basta um pai com largura, pois a altura vem do conteúdo."
+  ]
+ },
+ "empty-state": {
+  "quandoUsar": [
+   "Lista, tabela ou busca sem nada para mostrar, com uma explicação curta e o próximo passo (criar, importar, limpar filtros).",
+   "Primeiro uso de uma área do produto, quando ainda não existe nenhum item.",
+   "Quando o resultado de uma ação troca a mensagem no mesmo lugar: mudar `title`, `description` ou `icon` transforma o conteúdo sem remontar o bloco."
+  ],
+  "quandoEvitar": [
+   "Use `empty-states` quando quiser a versão com ilustração, em que as formas se transformam de uma cena para outra.",
+   "Use `skeleton` enquanto o conteúdo ainda está carregando; estado vazio é para quando a resposta chegou e não há itens.",
+   "Use `alert` para erros e avisos de que a pessoa precisa se recuperar."
+  ],
+  "acessibilidade": [
+   "A raiz é uma `<section>`; passe `label` para ela virar uma região nomeada, útil quando a página tem mais de um estado vazio.",
+   "O título é sempre um `<h3>`: confira se esse nível cabe na hierarquia de títulos da página.",
+   "O ícone fica em `aria-hidden` e, durante uma troca, a cópia que sai também, para o leitor de tela não ler o texto antigo junto com o novo."
+  ],
+  "movimento": [
+   "Na primeira aparição só a caixa do ícone entra, com um esmaecer e um leve aumento de escala.",
+   "Quando `title`, `description` ou o ícone mudam, o texto novo sobe saindo de um leve desfoque enquanto o antigo sai, o ícone faz uma troca cruzada e a altura do bloco segue uma mola.",
+   "Com “reduzir movimento”, as trocas viram um esmaecer rápido e a altura muda na hora."
+  ],
+  "responsivo": [
+   "Ocupa 100% da largura do pai, com respiro vertical entre `--space-8` e `--space-12` conforme a largura da tela; a descrição fica limitada a 18rem e quebra em linhas equilibradas.",
+   "As ações quebram linha e continuam centralizadas quando não cabem lado a lado."
+  ],
+  "notasIA": [
+   "`title` e `description` são strings obrigatórias (servem de chave da animação); `action` aceita qualquer nó, em geral um `button`, e `icon` substitui a pasta padrão.",
+   "Para ter a transição entre estados, mantenha o mesmo `<EmptyState>` montado e troque as props; mudar a `key` remonta o componente e perde o efeito.",
+   "O ícone só faz a troca cruzada quando o componente do ícone muda (de `Folder` para `Check`, por exemplo); use ícones de 24 px, como o padrão."
+  ]
+ },
+ "file-tree": {
+  "quandoUsar": [
+   "Explorador de arquivos de um projeto num editor, revisor de código ou painel de repositório.",
+   "Lista de arquivos alterados, com a marca de versão de cada um (`status`: M, A, D, U) e o ponto que sinaliza pastas com mudanças dentro.",
+   "Árvores em que a pessoa navega só pelo teclado e pula para um arquivo digitando o começo do nome."
+  ],
+  "quandoEvitar": [
+   "Use `tree-view` para hierarquias que não são arquivos (categorias, seções), sem ícone por extensão nem marcas de alteração.",
+   "Use `tree-table` quando cada linha tem colunas, seleção com caixas ou filhos carregados sob demanda.",
+   "Use `animated-sidebar` para a navegação do app com grupos aninhados; esta árvore seleciona arquivos, não troca de página."
+  ],
+  "teclado": [
+   {
+    "teclas": ["↑", "↓"],
+    "acao": "Movem o foco para a linha visível anterior ou seguinte, pulando as desabilitadas."
+   },
+   {
+    "teclas": ["→", "←"],
+    "acao": "`→` abre a pasta ou, se já aberta, vai ao primeiro item dela; `←` fecha a pasta ou, num arquivo, volta à pasta mãe."
+   },
+   {
+    "teclas": ["Home", "End"],
+    "acao": "Vão à primeira e à última linha visível."
+   },
+   {
+    "teclas": ["Enter", "Espaço"],
+    "acao": "Selecionam o arquivo ou abrem e fecham a pasta; `Enter` num arquivo também chama `onOpen`."
+   },
+   {
+    "teclas": ["*"],
+    "acao": "Abre todas as pastas irmãs da linha em foco."
+   },
+   {
+    "teclas": ["A–Z"],
+    "acao": "Digitar o começo de um nome (letras, números ou ponto) leva o foco à linha correspondente; repetir a mesma tecla percorre as que começam com ela."
+   }
+  ],
+  "acessibilidade": [
+   "Segue o padrão de árvore: `role=\"tree\"` nomeado por `label`, linhas `treeitem` com `aria-level`, `aria-setsize` e `aria-posinset`, `aria-expanded` nas pastas e `aria-selected` nos arquivos.",
+   "Só uma linha fica na ordem de `Tab` (a que tem foco, senão a selecionada, senão a primeira); nós com `disabled` continuam visíveis, mas o teclado os pula e eles não podem ser selecionados.",
+   "A letra de status traz o nome por extenso para leitor de tela e a pasta com mudanças diz “contains changes”; esses textos e “Empty folder” estão fixos em inglês."
+  ],
+  "movimento": [
+   "Abrir uma pasta anima a altura do grupo numa mola sem ultrapassagem, e as linhas entram em sequência, deslizando 8 px da esquerda, com atraso total limitado a 0,2 s.",
+   "A seta gira 90°, o ícone encolhe um pouco ao ser pressionado e a linha selecionada ganha uma barra de destaque que cresce a partir do meio.",
+   "Com “reduzir movimento”, as pastas abrem e fecham na hora e as transições de seta, ícone e barra são desligadas."
+  ],
+  "responsivo": [
+   "Nomes longos são cortados com reticências; cada nível recua 1rem (`--tree-indent`) e cada linha tem 1.875rem de altura (`--tree-row`).",
+   "A árvore não rola sozinha: ponha-a num contêiner com altura e rolagem (por exemplo `scroll-area`) quando houver muitos arquivos."
+  ],
+  "desempenho": [
+   "Pastas fechadas não renderizam os filhos, mas não há virtualização: cada linha visível é um elemento; mantenha `nodes` com referência estável, pois a lista visível é recalculada quando ele muda."
+  ],
+  "notasIA": [
+   "Pasta é todo nó com `children` (use `[]` para pasta vazia); o `id` padrão é o caminho desde a raiz, como `src/app/page.tsx`, e é ele que vai em `value` e `expandedIds`.",
+   "Seleção (`value`, `onValueChange`) e pastas abertas (`expandedIds`, `onExpandedChange`) aceitam uso controlado ou não; `onOpen` é separado e dispara com `Enter` ou duplo clique num arquivo.",
+   "Por padrão as pastas só abrem e fecham: passe `selectFolders` para que também sejam selecionáveis; o ícone vem da extensão do nome ou de `icon` no nó."
+  ]
+ },
+ "filter-toolbar": {
+  "quandoUsar": [
+   "Acima de uma tabela ou lista, para mostrar os filtros ativos como chips removíveis e limpar todos de uma vez.",
+   "Quando a pessoa adiciona filtros escolhendo primeiro o campo e depois o valor, sem sair da barra (`addFilter`).",
+   "Coleções com alguns campos de filtro e um valor por campo: o chip adicionado usa o `id` do campo, para que uma nova escolha substitua a anterior."
+  ],
+  "quandoEvitar": [
+   "Use `chip-group` quando as opções são poucas e podem ficar sempre à vista como chips de ligar e desligar.",
+   "Use `multi-select` quando um mesmo campo precisa de vários valores; aqui cada campo guarda um só.",
+   "Use `search-field` para busca por texto livre; o menu daqui só oferece valores predefinidos."
+  ],
+  "teclado": [
+   {
+    "teclas": ["Enter", "Espaço"],
+    "acao": "Abrem o menu “Add filter” com o foco no primeiro campo e, dentro dele, escolhem o item em foco."
+   },
+   {
+    "teclas": ["↓", "↑"],
+    "acao": "No botão, abrem o menu no primeiro ou no último item; dentro do menu, movem o foco dando a volta nas pontas."
+   },
+   {
+    "teclas": ["Home", "End"],
+    "acao": "Vão ao primeiro e ao último item do menu; digitar letras pula para o item que começa com elas."
+   },
+   {
+    "teclas": ["→", "←"],
+    "acao": "`→` entra nos valores do campo em foco; `←` volta à lista de campos."
+   },
+   {
+    "teclas": ["Esc"],
+    "acao": "Fecha o menu e devolve o foco ao botão que o abriu."
+   },
+   {
+    "teclas": ["Tab"],
+    "acao": "Percorre o botão de remover de cada chip e as ações da barra; sair do menu aberto com `Tab` o fecha."
+   }
+  ],
+  "acessibilidade": [
+   "A barra é um `role=\"group\"` nomeado por `label`; cada botão de remover tem `aria-label` com campo e valor, e uma região `role=\"status\"` anuncia filtros adicionados, alterados e removidos.",
+   "Ao remover um chip pelo teclado, o foco passa para o chip vizinho ou, se a lista esvaziar, para o botão “Add filter”; ao fechar o menu, o foco volta para esse botão.",
+   "O menu é um `role=\"dialog\"` com listas `role=\"menu\"` (`menuitemradio` nos valores) e uma só parada de `Tab` por lista; os textos fixos (“Clear all”, “No filters applied”, “Remove…”) estão em inglês."
+  ],
+  "movimento": [
+   "Cada chip abre e fecha a largura do próprio espaço numa mola, então vizinhos e ações deslizam junto; um chip que muda de linha desliza até lá, e a altura da barra acompanha.",
+   "O botão “Add filter” cresce até virar o painel do menu (largura, altura e posição na mesma mola) e volta mais rápido ao fechar; os passos de campo e valor entram deslizando no sentido da navegação.",
+   "Com “reduzir movimento”, chips, painel e passos trocam na hora ou com um esmaecer curto."
+  ],
+  "responsivo": [
+   "Em telas de até 520 px a barra vira coluna, com os chips em cima e as ações embaixo, alinhadas à direita; os chips sempre quebram linha e rótulos longos são cortados.",
+   "O painel do menu abre para cima quando falta espaço embaixo, desloca-se para caber na janela ou no ancestral que corta o conteúdo e rola por dentro acima de `min(20rem, 55vh)`."
+  ],
+  "desempenho": [
+   "As quebras de linha são animadas por observadores de tamanho em cada chip e um `MutationObserver` na lista, e só nos 0,9 s seguintes a uma mudança de filtros; redimensionar a janela não anima nada."
+  ],
+  "notasIA": [
+   "É totalmente controlado: guarde `filters` no estado e atualize em `onRemove`, `onClearAll` e `addFilter.onAdd`; no `onAdd`, substitua o chip de mesmo `id`, que é o `id` do campo.",
+   "O chip recebido em `onAdd` traz em `value` o texto exibido da opção (o `label` dela), não o `value`; passe sempre `onClearAll`, porque o botão “Clear all” aparece mesmo sem ele.",
+   "O painel não usa portal: evite `overflow: hidden` nos ancestrais; `children` entra entre o botão de adicionar e o “Clear all”, e `FilterMenu` também é exportado para uso avulso."
+  ]
+ },
+ "funnel-chart": {
+  "quandoUsar": [
+   "Sequência fixa de etapas (checkout, cadastro, onboarding) em que a pergunta é quantos seguem de cada etapa para a próxima.",
+   "Comparar o mesmo funil entre segmentos ou períodos trocando `data`: etapas com a mesma `key` se transformam até a nova largura.",
+   "Relatórios em que a queda percentual entre etapas e a conversão total precisam ficar à vista, sem depender do cursor."
+  ],
+  "quandoEvitar": [
+   "Use `sankey-chart` quando o fluxo se divide ou se junta entre vários nós, em vez de seguir uma fila única de etapas.",
+   "Use `stepper` para mostrar em que passo uma pessoa está num fluxo; o funil mostra quantas chegaram a cada etapa.",
+   "Use `composition-chart` ou `donut-chart` quando os valores são partes de um todo, e não etapas em que cada uma contém a seguinte."
+  ],
+  "teclado": [
+   {
+    "teclas": ["↑", "↓"],
+    "acao": "Com o foco no gráfico, passam à etapa anterior ou à seguinte e mostram o tooltip dela; `←` e `→` fazem o mesmo."
+   },
+   {
+    "teclas": ["Home", "End"],
+    "acao": "Vão à primeira e à última etapa."
+   },
+   {
+    "teclas": ["Esc"],
+    "acao": "Tira o destaque da etapa atual."
+   },
+   {
+    "teclas": ["Tab"],
+    "acao": "O gráfico é uma única parada de `Tab`: ao receber o foco pelo teclado, destaca a primeira etapa; ao perdê-lo, nenhuma."
+   }
+  ],
+  "acessibilidade": [
+   "Sobre o gráfico fica um `role=\"slider\"` vertical focável, cujo `aria-valuetext` descreve a etapa atual: nome, valor, parte da primeira etapa e queda desde a anterior.",
+   "O desenho, os rótulos e o tooltip ficam em `aria-hidden`; os mesmos números estão numa tabela oculta com etapa, valor, parte da primeira etapa e queda.",
+   "`label` é obrigatório e nomeia a figura; os textos fixos (“overall conversion”, “Reached”, “dropped off before this stage”) estão em inglês."
+  ],
+  "movimento": [
+   "Quando 30% do gráfico entra na tela, as barras crescem do centro para fora, uma etapa após a outra, de cima para baixo, seguidas dos afunilamentos e das pílulas de queda; os números contam a partir de zero.",
+   "Depois disso, trocar `data` transforma todas as etapas de uma vez, e o tooltip desliza de etapa em etapa numa mola enquanto as outras esmaecem.",
+   "Com “reduzir movimento”, o gráfico aparece pronto e as trocas são instantâneas."
+  ],
+  "responsivo": [
+   "A largura é medida com `ResizeObserver` e o desenho usa pixels reais; a coluna de rótulos ocupa de 84 px a 176 px (no máximo 34% da largura) e nomes longos são cortados.",
+   "A altura cresce com o número de etapas (44 px de `stageHeight` mais 28 px de `connectorHeight` por padrão); no toque, tocar numa etapa mostra o tooltip e a rolagem vertical continua livre."
+  ],
+  "notasIA": [
+   "`label` é obrigatório; passe `data` na ordem das etapas, com `key` estável: a largura de cada barra é relativa ao maior valor, e as porcentagens, à primeira etapa e à anterior.",
+   "Passe valores que não crescem de uma etapa para a seguinte: o componente não valida isso, e a queda sairia negativa.",
+   "Só a largura vem do pai; para controlar a etapa em destaque use `activeKey` com `onActiveChange` (sem atualizar o estado, o cursor não faz nada), e `hideHeader` remove o cabeçalho com a conversão total."
+  ]
+ },
+ "gauge": {
+  "quandoUsar": [
+   "Um único valor contra uma faixa conhecida num painel: carga do servidor, nota de atendimento, uso de uma cota.",
+   "Quando o valor tem estados nomeados (saudável, ocupado, crítico): com `thresholds`, cor e rótulo mudam no instante em que o número cruza cada limite."
+  ],
+  "quandoEvitar": [
+   "Use `progress` para o andamento de uma tarefa com fim conhecido, como um envio de arquivo.",
+   "Use `usage-meter` quando importa ver o que ocupa uma cota e quanto falta para o limite.",
+   "Use `slider` quando a pessoa precisa ajustar o valor; o medidor é só leitura."
+  ],
+  "acessibilidade": [
+   "O anel é um `role=\"meter\"` com `aria-valuemin`, `aria-valuemax`, `aria-valuenow` e um `aria-valuetext` com a porcentagem e o nome da faixa; o desenho e o número animado ficam em `aria-hidden`.",
+   "Cada faixa de `thresholds` tem um `label` de texto, então o estado não depende só da cor.",
+   "`label` é obrigatório; o `aria-label` da figura junta rótulo, valor e máximo com um “of” fixo em inglês."
+  ],
+  "movimento": [
+   "O primeiro preenchimento espera metade do medidor entrar na tela: o arco fecha devagar, sem ultrapassar o valor, enquanto o número conta.",
+   "A cada novo valor, arco e número vão até lá numa mola; cor e rótulo da faixa mudam quando o número em tela cruza o limite, e o texto entra de baixo se o valor subiu ou de cima se caiu.",
+   "Com “reduzir movimento”, arco e número saltam para o valor e os textos trocam com um esmaecer rápido."
+  ],
+  "responsivo": [
+   "O anel ocupa `min(100%, 176px)` de largura e a espessura do traço escala junto; não há prop de tamanho, então quem manda é a largura do pai."
+  ],
+  "notasIA": [
+   "O centro sempre mostra a porcentagem da faixa (`7.4` entre 0 e 10 aparece como 74%), não o valor bruto; use `detail` para dizer o valor com a unidade.",
+   "Em `thresholds`, vale a faixa de maior `from` que o valor alcança: inclua uma com `from` igual a `min` para sempre haver estado; sem `thresholds`, a cor vem de `tone`.",
+   "Não aceita `className` nem tamanho: envolva num contêiner com a largura desejada, lembrando que o anel não passa de 176 px."
+  ]
+ },
+ "image-compare": {
+  "quandoUsar": [
+   "Antes e depois de uma edição: retoque de foto, redesign de uma tela, resultado de um filtro ou de uma ampliação.",
+   "Duas versões da mesma cena com o mesmo enquadramento (mapas, renders, capturas de tela), em que a diferença aparece ao deslizar o divisor."
+  ],
+  "quandoEvitar": [
+   "Evite quando as imagens têm proporções ou enquadramentos diferentes: as duas são cortadas para cobrir a mesma moldura, e a comparação ponto a ponto se perde.",
+   "Use `image-viewer` para ampliar e percorrer várias imagens.",
+   "Use `file-diff` para comparar versões de texto ou código."
+  ],
+  "teclado": [
+   {
+    "teclas": ["←", "→"],
+    "acao": "Movem o divisor 1% para a esquerda ou a direita; na orientação vertical, use `↑` e `↓`."
+   },
+   {
+    "teclas": ["Shift + ←", "Shift + →"],
+    "acao": "Movem o divisor em passos de 10%."
+   },
+   {
+    "teclas": ["Page Up", "Page Down"],
+    "acao": "Também movem 10% de cada vez."
+   },
+   {
+    "teclas": ["Home", "End"],
+    "acao": "`Home` mostra só a imagem de antes; `End`, só a de depois."
+   },
+   {
+    "teclas": ["Tab"],
+    "acao": "Leva o foco à alça do divisor."
+   }
+  ],
+  "acessibilidade": [
+   "A alça é um `role=\"slider\"` nomeado por `label`, com `aria-orientation` e valor de 0 a 100 que diz quanto da imagem de depois está visível (o `aria-valuetext` “N% after” é fixo em inglês).",
+   "As legendas sobre as imagens ficam em `aria-hidden`: passe em `before` e `after` imagens com `alt` próprio.",
+   "Clicar ou arrastar na foto leva o foco para a alça, então as setas funcionam logo em seguida."
+  ],
+  "movimento": [
+   "A alça acompanha o arraste ponto a ponto, cede como elástico ao passar das bordas e fica onde foi solta; um clique na foto leva o divisor até lá numa mola.",
+   "Durante o arraste a alça redonda vira uma cápsula e as setas dela se afastam; trocar `orientation` gira o divisor um quarto de volta em vez de trocar o layout de uma vez.",
+   "Com “reduzir movimento”, o divisor salta para a posição, sem mola nem elástico, e a troca de orientação é imediata."
+  ],
+  "responsivo": [
+   "A moldura ocupa 100% da largura do pai e a altura vem de `aspectRatio` (padrão `3 / 2`); imagens, `picture` e vídeos passados são ajustados para cobri-la.",
+   "No toque, um dedo sobre a foto espera um arraste no eixo do divisor antes de assumir o gesto, para a página continuar rolando; a alça responde na hora e tem área de toque maior que o círculo visível."
+  ],
+  "desempenho": [
+   "Durante o arraste a posição corre em valores de movimento, e `onPositionChange` dispara no máximo uma vez por ponto percentual inteiro."
+  ],
+  "notasIA": [
+   "`before` e `after` são nós: passe `<img>` (ou `picture`, vídeo) com o mesmo enquadramento; o componente já aplica largura, altura e `object-fit: cover`.",
+   "`position` é a porcentagem a partir da esquerda (ou do topo): controle com `onPositionChange` ou deixe livre com `defaultPosition`; um duplo clique na alça volta a 50.",
+   "`labels={false}` esconde as legendas, `labels` com dois textos as troca (o padrão é “Before” e “After”), e `aspectRatio` aceita qualquer valor CSS, como `\"4 / 3\"`."
+  ]
+ },
+ "image-viewer": {
+  "quandoUsar": [
+   "Galeria de fotos (produto, viagem, portfólio, anexos) em que a pessoa abre uma imagem, amplia e passa para as vizinhas.",
+   "Quando abrir a imagem deve manter a noção de lugar: a miniatura cresce até virar a imagem e volta para o mesmo ponto ao fechar.",
+   "Imagens com legenda curta que pedem zoom por roda do mouse, pinça, duplo clique ou teclado."
+  ],
+  "quandoEvitar": [
+   "Use `carousel` para passar por slides dentro da própria página, sem abrir uma camada em tela cheia.",
+   "Use `image-compare` para comparar duas versões da mesma imagem.",
+   "Use `infinite-masonry` para um feed longo de alturas variadas que carrega mais ao rolar; aqui a grade tem colunas fixas e monta todas as miniaturas."
+  ],
+  "teclado": [
+   {
+    "teclas": ["Enter", "Espaço"],
+    "acao": "Numa miniatura, abrem o visualizador naquela imagem."
+   },
+   {
+    "teclas": ["←", "→"],
+    "acao": "Vão à imagem anterior ou à próxima; com `loop`, dão a volta nas pontas."
+   },
+   {
+    "teclas": ["Home", "End"],
+    "acao": "Vão à primeira e à última imagem."
+   },
+   {
+    "teclas": ["+", "-"],
+    "acao": "Aproximam e afastam em passos de 1,6×, até `maxZoom`; `=` também aproxima e `0` volta ao tamanho ajustado."
+   },
+   {
+    "teclas": ["Esc"],
+    "acao": "Fecha o visualizador: a imagem volta para a miniatura e o foco também."
+   },
+   {
+    "teclas": ["Tab", "Shift + Tab"],
+    "acao": "Circulam pelos controles do visualizador (zoom, fechar, setas, tira de miniaturas) sem sair dele."
+   }
+  ],
+  "acessibilidade": [
+   "O visualizador é um diálogo do Radix: prende o foco, fecha com `Esc` e, ao fechar, devolve o foco à miniatura da última imagem vista.",
+   "Cada miniatura é um botão com `aria-label` “Open image N of M: alt”, e o contador `aria-live` anuncia a imagem atual a cada troca.",
+   "Forneça `alt` em todas as imagens (ele nomeia os botões e é lido no contador) e `label` para a galeria; os rótulos dos controles estão fixos em inglês."
+  ],
+  "movimento": [
+   "A miniatura pressionada cresce numa mola até o tamanho ajustado à tela e volta mais rápido ao fechar; se ela estiver fora da tela, a imagem só esmaece.",
+   "Entre imagens, a nova entra pelo lado do movimento; o arraste acompanha o dedo, resiste quando não há para onde ir e troca de imagem ao passar do limite ou num arremesso.",
+   "Com “reduzir movimento”, abrir, fechar e trocar viram um esmaecer, e o zoom por botão ou tecla salta direto para o nível."
+  ],
+  "responsivo": [
+   "A grade mantém sempre `columns` colunas (3 por padrão), sem pontos de quebra: ajuste a prop conforme a largura disponível.",
+   "Abaixo de 640 px as setas laterais somem e a navegação fica por deslize e pela tira de miniaturas, que rola na horizontal; as margens laterais da imagem caem de 84 px para 12 px."
+  ],
+  "desempenho": [
+   "As miniaturas da grade usam `loading=\"lazy\"`; passe `thumbnail` com um arquivo menor, que também serve de prévia enquanto a imagem cheia carrega.",
+   "Informe `width` e `height` para o visualizador saber o formato antes do carregamento; a tira de miniaturas monta todas as imagens de uma vez, então galerias muito grandes pesam."
+  ],
+  "notasIA": [
+   "O componente renderiza a grade e o visualizador: passe `images` com `src` e `alt`, e de preferência `thumbnail`, `width`, `height` e `caption`.",
+   "`value` é o índice da imagem aberta ou `null` (fechado): controle com `onValueChange`, que recebe o índice ao abrir ou trocar e `null` ao fechar, ou use `defaultValue`.",
+   "O visualizador abre num portal em tela cheia (`position: fixed`, `z-index` 80 e 81); `className` se aplica só à grade de miniaturas."
+  ]
+ },
+ "json-viewer": {
+  "quandoUsar": [
+   "Inspecionar respostas de API, eventos de webhook ou registros de log em ferramentas internas e painéis de depuração.",
+   "Quando a pessoa precisa achar uma chave ou um valor num objeto grande: a busca destaca as ocorrências e abre os ramos que as contêm.",
+   "Quando o caminho de um campo importa: a linha atual mostra o seu (`order.items[0].sku`) e traz ações para copiar o valor ou o caminho."
+  ],
+  "quandoEvitar": [
+   "Use `code-block` para mostrar um trecho curto de JSON como código estático.",
+   "Use `tree-view` para navegar por uma hierarquia de itens com rótulos próprios; aqui cada linha é sempre chave e valor.",
+   "Use `sortable-data-table` quando o JSON é uma lista de registros com os mesmos campos, que se comparam melhor em colunas."
+  ],
+  "teclado": [
+   {
+    "teclas": ["↑", "↓"],
+    "acao": "Movem a linha atual; `Home` e `End` vão à primeira e à última."
+   },
+   {
+    "teclas": ["→", "←"],
+    "acao": "`→` abre o ramo ou, se já aberto, vai ao primeiro filho; `←` fecha o ramo ou volta ao pai."
+   },
+   {
+    "teclas": ["Enter", "Espaço"],
+    "acao": "Abrem ou fecham o ramo; na linha “Show N more”, carregam a próxima página."
+   },
+   {
+    "teclas": ["/"],
+    "acao": "Leva o foco ao campo de busca."
+   },
+   {
+    "teclas": ["Enter", "Shift + Enter"],
+    "acao": "No campo de busca, vão à próxima ocorrência e à anterior; `Esc` limpa a busca e `↓` volta à árvore."
+   },
+   {
+    "teclas": ["Ctrl + C", "Cmd + C"],
+    "acao": "Acionam a cópia do valor da linha em foco; com `Shift`, a do caminho."
+   }
+  ],
+  "acessibilidade": [
+   "Segue o padrão de árvore do WAI-ARIA: `role=\"tree\"` nomeado por `label` e linhas `treeitem` com nível, posição, `aria-expanded` e um `aria-label` que resume chave, tipo e valor; só a linha atual fica na ordem de `Tab`.",
+   "A contagem de ocorrências da busca é `aria-live`, e o resultado de cada cópia (sucesso ou falha) é anunciado numa região `role=\"status\"`.",
+   "Os botões de copiar das linhas ficam fora da ordem de `Tab` (pelo teclado, use o atalho) e o da barra de caminho é focável; os textos da interface estão fixos em inglês."
+  ],
+  "movimento": [
+   "Ao abrir ou fechar um ramo, carregar uma página ou expandir tudo, cada linha desdobra a própria altura numa mola sem ultrapassagem, com um esmaecer.",
+   "O destaque da linha atual desliza de uma linha para outra, e a rolagem que mantém essa linha à vista (ou centraliza uma ocorrência da busca) usa a mesma mola.",
+   "Com “reduzir movimento”, linhas, destaque e rolagem mudam na hora; acima de 400 linhas visíveis, a animação das linhas é desligada para todos."
+  ],
+  "responsivo": [
+   "A árvore rola por dentro, limitada por `maxHeight` (420 px por padrão); as linhas não quebram, valores longos são cortados com reticências e strings com mais de 40 caracteres mostram o texto inteiro no `title`.",
+   "Em telas de até 420 px o recuo por nível cai de 16 px para 12 px, as chaves ocupam no máximo 40% da linha e o tipo some da barra de caminho."
+  ],
+  "desempenho": [
+   "Arrays e objetos longos entram em páginas de `pageSize` (50 por padrão) com uma linha “Show N more”; não há virtualização, então cada linha visível é um elemento.",
+   "A busca percorre o JSON inteiro a cada tecla e para em 2.000 ocorrências; em cargas muito grandes, a digitação pode pesar."
+  ],
+  "notasIA": [
+   "Passe em `data` o valor já convertido (objeto ou array), não o texto JSON: uma string apareceria como um único valor.",
+   "Os caminhos partem de `rootName` (padrão `root`), como `root.users[0].name`: é esse formato que `expanded`, `defaultExpanded`, `onSelect` e `onCopy` usam, e `defaultExpandDepth` abre os primeiros níveis.",
+   "Já vem com borda, fundo e rolagem própria (`maxHeight`), então não precisa de outro cartão em volta; `searchable`, `copyable` e `showPath` desligam a busca, a cópia e a barra de caminho."
+  ]
+ },
+ "line-chart": {
+  "quandoUsar": [
+   "Uma ou mais medidas ao longo do tempo, quando a forma da tendência importa mais que um valor isolado.",
+   "Comparar o período atual com o anterior ou com uma meta, usando uma série tracejada (`dashed`).",
+   "Painéis com troca de intervalo (7, 14, 30 dias): com as mesmas `key`, as linhas se transformam em vez de redesenhar."
+  ],
+  "quandoEvitar": [
+   "Use `sparkline` para uma tendência compacta ao lado de um número, sem eixos nem legenda.",
+   "Use `bar-chart` para comparar uma medida período a período, lendo cada barra contra a média.",
+   "Use `brush-chart` para séries densas em que a pessoa precisa ampliar uma janela de tempo."
+  ],
+  "teclado": [
+   {
+    "teclas": ["←", "→"],
+    "acao": "Com o foco no gráfico, movem a mira para o ponto anterior ou o próximo; `↓` e `↑` fazem o mesmo."
+   },
+   {
+    "teclas": ["Page Up", "Page Down"],
+    "acao": "`Page Up` avança e `Page Down` recua cerca de um sexto dos pontos."
+   },
+   {
+    "teclas": ["Home", "End"],
+    "acao": "Vão ao primeiro e ao último ponto."
+   },
+   {
+    "teclas": ["Esc"],
+    "acao": "Solta a mira e esconde o tooltip."
+   },
+   {
+    "teclas": ["Enter", "Espaço"],
+    "acao": "Nos botões da legenda, escondem ou mostram a série."
+   },
+   {
+    "teclas": ["Tab"],
+    "acao": "Passa pelos botões da legenda e pelo gráfico; ao receber o foco pelo teclado, a mira começa no ponto mais recente."
+   }
+  ],
+  "acessibilidade": [
+   "A área do gráfico é um `role=\"slider\"` cujo `aria-valuetext` lê o ponto atual com o valor de cada série visível; SVG, eixos e tooltip ficam em `aria-hidden`.",
+   "Há um resumo oculto com o intervalo e o último valor de cada série, e uma tabela oculta com todos os pontos, cuja primeira coluna usa `categoryLabel`.",
+   "Os botões da legenda usam `aria-pressed`, e a série escondida fica com o nome riscado, não só sem cor; `label` é obrigatório, e `loading` marca a figura com `aria-busy`."
+  ],
+  "movimento": [
+   "Na primeira vez que entra na tela com dados, as linhas se desenham da esquerda para a direita em cerca de 0,8 s.",
+   "Trocar `data` transforma cada linha a partir da forma atual, mesmo com outro número de pontos, enquanto a escala e as linhas de grade se reajustam; esconder uma série a achata até a base.",
+   "A mira desliza entre os pontos e o tooltip a segue numa mola própria, mudando de lado antes de sair do gráfico; com “reduzir movimento”, tudo isso é imediato."
+  ],
+  "responsivo": [
+   "A largura acompanha o contêiner e a altura é fixa pela prop `height` (220 px por padrão); o eixo de valores ocupa 48 px à direita.",
+   "O eixo de datas mostra no máximo um rótulo a cada 76 px, contando a partir do mais recente; no toque, pressionar e arrastar na horizontal move a mira."
+  ],
+  "desempenho": [
+   "Um único pintor escreve os caminhos direto no SVG a cada quadro, sem re-renderizar o React; a tabela oculta para leitor de tela tem uma linha por ponto, o que pesa com milhares de pontos."
+  ],
+  "notasIA": [
+   "`label`, `data` e `series` são obrigatórios; cada ponto traz `values` indexado pela `key` das séries, e um valor ausente conta como zero, não como lacuna.",
+   "Só os pontos com `axisLabel` ganham rótulo no eixo; a primeira série usa a cor de destaque com área preenchida, e as demais ficam em tons neutros até receberem `color`.",
+   "Use `onActiveChange` para alimentar um número de destaque fora do gráfico e `loading` para manter as linhas atuais esmaecidas enquanto o próximo intervalo carrega."
+  ]
+ },
+ "liquidity-heatmap": {
+  "quandoUsar": [
+   "Telas de negociação que mostram como a liquidez em repouso se distribuiu por preço ao longo do tempo.",
+   "Encontrar paredes de ordens e ver onde elas ficam em relação ao preço negociado, desenhado como linha sobre a grade (`path`)."
+  ],
+  "quandoEvitar": [
+   "Use `order-book` para ver as ofertas de compra e de venda de agora, com profundidade acumulada e spread.",
+   "Use `volume-profile` para o volume negociado por nível de preço, num histograma ao lado da linha de preço.",
+   "Use `activity-heatmap` para atividade por dia num calendário; aqui os eixos são sempre horário e preço."
+  ],
+  "teclado": [
+   {
+    "teclas": ["←", "→"],
+    "acao": "Movem a leitura uma coluna de tempo para trás ou para a frente."
+   },
+   {
+    "teclas": ["↑", "↓"],
+    "acao": "Sobem ou descem um nível de preço."
+   },
+   {
+    "teclas": ["Page Up", "Page Down"],
+    "acao": "Sobem ou descem quatro níveis de preço."
+   },
+   {
+    "teclas": ["Home", "End"],
+    "acao": "Vão à primeira e à última coluna, no mesmo preço."
+   },
+   {
+    "teclas": ["Esc"],
+    "acao": "Larga a célula e volta à leitura da coluna mais recente."
+   }
+  ],
+  "acessibilidade": [
+   "O gráfico é um `role=\"application\"` focável, descrito como “heatmap”, com uma dica oculta de uso; cada movimento pelo teclado anuncia horário, preço e tamanho numa região `role=\"status\"`.",
+   "O SVG fica em `aria-hidden` e não há tabela alternativa: os valores são lidos célula a célula pelo teclado, e o resumo acima da grade mostra horário, preço e tamanho da célula lida.",
+   "`label` é obrigatório; os rótulos da interface (“Latest”, “Resting size”, “Traded price”) estão fixos em inglês, e `locale` muda apenas o formato dos números."
+  ],
+  "movimento": [
+   "Quando 30% do gráfico entra na tela, as colunas surgem da esquerda para a direita, subindo 8 px, e em seguida a linha do preço negociado se desenha sobre elas.",
+   "Com dados novos, as células mudam de cor na mesma varredura; as faixas e o anel da mira deslizam numa mola até a célula lida, e o marcador da legenda acompanha o degrau de cor.",
+   "Com “reduzir movimento”, a grade e a linha aparecem prontas e a mira salta de célula em célula."
+  ],
+  "responsivo": [
+   "O gráfico mede a própria largura e desenha em pixels reais; a altura é a prop `height` (268 px, eixo de tempo incluído), e a faixa de preços à direita se ajusta ao rótulo mais longo.",
+   "Os rótulos dos eixos rareiam quando as células encolhem, e em contêineres de até 400 px o resumo e a legenda ficam mais compactos."
+  ],
+  "desempenho": [
+   "Cada célula é um `<rect>` no SVG (colunas × níveis; a demo usa 48 × 24 = 1.152): a grade é memorizada durante a leitura com o cursor, mas é refeita a cada mudança de dados ou de largura."
+  ],
+  "notasIA": [
+   "`values` é indexado como `values[tempo][preço]`, alinhado a `times` e `prices`; os preços podem vir em qualquer ordem, mas precisam ser igualmente espaçados.",
+   "Fixe `max` quando os dados se atualizam, senão a escala de cor se recalcula pelo maior valor de cada conjunto; `path` é opcional e traz o preço negociado de cada coluna.",
+   "Passe arrays memorizados: o modelo é recalculado sempre que `times`, `prices` ou `values` mudam de identidade; `onCellChange` recebe a célula lida ou `null` quando a leitura volta ao repouso."
+  ]
+ },
+ "marquee": {
+  "quandoUsar": [
+   "Fileira de logos de clientes, depoimentos curtos ou um letreiro de novidades que serve de ambiente, não de conteúdo essencial.",
+   "Feed vertical de atividade que rola devagar num espaço de altura fixa (`direction=\"up\"`)."
+  ],
+  "quandoEvitar": [
+   "Use `logo-marquee` quando quiser a fileira de marcas pronta, já com controle de pausa.",
+   "Use `carousel` quando a pessoa precisa parar em cada item e controlar a passagem.",
+   "Use `announcement-bar` para avisos importantes no topo da página; informação essencial não deve depender de texto em movimento."
+  ],
+  "acessibilidade": [
+   "As repetições levam `aria-hidden` e `inert`, de modo que cada item é lido e recebe foco uma única vez; com `label`, a raiz vira um `role=\"group\"` nomeado.",
+   "Com `pauseOnHover` (padrão), o cursor sobre a faixa ou o foco dentro dela a fazem desacelerar até parar; para movimento que dura mais que alguns segundos, ofereça também um botão de pausa ligado a `paused`."
+  ],
+  "movimento": [
+   "O conteúdo corre a `speed` px por segundo num laço de quadros de animação e se repete quantas vezes for preciso (até 24 cópias) para emendar sem costura.",
+   "Pausar e retomar passam por uma mola que leva o ritmo de 1 a 0 e de volta, então a faixa freia e arranca em vez de congelar; fora da tela, ela descansa.",
+   "Com “reduzir movimento”, nada se move sozinho: as cópias não são renderizadas e a faixa vira uma área de rolagem comum, focável pelo teclado."
+  ],
+  "responsivo": [
+   "A faixa ocupa a largura do pai e recalcula o número de cópias quando ela ou o conteúdo mudam de tamanho.",
+   "Nas direções `up` e `down` a raiz usa `height: 100%`: o pai precisa ter altura definida."
+  ],
+  "desempenho": [
+   "Cada instância roda um laço de quadros (`useAnimationFrame`) que só move um `transform`; os filhos são renderizados em todas as cópias, então evite itens pesados ou com estado e efeitos próprios."
+  ],
+  "notasIA": [
+   "Passe os itens como filhos diretos: o marquee os alinha em linha (ou em coluna) e aplica `gap` entre eles e entre as repetições.",
+   "`speed` é em px por segundo (48 por padrão), `direction` aceita `left`, `right`, `up` e `down`, e `fade` controla a máscara das bordas (`true`, um comprimento CSS como `\"28%\"` ou `false`).",
+   "Para pausar por botão, guarde um estado e passe em `paused`: o componente não traz esse botão."
+  ]
+ },
+ "metric-card": {
+  "quandoUsar": [
+   "Resumo de indicadores no topo de um painel: um número com rótulo, contexto de comparação e variação.",
+   "Números que mudam com um filtro ou período: os dígitos giram até o novo valor e os textos entram do lado para onde o número foi."
+  ],
+  "quandoEvitar": [
+   "Use `animated-counter` quando só o número animado basta, sem cartão, rótulo e contexto.",
+   "Use `stats-band` para números de destaque numa página de divulgação.",
+   "Use `gauge` ou `usage-meter` quando o valor só faz sentido contra uma faixa ou um limite."
+  ],
+  "acessibilidade": [
+   "O número animado fica em `aria-hidden` e o valor final formatado vai num texto oculto, então o leitor de tela lê o número certo de uma vez.",
+   "O cartão é um `<article>` sem título próprio (o rótulo é texto comum): dê um título à seção que agrupa os cartões se a página precisar dessa estrutura.",
+   "A variação ganha cor pelo sinal, mas o próprio `+` ou `-` no texto já diz a direção, sem depender só da cor."
+  ],
+  "movimento": [
+   "Os dígitos giram a partir de zero na primeira vez que o número entra na tela; depois, cada coluna gira no sentido em que o valor mudou.",
+   "Quando `label`, `context` ou `change` mudam, o texto novo entra de baixo se o número dele subiu ou de cima se caiu, e a pílula da variação ajusta a largura numa mola.",
+   "Com “reduzir movimento”, os dígitos saltam para o valor e os textos trocam com um esmaecer rápido."
+  ],
+  "responsivo": [
+   "O cartão ocupa a largura do pai; em telas de até 380 px o respiro interno diminui e a pílula de variação pode passar para a linha de baixo."
+  ],
+  "notasIA": [
+   "`value` é numérico e aparece como inteiro com separador de milhar no formato `en-US`: o cartão não repassa `decimals`, `prefix` nem `locale` ao contador, então ponha a moeda no `label` e a unidade em `suffix`.",
+   "`label`, `value` e `context` são obrigatórios; `change` é texto livre: se começa com `+` fica verde e com `-` vermelho, sem como inverter para métricas em que cair é bom.",
+   "Precisa do item `animated-counter` instalado (o cartão o importa de `../animated-counter/animated-counter`); para uma fileira de indicadores, ponha os cartões numa grade, pois cada um preenche a própria célula."
+  ]
+ },
+ "order-book": {
+  "quandoUsar": [
+   "Tela de negociação que mostra as ofertas de compra e de venda do momento, com profundidade acumulada, spread e preço médio entre as melhores ofertas.",
+   "Deixar a pessoa escolher o preço de uma ordem limitada clicando num nível (`onSelectLevel`).",
+   "Demonstrações e telas de exemplo de produtos de trading, com o feed simulado `useOrderBookFeed`."
+  ],
+  "quandoEvitar": [
+   "Use `liquidity-heatmap` para ver como a liquidez evoluiu ao longo do tempo, e não só o retrato de agora.",
+   "Use `candlestick-chart` para o histórico de preços em velas.",
+   "Use `sortable-data-table` para tabelas genéricas de registros com ordenação; o livro tem colunas e ordem fixas."
+  ],
+  "teclado": [
+   {
+    "teclas": ["↑", "↓"],
+    "acao": "Movem o foco para o nível acima ou abaixo, no mesmo lado."
+   },
+   {
+    "teclas": ["←", "→"],
+    "acao": "Passam para o lado das compras ou o das vendas, na mesma linha."
+   },
+   {
+    "teclas": ["Home", "End"],
+    "acao": "Vão ao melhor preço e ao último nível do lado atual."
+   },
+   {
+    "teclas": ["Enter", "Espaço"],
+    "acao": "Selecionam o preço da linha; na linha já selecionada, desfazem a seleção."
+   },
+   {
+    "teclas": ["Tab"],
+    "acao": "O livro inteiro é uma única parada de `Tab`; as setas fazem o resto."
+   }
+  ],
+  "acessibilidade": [
+   "A raiz é um `role=\"group\"` nomeado por `label`, com duas listas rotuladas (compras e vendas, melhor preço primeiro); cada linha é um botão com `aria-pressed` e um `aria-label` com lado, preço, tamanho e total.",
+   "O foco numa linha faz o mesmo que o cursor: destaca os níveis até ela e mostra no rodapé quanto custa negociar até ali; as mudanças do feed não são anunciadas, pois não há região viva.",
+   "`label` é obrigatório; cabeçalhos e frases (“Bid”, “Ask”, “Spread”, “at an average of”) estão fixos em inglês, e `locale` só muda o formato dos números."
+  ],
+  "movimento": [
+   "Quando o tamanho de um nível muda, a linha pisca por 0,6 s: na cor do lado se cresceu, num tom neutro se diminuiu.",
+   "Quando o preço anda, as linhas deslizam para a nova posição numa mola, as novas entram esmaecendo e as barras de profundidade se esticam a partir do meio do livro.",
+   "Com “reduzir movimento”, não há pisca nem deslize, e o `useOrderBookFeed` deixa de emitir atualizações."
+  ],
+  "responsivo": [
+   "A raiz é um contêiner: com 520 px ou mais cada lado ganha a coluna de total acumulado; com até 360 px o respiro das linhas diminui e, com até 300 px, a fonte também.",
+   "Os dois lados ficam sempre lado a lado; abaixo de 520 px a coluna de preço usa a largura do próprio texto, então quem encolhe é a de tamanho."
+  ],
+  "desempenho": [
+   "As linhas são memorizadas e só `depth` níveis por lado são renderizados; o feed simulado usa um intervalo (850 ms por padrão) que para com a aba oculta.",
+   "Num feed real de alta frequência, agrupe as atualizações antes de trocar `bids` e `asks`: cada troca recalcula os totais e dispara piscas e deslizes."
+  ],
+  "notasIA": [
+   "Passe `bids` e `asks` como `{ price, size }` em qualquer ordem: o componente ordena, descarta tamanhos zerados, corta em `depth` e calcula totais, spread e o preço médio (mid).",
+   "`selectedPrice` controla a seleção (`null` para nenhuma; `undefined` deixa o livro cuidar dela), e `onSelectLevel` recebe `{ side, price, size }` ou `null` ao clicar de novo na linha.",
+   "`useOrderBookFeed` é uma simulação com semente para demos, não uma conexão de mercado: com dados reais, passe os seus arrays e mantenha os preços arredondados de forma estável, pois são a chave de cada linha."
+  ]
+ },
+ "pagination": {
+  "quandoUsar": [
+   "Tabelas e listas com número de páginas conhecido, como pedidos ou resultados de busca.",
+   "Quando a pessoa avança página a página ou salta entre páginas vizinhas: a janela mostra cinco números em torno da atual."
+  ],
+  "quandoEvitar": [
+   "Use `infinite-masonry` para feeds que carregam mais itens conforme a rolagem chega ao fim.",
+   "Use `stepper` para os passos de um fluxo; paginação é para páginas de uma mesma coleção.",
+   "Evite quando o total de páginas é desconhecido (APIs por cursor): o componente exige `pageCount` e não tem modo só de anterior e próximo."
+  ],
+  "teclado": [
+   {
+    "teclas": ["Tab", "Shift + Tab"],
+    "acao": "Percorrem o botão anterior, os números de página e o botão próximo."
+   },
+   {
+    "teclas": ["Enter", "Espaço"],
+    "acao": "Acionam o botão em foco e chamam `onPageChange`."
+   }
+  ],
+  "acessibilidade": [
+   "É um `<nav>` nomeado por `label` (padrão “Pagination”): dê um nome diferente a cada paginação quando houver mais de uma na página.",
+   "A página atual recebe `aria-current=\"page\"`, cada número tem `aria-label` “Page N” e as setas ficam `disabled` na primeira e na última página; esses rótulos estão fixos em inglês.",
+   "Os itens são botões, não links: a troca de URL ou de dados fica por conta do seu `onPageChange`."
+  ],
+  "movimento": [
+   "Uma única marca desliza numa mola até o número da página atual.",
+   "Quando a janela de cinco números se desloca, eles andam juntos como uma esteira, cada um o mesmo número de casas, enquanto os que entram e saem esmaecem.",
+   "Com “reduzir movimento”, a marca salta e os números trocam sem deslizar."
+  ],
+  "responsivo": [
+   "São no máximo sete botões de 2.25rem (duas setas e cinco números), cerca de 276 px no total; se faltar largura, a navegação quebra linha."
+  ],
+  "notasIA": [
+   "É controlado: guarde `page` (começa em 1) no estado e atualize em `onPageChange`; não há modo livre nem `className`.",
+   "Calcule `pageCount` com `Math.ceil(total / porPagina)`: o componente arredonda frações para baixo, e a última página parcial ficaria inacessível.",
+   "Importe com chaves, de `@/components/ryan-ui/pagination/pagination` (não há export default); não há reticências nem atalho para a primeira e a última página, então mostre o total por perto."
+  ]
+ },
+ "preview-rail": {
+  "quandoUsar": [
+   "Vitrine de poucos destaques com imagem (destinos, guias, projetos, categorias) em que passar o cursor mostra a prévia e pressionar o cartão aberto leva ao detalhe.",
+   "Seções de página em que um item fica sempre em evidência e os outros aparecem como fatias com o título."
+  ],
+  "quandoEvitar": [
+   "Use `carousel` quando há muitos itens ou todos precisam do mesmo destaque; aqui, cada cartão a mais estreita as fatias fechadas.",
+   "Use `image-viewer` para abrir e ampliar fotos.",
+   "Use `tabs` quando cada opção revela conteúdo próprio (texto, formulários) em vez de uma prévia curta sobre uma imagem."
+  ],
+  "teclado": [
+   {
+    "teclas": ["←", "→"],
+    "acao": "Movem o foco para o cartão anterior ou o próximo, que se abre ao receber o foco; `↑` e `↓` fazem o mesmo."
+   },
+   {
+    "teclas": ["Home", "End"],
+    "acao": "Vão ao primeiro e ao último cartão."
+   },
+   {
+    "teclas": ["Enter", "Espaço"],
+    "acao": "No cartão aberto, chamam `onSelect`."
+   },
+   {
+    "teclas": ["Tab"],
+    "acao": "Cada cartão é uma parada de `Tab`, e o foco abre o cartão."
+   }
+  ],
+  "acessibilidade": [
+   "O trilho é um `role=\"group\"` nomeado por `label`; cada cartão é um `<button>` com `aria-expanded` e o título num texto oculto, e os textos da prévia entram no nome do botão quando ele abre.",
+   "O foco abre o cartão, então quem usa teclado vê a mesma prévia do cursor; no toque, o primeiro toque num cartão fechado só o abre, e o segundo o seleciona.",
+   "O `alt` da imagem é vazio por padrão: preencha `alt` no item só quando a imagem disser algo que o título não diz."
+  ],
+  "movimento": [
+   "Só o `flex-grow` anima, numa mola sem ultrapassagem: o cartão aberto cresce até `ratio` vezes a largura de um fechado, e os demais viram fatias.",
+   "A imagem do cartão aberto clareia, o rótulo vertical some e as linhas da prévia sobem 10 px em sequência.",
+   "Com “reduzir movimento”, a largura troca na hora e a prévia só esmaece."
+  ],
+  "responsivo": [
+   "A raiz é um contêiner: com até 520 px o trilho vira coluna, fica 1,5 vez mais alto que `height`, e o cartão aberto cresce na vertical, com os rótulos dos fechados na horizontal.",
+   "A largura de um cartão fechado é a do trilho, descontados os vãos, dividida por `ratio` + número de itens − 1; com muitos itens, as fatias ficam estreitas demais para o rótulo."
+  ],
+  "desempenho": [
+   "Animar `flex-grow` refaz o layout da fileira a cada quadro, por isso imagem e prévia já nascem no tamanho aberto e o cartão só as descobre; todas as imagens carregam de imediato, sem `loading=\"lazy\"`."
+  ],
+  "notasIA": [
+   "Cada item precisa de `id`, `title` e `image`; `eyebrow`, `description` (cortada em duas linhas) e `meta` são opcionais.",
+   "Sempre há um cartão aberto (o primeiro, por padrão): `value` com `onValueChange` controla qual, e `onSelect` dispara ao pressionar o cartão já aberto; faça a navegação nele, pois o cartão é um botão, não um link.",
+   "`trigger=\"press\"` faz o mouse abrir cartões só no clique, não ao passar por cima (foco e toque continuam abrindo); `height` é em px, e a largura vem do pai."
+  ]
+ }
+}

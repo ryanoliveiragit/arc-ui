@@ -1,0 +1,258 @@
+# ryan-ui
+
+> Componentes e blocos React com movimento, em CSS modules e tokens de design, instalados com a CLI do shadcn: 179 componentes e 42 blocos, código aberto (MIT).
+
+Cada item abaixo tem um arquivo Markdown com o comando de instalação, os arquivos, o código de uso, a API (props) e, quando existe, o guia (quando usar, teclado, acessibilidade, movimento). Os textos estão em português; nomes de código e descrições das props, em inglês.
+
+Antes do primeiro item, instale a base uma vez: `npx shadcn@latest add https://ryanoliveiragit.github.io/arc-ui/r/ryan-foundation.json`, e importe `@/components/ryan-ui/foundation.css` na raiz do app. Passo a passo: https://ryanoliveiragit.github.io/arc-ui/#/docs/instalacao.
+
+## Componentes · Ações
+
+- [Action button](https://ryanoliveiragit.github.io/arc-ui/md/action-button.md): componente. Botão compacto para as ações mais usadas de uma barra de ferramentas.
+- [Action swap](https://ryanoliveiragit.github.io/arc-ui/md/action-swap.md): componente. Troca o rótulo de uma ação sem ela sair do lugar nem mudar de intenção.
+- [Button](https://ryanoliveiragit.github.io/arc-ui/md/button.md): componente. Uma ação clara e responsiva, com estados secundários discretos.
+- [Button group](https://ryanoliveiragit.github.io/arc-ui/md/button-group.md): componente. Ações relacionadas numa só superfície, com realce que desliza entre os segmentos e menu acoplado.
+- [Confirm morph](https://ryanoliveiragit.github.io/arc-ui/md/confirm-morph.md): componente. Botão destrutivo que vira confirmação no próprio lugar, depois carregamento e resultado com desfazer.
+- [Context menu](https://ryanoliveiragit.github.io/arc-ui/md/context-menu.md): componente. Ações secundárias ao alcance do clique direito, junto do objeto selecionado.
+- [Copy button](https://ryanoliveiragit.github.io/arc-ui/md/copy-button.md): componente. Copia um valor e confirma na hora.
+- [CTA buttons](https://ryanoliveiragit.github.io/arc-ui/md/cta-buttons.md): componente. Três botões de chamada: seta que se expande e preenche o botão, deslize para confirmar e botão magnético que segue o cursor.
+- [Dock](https://ryanoliveiragit.github.io/arc-ui/md/dock.md): componente. Dock de aplicativos: os ícones crescem perto do cursor, mostram o nome, pulam ao clicar e o ativo ganha um ponto.
+- [Dropdown menu](https://ryanoliveiragit.github.io/arc-ui/md/dropdown-menu.md): componente. Lista enxuta de ações ancorada a um botão.
+- [Eclipse](https://ryanoliveiragit.github.io/arc-ui/md/theme-switch-eclipse.md): componente. O novo tema atravessa a página como um eclipse.
+- [Expandable control](https://ryanoliveiragit.github.io/arc-ui/md/expandable-control.md): componente. Botão de ícone ou chip que se alarga com mola ao ser pressionado e revela o rótulo ou uma ação extra.
+- [Expanding button group](https://ryanoliveiragit.github.io/arc-ui/md/expanding-button-group.md): componente. Grupo de botões de ícone em que o apontado cresce para mostrar o rótulo e os vizinhos abrem espaço.
+- [Floating button group](https://ryanoliveiragit.github.io/arc-ui/md/floating-button-group.md): componente. Botões soltos numa bandeja discreta, com um realce único que passa de um para o outro.
+- [Hold to confirm](https://ryanoliveiragit.github.io/arc-ui/md/hold-to-confirm.md): componente. Confirma uma ação destrutiva ao segurar o botão, não com um toque.
+- [Hover highlight](https://ryanoliveiragit.github.io/arc-ui/md/hover-highlight.md): componente. Grupo em que um único fundo desliza até o item sob o cursor ou em foco, ideal para menus, navegação e barras de ferramentas.
+- [Icon morph](https://ryanoliveiragit.github.io/arc-ui/md/icon-morph.md): componente. Ícones que se transformam entre estados: menu em fechar, play em pausa, copiar em confirmado e outros.
+- [Reactions](https://ryanoliveiragit.github.io/arc-ui/md/reactions.md): componente. Reage a uma publicação com um toque, com contadores que rolam.
+- [Rise](https://ryanoliveiragit.github.io/arc-ui/md/theme-switch-rise.md): componente. O novo tema sobe até ocupar a página.
+- [Split](https://ryanoliveiragit.github.io/arc-ui/md/theme-switch-split.md): componente. O novo tema se abre a partir de uma fenda fina no centro.
+- [Split button](https://ryanoliveiragit.github.io/arc-ui/md/split-button.md): componente. Ação principal com um menu de alternativas ao lado.
+- [Swipe actions](https://ryanoliveiragit.github.io/arc-ui/md/swipe-actions.md): componente. Revela as ações de uma linha ao deslizar, com as mesmas ações também num menu.
+- [Theme switcher](https://ryanoliveiragit.github.io/arc-ui/md/theme-switch.md): componente. Quatro transições suaves entre o tema claro e o escuro.
+- [User menu](https://ryanoliveiragit.github.io/arc-ui/md/user-menu.md): componente. Conta, ajustes, tema e sair atrás do avatar; no celular abre como painel inferior.
+
+## Componentes · Entradas
+
+- [Adaptive stepper](https://ryanoliveiragit.github.io/arc-ui/md/adaptive-stepper.md): componente. Contador que não muda de tamanho: os dígitos rolam até o novo valor e o botão de menos ou de mais se recolhe no limite.
+- [Arc picker](https://ryanoliveiragit.github.io/arc-ui/md/arc-picker.md): componente. Seletor radial: as opções ficam em um arco, giram com a rolagem, o arraste ou as setas, e uma moldura abraça a opção ativa.
+- [Billing toggle](https://ryanoliveiragit.github.io/arc-ui/md/billing-toggle.md): componente. Alternância entre cobrança mensal e anual, com selo de economia e preços que rolam até o novo valor.
+- [Calendar](https://ryanoliveiragit.github.io/arc-ui/md/calendar.md): componente. Navegue pelas datas em uma visão mensal clara e compacta.
+- [Checkbox](https://ryanoliveiragit.github.io/arc-ui/md/checkbox.md): componente. Uma escolha binária com estado preciso e fácil de ler.
+- [Chip group](https://ryanoliveiragit.github.io/arc-ui/md/chip-group.md): componente. Filtre por poucas facetas com chips que se transformam ao serem escolhidos.
+- [Color picker](https://ryanoliveiragit.github.io/arc-ui/md/color-picker.md): componente. Uma amostra que se expande em seletor, com formatos, conta-gotas, cores salvas e leitura de contraste.
+- [Color swatches](https://ryanoliveiragit.github.io/arc-ui/md/color-swatches.md): componente. Amostras de cor em grupo de opções: um anel desliza com mola até a cor escolhida e cada amostra reage ao toque.
+- [Combobox](https://ryanoliveiragit.github.io/arc-ui/md/combobox.md): componente. Pesquise e escolha em uma lista sem sair do campo.
+- [Date picker](https://ryanoliveiragit.github.io/arc-ui/md/date-picker.md): componente. Escolha uma data sem perder o contexto da página.
+- [Date range picker](https://ryanoliveiragit.github.io/arc-ui/md/date-range-picker.md): componente. Seletor de período que cresce a partir do gatilho, com dois meses, atalhos e destaque elástico.
+- [Elastic slider](https://ryanoliveiragit.github.io/arc-ui/md/elastic-slider.md): componente. Controle deslizante que estica como borracha nos limites, com etiqueta que balança e marcas magnéticas.
+- [Expanding search](https://ryanoliveiragit.github.io/arc-ui/md/expanding-search.md): componente. Um ícone que se transforma em campo de busca, com resultados logo abaixo.
+- [File dropzone](https://ryanoliveiragit.github.io/arc-ui/md/file-dropzone.md): componente. Uma área generosa para soltar um ou vários arquivos, com progresso de envio.
+- [Inline edit](https://ryanoliveiragit.github.io/arc-ui/md/inline-edit.md): componente. Renomeie no próprio lugar: o texto vira campo sem mudar de posição.
+- [Input](https://ryanoliveiragit.github.io/arc-ui/md/input.md): componente. Campo de uma linha com rótulos claros e estados úteis.
+- [Mention input](https://ryanoliveiragit.github.io/arc-ui/md/mention-input.md): componente. Caixa de texto com menções a @pessoas e #canais que funcionam como um único bloco.
+- [Money input](https://ryanoliveiragit.github.io/arc-ui/md/money-input.md): componente. Campo de valor monetário com agrupamento ao vivo, largura estável e dígitos que rolam.
+- [Morph select](https://ryanoliveiragit.github.io/arc-ui/md/morph-select.md): componente. Um select cujo gatilho cresce até virar a lista, com destaque deslizante e busca por digitação.
+- [Multi-select](https://ryanoliveiragit.github.io/arc-ui/md/multi-select.md): componente. Selecione vários valores mantendo o campo legível.
+- [Number field](https://ryanoliveiragit.github.io/arc-ui/md/number-field.md): componente. Informe um número limitado com controles de incremento claros e dígitos em odômetro.
+- [Password field](https://ryanoliveiragit.github.io/arc-ui/md/password-field.md): componente. Capture texto sensível com um botão para revelar o que foi digitado.
+- [Password strength](https://ryanoliveiragit.github.io/arc-ui/md/password-strength.md): componente. Mostra a força de uma nova senha enquanto ela é digitada, com requisitos em tempo real.
+- [Phone input](https://ryanoliveiragit.github.io/arc-ui/md/phone-input.md): componente. Campo de telefone com seletor de país, formatação enquanto você digita e saída no padrão E.164.
+- [Radio cards](https://ryanoliveiragit.github.io/arc-ui/md/radio-cards.md): componente. Cartões selecionáveis com anel deslizante, preço e descrição, com o teclado de um grupo de rádio.
+- [Radio group](https://ryanoliveiragit.github.io/arc-ui/md/radio-group.md): componente. Escolha uma opção entre várias visíveis, com um destaque que desliza até a linha escolhida.
+- [Range histogram slider](https://ryanoliveiragit.github.io/arc-ui/md/range-histogram-slider.md): componente. Faixa de preço sobre um histograma dos dados, acendendo as barras dentro do intervalo escolhido.
+- [Rating](https://ryanoliveiragit.github.io/arc-ui/md/rating.md): componente. Avaliação por estrelas acessível, com meias estrelas, teclado e opção de limpar.
+- [Rich text editor](https://ryanoliveiragit.github.io/arc-ui/md/rich-text-editor.md): componente. Editor leve com atalhos de markdown, barra flutuante, menu de barra e saída em HTML ou markdown.
+- [Ruler slider](https://ryanoliveiragit.github.io/arc-ui/md/ruler-slider.md): componente. Uma fita de marcas que desliza sob uma agulha fixa, com inércia, encaixe e valor rolante.
+- [Scrub input](https://ryanoliveiragit.github.io/arc-ui/md/scrub-input.md): componente. Campo numérico estilo Figma: arraste o rótulo para ajustar ou digite valores, unidades e contas.
+- [Search field](https://ryanoliveiragit.github.io/arc-ui/md/search-field.md): componente. Campo de busca reconhecível, com ícone, botão de limpar e foco bem marcado.
+- [Segmented control](https://ryanoliveiragit.github.io/arc-ui/md/segmented-control.md): componente. Alterne entre poucas visões relacionadas com um seletor segmentado de destaque deslizante.
+- [Select](https://ryanoliveiragit.github.io/arc-ui/md/select.md): componente. Campo de escolha compacto com um menu que funciona bem pelo teclado.
+- [Shortcut recorder](https://ryanoliveiragit.github.io/arc-ui/md/shortcut-recorder.md): componente. Grave atalhos de teclado em teclas visuais, com aviso de conflito e uma lista de atalhos pesquisável.
+- [Signature pad](https://ryanoliveiragit.github.io/arc-ui/md/signature-pad.md): componente. Quadro de assinatura com traço suave que afina com a velocidade, desfazer, replay e exportação em PNG ou SVG.
+- [Slider](https://ryanoliveiragit.github.io/arc-ui/md/slider.md): componente. Escolha um valor ou um intervalo numa trilha que acompanha o dedo, com balão de dígitos rolantes.
+- [Switch](https://ryanoliveiragit.github.io/arc-ui/md/switch.md): componente. Um interruptor tátil para ajustes que passam a valer na hora.
+- [Tag input](https://ryanoliveiragit.github.io/arc-ui/md/tag-input.md): componente. Transforma textos curtos em etiquetas removíveis, com animação suave ao adicionar e remover.
+- [Textarea](https://ryanoliveiragit.github.io/arc-ui/md/textarea.md): componente. Campo de várias linhas para notas, descrições e textos mais longos.
+- [Time picker](https://ryanoliveiragit.github.io/arc-ui/md/time-picker.md): componente. Escolha um horário com um comportamento de teclado sensato, em formato 12h ou 24h.
+- [Toggle group](https://ryanoliveiragit.github.io/arc-ui/md/toggle-group.md): componente. Uma fileira de botões de alternância, única ou múltipla, como numa barra de formatação.
+- [Wheel picker](https://ryanoliveiragit.github.io/arc-ui/md/wheel-picker.md): componente. Seletor de roda como o de hora do celular: arraste, solte com impulso e ele encaixa na opção; aceita várias colunas e teclado.
+
+## Componentes · Revelação
+
+- [Accordion](https://ryanoliveiragit.github.io/arc-ui/md/accordion.md): componente. Revela informações de apoio no próprio lugar, uma seção por vez.
+- [Animated sidebar](https://ryanoliveiragit.github.io/arc-ui/md/animated-sidebar.md): componente. Barra lateral com grupos aninhados que abrem com animação de altura, destaque que desliza e modo recolhido com dicas.
+- [Bottom sheet](https://ryanoliveiragit.github.io/arc-ui/md/bottom-sheet.md): componente. Painel inferior que repousa em alturas definidas e acompanha o dedo ao arrastar.
+- [Bounce sidebar](https://ryanoliveiragit.github.io/arc-ui/md/bounce-sidebar.md): componente. Barra lateral que alterna entre trilho de ícones e painel completo com uma mola elástica; o marcador ativo desliza.
+- [Bouncy accordion](https://ryanoliveiragit.github.io/arc-ui/md/bouncy-accordion.md): componente. Acordeão em que o item aberto se solta dos vizinhos: o espaço cresce e os cantos arredondam com um leve quique.
+- [Breadcrumb](https://ryanoliveiragit.github.io/arc-ui/md/breadcrumb.md): componente. Mostra onde a página está dentro da hierarquia do produto.
+- [Center morph modal](https://ryanoliveiragit.github.io/arc-ui/md/center-morph-modal.md): componente. Um cartão da grade cresce até virar um modal no centro da tela, e o resumo dá lugar ao conteúdo completo.
+- [Collapsible](https://ryanoliveiragit.github.io/arc-ui/md/collapsible.md): componente. Uma região que abre e fecha no lugar, com altura em mola, conteúdo que entra em foco e seta que gira.
+- [Dialog](https://ryanoliveiragit.github.io/arc-ui/md/dialog.md): componente. Uma janela focada para decisões que pedem atenção.
+- [Drawer](https://ryanoliveiragit.github.io/arc-ui/md/drawer.md): componente. Painel lateral temporário para tarefas focadas.
+- [Expandable card](https://ryanoliveiragit.github.io/arc-ui/md/expandable-card.md): componente. Dá mais espaço a um cartão denso quando a pessoa pede.
+- [Expandable text](https://ryanoliveiragit.github.io/arc-ui/md/expandable-text.md): componente. Texto longo recolhido em poucas linhas, com ler mais e mostrar menos.
+- [Hover card](https://ryanoliveiragit.github.io/arc-ui/md/hover-card.md): componente. Pré-visualiza uma pessoa ou link ao passar o mouse ou focar, sem sair da página.
+- [Morphing modal](https://ryanoliveiragit.github.io/arc-ui/md/morphing-modal.md): componente. O botão se transforma no modal a partir do próprio lugar e volta a ser botão ao fechar.
+- [Popover](https://ryanoliveiragit.github.io/arc-ui/md/popover.md): componente. Pequena superfície ancorada para informações de contexto.
+- [Resizable panels](https://ryanoliveiragit.github.io/arc-ui/md/resizable-panels.md): componente. Painéis que trocam espaço entre si ao arrastar o divisor.
+- [Scroll area](https://ryanoliveiragit.github.io/arc-ui/md/scroll-area.md): componente. Área de rolagem nativa com barras finas e esmaecimento só quando há overflow.
+- [Tabs](https://ryanoliveiragit.github.io/arc-ui/md/tabs.md): componente. Alterna entre conteúdos relacionados no mesmo contexto.
+- [Tooltip](https://ryanoliveiragit.github.io/arc-ui/md/tooltip.md): componente. Texto curto de apoio para controles pouco familiares.
+
+## Componentes · Feedback
+
+- [Alert](https://ryanoliveiragit.github.io/arc-ui/md/alert.md): componente. Uma mensagem persistente que ajuda a pessoa a se recuperar de um problema ou seguir em frente.
+- [Announcement bar](https://ryanoliveiragit.github.io/arc-ui/md/announcement-bar.md): componente. Faixa no topo que alterna mensagens, mostra contagem regressiva e recolhe com suavidade ao ser dispensada.
+- [Cookie consent](https://ryanoliveiragit.github.io/arc-ui/md/cookie-consent.md): componente. Barra de consentimento que vira painel de preferências e se recolhe em um botão para reabrir.
+- [Countdown](https://ryanoliveiragit.github.io/arc-ui/md/countdown.md): componente. Contagem regressiva com dígitos que rolam e se transformam em um estado ao vivo quando chega a zero.
+- [Loader](https://ryanoliveiragit.github.io/arc-ui/md/loader.md): componente. Cinco indicadores de carregamento em três tamanhos, com rótulo lido por leitores de tela.
+- [Onboarding checklist](https://ryanoliveiragit.github.io/arc-ui/md/onboarding-checklist.md): componente. Lista que guia um novo espaço de trabalho pela configuração, um passo de cada vez.
+- [Progress](https://ryanoliveiragit.github.io/arc-ui/md/progress.md): componente. Barra que mostra quanto de uma tarefa conhecida já foi concluído.
+- [Pull to refresh](https://ryanoliveiragit.github.io/arc-ui/md/pull-to-refresh.md): componente. Área de rolagem que você puxa para baixo para atualizar: o indicador estica, gira durante a atualização e volta ao lugar.
+- [Skeleton](https://ryanoliveiragit.github.io/arc-ui/md/skeleton.md): componente. Reserva o espaço enquanto o conteúdo carrega e some em transição suave quando ele chega.
+- [Stepper](https://ryanoliveiragit.github.io/arc-ui/md/stepper.md): componente. Indicador de etapas de um fluxo, com estados de concluída, atual, pendente e com erro.
+- [Toast](https://ryanoliveiragit.github.io/arc-ui/md/toast.md): componente. Aviso rápido e discreto que aparece, some sozinho e pode ser dispensado com um gesto.
+- [Toast action](https://ryanoliveiragit.github.io/arc-ui/md/toast-action.md): componente. Aviso com uma ação, como Desfazer, e uma barra fina que se esgota até ele sair; passar o mouse ou focar pausa a contagem.
+- [Toast progress](https://ryanoliveiragit.github.io/arc-ui/md/toast-progress.md): componente. Aviso que acompanha uma tarefa: a barra e a porcentagem avançam e ele vira sucesso, com o check desenhado, ou erro com Tentar de novo.
+- [Toast stack](https://ryanoliveiragit.github.io/arc-ui/md/toast-stack.md): componente. Pilha de notificações que se empilha, se abre ao passar o mouse e transforma um aviso em seu resultado.
+- [Usage meter](https://ryanoliveiragit.github.io/arc-ui/md/usage-meter.md): componente. Medidor de consumo dividido em partes, com alerta quando o uso se aproxima ou passa do limite do plano.
+
+## Componentes · Dados
+
+- [Activity heatmap](https://ryanoliveiragit.github.io/arc-ui/md/activity-heatmap.md): componente. Um ano de atividade num relance, com um quadradinho para cada dia.
+- [Animated counter](https://ryanoliveiragit.github.io/arc-ui/md/animated-counter.md): componente. Totais que mudam com movimento claro, dígito por dígito.
+- [Aspect ratio](https://ryanoliveiragit.github.io/arc-ui/md/aspect-ratio.md): componente. Caixa que mantém a proporção e desliza suavemente para outra (16:9, 4:3, 1:1, 9:16) sem deixar a mídia descoberta.
+- [Avatar](https://ryanoliveiragit.github.io/arc-ui/md/avatar.md): componente. Foto ou iniciais de uma pessoa, em vários tamanhos e com indicador de presença.
+- [Avatar group](https://ryanoliveiragit.github.io/arc-ui/md/avatar-group.md): componente. Grupo de avatares sobrepostos que resume uma equipe e mostra quantos membros a mais existem.
+- [Badge](https://ryanoliveiragit.github.io/arc-ui/md/badge.md): componente. Etiqueta compacta para status, categorias e destaques, em tons e cores variados.
+- [Bar chart](https://ryanoliveiragit.github.io/arc-ui/md/bar-chart.md): componente. Compare uma medida ao longo dos dias e passe o dedo por qualquer barra para ver o valor.
+- [Brush chart](https://ryanoliveiragit.github.io/arc-ui/md/brush-chart.md): componente. Série temporal densa com faixa de visão geral: arraste a janela para dar zoom e leia eventos no próprio gráfico.
+- [Bump chart](https://ryanoliveiragit.github.io/arc-ui/md/bump-chart.md): componente. Ranking ao longo do tempo: as linhas trocam de posição a cada período e a série escolhida vem para a frente.
+- [Candlestick chart](https://ryanoliveiragit.github.io/arc-ui/md/candlestick-chart.md): componente. Velas de abertura, máxima, mínima e fechamento, com mira que acompanha o cursor e mostra os valores de cada período.
+- [Card](https://ryanoliveiragit.github.io/arc-ui/md/card.md): componente. Cartão com imagem, autor e ação que cresce em uma visão rápida ao ser aberto.
+- [Card stack](https://ryanoliveiragit.github.io/arc-ui/md/card-stack.md): componente. Pilha de cartões para arrastar e decidir, com botões, desfazer e acessibilidade por teclado.
+- [Carousel](https://ryanoliveiragit.github.io/arc-ui/md/carousel.md): componente. Carrossel arrastável que centraliza o slide ativo, com indicadores, setas e rotação opcional.
+- [Chat thread](https://ryanoliveiragit.github.io/arc-ui/md/chat-thread.md): componente. Conversa com mensagens agrupadas, reações, confirmação de leitura, indicador de digitação e campo de envio com anexos.
+- [Code block](https://ryanoliveiragit.github.io/arc-ui/md/code-block.md): componente. Bloco de código com realce leve, nome do arquivo, botão de copiar e opção de expandir trechos longos.
+- [Comment thread](https://ryanoliveiragit.github.io/arc-ui/md/comment-thread.md): componente. Comentários em fio, com respostas, reações, menções, edição no local e opção de resolver a conversa.
+- [Composition chart](https://ryanoliveiragit.github.io/arc-ui/md/composition-chart.md): componente. Barra empilhada de 100% com legenda: mostra as partes de um todo e desliza os segmentos quando os dados mudam.
+- [Cylinder carousel](https://ryanoliveiragit.github.io/arc-ui/md/cylinder-carousel.md): componente. Cartões dispostos em volta de um cilindro 3D que gira com arraste, setas ou teclado e para sempre em um cartão.
+- [Donut chart](https://ryanoliveiragit.github.io/arc-ui/md/donut-chart.md): componente. Gráfico de rosca cujos arcos se transformam entre conjuntos de dados, com o valor ativo rolando no centro.
+- [Empty state](https://ryanoliveiragit.github.io/arc-ui/md/empty-state.md): componente. Estado vazio com título, explicação e uma ação para ajudar a pessoa a começar.
+- [File tree](https://ryanoliveiragit.github.io/arc-ui/md/file-tree.md): componente. Árvore de arquivos com pastas que abrem suavemente, ícones por tipo, seleção e navegação completa pelo teclado.
+- [Filter toolbar](https://ryanoliveiragit.github.io/arc-ui/md/filter-toolbar.md): componente. Barra de filtros ativos que se removem com um toque, com um botão que vira menu para escolher campo e valor.
+- [Funnel chart](https://ryanoliveiragit.github.io/arc-ui/md/funnel-chart.md): componente. Funil de conversão em que cada etapa surge depois da anterior, com o valor da etapa e a queda percentual entre elas.
+- [Gauge](https://ryanoliveiragit.github.io/arc-ui/md/gauge.md): componente. Mostra um valor dentro de um intervalo conhecido, com faixas de estado.
+- [Image compare](https://ryanoliveiragit.github.io/arc-ui/md/image-compare.md): componente. Arraste um divisor sobre duas imagens para ver o antes e o depois, também pelo teclado.
+- [Image viewer](https://ryanoliveiragit.github.io/arc-ui/md/image-viewer.md): componente. Galeria de miniaturas que se ampliam num visualizador com setas, gesto de deslizar, zoom e arraste; Esc devolve a imagem ao lugar.
+- [JSON viewer](https://ryanoliveiragit.github.io/arc-ui/md/json-viewer.md): componente. Árvore de JSON recolhível, com busca, paginação de listas longas e cópia de valor ou caminho.
+- [Line chart](https://ryanoliveiragit.github.io/arc-ui/md/line-chart.md): componente. Gráfico de várias linhas com mira deslizante, legenda interativa e curvas que se transformam entre períodos.
+- [Liquidity heatmap](https://ryanoliveiragit.github.io/arc-ui/md/liquidity-heatmap.md): componente. Mapa de calor da liquidez por preço e horário, com legenda em degraus e leitura da célula sob o cursor.
+- [Marquee](https://ryanoliveiragit.github.io/arc-ui/md/marquee.md): componente. Faixa que rola sem fim na horizontal ou na vertical, com bordas esmaecidas, e desacelera até parar quando o cursor passa.
+- [Metric card](https://ryanoliveiragit.github.io/arc-ui/md/metric-card.md): componente. Um resumo compacto para um número que precisa de contexto.
+- [Order book](https://ryanoliveiragit.github.io/arc-ui/md/order-book.md): componente. Livro de ofertas com compras e vendas lado a lado, barras de profundidade, spread e linhas que piscam a cada mudança.
+- [Pagination](https://ryanoliveiragit.github.io/arc-ui/md/pagination.md): componente. Navegação entre páginas de uma coleção longa, com limites claros e reticências quando necessário.
+- [Preview rail](https://ryanoliveiragit.github.io/arc-ui/md/preview-rail.md): componente. Trilho de cartões em que o cartão sob o cursor ou em foco se alarga para mostrar a prévia enquanto os outros encolhem.
+- [Price target fan](https://ryanoliveiragit.github.io/arc-ui/md/price-target-fan.md): componente. Histórico de preço que se abre em leque até os alvos alto, mediano e baixo, cada um com rótulo e variação.
+- [Reorderable list](https://ryanoliveiragit.github.io/arc-ui/md/reorderable-list.md): componente. Lista que se reorganiza arrastando, com alternativa pelo teclado para mover cada item.
+- [Returns calendar](https://ryanoliveiragit.github.io/arc-ui/md/returns-calendar.md): componente. Calendário de retornos diários, mês a mês, com cada dia colorido pela força do ganho ou da perda e o total do mês.
+- [Ridgeline](https://ryanoliveiragit.github.io/arc-ui/md/ridgeline.md): componente. Distribuições sobrepostas, uma crista por grupo: passe o mouse para destacar e ver os quartis.
+- [Sankey chart](https://ryanoliveiragit.github.io/arc-ui/md/sankey-chart.md): componente. Diagrama de fluxo em colunas: as faixas têm a espessura do valor e, ao passar o mouse, só o caminho escolhido fica aceso.
+- [Slope chart](https://ryanoliveiragit.github.io/arc-ui/md/slope-chart.md): componente. Antes e depois em dois eixos, com variação de posição ao lado de cada valor.
+- [Sortable data table](https://ryanoliveiragit.github.io/arc-ui/md/sortable-data-table.md): componente. Tabela de registros com colunas ordenáveis, seleção de linhas e contagem de itens.
+- [Sparkline](https://ryanoliveiragit.github.io/arc-ui/md/sparkline.md): componente. Uma tendência compacta ao lado de um valor, com leitura ponto a ponto.
+- [Status bar](https://ryanoliveiragit.github.io/arc-ui/md/status-bar.md): componente. Faixa de disponibilidade com uma barra por dia, colorida pelo estado, dica por dia e o percentual geral.
+- [Streamgraph](https://ryanoliveiragit.github.io/arc-ui/md/streamgraph.md): componente. Camadas fluidas que se transformam entre períodos, com uma camada para isolar e ler semana a semana.
+- [Tilt card](https://ryanoliveiragit.github.io/arc-ui/md/tilt-card.md): componente. Cartão que se inclina em 3D na direção do cursor, com um brilho que acompanha o movimento, e volta ao lugar com mola.
+- [Timeline](https://ryanoliveiragit.github.io/arc-ui/md/timeline.md): componente. Linha do tempo com os eventos mais recentes primeiro, agrupados por dia e com detalhes que se expandem.
+- [Tree table](https://ryanoliveiragit.github.io/arc-ui/md/tree-table.md): componente. Tabela com linhas aninhadas, seleção em três estados, ordenação que preserva a hierarquia e carga sob demanda.
+- [Tree view](https://ryanoliveiragit.github.io/arc-ui/md/tree-view.md): componente. Árvore de navegação para pastas e conteúdo aninhado, com suporte completo ao teclado.
+- [Treemap](https://ryanoliveiragit.github.io/arc-ui/md/treemap.md): componente. Mapa de árvore em blocos: clique para detalhar e os blocos crescem até preencher a vista.
+- [Volume profile](https://ryanoliveiragit.github.io/arc-ui/md/volume-profile.md): componente. Histograma horizontal do volume em cada faixa de preço, ao lado da linha de preço, com o ponto de controle em destaque.
+- [Waffle chart](https://ryanoliveiragit.github.io/arc-ui/md/waffle-chart.md): componente. Gráfico de unidades 10 por 10 em que cada célula vale um por cento e voa para o novo grupo quando os dados mudam.
+
+## Componentes · Texto
+
+- [In-view title](https://ryanoliveiragit.github.io/arc-ui/md/in-view-title.md): componente. Título que entra com animação ao aparecer na rolagem.
+- [Text morph](https://ryanoliveiragit.github.io/arc-ui/md/text-morph.md): componente. Transforma um rótulo no próximo estado, letra por letra.
+- [Text reveal](https://ryanoliveiragit.github.io/arc-ui/md/text-reveal.md): componente. Revela um trecho curto de conteúdo com movimento discreto.
+- [Text shimmer](https://ryanoliveiragit.github.io/arc-ui/md/text-shimmer.md): componente. Indica trabalho em andamento com uma luz calma passando pelo texto.
+
+## Componentes · Agentes de IA
+
+- [Agent activity](https://ryanoliveiragit.github.io/arc-ui/md/agent-activity.md): componente. Linha do tempo ao vivo do que o agente está fazendo: a etapa atual pulsa e as concluídas se recolhem num resumo.
+- [AI sidebar](https://ryanoliveiragit.github.io/arc-ui/md/ai-sidebar.md): componente. Painel de assistente que desliza ao lado da página, com cabeçalho, mensagens, sugestões e caixa de prompt.
+- [Approval card](https://ryanoliveiragit.github.io/arc-ui/md/approval-card.md): componente. Cartão que pede sua aprovação antes de o agente agir, com resumo, detalhes que se abrem e o resultado da decisão.
+- [Citations](https://ryanoliveiragit.github.io/arc-ui/md/citations.md): componente. Números de citação no meio do texto que abrem um cartão com a fonte, mais a lista de fontes com destaque compartilhado.
+- [File diff](https://ryanoliveiragit.github.io/arc-ui/md/file-diff.md): componente. Diff unificado de um arquivo, com números de linha, contagem de mudanças e trechos iguais que se abrem com um clique.
+- [Image generation](https://ryanoliveiragit.github.io/arc-ui/md/image-generation.md): componente. Cartão de pedido de imagem: um campo de células cintila com o progresso e a imagem surge do desfoque até ficar nítida.
+- [Loading states](https://ryanoliveiragit.github.io/arc-ui/md/loading-states.md): componente. Indicadores de que a IA está pensando: texto cintilante, pontinhos que saltam, frases que se alternam e contador de etapas.
+- [Message](https://ryanoliveiragit.github.io/arc-ui/md/message.md): componente. Mensagem completa do assistente, com avatar, nome, texto formatado e ações de copiar, refazer e avaliar ao passar o mouse.
+- [Message bubble](https://ryanoliveiragit.github.io/arc-ui/md/message-bubble.md): componente. Balão de conversa para você e para o assistente, com cauda, agrupamento, horário e tiques de entrega animados.
+- [Message scroller](https://ryanoliveiragit.github.io/arc-ui/md/message-scroller.md): componente. Área de conversa que acompanha as mensagens novas, solta quando você rola para cima e mostra um atalho com as não lidas.
+- [Prompt input](https://ryanoliveiragit.github.io/arc-ui/md/prompt-input.md): componente. Caixa de prompt que cresce com o texto, com anexos, menu de modelo e um botão de enviar que vira parar durante a resposta.
+- [Streaming response](https://ryanoliveiragit.github.io/arc-ui/md/streaming-response.md): componente. Texto que chega palavra por palavra, com cursor e desfoque suave, e controles para pausar, pular e repetir.
+- [Todo list](https://ryanoliveiragit.github.io/arc-ui/md/todo-list.md): componente. Lista do plano de um agente: cada etapa passa de pendente para em andamento e concluída, com contagem de progresso.
+- [Tool approval](https://ryanoliveiragit.github.io/arc-ui/md/tool-approval.md): componente. Pedido compacto para rodar uma ferramenta: permita uma vez, sempre ou negue, e ele se recolhe em uma linha de resultado.
+- [Tool result](https://ryanoliveiragit.github.io/arc-ui/md/tool-result.md): componente. Registro recolhível de uma chamada de ferramenta, com status, duração e a entrada e a saída formatadas.
+- [Voice orb](https://ryanoliveiragit.github.io/arc-ui/md/voice-orb.md): componente. Orbe de assistente de voz que mostra quando ele escuta, pensa ou fala, com anéis e barras que acompanham o volume.
+
+## Componentes · Jogos
+
+- [Crash game](https://ryanoliveiragit.github.io/arc-ui/md/crash-game.md): componente. Jogo de brincadeira em que o multiplicador sobe numa curva até quebrar; saia antes para ficar com a aposta multiplicada.
+- [Mines game](https://ryanoliveiragit.github.io/arc-ui/md/mines-game.md): componente. Campo 5×5 de mentirinha: vire as peças para achar gemas e aumentar o multiplicador, mas uma mina encerra a rodada.
+- [Plinko game](https://ryanoliveiragit.github.io/arc-ui/md/plinko-game.md): componente. Tabuleiro de plinko de mentirinha: a bolinha quica nos pinos, para a esquerda ou a direita, e acende a casa do multiplicador.
+- [Slide game](https://ryanoliveiragit.github.io/arc-ui/md/slide-game.md): componente. Uma faixa de multiplicadores dispara, desacelera e para sob o marcador central: o valor sorteado multiplica a aposta de mentirinha.
+
+## Componentes · Especial
+
+- [Scroll reveal](https://ryanoliveiragit.github.io/arc-ui/md/scroll-reveal.md): componente. Revela o conteúdo conforme ele entra na tela, em sequência, e acompanha a leitura com uma barra de progresso.
+- [Shader background](https://ryanoliveiragit.github.io/arc-ui/md/shader-background.md): componente. Fundo animado em canvas: um campo de ruído que flui na cor de destaque e pausa quando sai da tela.
+- [Slot text](https://ryanoliveiragit.github.io/arc-ui/md/slot-text.md): componente. Textos e números que giram até o novo valor, como rolos de caça-níqueis.
+
+## Blocos
+
+- [Availability scheduler](https://ryanoliveiragit.github.io/arc-ui/md/availability-scheduler.md): bloco. Grade semanal para marcar horários livres com clique e arraste, com atalhos prontos e um resumo por dia que se atualiza na hora.
+- [Blog grid](https://ryanoliveiragit.github.io/arc-ui/md/blog-grid.md): bloco. Índice de blog com post em destaque, filtro por categoria, cartões, paginação e leitor no próprio lugar.
+- [Bloom menu](https://ryanoliveiragit.github.io/arc-ui/md/bloom-menu.md): bloco. Botão flutuante cujas ações se abrem em arco, uma após a outra; Esc ou um clique fora fecha o menu.
+- [Card dealer](https://ryanoliveiragit.github.io/arc-ui/md/card-dealer.md): bloco. Um baralho que distribui cartas pelas posições da mesa em arco, virando cada uma; dá para embaralhar e recomeçar.
+- [Card folder](https://ryanoliveiragit.github.io/arc-ui/md/card-folder.md): bloco. Fichário de cartões com abas: ao escolher uma aba, o cartão sobe, vem para a frente e os outros se acomodam atrás.
+- [Centered login](https://ryanoliveiragit.github.io/arc-ui/md/login-centered.md): bloco. Cartão de login centralizado, com passkey em primeiro lugar, que muda de e-mail para código sem trocar de tela.
+- [Changelog feed](https://ryanoliveiragit.github.io/arc-ui/md/changelog-feed.md): bloco. Linha do tempo de novidades por mês, com versões, tipos de mudança e navegação lateral.
+- [Chat app](https://ryanoliveiragit.github.io/arc-ui/md/chat-app.md): bloco. Tela de chat completa: lista de conversas, respostas simuladas que chegam aos poucos e caixa de prompt.
+- [Command palette](https://ryanoliveiragit.github.io/arc-ui/md/command-palette.md): bloco. Paleta de comandos controlada pelo teclado, com busca, resultados agrupados e atalhos.
+- [Comparison table](https://ryanoliveiragit.github.io/arc-ui/md/comparison-table.md): bloco. Tabela comparativa com cabeçalho fixo, seções recolhíveis e filtro para ver só as diferenças.
+- [Contact section](https://ryanoliveiragit.github.io/arc-ui/md/contact-section.md): bloco. Seção de contato com formulário, canais e escritórios, em três layouts à escolha.
+- [CTA section](https://ryanoliveiragit.github.io/arc-ui/md/cta-section.md): bloco. Chamada para ação como fecho centralizado, dividida ao lado de um cartão de configuração ou em faixa dispensável.
+- [Dynamic island](https://ryanoliveiragit.github.io/arc-ui/md/dynamic-island.md): bloco. Pílula no topo da tela que se transforma com mola entre repouso, atividade compacta e visões expandidas de chamada, timer e música.
+- [Empty states](https://ryanoliveiragit.github.io/arc-ui/md/empty-states.md): bloco. Quatro estados vazios numa única ilustração, cujas formas se transformam ao trocar de aba.
+- [Expandable action bar](https://ryanoliveiragit.github.io/arc-ui/md/expandable-action-bar.md): bloco. Barra de ações flutuante que cresce de uma pílula compacta para uma grade com todas as ações e uma linha secundária.
+- [Expandable tabs](https://ryanoliveiragit.github.io/arc-ui/md/expandable-tabs.md): bloco. Abas de ícones em que só a aba ativa mostra o rótulo, que se abre com uma mola enquanto as outras se recolhem.
+- [FAQ section](https://ryanoliveiragit.github.io/arc-ui/md/faq-section.md): bloco. Perguntas frequentes em acordeão, por categoria ou com busca, com um caminho para falar com alguém.
+- [Feedback widget](https://ryanoliveiragit.github.io/arc-ui/md/feedback-widget.md): bloco. Botão flutuante de feedback que vira um formulário com humor e mensagem, passa pelo envio e termina num agradecimento.
+- [File upload](https://ryanoliveiragit.github.io/arc-ui/md/file-upload.md): bloco. Envio de arquivos com arrastar e soltar, limite de tamanho, progresso e mensagens de erro.
+- [Hero section](https://ryanoliveiragit.github.io/arc-ui/md/hero-section.md): bloco. Hero em três versões sem gradientes: janela de produto viva, fluxo de automação com pulso e tipografia editorial com marquee.
+- [Infinite masonry](https://ryanoliveiragit.github.io/arc-ui/md/infinite-masonry.md): bloco. Mural em colunas com cartões de alturas diferentes que carrega mais conforme você rola, com os novos subindo em sequência.
+- [Knockout bracket](https://ryanoliveiragit.github.io/arc-ui/md/knockout-bracket.md): bloco. Chave de mata-mata em colunas: escolha o vencedor e ele avança pela linha de conexão até a próxima fase.
+- [Logo marquee](https://ryanoliveiragit.github.io/arc-ui/md/logo-marquee.md): bloco. Faixa de logos de clientes que desliza sem parar e pausa quando você aponta.
+- [Morphing search](https://ryanoliveiragit.github.io/arc-ui/md/morphing-search.md): bloco. Ícone de busca que se estica em campo e depois abre um painel de resultados; Esc desfaz o caminho passo a passo.
+- [Morphing tabs](https://ryanoliveiragit.github.io/arc-ui/md/morphing-tabs.md): bloco. Abas com uma pílula ativa que estica e muda de forma ao viajar, enquanto o painel troca na mesma direção.
+- [Newsletter signup](https://ryanoliveiragit.github.io/arc-ui/md/newsletter-signup.md): bloco. Cadastro de newsletter em dois layouts, com confirmação e tratamento de erro.
+- [Not found](https://ryanoliveiragit.github.io/arc-ui/md/not-found.md): bloco. Página 404 com uma ilustração animada feita de formas, um campo de busca e atalhos para voltar ao site.
+- [Notification center](https://ryanoliveiragit.github.io/arc-ui/md/notification-center.md): bloco. Central de notificações com estado de lido, avisos agrupados e abertura animada.
+- [Notification stack](https://ryanoliveiragit.github.io/arc-ui/md/notification-stack.md): bloco. Pilha de notificações que se abre em leque ao passar o mouse; dispense arrastando ou pelo botão e as demais se reorganizam com mola.
+- [OTP input](https://ryanoliveiragit.github.io/arc-ui/md/otp-input.md): bloco. Campo de código de seis dígitos com suporte a colar e navegação pelo teclado.
+- [Overflow actions](https://ryanoliveiragit.github.io/arc-ui/md/overflow-actions.md): bloco. Barra de ações que mede a própria largura e guarda no menu “mais” o que não cabe, animando a cada ajuste.
+- [Page header](https://ryanoliveiragit.github.io/arc-ui/md/page-header.md): bloco. Cabeçalho de projeto que encolhe numa barra compacta ao rolar, com abas de contagem animada.
+- [Plan comparison](https://ryanoliveiragit.github.io/arc-ui/md/plan-comparison.md): bloco. Comparação de planos com troca de cobrança mensal ou anual e foco nas diferenças reais.
+- [Prediction market](https://ryanoliveiragit.github.io/arc-ui/md/prediction-market.md): bloco. Cartão de mercado de previsões com preços de sim e não, linha de probabilidade, valor e estimativa de retorno (dados fictícios).
+- [Project folder](https://ryanoliveiragit.github.io/arc-ui/md/project-folder.md): bloco. Pasta que entreabre ao passar o mouse e, no clique, deixa os documentos subirem e se abrirem em leque.
+- [Sign in](https://ryanoliveiragit.github.io/arc-ui/md/sign-in.md): bloco. Cartão de entrada que passa de e-mail para código de seis dígitos e depois para a sua conta.
+- [Sign up form](https://ryanoliveiragit.github.io/arc-ui/md/signup-form.md): bloco. Cadastro com validação por campo, força da senha e um estado de conclusão claro.
+- [Site footer](https://ryanoliveiragit.github.io/arc-ui/md/site-footer.md): bloco. Rodapé de site em três layouts, com colunas de links, redes sociais, newsletter e status.
+- [Site header](https://ryanoliveiragit.github.io/arc-ui/md/site-header.md): bloco. Cabeçalho de site com menu mega, que ganha fundo ao rolar a página, em três layouts.
+- [Stats band](https://ryanoliveiragit.github.io/arc-ui/md/stats-band.md): bloco. Faixa de números que contam até o valor final, em layout simples ou em cartões.
+- [Token swap](https://ryanoliveiragit.github.io/arc-ui/md/token-swap.md): bloco. Cartão de troca de tokens com dois campos que trocam de lugar ao inverter, taxa e custos ao vivo e confirmação animada (dados fictícios).
+- [Wallet card](https://ryanoliveiragit.github.io/arc-ui/md/wallet-card.md): bloco. Cartão de pagamento que inclina em 3D e vira para mostrar o verso, com saldo que pode ser ocultado e últimas transações.

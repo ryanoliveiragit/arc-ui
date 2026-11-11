@@ -1,0 +1,755 @@
+{
+ "availability-scheduler": {
+  "quandoUsar": [
+   "Perguntar a alguém em que horários da semana está livre, para marcar reuniões, plantões ou atendimentos em blocos de uma hora.",
+   "Configurar janelas que se repetem toda semana, como horário de funcionamento ou período em que notificações podem chegar.",
+   "Quando o resultado precisa ser conferido de relance: o resumo ao lado junta os blocos vizinhos em faixas por dia e soma as horas."
+  ],
+  "quandoEvitar": [
+   "Use `date-picker` ou `date-range-picker` quando a escolha é de datas do calendário, e não de horários que se repetem toda semana.",
+   "Use `time-picker` quando basta um único horário.",
+   "Evite quando a precisão precisa ser menor que uma hora: cada célula é um bloco de uma hora cheia, sem meia hora nem quinze minutos."
+  ],
+  "teclado": [
+   { "teclas": ["↑", "↓", "←", "→"], "acao": "Movem o foco pela grade, uma célula por vez." },
+   { "teclas": ["Espaço", "Enter"], "acao": "Marca ou desmarca o horário em foco." },
+   { "teclas": ["Shift + ↑", "Shift + ↓", "Shift + ←", "Shift + →"], "acao": "Pintam: a célula de destino recebe o estado (marcada ou não) da célula de onde o foco saiu." },
+   { "teclas": ["Home", "End"], "acao": "Levam o foco ao primeiro ou ao último dia, na mesma hora." },
+   { "teclas": ["Tab"], "acao": "Passa pelos atalhos prontos, por “Clear”, pelos botões de dia (que marcam ou limpam o dia inteiro) e entra na grade pela célula atual." }
+  ],
+  "acessibilidade": [
+   "A grade usa `role=\"grid\"` com `aria-multiselectable`; cada célula é um `gridcell` com `aria-selected` e um nome como “Monday, 9 AM to 10 AM”, e só a célula atual fica na ordem do Tab (roving tabindex).",
+   "O total de horas fica numa região `aria-live=\"polite\"`, os atalhos prontos expõem `aria-pressed` e cada cabeçalho de dia é um botão com nome próprio.",
+   "Os textos internos (ajuda, “Clear”, “Available”, “Unavailable”, nomes das células e o relógio AM/PM) estão fixos em inglês no código; só `title`, `days` e os rótulos de `presets` vêm por props."
+  ],
+  "movimento": [
+   "Cada horário marcado cresce do centro da célula numa curva de mola sem ultrapassagem e some com um esmaecer simples; em mudanças em lote (atalho pronto, dia inteiro) as células se preenchem em onda a partir da origem.",
+   "O total de horas troca rolando: o número antigo sobe e o novo entra por baixo, com uma mola sem ultrapassagem.",
+   "Com “reduzir movimento” ligado, as transições das células e dos botões são desligadas e o total troca na hora."
+  ],
+  "responsivo": [
+   "Usa container query: abaixo de 46rem de largura do bloco o resumo desce para baixo da grade, e abaixo de 30rem os dias mostram só a inicial.",
+   "O corpo da grade tem `touch-action: none`: no toque, arrastar sobre os horários seleciona em vez de rolar a página, então deixe área livre ao redor para a rolagem."
+  ],
+  "desempenho": [
+   "Cada horário é um elemento do DOM (`days` × horas visíveis, 84 no padrão), e durante o arrasto o estado só muda quando o ponteiro entra em outra célula, não a cada pixel."
+  ],
+  "notasIA": [
+   "Controle com `value` e `onValueChange`: a seleção é uma lista de ids `\"dia-hora\"`, com o dia contado a partir de 0 e a hora no relógio de 24 h (`\"0-9\"` é o primeiro dia às 9h).",
+   "Sem `value` nem `defaultValue`, a grade já nasce com as cinco primeiras colunas marcadas das 9h às 17h, menos o meio-dia; passe `defaultValue={[]}` para começar vazia.",
+   "`startHour` e `endHour` definem as linhas (8 e 20 por padrão), `days` as colunas e `presets` os atalhos, cada um com `label` e uma função `includes(day, hour)`."
+  ]
+ },
+ "blog-grid": {
+  "quandoUsar": [
+   "Índice de blog ou de novidades de um site, com um post em destaque, filtro por categoria e paginação, tudo a partir de uma lista de posts em memória.",
+   "Protótipos e sites estáticos sem roteador: sem `getHref`, o clique abre o post num leitor no próprio lugar e “All posts” volta ao índice.",
+   "Listas editoriais com imagem de capa, resumo, autor e tempo de leitura em cada cartão."
+  ],
+  "quandoEvitar": [
+   "Use `changelog-feed` para notas de versão, com tipo de mudança, número da versão e navegação por mês.",
+   "Use `infinite-masonry` quando o conteúdo é um feed de imagens de alturas diferentes que carrega ao rolar.",
+   "Evite quando os posts chegam paginados do servidor: o bloco ordena, filtra e pagina no cliente a lista inteira passada em `posts`."
+  ],
+  "teclado": [
+   { "teclas": ["Enter"], "acao": "Num cartão, abre o post no leitor e leva o foco ao botão “All posts”; com `getHref`, segue o link." },
+   { "teclas": ["Enter", "Espaço"], "acao": "Acionam os filtros de categoria, os números de página e os botões “Previous”, “Next” e “All posts”." }
+  ],
+  "acessibilidade": [
+   "Os cartões são links (`<a>`), os filtros são botões com `aria-pressed` e a paginação é um `<nav>` com `aria-current=\"page\"` na página atual.",
+   "Ao abrir o leitor o foco vai para “All posts”; ao fechar, volta ao cartão de origem, que é rolado para a área visível; não há tecla Esc para fechar.",
+   "Preencha `image.alt` de cada post: é o texto alternativo da capa no cartão e no leitor; o avatar do autor é decorativo (`alt=\"\"`)."
+  ],
+  "movimento": [
+   "A capa do cartão viaja e cresce até virar a imagem do leitor (elemento compartilhado, mola sem ultrapassagem) e faz o caminho de volta ao fechar, enquanto o resto do índice some e reaparece aos poucos.",
+   "Trocar de página desliza o conteúdo no sentido da navegação, os realces do filtro e da página deslizam até o novo item e a altura acompanha com uma mola, sem salto da paginação.",
+   "Com “reduzir movimento” ligado, a capa não viaja, as trocas viram um esmaecer, os realces e a altura mudam na hora e a rolagem até o topo deixa de ser suave."
+  ],
+  "responsivo": [
+   "Container query no próprio bloco: três colunas, duas abaixo de 900px e uma abaixo de 540px; abaixo de 680px o destaque empilha a imagem sobre o texto.",
+   "A faixa de filtros rola na horizontal sem barra de rolagem, e abaixo de 540px “Previous” e “Next” ficam só com o ícone."
+  ],
+  "desempenho": [
+   "As capas usam `<img>` simples com `loading=\"lazy\"` (a do destaque carrega na hora), então sirva arquivos já redimensionados; um `ResizeObserver` mede a página para animar a altura."
+  ],
+  "notasIA": [
+   "Importe `BlogGrid` pelo nome para passar props (a exportação padrão, `BlogGridBlock`, é só a prévia); `category` e `page` aceitam uso controlado com `onCategoryChange` e `onPageChange`.",
+   "Com `getHref` os cartões viram links reais e o leitor é desligado; sem ele, preencha `body` de cada post (parágrafos em texto puro), senão o leitor mostra só o resumo.",
+   "Passe `categories` com as mesmas categorias usadas em `posts` (o padrão é a lista de exemplo; “All” é acrescentada pelo bloco) e datas ISO em `date` (`2026-09-18`), que ordenam os posts e geram a data exibida."
+  ]
+ },
+ "bloom-menu": {
+  "quandoUsar": [
+   "Botão flutuante de criação com três a seis ações rápidas, como nova nota, tarefa, foto ou áudio, num canto da tela.",
+   "Telas em que uma barra de ferramentas fixa roubaria espaço do conteúdo, como quadros, mapas e listas de captura no celular."
+  ],
+  "quandoEvitar": [
+   "Use `dropdown-menu` quando há mais de seis ações ou quando cada uma precisa de texto sempre visível: aqui os nomes só aparecem ao passar o mouse ou ao focar pelo teclado.",
+   "Use `expandable-action-bar` para ações sobre uma seleção, com rótulos e uma fileira secundária.",
+   "Use `button` quando só existe uma ação principal."
+  ],
+  "teclado": [
+   { "teclas": ["Enter", "Espaço"], "acao": "No botão flutuante, abrem ou fecham o menu (aberto pelo teclado, o foco vai para a primeira ação); numa ação, executam, fecham e devolvem o foco ao botão." },
+   { "teclas": ["↓", "→"], "acao": "Com o menu aberto, focam a próxima ação e dão a volta no fim; com ele fechado, `↓` ou `↑` no botão abre o menu e foca a primeira ação." },
+   { "teclas": ["↑", "←"], "acao": "Com o menu aberto, focam a ação anterior; ações desabilitadas são puladas." },
+   { "teclas": ["Home", "End"], "acao": "Focam a primeira ou a última ação." },
+   { "teclas": ["Esc"], "acao": "Fecha o menu e devolve o foco ao botão." },
+   { "teclas": ["Tab"], "acao": "Fecha o menu e deixa o foco seguir a ordem normal de tabulação." }
+  ],
+  "acessibilidade": [
+   "O botão expõe `aria-haspopup=\"menu\"`, `aria-expanded` e `aria-controls`; as ações ficam num `role=\"menu\"` como `menuitem`, fora da ordem do Tab, com o foco movido pelas setas.",
+   "`label` nomeia o botão e o menu para o leitor de tela, e o `label` de cada ação é o nome acessível dela: escreva os dois dizendo o que a ação faz.",
+   "Esc e a escolha de uma ação devolvem o foco ao botão; o clique fora fecha o menu sem mexer no foco."
+  ],
+  "movimento": [
+   "As ações saem do centro do botão para seus lugares no arco, uma após a outra, com uma mola levemente elástica que passa um pouco do ponto; ao fechar, voltam ao centro na ordem inversa.",
+   "O ícone do botão gira 135° (o mais vira um x) e um anel se expande a partir dele quando o menu abre.",
+   "Com “reduzir movimento” ligado, as ações ainda saem do centro, mas num deslocamento curto (0,16 s) sem mola nem escala; ao fechar só esmaecem no lugar, o ícone gira na hora e o anel não aparece."
+  ],
+  "responsivo": [
+   "Não há detecção de colisão: o arco abre sempre em `direction` e é posicionado por transform, então pode sair da tela ou ser cortado por um pai com `overflow: hidden`.",
+   "O raio cresce sozinho para manter 58px entre ações vizinhas: com muitas ações num arco de 90°, o menu ocupa bem mais que os 96px de `radius`."
+  ],
+  "notasIA": [
+   "Importe `BloomMenu` pelo nome: a exportação padrão do arquivo é a prévia (um quadro de captura), não o componente.",
+   "O componente não se fixa na tela: posicione-o com um contêiner (por exemplo, `position: fixed` no canto) e aponte `direction` para dentro da tela, usando as diagonais nos cantos.",
+   "Cada ação tem `id`, `label` e `icon`; trate a escolha em `onAction(id)` ou no `onSelect` da ação, e use `open` com `onOpenChange` só se precisar controlar a abertura."
+  ]
+ },
+ "card-dealer": {
+  "quandoUsar": [
+   "Demonstrações e protótipos de jogos de cartas: distribui de uma a sete cartas do baralho para a mesa e, com cinco posições, dá nome à mão de pôquer.",
+   "Seções lúdicas de uma página, como um sorteio ou uma “mão do dia”, em que a animação de dar as cartas é o próprio conteúdo.",
+   "Exemplo de referência de movimento em sequência: trajetória em arco, virada em 3D e embaralhamento."
+  ],
+  "quandoEvitar": [
+   "Use `card-stack` para percorrer cartões de conteúdo um a um, com arremesso e desfazer.",
+   "Evite em jogos com dinheiro ou resultado auditável: o embaralhamento usa `Math.random` no navegador e o baralho vive no estado do componente.",
+   "Evite quando as cartas precisam de conteúdo próprio: as faces só desenham valor e naipe."
+  ],
+  "teclado": [
+   { "teclas": ["Enter", "Espaço"], "acao": "No baralho, dão uma carta para a próxima posição livre; nos botões, distribuem a mão (“Deal hand”), embaralham (“Shuffle”) ou recomeçam (“Reset”)." }
+  ],
+  "acessibilidade": [
+   "A mesa é um `role=\"group\"` nomeado por `label`, e o baralho é um botão cujo nome informa quantas cartas restam.",
+   "As cartas desenhadas ficam em `aria-hidden`; quem conta o que há na mesa é um parágrafo oculto com `aria-live=\"polite\"`, que lista as cartas e o nome da mão, em inglês."
+  ],
+  "movimento": [
+   "Cada carta sai do baralho para a sua posição em arco (corre de lado primeiro e desce depois), levanta um pouco e vira de frente no caminho, com 0,13 s entre uma carta e a seguinte.",
+   "“Shuffle” recolhe a mesa e faz as cartas do topo abrirem para os lados duas vezes; com a mesa cheia, as cartas voltam para o baralho antes da próxima mão.",
+   "Com “reduzir movimento” ligado, as cartas mudam de lugar na hora, sem trajetória, virada nem espera entre as etapas."
+  ],
+  "responsivo": [
+   "A largura das cartas é calculada em unidades de container para caber na fileira (até 5,25rem), e as posições são medidas por `ResizeObserver`, então a mesa encolhe sem quebrar a linha."
+  ],
+  "desempenho": [
+   "Só as cinco cartas do topo do baralho são desenhadas, além das que estão na mesa (no máximo doze elementos animados); o resto do baralho é só um número."
+  ],
+  "notasIA": [
+   "Importe `CardDealer` pelo nome; a exportação padrão é a prévia com cinco posições.",
+   "O baralho e a mesa são estado interno, sem props para controlar as cartas: a única saída é `onDeal(hand)`, chamado no clique (antes de a animação terminar) com as cartas da mesa na ordem das posições.",
+   "`positions` aceita de 1 a 7; a mão só recebe nome com a mesa cheia e ao menos duas posições, e sequências e flushes exigem exatamente cinco cartas."
+  ]
+ },
+ "card-folder": {
+  "quandoUsar": [
+   "De três a cinco visões curtas do mesmo assunto, como resumo, tarefas, arquivos e equipe de um projeto, em que a metáfora de fichas empilhadas ajuda.",
+   "Seções de apresentação em que trocar de aba deve ser um gesto visível: a ficha escolhida sobe, cai na frente e as outras se acomodam atrás."
+  ],
+  "quandoEvitar": [
+   "Use `tabs` para abas comuns de aplicativo, com conteúdo de altura variável ou muitas seções.",
+   "Use `card-stack` quando a pessoa percorre os cartões um a um e descarta, em vez de escolher por aba.",
+   "Evite com conteúdo longo: todas as fichas têm a mesma altura (`height`) e o corpo corta o que passar dela, sem rolagem."
+  ],
+  "teclado": [
+   { "teclas": ["←", "→"], "acao": "Selecionam a aba anterior ou a próxima e levam o foco junto, dando a volta nas pontas." },
+   { "teclas": ["Home", "End"], "acao": "Selecionam a primeira ou a última aba." },
+   { "teclas": ["Tab"], "acao": "Entra na aba selecionada (a única na ordem do Tab) e depois segue para os controles da ficha da frente, se houver; os das fichas de trás ficam fora do alcance." }
+  ],
+  "acessibilidade": [
+   "Segue o padrão de abas: um `tablist` nomeado por `label` (ligado às abas por `aria-owns`), cada aba com `aria-selected` e `aria-controls`, e um `tabpanel` por ficha.",
+   "As fichas de trás recebem `inert` e `aria-hidden`, então nem o foco nem o leitor de tela entram no conteúdo coberto."
+  ],
+  "movimento": [
+   "Ao escolher uma aba, a ficha é puxada 58px para cima num movimento curto e depois cai na frente com uma mola de leve quique, enquanto as que estavam na frente dela recuam um degrau, menores e mais apagadas.",
+   "O conteúdo da ficha que sai da frente fica visível até a nova pousar, e um marcador de destaque cresce no topo da aba ativa.",
+   "Com “reduzir movimento” ligado, a ordem da pilha troca na hora, sem subida, quique nem transições."
+  ],
+  "responsivo": [
+   "A pasta ocupa `min(30rem, 100%)` e as abas dividem a largura por igual, cortando rótulos longos com reticências; abaixo de 26rem (container query) os ícones das abas somem e o texto diminui."
+  ],
+  "desempenho": [
+   "Todas as fichas ficam montadas o tempo todo (as de trás só escondidas), então o conteúdo de cada uma é renderizado mesmo sem estar à frente."
+  ],
+  "notasIA": [
+   "Importe `CardFolder` pelo nome (a exportação padrão é a prévia) e passe `cards` com `id`, `label`, `icon` opcional e `content`: sem `cards`, aparece uma pasta de projeto de exemplo.",
+   "Controle a ficha da frente com `value` e `onValueChange`, ou defina só a inicial com `defaultValue`.",
+   "`height` (296 por padrão) é a altura em px do corpo de todas as fichas; dimensione pelo conteúdo mais alto, porque o excesso é cortado."
+  ]
+ },
+ "changelog-feed": {
+  "quandoUsar": [
+   "Página de novidades ou notas de versão de um produto, com cada entrada marcada como New, Improved ou Fixed e detalhes que abrem no lugar.",
+   "Históricos longos agrupados por mês, em que a barra de meses mostra em que mês a rolagem está e salta para outro.",
+   "Notas que pedem uma imagem com legenda ou um trecho de código com botão de copiar, sem sair da lista."
+  ],
+  "quandoEvitar": [
+   "Use `timeline` para uma sequência de eventos agrupada por dia, sem filtros por tipo nem versões.",
+   "Use `blog-grid` quando as novidades são artigos com capa, autor e leitura completa.",
+   "Evite quando os tipos de mudança são outros: New, Improved e Fixed são fixos no código, assim como os textos da interface, em inglês."
+  ],
+  "teclado": [
+   { "teclas": ["Enter", "Espaço"], "acao": "Numa nota, abrem ou fecham os detalhes; nos filtros, ligam ou desligam o tipo; num mês da barra, rolam a lista até ele." },
+   { "teclas": ["↑", "↓", "Page Up", "Page Down"], "acao": "Com a área das notas em foco (ela entra na ordem do Tab), rolam a lista como qualquer área de rolagem." },
+   { "teclas": ["Enter"], "acao": "No campo de e-mail de “Subscribe”, envia; um endereço inválido faz o campo tremer, mostra o erro e mantém o foco nele." },
+   { "teclas": ["Esc"], "acao": "No campo de e-mail, volta ao botão “Subscribe” e devolve o foco a ele." }
+  ],
+  "acessibilidade": [
+   "Cada nota é um botão com `aria-expanded` e `aria-controls`, os filtros usam `aria-pressed` e uma região `role=\"status\"` oculta anuncia quantas notas ficaram visíveis depois de filtrar.",
+   "O e-mail tem rótulo oculto, `aria-invalid` no erro e mensagem num `role=\"status\"`; ao confirmar, o foco vai para “Undo”, cujo nome inclui o endereço inscrito.",
+   "O mês atual e as contagens animadas são `aria-hidden`; para o leitor de tela, cada mês é uma `section` com título próprio e a barra de meses é um `nav` com botões “Jump to …”."
+  ],
+  "movimento": [
+   "Os detalhes abrem com a altura numa mola e o conteúdo sobe de um leve desfoque; ao filtrar, as notas restantes deslizam para o novo lugar enquanto as que saem esmaecem.",
+   "Os números rolam para cima quando crescem e para baixo quando diminuem, o nome do mês entra no sentido da rolagem e a pílula da barra de meses desliza até o mês atual.",
+   "Com “reduzir movimento” ligado, as transições CSS vão a zero, molas e tremor do erro são desligados, as trocas viram corte ou esmaecer curto e o salto até um mês deixa de ser suave."
+  ],
+  "responsivo": [
+   "A lista rola dentro de uma altura fixa de 560px (520px em telas de até 640px); abaixo de 640px o cabeçalho empilha e data e versão vão para cima do título de cada nota.",
+   "Usa media queries da janela, não do contêiner: abaixo de 480px somem o ano, a contagem do mês e o total de notas visíveis."
+  ],
+  "desempenho": [
+   "A rolagem é lida no máximo uma vez por quadro (`requestAnimationFrame`) e um `ResizeObserver` refaz a conta quando a lista muda de altura; fotos e código só entram no DOM quando a nota abre.",
+   "Todas as notas ficam no DOM, cada uma com animação de layout; para centenas de versões, corte ou pagine a lista antes de passar `entries`."
+  ],
+  "notasIA": [
+   "Cada entrada precisa de `month` igual a uma `key` de `months` (os dois do mais novo para o mais antigo): entradas sem mês correspondente não aparecem.",
+   "O “Subscribe” só valida o e-mail e mostra a confirmação, sem prop de envio; para inscrever de verdade, edite `SubscribeControl` no arquivo instalado.",
+   "Depende de `copy-button` (instalado junto) para copiar os trechos de código; `defaultOpen` recebe ids e, sem ele, a primeira entrada já começa aberta."
+  ]
+ },
+ "chat-app": {
+  "quandoUsar": [
+   "Protótipo ou demonstração de um produto de chat com IA: lista de conversas e respostas que “pensam”, chegam palavra por palavra e podem ser paradas, copiadas ou refeitas.",
+   "Testes de usabilidade, tours guiados ou páginas de apresentação em que respostas prontas (`reply`) bastam e não há servidor.",
+   "Telas que precisam ir do desktop ao celular: abaixo de 760px de largura, a lista de conversas vira uma gaveta."
+  ],
+  "quandoEvitar": [
+   "Use `chat-thread` para conversa entre pessoas, com reações, confirmação de leitura e anexos.",
+   "Use `ai-sidebar` quando o assistente fica num painel ao lado da página, e não numa tela própria.",
+   "Evite ligar direto a um modelo com streaming: `reply` é síncrona e devolve o texto inteiro; para respostas reais, combine `prompt-input`, `message` e `message-scroller` ou edite o bloco."
+  ],
+  "teclado": [
+   { "teclas": ["Enter"], "acao": "Na caixa de mensagem, envia o texto; enquanto uma resposta chega, não faz nada (o botão ao lado vira o de parar)." },
+   { "teclas": ["Shift + Enter"], "acao": "Quebra a linha; a caixa cresce até 168px e depois rola." },
+   { "teclas": ["Esc"], "acao": "Na largura estreita, fecha a gaveta de conversas e devolve o foco ao botão que a abriu." },
+   { "teclas": ["Enter", "Espaço"], "acao": "Nos botões, abrem uma conversa, criam outra, enviam uma sugestão ou param, copiam e refazem a resposta." }
+  ],
+  "acessibilidade": [
+   "As mensagens ficam numa lista `ol`, cada fala começa com “You:” ou com `assistantName` só para o leitor de tela, e uma região `role=\"status\"` avisa quando o assistente está respondendo.",
+   "Na largura estreita, a gaveta recebe `inert` quando fechada e o resto da tela quando aberta; abrir leva o foco a “New chat” e fechar o devolve ao botão de conversas.",
+   "A conversa aberta tem `aria-current`, o botão de envio passa a se chamar “Stop the reply” durante a resposta e o de copiar vira “Copied”; os textos fixos estão em inglês."
+  ],
+  "movimento": [
+   "As mensagens sobem com uma mola suave; a resposta “pensa” por cerca de um segundo com um brilho no texto e depois chega palavra por palavra na velocidade de `speed`.",
+   "O marcador da conversa ativa desliza entre os itens, a gaveta entra de lado com uma mola sem ultrapassagem e o ícone de enviar gira até virar o de parar.",
+   "Com “reduzir movimento” ligado, molas, deslizes e pressões são desligados e a resposta aparece inteira depois do intervalo de “pensando”, sem o efeito palavra por palavra."
+  ],
+  "responsivo": [
+   "Abaixo de 760px de largura do próprio bloco (medida por `ResizeObserver`), a lista de conversas vira uma gaveta sobre a conversa, com fundo escurecido e um botão no cabeçalho.",
+   "Ocupa `100dvh` por padrão, com mínimo de 30rem; dentro de uma página ou de um quadro, passe `height` para não empurrar o resto do layout."
+  ],
+  "desempenho": [
+   "Usa dois `ResizeObserver` (largura do bloco e altura da conversa, para seguir a resposta até o fim) e um temporizador por resposta; todas as mensagens da conversa aberta ficam no DOM."
+  ],
+  "notasIA": [
+   "Importe `ChatApp` pelo nome (a exportação padrão é a prévia); `conversations` só define o estado inicial: depois disso, conversas e mensagens vivem dentro do bloco.",
+   "As respostas são simuladas: `reply(prompt, attempt)` devolve o texto (linhas em branco separam parágrafos) e `onSend` avisa cada envio; o selo “Simulated replies” do cabeçalho é fixo no código.",
+   "Depende de `streaming-response` e `loading-states`, instalados junto; passe `user` para trocar a pessoa de exemplo no pé da lista e `assistantName` para os rótulos."
+  ]
+ },
+ "command-palette": {
+  "quandoUsar": [
+   "Paleta de comandos de um app: buscar e executar ações, ir para outras páginas ou trocar configurações sem tirar as mãos do teclado.",
+   "Até algumas centenas de ações com grupos, ícones e atalhos visíveis, em que a busca aceita abreviações (“dup pr” acha “Duplicate project”).",
+   "Busca rápida embutida numa página ou num painel, já que o componente é um painel comum, não um modal."
+  ],
+  "quandoEvitar": [
+   "Use `combobox` quando a pessoa escolhe um valor para um campo de formulário, e não uma ação.",
+   "Use `search-field` ou `expanding-search` para buscar conteúdo com resultados próprios da página.",
+   "Evite com milhares de itens ou busca no servidor: a filtragem roda no cliente a cada tecla sobre a lista inteira e todos os resultados são renderizados."
+  ],
+  "teclado": [
+   { "teclas": ["↑", "↓"], "acao": "Movem o destaque entre os resultados, na ordem em que aparecem, e param no primeiro e no último." },
+   { "teclas": ["Home", "End"], "acao": "Levam o destaque ao primeiro ou ao último resultado (no campo, não movem o cursor do texto)." },
+   { "teclas": ["Enter"], "acao": "Executa o resultado destacado (depois de digitar, o primeiro); a busca é limpa e o foco continua no campo." },
+   { "teclas": ["Esc"], "acao": "Limpa a busca; com o campo já vazio, chama `onClose`." },
+   { "teclas": ["Ctrl + K", "⌘ + K"], "acao": "Em qualquer ponto da página, levam o foco ao campo enquanto a paleta estiver montada." }
+  ],
+  "acessibilidade": [
+   "O campo é um `combobox` ligado à lista (`role=\"listbox\"`) por `aria-controls`, e o resultado ativo vai em `aria-activedescendant`: o foco nunca sai do campo.",
+   "Os grupos são `role=\"group\"` com o nome do grupo, cada resultado é um `option` com `aria-selected`, e uma região `aria-live` anuncia o total de resultados ou “No results”.",
+   "`label` vira o rótulo oculto do campo; o componente não prende o foco nem cobre a página, então, para usá-lo como modal, coloque-o num `dialog` que devolva o foco ao fechar."
+  ],
+  "movimento": [
+   "Um único destaque desliza com uma mola rápida até o resultado ativo, pelo ponteiro ou pelas setas, e a moldura dos resultados acompanha a altura da lista ao filtrar.",
+   "Ao digitar, as linhas que saem esmaecem e as restantes deslizam para o novo lugar; se a nova ordem mover alguma linha mais de seis posições, a lista troca de uma vez.",
+   "Com “reduzir movimento” ligado, a entrada, o destaque, a altura e as linhas mudam na hora, sem deslize nem esmaecer."
+  ],
+  "responsivo": [
+   "A lista tem altura máxima de 342px e rola por dentro, trazendo o resultado ativo para a área visível; em janelas de até 480px, as teclas de atalho e a dica “⌘ K” somem."
+  ],
+  "desempenho": [
+   "A busca pontua todos os itens a cada tecla e cada resultado é um botão com animação de layout; um `ResizeObserver` mede a lista para a moldura acompanhar a altura."
+  ],
+  "notasIA": [
+   "Apesar de estar entre os blocos, instala em `@/components/ryan-ui/command-palette/command-palette`; passe `items` com `id` e `label` e, opcionais, `group`, `keywords`, `description`, `icon` e `shortcut`.",
+   "Ela não abre nem fecha sozinha: para um modal, monte-a num `dialog` quando o atalho for pressionado, com `autoFocus`, e feche em `onClose`, chamado pelo Esc com o campo vazio e pelo botão “Esc”.",
+   "`shortcut` só desenha as teclas na linha, sem registrar atalho; o único atalho real é o Ctrl+K/⌘+K global, que foca o campo e pode colidir com um atalho seu."
+  ]
+ },
+ "comparison-table": {
+  "quandoUsar": [
+   "Página de preços ou de produto que compara a sua oferta com alternativas, recurso por recurso, com a sua coluna destacada.",
+   "Tabelas longas em que o cabeçalho precisa continuar visível na rolagem e a opção “Only differences” enxuga a leitura.",
+   "Comparações que precisam funcionar no celular: abaixo de `stackBelow` ficam só a sua coluna e uma concorrente, escolhida por botões."
+  ],
+  "quandoEvitar": [
+   "Use `plan-comparison` para comparar os seus próprios planos e períodos de cobrança.",
+   "Use `sortable-data-table` para dados tabulares de verdade, com ordenação e muitas linhas.",
+   "Evite com muitas colunas: todas dividem a largura, sem rolagem horizontal, até o modo empilhado entrar abaixo de `stackBelow`."
+  ],
+  "teclado": [
+   { "teclas": ["Espaço"], "acao": "No interruptor “Only differences”, liga ou desliga a filtragem das linhas iguais." },
+   { "teclas": ["Enter", "Espaço"], "acao": "Nos botões de concorrente (modo empilhado) e no botão de chamada da sua coluna, acionam a escolha." },
+   { "teclas": ["↑", "↓", "Page Up", "Page Down"], "acao": "Com `maxHeight`, a área da tabela entra na ordem do Tab e rola pelo teclado, com o cabeçalho preso no topo." }
+  ],
+  "acessibilidade": [
+   "A grade é uma tabela ARIA (`role=\"table\"`, `row`, `columnheader`, `rowheader`, `cell`) nomeada pelo título, e cada marca tem texto oculto: “Included”, “Partial” ou “Not included”.",
+   "“Only differences” é um checkbox nativo com `role=\"switch\"` dentro do rótulo, e uma região `aria-live` diz se todas as linhas estão visíveis ou só as que diferem.",
+   "Com `maxHeight`, a área de rolagem vira uma `region` focável com o título como nome; os textos fixos (o interruptor, a legenda, “Compare … with”) estão em inglês."
+  ],
+  "movimento": [
+   "As marcas de incluído se desenham quando entram na tela, em cascata na sua coluna; ao filtrar, as linhas fecham e abrem a altura com uma mola sem ultrapassagem.",
+   "No modo empilhado, o realce desliza até a concorrente escolhida e os valores trocam com um leve zoom; o botão de chamada muda de largura ao confirmar com `doneLabel`.",
+   "Com “reduzir movimento” ligado, as marcas já aparecem desenhadas, as linhas somem e voltam na hora, o botão troca de largura sem animar e as trocas viram só esmaecer."
+  ],
+  "responsivo": [
+   "Abaixo de `stackBelow` (640px por padrão, medido no próprio bloco), mostra só a sua coluna e a concorrente escolhida; as colunas também se estreitam por container query em 820px e 640px.",
+   "O cabeçalho gruda no topo da rolagem da página ou, com `maxHeight`, no topo da própria tabela; `stickyTop` desconta a altura de um cabeçalho fixo do site."
+  ],
+  "notasIA": [
+   "Importe `ComparisonTable` pelo nome (a exportação padrão é a prévia com altura limitada) e marque a sua coluna com `highlight: true`; sem ela, vale a primeira.",
+   "Valores por coluna: `true`, `false`, `\"partial\"`, um texto (limite ou preço) ou `{ value, note }`; “Only differences” compara só `value`, então notas diferentes não contam como diferença.",
+   "Sem `cta` não há botão: com `href` e sem `onClick` vira link, e com `doneLabel` o botão confirma no lugar. No modo empilhado, `compareWith` controla a concorrente (o padrão é a primeira)."
+  ]
+ },
+ "contact-section": {
+  "quandoUsar": [
+   "Página ou seção de contato com formulário validado (nome, e-mail, assunto e mensagem) que vira uma confirmação no mesmo cartão, na variante `form`.",
+   "Central de suporte com vários canais (chat, e-mail, vendas, comunidade), cada um com seu painel de detalhe, na variante `channels`.",
+   "Empresas com escritórios em fusos diferentes: a variante `offices` mostra a hora local de cada um e se está aberto agora."
+  ],
+  "quandoEvitar": [
+   "Use `feedback-widget` para colher uma opinião rápida sem a pessoa sair da página.",
+   "Use `signup-form` para criar conta, com força de senha e estado de conclusão próprios.",
+   "Evite quando o formulário precisa de outros campos: nome, e-mail, assunto e mensagem são fixos no código, e só a lista de assuntos vem por prop."
+  ],
+  "teclado": [
+   { "teclas": ["↑", "↓", "←", "→"], "acao": "No grupo de assuntos, marcam o assunto anterior ou o próximo, dando a volta nas pontas." },
+   { "teclas": ["↑", "↓", "←", "→"], "acao": "Na lista de canais (variante `channels`), selecionam o canal anterior ou o próximo e trocam o painel, dando a volta." },
+   { "teclas": ["Home", "End"], "acao": "Na lista de canais, selecionam o primeiro ou o último canal." },
+   { "teclas": ["Enter"], "acao": "Num campo de linha única, envia o formulário; com erro, o foco vai para o primeiro campo inválido." }
+  ],
+  "acessibilidade": [
+   "Os campos vêm de `input` e `textarea`, com rótulo visível, `aria-invalid` e erro ligado ao campo em `role=\"alert\"`; uma falha de envio também aparece em `role=\"alert\"`.",
+   "Os assuntos são um `radiogroup` com foco itinerante e os canais, um `tablist` vertical ligado ao `tabpanel`; durante a troca, a face que sai fica `inert`.",
+   "Na confirmação, o foco vai para o título “Thanks, …”, e “Send another message” limpa o formulário e devolve o foco ao campo Name; os textos fixos estão em inglês."
+  ],
+  "movimento": [
+   "O cartão muda de altura numa mola ao virar confirmação, enquanto as faces trocam deslizando um pouco e saindo de um leve desfoque; o visto da confirmação se desenha.",
+   "Nos assuntos e nos canais, um realce desliza até a opção escolhida, e o painel do canal ajusta a altura enquanto o conteúdo novo entra no sentido da navegação.",
+   "Com “reduzir movimento” ligado, as faces só esmaecem, a altura troca na hora, os realces não deslizam e o visto já aparece desenhado."
+  ],
+  "responsivo": [
+   "Container query: abaixo de 820px o formulário desce para baixo do texto e os canais viram uma fileira que rola na horizontal, sem a linha de detalhe; abaixo de 520px os campos empilham.",
+   "Os cartões de escritório se organizam em colunas automáticas de no mínimo 240px (`auto-fit`)."
+  ],
+  "desempenho": [
+   "A variante `offices` atualiza a hora local a cada 15 segundos; antes de montar no navegador mostra “--:--”, então a primeira renderização bate com a do servidor."
+  ],
+  "notasIA": [
+   "Importe `ContactSection` pelo nome (a exportação padrão é a prévia com seletor de variantes); `avatar`, `button`, `copy-button`, `input`, `segmented-control` e `textarea` são instalados junto.",
+   "`onSubmit` recebe `{ name, email, topic, message }`: devolva uma promessa e rejeite para manter o formulário com a mensagem de falha; sem ele, o envio é só simulado (1,1 s) e nada sai da página.",
+   "O e-mail “hello@example.com” e os prazos de resposta da variante `form` estão escritos no código; canais e escritórios de exemplo trocam por `channels` e `offices`."
+  ]
+ },
+ "cta-section": {
+  "quandoUsar": [
+   "Fechamento de uma landing page com título, texto e duas ações, na variante `centered`, com rostos e uma nota curta como prova social.",
+   "Chamada ao lado de uma demonstração do produto, na variante `split`, com lista de benefícios e um cartão de configuração que se completa ao entrar na tela (ou o seu `visual`).",
+   "Aviso de lançamento numa linha só, na variante `banner`, que pode ser dispensado e fecha o espaço que ocupava."
+  ],
+  "quandoEvitar": [
+   "Use `announcement-bar` para uma faixa no topo que alterna mensagens ou faz contagem regressiva.",
+   "Use `newsletter-signup` quando a ação é deixar o e-mail.",
+   "Use `hero-section` para a abertura da página; esta seção é pensada para o meio ou o fim dela."
+  ],
+  "acessibilidade": [
+   "Cada variante é uma `section` nomeada pelo título (`h2` em `centered` e `split`, texto em negrito no `banner`); o botão de dispensar se chama “Dismiss” e só aparece com `onDismiss`.",
+   "O cartão de configuração e os rostos são decorativos (`aria-hidden`); ações sem `href` nem `onClick` trocam o rótulo numa região `aria-live` quando clicadas."
+  ],
+  "movimento": [
+   "Em `split`, o palco sobe ao entrar na tela e o cartão marca as etapas uma a uma, a cada 0,6 s, enchendo a barra de progresso até “Ready”.",
+   "No `banner`, dispensar fecha a altura com uma mola sem ultrapassagem e só então chama `onDismiss`; a seta das ações avança um pouco ao passar o mouse.",
+   "Com “reduzir movimento” ligado, o cartão já aparece completo, o palco não sobe, o banner some sem fechar a altura aos poucos e as transições CSS são desligadas."
+  ],
+  "responsivo": [
+   "Container query: abaixo de 860px o `split` empilha o texto sobre o palco; abaixo de 560px as ações ocupam a largura, uma sobre a outra, e o `banner` vira um bloco com as ações embaixo."
+  ],
+  "notasIA": [
+   "Importe `CtaSection` pelo nome (a exportação padrão é a prévia com seletor de variantes); todos os textos têm padrão de exemplo, então passe sempre `title`, `description` e `primaryAction`.",
+   "Cada ação é `{ label, href?, onClick?, confirmedLabel? }`: com `href` vira link, com `onClick` chama a função e, sem os dois, só alterna o rótulo, o que serve para prévias e não para produção.",
+   "No `banner`, o botão de fechar só existe se você passar `onDismiss`; `secondaryAction={null}` esconde a segunda ação e `faces={[]}` tira os rostos de `centered`."
+  ]
+ },
+ "dynamic-island": {
+  "quandoUsar": [
+   "Mostrar uma atividade em andamento no topo de uma interface móvel, ou de um app que imita um celular: chamada, cronômetro ou música, compacta e expansível.",
+   "Demonstrações e protótipos em que a mudança de forma da pílula entre os estados é o destaque."
+  ],
+  "quandoEvitar": [
+   "Use `toast` ou `toast-progress` para avisar o andamento ou o resultado de uma tarefa sem ocupar um lugar fixo na tela.",
+   "Use `announcement-bar` para uma mensagem de largura total no topo da página.",
+   "Evite para outras atividades: as visões de chamada, cronômetro e música são fixas no código, e o tempo, a faixa e o mudo vivem dentro do componente."
+  ],
+  "teclado": [
+   { "teclas": ["Enter", "Espaço"], "acao": "Na pílula compacta, expandem a atividade; nos botões redondos, atendem, recusam, silenciam, pausam, reiniciam ou trocam de faixa." },
+   { "teclas": ["Esc"], "acao": "Com a ilha expandida, recolhe e, se o foco estava dentro dela, devolve-o à pílula compacta." }
+  ],
+  "acessibilidade": [
+   "A ilha é um `role=\"group\"` chamado “Live activity”; compacta, é um botão cujo nome descreve a atividade, como “Jasmine Brooks is calling. Expand” ou “Timer, 4:12 left. Expand”.",
+   "Os botões só com ícone têm nome (“Accept”, “Decline”, “Mute” com `aria-pressed`), o cronômetro usa `role=\"timer\"` e a música tem um `progressbar` com texto como “0:48 of 3:34”.",
+   "Não há botão de recolher na visão expandida: Esc e o clique fora da ilha são os únicos jeitos de voltar à forma compacta."
+  ],
+  "movimento": [
+   "A pílula muda de largura, altura e raio numa única mola com um leve quique, e o conteúdo de cada visão entra de um desfoque e de uma escala um pouco menor, já no tamanho final.",
+   "As barras de som pulsam em ritmos diferentes enquanto há áudio, o telefone da forma compacta balança enquanto a chamada toca e as barras de progresso andam em ritmo constante a cada segundo.",
+   "Com “reduzir movimento” ligado, a pílula troca de tamanho na hora, o conteúdo só esmaece, as barras de som ficam paradas em alturas fixas e o telefone não balança."
+  ],
+  "responsivo": [
+   "A pílula expandida tem largura fixa de 344px, limitada a `100vw - 1.5rem`; o conteúdo é desenhado nesse tamanho e não se reorganiza, então em telas mais estreitas as bordas ficam cortadas."
+  ],
+  "desempenho": [
+   "Fora do repouso, um único intervalo de 1 segundo atualiza a chamada, o cronômetro ou a música, mesmo na forma compacta; as barras de som e o toque são animações CSS."
+  ],
+  "notasIA": [
+   "Importe `DynamicIsland` pelo nome (a exportação padrão é a prévia com celular e seletor); o componente não se posiciona, então centralize-o no topo pelo pai.",
+   "Controle `activity` e `expanded` com `onActivityChange` e `onExpandedChange`: recusar ou encerrar a chamada e cancelar o cronômetro voltam a ilha para `\"idle\"` por conta própria.",
+   "`caller`, `tracks` e `timerSeconds` trocam os dados de exemplo; a ilha fica quase preta nos dois temas porque usa a escala neutra fixa, e não as superfícies do tema."
+  ]
+ },
+ "empty-states": {
+  "quandoUsar": [
+   "Vitrine ou página de demonstração de estados vazios ilustrados (sem resultados, offline, caixa em dia, página não encontrada), em que trocar de aba transforma a ilustração.",
+   "Ponto de partida para estados vazios próprios com formas que se transformam, adaptando textos, ações e cenas no código."
+  ],
+  "quandoEvitar": [
+   "Use `empty-state` para um estado vazio de verdade dentro de uma tela, com título, texto e ação por props.",
+   "Use `not-found` para uma página 404 completa, com busca e links de volta.",
+   "Evite quando textos e ações precisam vir de props: o bloco não recebe nenhuma, e as ações só simulam o resultado na própria tela."
+  ],
+  "teclado": [
+   { "teclas": ["←", "→"], "acao": "Selecionam a aba anterior ou a próxima, dando a volta, e levam o foco junto." },
+   { "teclas": ["Home", "End"], "acao": "Selecionam a primeira ou a última aba." },
+   { "teclas": ["Enter", "Espaço"], "acao": "No botão, executam a ação da cena: limpar filtros, tentar de novo, verificar o e-mail ou achar a página." }
+  ],
+  "acessibilidade": [
+   "As cenas seguem o padrão de abas (`tablist`, `tab` com `aria-selected`, `tabpanel`) com foco itinerante, e a ilustração é um `role=\"img\"` com descrição própria de cada cena.",
+   "O resultado de cada ação é anunciado numa região `aria-live=\"polite\"` oculta, e o botão fica em estado de carregamento enquanto a ação simulada espera."
+  ],
+  "movimento": [
+   "Ao trocar de aba, cada uma das dez formas da ilustração viaja para nova posição, tamanho, raio e cor numa mola própria, e as linhas se redesenham um instante depois.",
+   "Com mouse, as camadas da ilustração se deslocam levemente acompanhando o ponteiro; título e texto trocam subindo de um leve desfoque, e a altura do texto acompanha com uma mola.",
+   "Com “reduzir movimento” ligado, a ilustração troca por esmaecimento cruzado, sem viagem das formas, a paralaxe é desligada e os textos só esmaecem."
+  ],
+  "responsivo": [
+   "A ilustração tem proporção fixa e no máximo 360px de largura, então trocar de cena não muda o layout; em contêineres de até 420px as abas ficam menores e rolam se faltar espaço."
+  ],
+  "desempenho": [
+   "Um único laço de `requestAnimationFrame` move todas as formas escrevendo direto nos atributos do SVG, sem renderizar o React a cada quadro, e dorme quando tudo assenta."
+  ],
+  "notasIA": [
+   "O bloco não tem props: textos e ações estão em `COPY`, no componente, e as cenas em `empty-states-art.ts`; para um estado vazio configurável, use `empty-state`.",
+   "As ações são locais e simuladas (limpar filtros, reconectar, checar o e-mail, achar a página); para ligá-las a dados reais, troque a função `act()` no arquivo instalado.",
+   "Depende de `button`, instalado junto; o cartão ocupa a largura do pai, e o conteúdo se limita a 480px no centro."
+  ]
+ },
+ "expandable-action-bar": {
+  "quandoUsar": [
+   "Barra flutuante de ações em massa sobre uma seleção (arquivos, fotos, linhas), com as três ou quatro ações principais sempre à mão e o resto a um toque.",
+   "Telas de celular ou painéis estreitos, em que a pílula compacta cabe sobre o conteúdo e só se abre numa grade rotulada quando pedida."
+  ],
+  "quandoEvitar": [
+   "Use `overflow-actions` para uma barra fixa que leva para um menu “mais” só as ações que não cabem na largura.",
+   "Use `bloom-menu` para criar itens novos a partir de um botão flutuante, sem seleção.",
+   "Use `dropdown-menu` quando a lista de ações é longa ou tem submenus."
+  ],
+  "teclado": [
+   { "teclas": ["←", "→"], "acao": "Movem o foco entre todos os botões da barra, incluindo o de expandir e os da fileira secundária, dando a volta." },
+   { "teclas": ["Home", "End"], "acao": "Focam o primeiro ou o último botão da barra." },
+   { "teclas": ["Esc"], "acao": "Com a barra expandida, recolhe e devolve o foco ao botão de expandir." },
+   { "teclas": ["Enter", "Espaço"], "acao": "Acionam a ação em foco, ou expandem e recolhem a barra no botão da seta." }
+  ],
+  "acessibilidade": [
+   "A barra é um `role=\"toolbar\"` horizontal com nome fixo “Actions”, e o botão de expandir tem `aria-expanded` e nome “Show all actions” ou “Show fewer actions”.",
+   "Na forma compacta, cada botão recebe `aria-label` e `title` com o `label` da ação; expandida, o texto visível vira o nome. A fileira secundária é um `group` nomeado por `shortcutsLabel`.",
+   "Todos os botões ficam na ordem do Tab (não há foco itinerante); as setas são um atalho a mais para percorrê-los."
+  ],
+  "movimento": [
+   "A barra é uma janela que muda de largura e altura numa mola com leve quique, crescendo para cima a partir da pílula, enquanto os ícones que já estavam lá deslizam para o novo lugar.",
+   "Os ícones extras surgem em cascata, os rótulos sobem logo depois e a seta gira 180°; quando `label` muda, o texto novo entra por baixo e o antigo sai por cima.",
+   "Com “reduzir movimento” ligado, a barra assume o novo tamanho na hora e ícones e rótulos só aparecem, sem deslize nem cascata."
+  ],
+  "responsivo": [
+   "A largura expandida é `width` (416px por padrão), limitada ao espaço do contêiner; a fileira secundária rola na horizontal, com a borda final esmaecida indicando que há mais."
+  ],
+  "desempenho": [
+   "Um `ResizeObserver` acompanha o contêiner e o conteúdo, e só um novo tamanho-alvo dispara a mola, então redimensionar a janela não reinicia a animação a cada quadro."
+  ],
+  "notasIA": [
+   "Importe `ExpandableActionBar` pelo nome (a exportação padrão é a prévia com o quadro de arquivos) e marque com `primary: true` as três ou quatro ações da pílula compacta.",
+   "O componente ocupa a largura do pai e se ancora na borda de baixo dele: posicione o pai (por exemplo, `position: absolute` no rodapé) e mostre a barra só quando houver seleção.",
+   "Trate os cliques em `onAction(id)` e `onShortcut(id)`; `label` (como “3 selected”) é o texto que troca com animação, e `shortcuts={[]}` remove a fileira secundária."
+  ]
+ },
+ "expandable-tabs": {
+  "quandoUsar": [
+   "Barra inferior de app ou alternador compacto com quatro ou cinco destinos, em que só o ativo precisa mostrar o nome.",
+   "Navegação por ícones conhecidos (início, busca, caixa de entrada, perfil), com contador de não lidos no ícone (`badge: 3`)."
+  ],
+  "quandoEvitar": [
+   "Use `tabs` ou `segmented-control` quando todos os rótulos devem ficar visíveis o tempo todo.",
+   "Use `morphing-tabs` quando as abas têm rótulo e o destaque deve viajar entre elas.",
+   "Evite com ícones ambíguos ou muitos destinos: os nomes ficam escondidos e a lista não rola nem quebra linha."
+  ],
+  "teclado": [
+   { "teclas": ["←", "→"], "acao": "Selecionam a aba anterior ou a próxima, pulando as desabilitadas e dando a volta, e levam o foco junto." },
+   { "teclas": ["Home", "End"], "acao": "Selecionam a primeira ou a última aba habilitada." }
+  ],
+  "acessibilidade": [
+   "Segue o padrão de abas com foco itinerante: `tablist` nomeado por `label`, `aria-selected` em cada aba e, quando há `content`, um `tabpanel` ligado à aba ativa.",
+   "O nome de cada aba é sempre o `label` (com “, 3 new” quando há `badge`), mesmo com o texto escondido; o rótulo visível fica em `aria-hidden` para não ser lido duas vezes."
+  ],
+  "movimento": [
+   "O rótulo da aba ativa se abre numa mola sem ultrapassagem enquanto o da anterior se fecha, o fundo de destaque cresce a partir da própria aba e o ícone pulsa uma vez.",
+   "Quando há `content`, o painel troca subindo de um leve desfoque.",
+   "Com “reduzir movimento” ligado, rótulos e painéis trocam na hora, sem pulso nem desfoque, e as transições CSS do fundo são desligadas."
+  ],
+  "responsivo": [
+   "A lista se centraliza e cresce com o rótulo ativo, sem rolagem nem quebra de linha: confira se os ícones mais o rótulo mais longo cabem na tela mais estreita."
+  ],
+  "notasIA": [
+   "Importe `ExpandableTabs` pelo nome (a exportação padrão é a prévia de um app); cada aba precisa de `id`, `label` e `icon`, e contagens acima de 9 em `tab.badge` aparecem como “9+”.",
+   "Sem `content` em nenhuma aba, vira um alternador simples, sem `tabpanel`: use `value` e `onValueChange` para trocar a tela por fora, como numa barra inferior.",
+   "Com `content`, o painel aparece acima da lista; para fixar a barra no rodapé da tela, posicione o componente pelo pai."
+  ]
+ },
+ "faq-section": {
+  "quandoUsar": [
+   "Seção de perguntas frequentes numa página de produto ou de preços, com respostas que abrem no lugar, na variante `accordion`.",
+   "Muitas perguntas agrupadas por tema, na variante `columns`, com um trilho de categorias que fica fixo ao lado durante a rolagem.",
+   "Centrais de ajuda em que a pessoa procura por palavra: a variante `search` filtra perguntas e respostas, ignora acentos e destaca o trecho encontrado."
+  ],
+  "quandoEvitar": [
+   "Use `accordion` para revelar seções de qualquer conteúdo, e não só perguntas com respostas em texto.",
+   "Evite quando as respostas precisam de links, listas ou formatação: `answer` é texto puro, porque também é o que a busca compara e destaca."
+  ],
+  "teclado": [
+   { "teclas": ["↑", "↓"], "acao": "Movem o foco para a pergunta anterior ou a próxima da mesma lista, dando a volta." },
+   { "teclas": ["Home", "End"], "acao": "Focam a primeira ou a última pergunta da lista." },
+   { "teclas": ["Enter", "Espaço"], "acao": "Abrem ou fecham a resposta da pergunta em foco; nas categorias de `columns`, trocam o tema." }
+  ],
+  "acessibilidade": [
+   "Cada pergunta é um botão dentro de um `h3`, com `aria-expanded` e `aria-controls`, e a resposta é uma `region` nomeada pela própria pergunta.",
+   "Na busca, a contagem de respostas encontradas é anunciada numa região `aria-live`; nas categorias, o tema ativo usa `aria-pressed`.",
+   "`title` vira o `h2` que nomeia a seção; o cartão de contato do fim é um link quando recebe `href` e um botão nos outros casos."
+  ],
+  "movimento": [
+   "A resposta abre com a altura numa mola sem ultrapassagem e o texto desce de um leve desfoque, enquanto o sinal de mais gira 45° e vira um x.",
+   "Na busca, as perguntas que deixam de bater fecham a altura e as restantes deslizam; em `columns`, a lista do novo tema entra no sentido da troca e o realce desliza até ele.",
+   "Com “reduzir movimento” ligado, respostas, filtros e temas trocam na hora e o ícone não anima."
+  ],
+  "responsivo": [
+   "Container query: abaixo de 760px o trilho de `columns` deixa de ficar fixo e as categorias viram uma fileira que rola na horizontal, acima das perguntas."
+  ],
+  "notasIA": [
+   "Importe `FaqSection` pelo nome (a exportação padrão é a prévia com seletor) e escolha `variant`: `accordion`, `columns` ou `search`; `search-field` e `segmented-control` vêm junto.",
+   "Por padrão a primeira pergunta abre e só uma fica aberta por vez: use `multiple` para várias e `defaultValue={[]}` para começar fechado; o id de cada item é `id` ou, sem ele, a pergunta.",
+   "Em `columns`, dê `category` a cada item (sem ela, vira “General”); `contact={null}` remove o cartão “Still have a question?”, que sem `href` nem `onClick` não faz nada."
+  ]
+ },
+ "feedback-widget": {
+  "quandoUsar": [
+   "Coletar uma opinião rápida em qualquer página (central de ajuda, artigo, painel) com um botão fixo no canto que não tira a pessoa do que estava fazendo.",
+   "Pesquisas de satisfação de um clique, com cinco rostos e uma mensagem opcional."
+  ],
+  "quandoEvitar": [
+   "Use `contact-section` quando a mensagem precisa de nome, e-mail e assunto para receber resposta.",
+   "Use `rating` para uma nota dentro de um formulário.",
+   "Evite com outro botão flutuante no mesmo canto, como um chat de suporte: o widget fica fixo no canto inferior, numa camada alta (`z-index: 50`), e os dois disputariam o lugar."
+  ],
+  "teclado": [
+   { "teclas": ["Enter", "Espaço"], "acao": "No botão “Feedback”, abrem o formulário e levam o foco ao primeiro rosto." },
+   { "teclas": ["↑", "↓", "←", "→"], "acao": "No grupo de rostos, escolhem o anterior ou o próximo, dando a volta; sem escolha, `→` e `↓` começam no primeiro e `←` e `↑` no último." },
+   { "teclas": ["Ctrl + Enter", "⌘ + Enter"], "acao": "No campo de mensagem, enviam o formulário, desde que um rosto tenha sido escolhido." },
+   { "teclas": ["Esc"], "acao": "Fecha o formulário e devolve o foco ao botão, exceto durante o envio." }
+  ],
+  "acessibilidade": [
+   "O botão tem `aria-haspopup=\"dialog\"`; o painel é um `role=\"dialog\"` nomeado pelo título, mas não modal: o foco não fica preso, e Esc ou um clique fora fecham e devolvem o foco ao botão.",
+   "Os rostos formam um `radiogroup` com foco itinerante e nomes (de “Terrible” a “Great”), e o nome do rosto escolhido é anunciado numa região `aria-live`.",
+   "O envio expõe `aria-busy`, a falha aparece em `role=\"alert\"` e o agradecimento em `role=\"status\"`; o campo de mensagem tem o rótulo oculto “Your feedback”."
+  ],
+  "movimento": [
+   "O próprio botão se transforma no painel, a partir do seu canto, numa mola de layout sem ultrapassagem, e o conteúdo surge aos poucos logo depois.",
+   "O destaque desliza até o rosto escolhido, que cresce e gira um pouco; ao concluir, o selo aparece com um quique, o visto se desenha e o painel fecha sozinho após 2,6 s.",
+   "Com “reduzir movimento” ligado, o painel abre e fecha na hora, sem morph nem giro, e o indicador de envio fica parado."
+  ],
+  "responsivo": [
+   "Fica fixo na janela (`position: fixed`) no canto escolhido por `placement`; com `contained`, prende-se ao ancestral posicionado mais próximo, como num painel ou numa prévia.",
+   "O painel tem 21rem de largura, limitado ao espaço disponível; em telas de até 30rem, a distância até as bordas diminui."
+  ],
+  "notasIA": [
+   "Importe `FeedbackWidget` pelo nome (a exportação padrão é a prévia com um artigo de ajuda) e monte-o uma vez no layout da página: ele se fixa sozinho no canto.",
+   "`onSubmit` recebe `{ mood, message }`, com a mensagem já aparada: devolva uma promessa para segurar o estado de envio e rejeite-a para mostrar o erro e manter o formulário.",
+   "Os nomes dos rostos e os textos de falha, de envio e de “Close” estão fixos em inglês; `label`, `title`, `placeholder`, `thanksTitle` e `thanksMessage` vêm por props."
+  ]
+ },
+ "file-upload": {
+  "quandoUsar": [
+   "Formulários que pedem um ou mais arquivos com regras de tipo e tamanho, mostrando o motivo da recusa na própria linha do arquivo.",
+   "Envio com progresso por arquivo, cancelamento ao remover e botão de tentar de novo quando falha, ligado ao seu `onUpload`."
+  ],
+  "quandoEvitar": [
+   "Use `file-dropzone` quando basta uma área generosa para soltar arquivos, sem lista nem progresso.",
+   "Evite para escolher uma imagem de perfil com recorte ou prévia: cada linha mostra só um ícone pelo tipo, o nome e o tamanho."
+  ],
+  "teclado": [
+   { "teclas": ["Enter", "Espaço"], "acao": "Na área de envio, abrem a janela de escolha de arquivos do sistema." },
+   { "teclas": ["Enter", "Espaço"], "acao": "Nos botões de cada linha, removem o arquivo ou tentam de novo; ao remover, o foco vai para o “remover” do arquivo vizinho ou volta à área de envio." }
+  ],
+  "acessibilidade": [
+   "A área de envio é um `role=\"button\"` focável, com `aria-disabled` e a descrição ligada por `aria-describedby`; o `input` de arquivo real fica escondido e fora do Tab.",
+   "Uma região `aria-live` anuncia arquivos adicionados, recusados, enviados, com falha e removidos, e os botões de cada linha incluem o nome do arquivo (“Remove foto.png”, “Retry foto.png”)."
+  ],
+  "movimento": [
+   "Cada linha abre e fecha a altura numa mola; a barra de progresso e a porcentagem seguem a mesma mola, e a barra só se recolhe depois de mostrar 100%.",
+   "Os textos de estado trocam subindo de um leve desfoque, o visto de pronto se desenha e a nuvem sobe um pouco quando um arquivo paira sobre a área.",
+   "Com “reduzir movimento” ligado, linhas, barra e textos mudam na hora ou só esmaecem, e a nuvem não se move."
+  ],
+  "desempenho": [
+   "Cada envio tem seu `AbortController`: remover o arquivo ou desmontar o componente cancela o sinal, então o seu `onUpload` precisa respeitar `signal` para parar a rede."
+  ],
+  "notasIA": [
+   "Apesar de estar entre os blocos, instala em `@/components/ryan-ui/file-upload/file-upload`; sem `onUpload`, os arquivos só aparecem como prontos e nada é enviado.",
+   "`onUpload(file, { onProgress, signal })` deve chamar `onProgress` de 0 a 100, resolver ao terminar e rejeitar na falha; recusados por `accept` ou `maxSize` (em bytes) ficam na lista e não são enviados.",
+   "`value` e `onChange` controlam a lista de `{ id, file, error }`; com `multiple={false}`, um arquivo novo substitui o anterior e cancela o envio em andamento."
+  ]
+ },
+ "hero-section": {
+  "quandoUsar": [
+   "Abertura de uma landing page de produto: uma janela de produto viva (`product`), um fluxo de automação rodando (`workflow`) ou tipografia grande sobre uma faixa de palavras (`editorial`).",
+   "Hero com o seu próprio conteúdo (título, descrição, ações, comando de instalação e um visual ao lado), passando `title`, sem montar o layout do zero."
+  ],
+  "quandoEvitar": [
+   "Use `cta-section` para uma chamada no meio ou no fim da página.",
+   "Use `site-header` para a navegação do site: a barra das versões desenhadas rola junto com o hero e perde os links em telas estreitas.",
+   "Evite usar as versões desenhadas com a sua marca sem editar o código: textos, números e nomes (Lumen, Relay, Cadence) são de exemplo, e só as ações vêm por props."
+  ],
+  "acessibilidade": [
+   "Cada versão tem um único `h1`; os cartões flutuantes são `aria-hidden`, e a janela do produto e o grafo são grupos com nome resumido, como “Lumen revenue dashboard, sample data”.",
+   "No grafo, cada etapa tem estado com nome (“Running”, “Done”, “Skipped”, “Waiting”), e a frase sob o marca-texto é desenhada duas vezes, com a cópia em `aria-hidden`, para ser lida uma vez só."
+  ],
+  "movimento": [
+   "Ao montar, as partes sobem em ordem de leitura saindo de um leve desfoque, e um marca-texto na cor de destaque passa da esquerda para a direita sobre uma frase do título.",
+   "Na `product`, os números rolam, o gráfico se desenha e os cartões flutuam; na `workflow`, um pulso percorre as linhas a cada evento; na `editorial`, as palavras correm numa faixa.",
+   "Com “reduzir movimento” ligado, nada se desloca (só esmaece), o gráfico já aparece pronto, o fluxo mostra cada evento concluído, a faixa vira uma área de rolagem comum e o marca-texto já vem pintado."
+  ],
+  "responsivo": [
+   "As versões desenhadas ocupam no mínimo a altura da tela (`100svh`) e se ajustam por container query; abaixo de 760px os links da barra e o “Sign in” somem, sem menu no lugar.",
+   "Na `workflow`, o grafo é desenhado em tamanho fixo e reduzido em escala para caber na coluna, com um arranjo estreito abaixo de 520px."
+  ],
+  "desempenho": [
+   "Os laços de eventos e de avisos param quando o hero sai da tela ou a aba fica oculta (`IntersectionObserver` e `visibilitychange`); ainda assim, use uma versão por página."
+  ],
+  "notasIA": [
+   "Importe `HeroSection` pelo nome (a exportação padrão é a prévia com seletor de versões) e escolha `variant`: `product`, `workflow` ou `editorial`; `centered`, `split` e `minimal` também valem.",
+   "Com `title`, o bloco troca a vitrine pelo seu conteúdo (`description`, `announcement`, `install`, `meta` e, em `workflow`, `media`), com altura natural; sem `title`, só as duas ações são suas.",
+   "Depende de `animated-counter`, `avatar`, `badge`, `button`, `copy-button`, `marquee` e `segmented-control`; `HeroNav`, `HeroBackdrop` e `HeroMark` também são exportados para montar a sua versão."
+  ]
+ },
+ "infinite-masonry": {
+  "quandoUsar": [
+   "Galerias e feeds de imagens com proporções diferentes (portfólios, inspiração, fotos de produtos) que carregam a próxima página ao chegar perto do fim.",
+   "Conteúdo vindo de uma API paginada: `loadPage(page)` recebe o número da página e devolve os cartões, e uma lista vazia encerra o feed."
+  ],
+  "quandoEvitar": [
+   "Use `blog-grid` quando os itens são posts com texto, categoria e paginação numerada.",
+   "Use `pagination` com uma grade comum quando a pessoa precisa voltar a uma posição exata ou chegar ao rodapé da página.",
+   "Evite para milhares de itens: não há virtualização, e todos os cartões carregados ficam no DOM."
+  ],
+  "acessibilidade": [
+   "O contêiner usa `role=\"feed\"` com `aria-busy` durante o carregamento, e cada cartão é um `article` com `aria-posinset`, `aria-setsize` (−1 até o fim do feed) e nome “título by autor”.",
+   "O botão de curtir expõe `aria-pressed` e um nome com o total de curtidas, e o rodapé `role=\"status\"` anuncia o carregamento e o fim do feed.",
+   "Preencha `alt` de cada item: é o texto alternativo da imagem; o avatar do autor é decorativo."
+  ],
+  "movimento": [
+   "Os cartões novos sobem e crescem um pouco com uma mola suave, em cascata dentro da página que chegou; os que já apareceram não repetem a entrada ao mudar de coluna.",
+   "Enquanto carrega, cada coluna ganha um bloco de espera com um brilho que passa e três pontos saltam no rodapé; curtir faz o coração pular.",
+   "Com “reduzir movimento” ligado, os cartões só esmaecem, o coração não pula, o brilho e os pontos param e a imagem não amplia ao passar o mouse."
+  ],
+  "responsivo": [
+   "O número de colunas sai da largura do próprio bloco (`minColumnWidth`, até `maxColumns`), medida por `ResizeObserver`; colunas com menos de 200px escondem o avatar.",
+   "Cada imagem reserva a altura por `ratio` antes de carregar, então a grade não pula quando as fotos chegam."
+  ],
+  "desempenho": [
+   "Um `IntersectionObserver` dispara `loadPage` 320px antes do fim e continua pedindo páginas enquanto o fim estiver à vista; as imagens usam `loading=\"lazy\"`."
+  ],
+  "notasIA": [
+   "Passe `loadPage` (sem ele, o bloco simula quatro páginas de exemplo) e devolva `[]` para encerrar; um erro também encerra o feed, sem nova tentativa.",
+   "Cada item precisa de `ratio` (altura dividida pela largura da imagem): é com ele que o bloco reserva espaço e equilibra as colunas; ids repetidos são descartados.",
+   "As curtidas são estado interno e começam vazias: `onLikeChange(id, liked)` avisa a mudança, mas não há prop para carregar o que a pessoa já curtiu."
+  ]
+ },
+ "knockout-bracket": {
+  "quandoUsar": [
+   "Chaves de mata-mata de torneios, campeonatos internos ou bolões, em que a pessoa escolhe o vencedor de cada partida até chegar ao campeão.",
+   "Simuladores de “quem passa” com 4, 8 ou 16 participantes, com preenchimento automático pelo melhor cabeça de chave e botão para recomeçar."
+  ],
+  "quandoEvitar": [
+   "Use `sortable-data-table` para uma classificação com pontos e saldo, como a de pontos corridos ou de fase de grupos.",
+   "Evite para dupla eliminação ou chaves com número de participantes fora de potência de dois: o bloco só monta eliminação simples e não trata folgas.",
+   "Evite com 32 ou mais participantes: as rodadas dividem a largura, sem rolagem horizontal, e a primeira coluna fica muito alta."
+  ],
+  "teclado": [
+   { "teclas": ["Enter", "Espaço"], "acao": "Num time, marcam-no como vencedor da partida ou desmarcam, se já for; nos botões, preenchem tudo (“Auto-fill”) ou recomeçam (“Reset”)." }
+  ],
+  "acessibilidade": [
+   "Cada rodada é um `group` com o nome da fase, e cada time é um botão com `aria-pressed` e nome completo, como “Harbor City, seed 1. Pick to win quarterfinal 1”.",
+   "O campeão é anunciado numa região `role=\"status\"`; as linhas de ligação são `aria-hidden`, e os textos fixos estão em inglês."
+  ],
+  "movimento": [
+   "Escolher um vencedor desenha a linha dele até a próxima rodada, desliza o destaque entre as duas vagas da partida e faz o time entrar na vaga seguinte vindo da esquerda, de um leve desfoque.",
+   "“Auto-fill” decide uma partida por vez, a cada 0,32 s, para que cada avanço seja visto; o campeão aparece com uma mola de leve quique.",
+   "Com “reduzir movimento” ligado, linhas e destaques mudam na hora, os times só esmaecem e o preenchimento automático não espera entre as partidas."
+  ],
+  "responsivo": [
+   "As linhas são medidas das caixas reais e refeitas por `ResizeObserver` quando a chave muda de tamanho; abaixo de 44rem de contêiner, os nomes viram códigos de três letras e as fases ganham nomes curtos."
+  ],
+  "notasIA": [
+   "Importe `KnockoutBracket` e passe `teams` na ordem da chave (os dois primeiros se enfrentam na primeira partida); a quantidade precisa ser potência de dois.",
+   "As escolhas são `{ \"rodada-partida\": idDoTime }`, ambos a partir de zero (`\"0-0\"` é a primeira partida); use `value` com `onValueChange`, que já recebe as escolhas sem as que perderam o sentido.",
+   "`seed` decide o “Auto-fill” (vence o menor número) e `code` aparece no lugar do nome quando a chave fica estreita."
+  ]
+ }
+}

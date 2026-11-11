@@ -4841,6 +4841,11 @@
           "path": "lib/use-copy-feedback.ts",
           "type": "registry:lib",
           "target": "@components/ryan-ui/lib/use-copy-feedback.ts"
+        },
+        {
+          "path": "lib/ryan-provider.tsx",
+          "type": "registry:lib",
+          "target": "@components/ryan-ui/lib/ryan-provider.tsx"
         }
       ],
       "meta": {
@@ -5035,6 +5040,11 @@
           "path": "registry/components/animated-counter/animated-counter.module.css",
           "type": "registry:component",
           "target": "@components/ryan-ui/animated-counter/animated-counter.module.css"
+        },
+        {
+          "path": "lib/media.ts",
+          "type": "registry:lib",
+          "target": "@components/ryan-ui/lib/media.ts"
         }
       ],
       "meta": {
@@ -5192,6 +5202,11 @@
           "path": "registry/components/segmented-control/segmented-control.module.css",
           "type": "registry:component",
           "target": "@components/ryan-ui/segmented-control/segmented-control.module.css"
+        },
+        {
+          "path": "lib/ryan-provider.tsx",
+          "type": "registry:lib",
+          "target": "@components/ryan-ui/lib/ryan-provider.tsx"
         }
       ],
       "meta": {
@@ -5446,6 +5461,11 @@
           "path": "registry/blocks/blog-grid/blog-grid.module.css",
           "type": "registry:component",
           "target": "@components/ryan-ui/blocks/blog-grid/blog-grid.module.css"
+        },
+        {
+          "path": "lib/media.ts",
+          "type": "registry:lib",
+          "target": "@components/ryan-ui/lib/media.ts"
         }
       ],
       "meta": {
@@ -5671,6 +5691,11 @@
           "path": "registry/components/animated-counter/animated-counter.module.css",
           "type": "registry:component",
           "target": "@components/ryan-ui/animated-counter/animated-counter.module.css"
+        },
+        {
+          "path": "lib/ryan-provider.tsx",
+          "type": "registry:lib",
+          "target": "@components/ryan-ui/lib/ryan-provider.tsx"
         }
       ],
       "meta": {
@@ -6891,6 +6916,11 @@
           "path": "registry/blocks/morphing-tabs/morphing-tabs.module.css",
           "type": "registry:component",
           "target": "@components/ryan-ui/blocks/morphing-tabs/morphing-tabs.module.css"
+        },
+        {
+          "path": "lib/media.ts",
+          "type": "registry:lib",
+          "target": "@components/ryan-ui/lib/media.ts"
         }
       ],
       "meta": {

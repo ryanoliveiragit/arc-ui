@@ -1,0 +1,962 @@
+{
+ "login-centered": {
+  "quandoUsar": [
+   "Tela de login que ocupa a página inteira e oferece passkey primeiro, com e-mail mais código de 6 dígitos e três provedores de login único como alternativas.",
+   "Protótipos e demos que precisam de um fluxo de entrada navegável sem backend: todos os passos são simulados com temporizadores.",
+   "Produtos em que entrar e criar conta dividem o mesmo cartão: o botão do topo alterna entre os modos “Sign in” e “Sign up”."
+  ],
+  "quandoEvitar": [
+   "Use `sign-in` quando basta um cartão solto de e-mail e código, sem o fundo de anéis, o cabeçalho e o rodapé de página.",
+   "Use `signup-form` quando a criação de conta pede nome, senha e medidor de força.",
+   "Use `otp-input` quando você já tem o fluxo e só falta o campo de código."
+  ],
+  "teclado": [
+   {
+    "teclas": ["Enter"],
+    "acao": "No campo de e-mail ou em qualquer casa do código, envia o formulário do passo atual."
+   },
+   {
+    "teclas": ["←", "→"],
+    "acao": "No passo do código, movem o foco entre as casas (comportamento do `otp-input`)."
+   },
+   {
+    "teclas": ["Backspace"],
+    "acao": "Numa casa vazia do código, apaga a casa anterior e volta o foco para ela."
+   },
+   {
+    "teclas": ["Tab"],
+    "acao": "Percorre os controles do passo; os botões bloqueados usam `aria-disabled` e continuam focáveis."
+   }
+  ],
+  "acessibilidade": [
+   "Cada mudança de passo é anunciada por uma região `role=\"status\"` com `aria-live=\"polite\"` escondida visualmente; a linha de status visível do rodapé fica com `aria-hidden`.",
+   "O foco acompanha o fluxo: vai para o botão de passkey, para o campo de e-mail, para a primeira casa do código e, ao concluir, para o título de boas-vindas.",
+   "O grupo de provedores é um `role=\"group\"` nomeado, cada botão tem `aria-label` próprio e o botão de reenvio informa no `aria-label` quantos segundos faltam."
+  ],
+  "movimento": [
+   "Os passos sobem para o lugar saindo de um leve desfoque e, ao voltar, descem de cima; a altura do cartão segue o novo conteúdo com uma mola sem ultrapassagem, só durante a troca.",
+   "Os anéis do fundo deslizam de leve com o mouse, os de fora mais que os de dentro; no passkey dois anéis pulsam a partir da digital, a contagem de reenvio rola dígito a dígito e o sucesso desenha um círculo e um visto.",
+   "Com “reduzir movimento” ligado, os passos só esmaecem, a altura troca na hora, os anéis ficam parados e o pulso do passkey não é renderizado."
+  ],
+  "responsivo": [
+   "Usa container queries do próprio bloco: abaixo de 520 px e de 400 px de largura os espaçamentos, o título e os botões de provedor encolhem.",
+   "Ocupa a largura do contêiner com altura mínima de 640 px; `fullScreen` troca para `min-height: 100dvh` e remove borda e raio."
+  ],
+  "desempenho": [
+   "Um `ResizeObserver` mede o cartão para animar a altura e a contagem de reenvio usa um temporizador de 1 s só no passo do código; todos os temporizadores são limpos ao desmontar."
+  ],
+  "notasIA": [
+   "Nada é autenticado de verdade: `startPasskey`, `submitEmail`, `verify` e `signInWith` usam `setTimeout`, e `onSignIn(email, method, mode)` só avisa que a simulação terminou; troque essas funções pelas chamadas reais.",
+   "Props: `fullScreen` para ocupar a página, `demoCode` (o código aceito, padrão `482913`), `demoEmail` (a conta devolvida por passkey e provedores), `termsHref` e `privacyHref`.",
+   "Depende de `button`, `input` e `otp-input`; a marca “ryan-ui” e todos os textos estão fixos em inglês no arquivo, sem props para traduzir."
+  ]
+ },
+ "logo-marquee": {
+  "quandoUsar": [
+   "Faixa de prova social numa landing page: clientes, integrações ou ferramentas compatíveis passando em linha contínua.",
+   "Quando há marcas suficientes para uma cópia da lista ser mais larga que a seção e nenhuma delas precisa de destaque ou de link."
+  ],
+  "quandoEvitar": [
+   "Use `marquee` quando o conteúdo que rola não é uma lista de marcas ou quando precisa controlar velocidade, direção ou rolagem vertical.",
+   "Com poucas marcas, prefira uma grade estática: se uma cópia da lista for mais estreita que a seção, o laço não fecha e aparece um vazio no fim.",
+   "Se cada logo precisa ser um link ou abrir um caso de cliente, este bloco não serve: os itens são só símbolo e nome, sem interação."
+  ],
+  "teclado": [
+   {
+    "teclas": ["Enter", "Espaço"],
+    "acao": "No botão “Pause” ou “Play”, pausam ou retomam o movimento da faixa."
+   }
+  ],
+  "acessibilidade": [
+   "A faixa é uma `role=\"region\"` nomeada, a cópia duplicada da lista fica com `aria-hidden` e os símbolos são decorativos: o nome de cada marca é texto real.",
+   "O botão de pausa tem `aria-label` que muda entre pausar e retomar, e uma região `aria-live=\"polite\"` anuncia “Motion paused”.",
+   "Os nomes acessíveis da região e do botão estão fixos em inglês no arquivo (“Illustrative tool logos”, “Pause logo motion”); ajuste-os ao trocar as marcas."
+  ],
+  "movimento": [
+   "A faixa desliza para a esquerda em laço contínuo de 39 s com animação CSS linear; passar o mouse sobre ela ou acionar o botão congela o movimento onde ele está.",
+   "Com “reduzir movimento” ligado, a animação é removida, as marcas viram uma lista centralizada que quebra em linhas, a cópia duplicada some e o botão de pausa é escondido."
+  ],
+  "responsivo": [
+   "Uma container query da seção (até 639 px) empilha título e descrição, reduz o tipo e aproxima as marcas."
+  ],
+  "desempenho": [
+   "O movimento é uma única animação CSS de `transform` na faixa, sem JavaScript por quadro; cada símbolo é pintado como máscara CSS a partir da URL do SVG, então use arquivos pequenos."
+  ],
+  "notasIA": [
+   "Passe `brands` com `name` e `icon` (URL de um SVG monocromático, usado como máscara); `color` pinta o símbolo no tom `color` e `colorIcon` troca a máscara por uma imagem colorida.",
+   "As marcas padrão são formas abstratas de exemplo, não logos reais; a duração do laço é fixa em 39 s, então listas longas passam mais rápido.",
+   "`tone=\"mono\"` desenha tudo na cor do texto; não há prop `className`, e o bloco depende de `button`."
+  ]
+ },
+ "morphing-search": {
+  "quandoUsar": [
+   "Busca na barra superior de um app em que o espaço é curto: em repouso é só um ícone de 44 px e abre por clique ou pela tecla `/`.",
+   "Navegação rápida por uma lista local de páginas, pessoas e ações, agrupada por tipo e limitada a poucos resultados (`limit`, padrão 6)."
+  ],
+  "quandoEvitar": [
+   "Use `command-palette` quando a busca é a superfície principal de comandos, com atalhos por item, e não um campo dentro da barra.",
+   "Use `expanding-search` quando precisa de sugestões recentes antes de digitar ou de dar nome acessível próprio ao campo; aqui os rótulos são fixos em inglês.",
+   "Use `search-field` quando o campo fica sempre visível e os resultados aparecem em outra parte da tela."
+  ],
+  "teclado": [
+   {
+    "teclas": ["/"],
+    "acao": "Abre a busca de qualquer ponto da página, desde que o foco não esteja num campo de texto; a tecla vem de `shortcut`."
+   },
+   {
+    "teclas": ["↓", "↑"],
+    "acao": "Movem o destaque pela lista de resultados, dando a volta nas pontas."
+   },
+   {
+    "teclas": ["Enter"],
+    "acao": "Escolhe o resultado destacado, chama `onSelect`, fecha a busca e devolve o foco ao ícone."
+   },
+   {
+    "teclas": ["Esc"],
+    "acao": "Primeiro limpa o texto; com o campo vazio, fecha a busca e devolve o foco ao ícone."
+   },
+   {
+    "teclas": ["Tab"],
+    "acao": "Fecha a busca e limpa o texto, sem impedir que o foco siga adiante."
+   }
+  ],
+  "acessibilidade": [
+   "O campo é um `role=\"combobox\"` com `aria-expanded`, `aria-controls` e `aria-activedescendant`; os resultados são `role=\"option\"` dentro de um `listbox`, em grupos nomeados pelos títulos.",
+   "O foco fica no campo enquanto o destaque percorre as opções; fechada, a busca deixa o campo `disabled` e o painel `inert`, e o estado sem resultados usa `role=\"status\"`.",
+   "Os nomes acessíveis (“Search”, “Results”, “Clear search”) e os títulos “Suggested …” estão fixos em inglês no arquivo."
+  ],
+  "movimento": [
+   "O ícone estica até virar o campo com uma mola sem ultrapassagem e só depois o painel de resultados cresce para baixo; ao fechar, o painel dobra primeiro e o campo encolhe em seguida.",
+   "Um único destaque desliza entre as linhas conforme as setas ou o ponteiro, e os resultados entram subindo 8 px e se reposicionam quando a lista filtra.",
+   "Com “reduzir movimento” ligado, largura, altura, destaque e linhas trocam na hora."
+  ],
+  "responsivo": [
+   "A largura aberta é o menor valor entre `width` (padrão 440 px) e o espaço medido da âncora, então o campo nunca passa do contêiner.",
+   "Abaixo de 36rem de viewport, a linha de dicas de teclado no rodapé do painel é escondida."
+  ],
+  "desempenho": [
+   "A filtragem é local e síncrona sobre `items` a cada tecla, sem estado de carregamento: serve para listas em memória, não para busca remota.",
+   "Usa dois `ResizeObserver` (âncora e painel) e ouvintes no `document` só enquanto precisa: `keydown` para o atalho quando fechada e `pointerdown` quando aberta."
+  ],
+  "notasIA": [
+   "Importe o componente nomeado `MorphingSearch`; o export padrão do arquivo é `MorphingSearchPreview`, a demonstração com um app fictício em volta.",
+   "A âncora ocupa 100% da largura do pai e reserva só 44 px de altura: o campo cresce até `width` a partir da borda de `align` e flutua sobre o conteúdo, então o pai precisa dar esse espaço e não pode cortar com `overflow: hidden`.",
+   "Só `title` e `keywords` entram na busca (`subtitle` não); controle com `open` e `onOpenChange`, `query` e `onQueryChange`, e passe `shortcut=\"\"` para desligar a tecla global."
+  ]
+ },
+ "morphing-tabs": {
+  "quandoUsar": [
+   "Troca de seção dentro de um cartão ou página em que a própria troca merece atenção: a pílula ativa viaja esticando até a nova aba.",
+   "Poucas abas de rótulo curto cujos painéis têm alturas diferentes: a área de conteúdo anima a altura de um painel para o outro."
+  ],
+  "quandoEvitar": [
+   "Use `tabs` quando precisa compor gatilhos e painéis livremente ou manter painéis montados; aqui só o painel ativo existe no DOM.",
+   "Use `segmented-control` quando a escolha só muda um modo ou filtro e não há painel associado.",
+   "Use `expandable-tabs` quando as abas são ícones e o espaço só comporta o rótulo da aba ativa."
+  ],
+  "teclado": [
+   {
+    "teclas": ["→", "←"],
+    "acao": "Selecionam a aba seguinte ou anterior, dando a volta nas pontas e pulando as desativadas; a seleção acompanha o foco."
+   },
+   {
+    "teclas": ["Home", "End"],
+    "acao": "Selecionam a primeira ou a última aba habilitada."
+   },
+   {
+    "teclas": ["Tab"],
+    "acao": "Entra na lista pela aba ativa e, em seguida, vai para o painel, que é focável."
+   }
+  ],
+  "acessibilidade": [
+   "Segue o padrão de abas: `role=\"tablist\"` com `aria-label` vindo de `label`, abas com `aria-selected` e `aria-controls`, e painel `role=\"tabpanel\"` ligado por `aria-labelledby`.",
+   "Usa roving tabindex (só a aba ativa entra na ordem de Tab), e a cópia colorida da fileira que forma a pílula fica com `aria-hidden`.",
+   "O `label` padrão é “Sections”, em inglês; passe o nome real do conjunto de abas."
+  ],
+  "movimento": [
+   "A pílula é um recorte (`clip-path`) de uma cópia da fileira na cor de destaque: a borda da frente chega primeiro com uma mola rápida e a de trás segue com outra mais lenta, o que estica a pílula.",
+   "Enquanto está esticada ela afina (até 5 px a menos em cima e embaixo) e fica com os cantos mais retos, e volta ao formato de pílula ao chegar; o painel sai e entra deslizando 36 px no sentido da viagem, com a altura numa mola.",
+   "Com “reduzir movimento” ligado, a pílula salta para a nova aba e o painel e a altura trocam na hora."
+  ],
+  "responsivo": [
+   "Se a fileira de abas for mais larga que o espaço, ela rola na horizontal com a barra de rolagem escondida; abaixo de 26rem de viewport o respiro lateral das abas diminui."
+  ],
+  "desempenho": [
+   "A pílula anima só `clip-path` a partir de dois valores de movimento, sem layout por quadro; rótulos e ícones são renderizados duas vezes por causa da cópia colorida."
+  ],
+  "notasIA": [
+   "Importe o componente nomeado `MorphingTabs`; o export padrão do arquivo é o preview com um cartão de exemplo.",
+   "A API é um array: `tabs` com `id`, `label`, `icon`, `content` e `disabled`; controle com `value` e `onValueChange` ou use `defaultValue`.",
+   "Como só o painel ativo fica montado, estado local dentro de `content` se perde ao trocar de aba; e o respiro de 4 px da lista no CSS precisa bater com a constante `INSET` do componente."
+  ]
+ },
+ "newsletter-signup": {
+  "quandoUsar": [
+   "Seção de inscrição de newsletter numa landing page ou blog em que mostrar as edições anteriores ajuda a pessoa a decidir.",
+   "Cartão independente de inscrição (`variant=\"card\"`), por exemplo ao fim de um artigo.",
+   "Formulário só de e-mail com validação e estados de envio, sem a pilha: passe `publication={null}` e `readers={null}`."
+  ],
+  "quandoEvitar": [
+   "Use `site-footer` quando a inscrição é só um campo dentro do rodapé; a variante de colunas dele já traz um formulário de newsletter.",
+   "Use `contact-section` quando a pessoa precisa escrever uma mensagem, e `signup-form` quando o objetivo é criar conta com senha.",
+   "Sem edições reais para mostrar, a pilha vira enfeite com dados de exemplo; nesse caso esconda-a em vez de inventar conteúdo."
+  ],
+  "teclado": [
+   {
+    "teclas": ["Enter"],
+    "acao": "No campo de e-mail, envia o formulário; com endereço inválido, o foco volta ao campo."
+   }
+  ],
+  "acessibilidade": [
+   "O campo tem um `<label>` escondido visualmente (“Email address”), `aria-invalid` quando o endereço é inválido e `aria-describedby` apontando para a linha de mensagem.",
+   "A linha de mensagem fica numa região `aria-live=\"polite\"` e vira `role=\"alert\"` em erro; ao concluir, o foco vai para “Use a different email” e, ao reiniciar, volta ao campo.",
+   "Só a edição da frente da pilha é exposta ao leitor de tela, com `aria-label`; as de trás ficam com `aria-hidden` e as fotos dos leitores têm `alt` vazio."
+  ],
+  "movimento": [
+   "Ao inscrever, a próxima edição sobe de baixo, endereçada ao e-mail digitado, e pousa na frente da pilha; as anteriores recuam um degrau numa mola sem ultrapassagem e a mais antiga sai.",
+   "O rótulo do botão troca no lugar entre enviar, enviando e inscrito (com um visto desenhado), a contagem de leitores sobe um e um erro sacode o campo de lado uma vez.",
+   "Com “reduzir movimento” ligado, as edições assumem o lugar na hora e só esmaecem, não há sacudida nem desenho do visto, e o indicador de envio gira mais devagar."
+  ],
+  "responsivo": [
+   "Container queries do bloco: até 860 px a variante `inline` empilha texto e pilha; até 520 px e 400 px os espaçamentos encolhem e os minutos de leitura somem.",
+   "O formulário tem contêiner próprio: até 300 px, campo e botão se separam e empilham em largura total; a linha de mensagem reserva a altura da frase mais longa, então nada abaixo se move."
+  ],
+  "desempenho": [
+   "As miniaturas e os rostos passam por `RyanImage`, que carrega sob demanda por padrão; uma cópia invisível da próxima edição fica no DOM só para reservar a altura da pilha."
+  ],
+  "notasIA": [
+   "Importe o componente nomeado `NewsletterSignup`; o export padrão é `NewsletterSignupBlock`, o preview com troca de layout e um interruptor que simula falha.",
+   "Passe `onSubscribe(email)` devolvendo uma Promise: rejeitar mostra o erro e mantém o e-mail, resolver mostra o sucesso; sem essa prop o bloco só espera 1,1 s e finge que deu certo.",
+   "`publication` (nome, `upcoming` e `recent`) e `readers` vêm com dados de exemplo de `newsletter-signup-data.ts`; troque pelos seus ou passe `null`, e saiba que as mensagens de validação estão fixas em inglês."
+  ]
+ },
+ "not-found": {
+  "quandoUsar": [
+   "Página 404 de um site ou app que tem alguns destinos conhecidos para sugerir e, de preferência, uma busca para onde mandar a consulta.",
+   "Produtos em que uma página de erro pode ter tom leve: a ilustração tem um zero com rosto que segue o mouse e pula ao ser clicado."
+  ],
+  "quandoEvitar": [
+   "Use `empty-state` quando a página existe, mas uma lista ou busca não tem o que mostrar.",
+   "Use `alert` para um erro recuperável dentro de uma tela que continua útil.",
+   "Para erro 500 ou manutenção a arte não serve: os dois quatros e o zero estão desenhados no SVG do arquivo."
+  ],
+  "teclado": [
+   {
+    "teclas": ["Enter"],
+    "acao": "No campo de busca, envia o formulário e chama `onSearch` com o texto sem espaços nas pontas."
+   }
+  ],
+  "acessibilidade": [
+   "A seção é nomeada pelo `<h1>` do título, e a ilustração é um `role=\"img\"` com `aria-label` em inglês, fixo no arquivo.",
+   "A busca é um formulário `role=\"search\"` cujo campo usa `searchPlaceholder` como `aria-label`; a linha “N of M pages match” é `aria-live=\"polite\"` e anuncia o resultado do filtro.",
+   "O pulo do zero ao clique não tem equivalente no teclado nem papel de botão: é enfeite e não carrega informação."
+  ],
+  "movimento": [
+   "As peças pousam uma após a outra com uma mola de pequeno salto: os quatros e o zero caem de cima e as formas menores surgem crescendo.",
+   "Em repouso, animações CSS fazem o zero flutuar e piscar, o segundo quatro balançar e as formas derivar e girar; com mouse, os olhos seguem o ponteiro e as camadas se deslocam em profundidades diferentes.",
+   "Com “reduzir movimento” ligado, a ilustração aparece parada, sem laços, sem seguir o ponteiro e sem pulo, e os links filtrados trocam na hora."
+  ],
+  "responsivo": [
+   "O bloco é uma coluna centralizada de até 36rem; abaixo de 30rem de viewport a grade de links passa de duas colunas para uma e os espaços diminuem."
+  ],
+  "notasIA": [
+   "Importe o componente nomeado `NotFound`; o export padrão é `NotFoundPreview`, que bloqueia a navegação dos links para a demonstração.",
+   "Passe os `links` do seu site (cada `href` é usado como chave e precisa ser único) e `onSearch` para levar a consulta à sua busca; sem `onSearch`, enviar o formulário não faz nada.",
+   "Para roteamento no cliente, use `onNavigate(link, event)` e chame `event.preventDefault()`; o bloco renderiza um `<h1>`, então deve ser o conteúdo principal da página."
+  ]
+ },
+ "notification-center": {
+  "quandoUsar": [
+   "Caixa de avisos atrás de um sino no cabeçalho de um app, com estado de lido e não lido e contagem no selo.",
+   "Quando a pessoa precisa triar: abrir o detalhe de um aviso, marcar como lido, dispensar, marcar todos como lidos ou limpar os lidos."
+  ],
+  "quandoEvitar": [
+   "Use `toast` ou `toast-stack` para o retorno imediato de uma ação que a pessoa acabou de fazer.",
+   "Use `notification-stack` quando os avisos ficam visíveis na página como uma pilha de cartões que se dispensa um a um, sem estado de leitura.",
+   "Use `timeline` para um histórico de atividade em página inteira, agrupado por dia."
+  ],
+  "teclado": [
+   {
+    "teclas": ["Enter", "Espaço"],
+    "acao": "No sino, abrem ou fecham o painel; numa linha, mostram ou escondem o detalhe com as ações."
+   },
+   {
+    "teclas": ["Esc"],
+    "acao": "Fecha o painel e devolve o foco ao sino."
+   },
+   {
+    "teclas": ["Tab", "Shift + Tab"],
+    "acao": "Percorrem os controles do painel: fechar, filtros “All” e “Unread”, linhas e ações."
+   }
+  ],
+  "acessibilidade": [
+   "É um popover Radix: o sino recebe `aria-expanded` do primitivo e um `aria-label` com `label` mais a contagem de não lidos; o painel leva `aria-label` e o resumo é `aria-live=\"polite\"`.",
+   "Cada linha é um botão com `aria-expanded` e um nome que junta título, estado de não lido e a ação de mostrar ou esconder detalhes; os filtros usam `aria-pressed`.",
+   "O foco é reposicionado depois de cada ação: ao dispensar vai para a linha vizinha, e depois das ações em lote vai para os botões de filtro."
+  ],
+  "movimento": [
+   "O painel cresce a partir do sino, que inclina 12° enquanto está aberto; as linhas entram em cascata de 35 ms e fecham a própria altura numa mola ao sair, em sequência nas ações em lote.",
+   "As contagens rolam como um odômetro (número maior sobe de baixo, menor desce de cima), o destaque do filtro desliza entre “All” e “Unread” e o botão de marcar como lido anima a largura ao trocar de rótulo.",
+   "Com “reduzir movimento” ligado, as animações CSS são removidas e as trocas viram um esmaecer curto ou acontecem na hora."
+  ],
+  "responsivo": [
+   "O painel tem largura `min(424px, 100vw - 24px)` e altura máxima `min(590px, 100vh - 24px)`; a lista rola por dentro, com a barra de rolagem escondida.",
+   "Até 380 px de viewport os espaçamentos encolhem e “Mark all read” perde o texto, ficando só o ícone."
+  ],
+  "desempenho": [
+   "Todas as notificações são renderizadas de uma vez, cada linha com animação de altura e sem virtualização; mantenha a lista na casa das dezenas."
+  ],
+  "notasIA": [
+   "`notifications` é só o estado inicial (vai para um `useState`): mudanças posteriores na prop são ignoradas, então para injetar avisos novos remonte com outra `key`.",
+   "Persista com `onReadChange(notification, read)` e `onDismiss(notification)`, chamados uma vez por item também nas ações em lote; `time` é um texto pronto, o componente não formata datas.",
+   "Importe de `@/components/ryan-ui/notification-center/notification-center` (não fica em `blocks/`); ele já desenha o sino, depende de `avatar` e aceita `open` com `onOpenChange`."
+  ]
+ },
+ "notification-stack": {
+  "quandoUsar": [
+   "Um punhado de avisos pendentes num painel ou dashboard, empilhados para ocupar pouco e abertos em lista quando a pessoa chega perto.",
+   "Avisos que se resolvem dispensando: arrastar o cartão para o lado, botão de fechar ou tecla `Delete`."
+  ],
+  "quandoEvitar": [
+   "Use `toast-stack` para resultados passageiros que aparecem na borda da tela e somem sozinhos.",
+   "Use `notification-center` quando precisa de lido e não lido, filtro e ações em lote atrás de um sino.",
+   "Use `swipe-actions` quando o gesto lateral deve revelar ações numa linha de lista, e não remover o item."
+  ],
+  "teclado": [
+   {
+    "teclas": ["Tab"],
+    "acao": "Ao entrar na pilha pelo teclado ela se abre em lista; cada cartão tem uma parada, no botão de dispensar."
+   },
+   {
+    "teclas": ["Delete", "Backspace"],
+    "acao": "Dispensam o cartão em foco e levam o foco ao cartão seguinte, ou ao botão “Bring them back” quando a pilha esvazia."
+   },
+   {
+    "teclas": ["Enter", "Espaço"],
+    "acao": "Acionam o botão em foco: dispensar um cartão, fixar a lista aberta (“Show all”) ou limpar tudo (“Clear all”)."
+   }
+  ],
+  "acessibilidade": [
+   "Com a pilha fechada, os cartões de trás ficam com `aria-hidden` e fora da ordem de Tab; o botão “Show all” fixa a lista aberta e expõe `aria-expanded`.",
+   "Um `role=\"status\"` escondido anuncia quantos avisos restam, cada botão de fechar tem `aria-label` com o título do cartão e o ponto de não lido traz o texto “Unread” para leitor de tela.",
+   "Arrastar não é o único caminho: o botão de fechar e `Delete` fazem o mesmo, e em telas de toque um toque na pilha a abre."
+  ],
+  "movimento": [
+   "Fechada, cada cartão de trás mostra 10 px e encolhe 5%; com mouse por cima, foco de teclado ou lista fixada, os cartões descem para uma lista numa mola e a altura do contêiner acompanha.",
+   "Um cartão dispensado desliza para o lado do arrasto e some, e os demais sobem para fechar a fila numa mola; arrastar além de 110 px ou soltar acima de 650 px/s confirma a saída.",
+   "Com “reduzir movimento” ligado, o arrasto é desligado, os cartões só esmaecem ao sair e as posições trocam na hora."
+  ],
+  "responsivo": [
+   "A largura é `min(25rem, 100%)` e o texto de cada cartão é cortado em duas linhas, o que mantém todos com a mesma altura.",
+   "A lista aberta cresce para baixo no fluxo da página e empurra o que vem depois; `touch-action: pan-y` deixa a rolagem vertical passar enquanto o arrasto lateral dispensa."
+  ],
+  "desempenho": [
+   "Todos os avisos ficam montados, mesmo os que não aparecem na pilha, cada um com um `ResizeObserver` e arrasto próprio; o bloco foi pensado para poucos itens, não para centenas."
+  ],
+  "notasIA": [
+   "Importe o componente nomeado `NotificationStack`; o export padrão é o preview com avisos de exemplo.",
+   "Controle com `notifications` e `onNotificationsChange` (lista do mais novo para o mais antigo) ou use `defaultNotifications`; `onDismiss(id)` dispara por cartão, inclusive para cada um em “Clear all”.",
+   "No modo controlado passe também `defaultNotifications`: o botão “Bring them back” do estado vazio devolve essa lista e, sem ela, entrega os avisos de exemplo ao seu `onNotificationsChange`."
+  ]
+ },
+ "otp-input": {
+  "quandoUsar": [
+   "Código de verificação de tamanho fixo, enviado por e-mail ou SMS ou gerado por um app autenticador, digitado casa a casa.",
+   "Quando colar o código inteiro precisa funcionar: o texto colado é distribuído pelas casas a partir da que está em foco."
+  ],
+  "quandoEvitar": [
+   "Use `sign-in` quando quer o fluxo inteiro de e-mail e código já montado, com reenvio e estado de conta.",
+   "Use `input` para códigos de tamanho variável ou com separadores, como cupons e chaves de recuperação.",
+   "Use `password-field` para segredos que não devem aparecer na tela; aqui os caracteres ficam visíveis."
+  ],
+  "teclado": [
+   {
+    "teclas": ["←", "→"],
+    "acao": "Movem o foco para a casa anterior ou seguinte."
+   },
+   {
+    "teclas": ["Backspace"],
+    "acao": "Numa casa vazia, apaga a casa anterior e leva o foco para ela."
+   },
+   {
+    "teclas": ["Delete"],
+    "acao": "Apaga o caractere da casa em foco."
+   },
+   {
+    "teclas": ["Ctrl + V"],
+    "acao": "Cola o código a partir da casa em foco; no modo numérico, o que não é dígito é descartado."
+   },
+   {
+    "teclas": ["Tab", "Shift + Tab"],
+    "acao": "Passam por cada casa: todas são campos independentes na ordem de foco."
+   }
+  ],
+  "acessibilidade": [
+   "As casas formam um `role=\"group\"` com `aria-label` vindo de `label`, e cada campo se identifica como “digit N of M”, em inglês fixo no arquivo.",
+   "`description` e `error` são ligados a todas as casas por `aria-describedby`; com erro, as casas recebem `aria-invalid` e a mensagem é um `role=\"alert\"`.",
+   "A primeira casa usa `autoComplete=\"one-time-code\"`; em cores forçadas o anel animado some e o contorno nativo de foco volta."
+  ],
+  "movimento": [
+   "Cada dígito sobe para dentro da casa saindo de um leve desfoque; ao colar, os dígitos chegam em onda da esquerda para a direita.",
+   "Um único anel de foco desliza entre as casas com uma mola curta, e um erro novo sacode a fileira de lado uma vez, com a mensagem abrindo a própria altura.",
+   "Com “reduzir movimento” ligado, os dígitos só esmaecem, o anel salta de casa, não há sacudida e as mensagens aparecem sem animação."
+  ],
+  "responsivo": [
+   "As casas têm 42 × 48 px e encolhem em largura quando a fileira não cabe; até 360 px de viewport o espaço entre elas cai para 6 px e a altura para 44 px."
+  ],
+  "notasIA": [
+   "É só controlado: sem `value` e `onChange` os dígitos digitados não aparecem; `onChange` devolve a string compacta, então confira `value.length === length` para validar ou enviar.",
+   "`label` é obrigatório; `length` é 6 por padrão, `inputMode=\"text\"` aceita letras e passar um `error` novo dispara a sacudida.",
+   "Importe de `@/components/ryan-ui/otp-input/otp-input` (não fica em `blocks/`); não há `onComplete`, e `sign-in` e `login-centered` mostram como enviar ao completar a última casa."
+  ]
+ },
+ "overflow-actions": {
+  "quandoUsar": [
+   "Barra de ferramentas cuja largura muda (painéis redimensionáveis, colunas estreitas, telas pequenas) e que tem mais ações do que cabem.",
+   "Quando todas as ações precisam continuar alcançáveis: as que não cabem vão para o menu “mais”, começando pelas últimas da lista."
+  ],
+  "quandoEvitar": [
+   "Use `button-group` quando são poucas ações relacionadas que sempre cabem.",
+   "Use `dropdown-menu` quando as ações secundárias podem ficar num menu desde o início.",
+   "Use `toggle-group` para alternadores de formatação que cabem sempre e não precisam de menu."
+  ],
+  "teclado": [
+   {
+    "teclas": ["→", "←"],
+    "acao": "Movem o foco entre as ações visíveis e o botão “mais”, dando a volta nas pontas e pulando as desativadas."
+   },
+   {
+    "teclas": ["Home", "End"],
+    "acao": "Levam o foco à primeira ou à última parada da barra."
+   },
+   {
+    "teclas": ["Tab"],
+    "acao": "A barra tem uma única parada de Tab; as setas fazem o resto."
+   },
+   {
+    "teclas": ["Enter", "Espaço"],
+    "acao": "Acionam a ação em foco ou abrem o menu “mais”."
+   },
+   {
+    "teclas": ["↓", "↑"],
+    "acao": "No menu “mais”, movem entre os itens; `↓` no botão também abre o menu."
+   },
+   {
+    "teclas": ["Esc"],
+    "acao": "Fecha o menu e devolve o foco ao botão “mais”."
+   }
+  ],
+  "acessibilidade": [
+   "A barra é um `role=\"toolbar\"` com `aria-label` vindo de `label` e roving tabindex; ações com `pressed` expõem `aria-pressed`.",
+   "O botão “mais” recebe `moreLabel` com a contagem no `aria-label`, e no menu uma ação ligada ganha um ponto com o texto “On” para leitor de tela.",
+   "A fileira de medição, com cópias de todas as ações, fica com `aria-hidden` e `inert`."
+  ],
+  "movimento": [
+   "As ações que deixam de caber encolhem para 80% e esmaecem, e as que voltam fazem o caminho inverso; o botão “mais” desliza até a nova posição numa mola de layout.",
+   "O número no botão “mais” rola na vertical quando a contagem muda, e o menu abre com os itens em cascata de 28 ms.",
+   "Com “reduzir movimento” ligado, entradas, saídas e deslocamentos acontecem na hora e as animações do menu são removidas."
+  ],
+  "responsivo": [
+   "A largura que conta é a do próprio componente, que ocupa 100% do pai: ele mede todas as ações numa fileira oculta e mostra quantas couberem, sem nunca quebrar linha.",
+   "Quando não cabe nenhuma ação, sobra só o botão “mais”, com todas dentro do menu."
+  ],
+  "desempenho": [
+   "Um `ResizeObserver` observa a raiz e a fileira de medição e refaz a conta a cada mudança de largura, rótulo ou fonte; cada ação é renderizada duas vezes por causa dessa cópia."
+  ],
+  "notasIA": [
+   "Importe o componente nomeado `OverflowActions`; o export padrão é o preview de um editor com alça de redimensionar.",
+   "Ordene `actions` por prioridade, porque as últimas vão primeiro para o menu, e dê ao contêiner uma largura real (em flex, `min-width: 0`).",
+   "`pressed` é controlado por você: guarde o estado e alterne em `onSelect` ou em `onAction(id)`; `onOverflowChange(ids)` avisa quais ações estão no menu."
+  ]
+ },
+ "page-header": {
+  "quandoUsar": [
+   "Ponto de partida para o cabeçalho da página de um projeto num app: trilha, título com status, membros, ações e abas de seção com contagens.",
+   "Telas longas em que o título deve sair do caminho ao rolar sem sumir: o cabeçalho dobra numa barra compacta que leva de volta ao topo."
+  ],
+  "quandoEvitar": [
+   "Use `site-header` para a navegação do topo de um site; este bloco é o cabeçalho de uma página dentro do produto.",
+   "Use `tabs` ou `breadcrumb` quando precisa só da troca de seções ou só da trilha, sem o conjunto inteiro.",
+   "Se a página rola a janela, a dobra não acontece: ela lê a rolagem do corpo interno do bloco, que tem altura fixa de 640 px."
+  ],
+  "teclado": [
+   {
+    "teclas": ["←", "→"],
+    "acao": "Na fileira de seções, levam o foco à aba vizinha e já a selecionam, dando a volta nas pontas (abas Radix)."
+   },
+   {
+    "teclas": ["Home", "End"],
+    "acao": "Selecionam a primeira ou a última seção."
+   },
+   {
+    "teclas": ["Tab"],
+    "acao": "Da aba ativa, segue para o painel da seção, que é focável."
+   },
+   {
+    "teclas": ["Enter", "Espaço", "↓"],
+    "acao": "No botão de três pontos, abrem o menu de ações (Radix)."
+   },
+   {
+    "teclas": ["↑", "↓"],
+    "acao": "No menu de ações, movem entre os itens e dão a volta nas pontas."
+   },
+   {
+    "teclas": ["Esc"],
+    "acao": "Fecha o menu e devolve o foco ao botão de três pontos."
+   }
+  ],
+  "acessibilidade": [
+   "A trilha fica num `<nav aria-label=\"Breadcrumb\">` com `aria-current=\"page\"`; ao dobrar ela vira `inert` e um botão com o título assume, rolando ao topo e levando o foco ao `<h2>`.",
+   "Os resultados das ações (seguir, compartilhar, criar ou concluir issue, copiar o link) são anunciados por uma região `role=\"status\"`, e o aviso visual fica com `aria-hidden`.",
+   "Ao concluir uma issue, o foco passa ao botão da issue seguinte ou ao painel quando a lista esvazia; abaixo de 460 px “New issue” vira só ícone e mantém o `aria-label`."
+  ],
+  "movimento": [
+   "Rolar o corpo além de 16 px dobra o cabeçalho: a introdução fecha a altura numa mola sem ultrapassagem, o título encolhe e desfoca e a trilha dá lugar ao título compacto, que só reabre a 4 px do topo.",
+   "O sublinhado da aba ativa desliza entre as abas, as contagens rolam, o painel entra deslizando 12 px no sentido da aba escolhida e as linhas de issue abrem e fecham a própria altura.",
+   "Com “reduzir movimento” ligado, dobra, painéis e linhas trocam na hora ou só esmaecem, o sublinhado salta e as transições CSS são removidas."
+  ],
+  "responsivo": [
+   "Quando a barra fica estreita, “Follow” e “Share update” recolhem para o menu de três pontos (largura numa mola) e só voltam com uma folga, sem piscar no limite.",
+   "Container queries do quadro: até 559 px some o primeiro nível da trilha, a fileira de abas rola de lado com a borda esmaecida e as linhas se reorganizam; em telas de até 560 px o quadro ganha quase toda a altura."
+  ],
+  "desempenho": [
+   "Um `ResizeObserver` só na barra decide quando recolher as ações, e os temporizadores das ações simuladas e do aviso de 3,2 s são limpos ao desmontar."
+  ],
+  "notasIA": [
+   "`PageHeader` não recebe props: projeto, trilha, pessoas, issues, atualizações e arquivos são constantes do arquivo e as ações são simuladas, então copie o arquivo instalado e troque dados e handlers pelos seus.",
+   "A dobra depende do corpo interno com rolagem própria (`.scroller`) dentro de um quadro de altura fixa; com altura `auto` o corpo não rola e o cabeçalho nunca dobra.",
+   "Precisa de `animated-counter`, `avatar`, `avatar-group`, `badge`, `button` e `progress`, além das abas e do menu Radix; as fotos de exemplo vêm de `@/lib/media`."
+  ]
+ },
+ "plan-comparison": {
+  "quandoUsar": [
+   "Seção de preços que compara dois planos linha a linha, com troca entre cobrança mensal e anual e um filtro para mostrar só as diferenças.",
+   "Ponto de partida para editar: planos, preços e recursos são constantes no topo do arquivo, prontos para trocar pelos seus."
+  ],
+  "quandoEvitar": [
+   "Use `comparison-table` para comparar o seu produto com concorrentes, com cabeçalho fixo e uma coluna em destaque.",
+   "Use `billing-toggle` quando só precisa da troca de período com preços que rolam, em cartões de plano.",
+   "Para três ou mais planos o bloco não serve como está: a grade e o tipo `Feature` têm exatamente duas colunas, Team e Studio."
+  ],
+  "teclado": [
+   {
+    "teclas": ["←", "→"],
+    "acao": "No seletor de período, trocam entre mensal e anual e levam o foco junto (`segmented-control`)."
+   },
+   {
+    "teclas": ["Espaço", "Enter"],
+    "acao": "No interruptor “Show differences only”, ligam ou desligam o filtro; num botão de plano, selecionam ou desfazem a seleção."
+   }
+  ],
+  "acessibilidade": [
+   "A matriz usa papéis ARIA de tabela (`table`, `row`, `columnheader`, `rowheader`, `cell`), e cada valor traz o nome do plano em texto escondido, então faz sentido lido sozinho.",
+   "Os botões de plano expõem `aria-pressed` e uma região `role=\"status\"` anuncia o plano escolhido; o preço de cada plano fica numa região `aria-live=\"polite\"` com `aria-atomic`.",
+   "O filtro é o `switch` com o rótulo “Show differences only” e o período é o `segmented-control` nomeado “Billing period”."
+  ],
+  "movimento": [
+   "Trocar o período faz cada preço contar até o novo valor em 0,24 s, e a contagem “N of 8 features” acompanha o filtro.",
+   "Ligar o filtro fecha a altura das linhas de recursos iguais numa mola sem ultrapassagem e as reabre com esmaecimento; escolher um plano tinge a coluna e um trilho de 2 px desliza até ela.",
+   "Com “reduzir movimento” ligado, os números trocam na hora, as linhas entram e saem sem animação e o trilho salta."
+  ],
+  "responsivo": [
+   "O layout segue a largura do bloco, medida por um `ResizeObserver`: até 720 px a introdução empilha e as margens diminuem; até 540 px o nome do recurso sobe para cima dos dois valores e a coluna “What changes” some."
+  ],
+  "notasIA": [
+   "`PlanComparison` não recebe props: edite `features` (com `shared: true` no que o filtro esconde) e `pricing` no topo do arquivo, e os textos fixos no JSX.",
+   "Os botões “Select …” só marcam o plano com `aria-pressed`, sem callback; ligue o seu checkout trocando o `onClick` deles.",
+   "Os valores “Included” e “Not included” são comparados como texto exato para ganhar o visto e o tom apagado; o bloco depende de `button`, `segmented-control` e `switch`."
+  ]
+ },
+ "prediction-market": {
+  "quandoUsar": [
+   "Mercado de sim ou não com dinheiro fictício, em demos, conteúdo educativo ou jogos: preço de cada resultado, histórico da probabilidade e um bilhete com estimativa de retorno.",
+   "Quando a pessoa precisa ler o histórico ponto a ponto, com ponteiro ou teclado, e ver o retorno se atualizar enquanto digita o valor."
+  ],
+  "quandoEvitar": [
+   "Use `line-chart` quando só precisa mostrar a série histórica, ou várias séries, sem o bilhete de compra.",
+   "Use `token-swap` para trocar um ativo por outro com taxa e tarifa.",
+   "Para dinheiro real o bloco não basta: saldo e posição vivem só no estado local e uma ordem rejeitada volta ao início sem mensagem de erro."
+  ],
+  "teclado": [
+   {
+    "teclas": ["←", "→"],
+    "acao": "No gráfico em foco, leem o ponto anterior ou o seguinte da série; o valor lido é anunciado."
+   },
+   {
+    "teclas": ["Home", "End"],
+    "acao": "No gráfico, saltam para o primeiro ou o último ponto do período."
+   },
+   {
+    "teclas": ["←", "→", "↑", "↓"],
+    "acao": "Nos seletores de período e de resultado (Yes e No), escolhem a opção vizinha, levam o foco junto e dão a volta nas pontas."
+   },
+   {
+    "teclas": ["Tab"],
+    "acao": "Cada seletor é uma única parada, na opção escolhida, e o gráfico é outra parada."
+   }
+  ],
+  "acessibilidade": [
+   "O gráfico é um `role=\"group\"` focável cujo `aria-label` traz a probabilidade atual e explica as setas; o ponto lido é anunciado por uma região `aria-live=\"polite\"` e o SVG fica com `aria-hidden`.",
+   "Período e resultado são `role=\"radiogroup\"` com botões `role=\"radio\"`, `aria-checked` e roving tabindex.",
+   "O campo de valor tem rótulo, `aria-invalid` acima do saldo e `aria-describedby` para a estimativa; o botão de compra recebe `aria-busy` ao enviar e a linha de posição é `aria-live=\"polite\"`."
+  ],
+  "movimento": [
+   "A linha se desenha em 1,1 s na primeira vez; trocar de período ou de resultado transforma o traçado numa mola sem ultrapassagem e o marcador do fim desliza até o novo ponto, pulsando em repouso.",
+   "Probabilidade, preços, cotas, retorno e saldo contam até cada valor novo em 0,48 s, as pílulas de seleção deslizam e o rótulo do botão passa por “Placing order” e “Order placed”.",
+   "Com “reduzir movimento” ligado, os números trocam na hora, a linha aparece sem desenho nem transformação, pílulas e marcador saltam e o pulso e o indicador de envio param."
+  ],
+  "responsivo": [
+   "O cartão vai até 27rem; o gráfico tem 136 px de altura fixa e largura medida por um `ResizeObserver`, e até 26rem de viewport o respiro interno diminui."
+  ],
+  "notasIA": [
+   "Importe o componente nomeado `PredictionMarket` (o export padrão é o preview com dados de exemplo) e controle o resultado com `side` e `onSideChange` ou use `defaultSide`.",
+   "Em `ranges`, todo período precisa do mesmo número de `points` (probabilidade de “Yes”, de 0 a 1) e de um item de `labels` por ponto; o último ponto do período ativo é o preço atual.",
+   "`onPlaceOrder(order)` recebe `side`, `amount`, `price` e `shares`: devolva uma Promise para segurar “Placing order” e mostre o seu erro se rejeitar; `balance` é só o saldo inicial."
+  ]
+ },
+ "project-folder": {
+  "quandoUsar": [
+   "Grade ou prateleira de projetos em portfólios, painéis e telas iniciais de arquivos, em que espiar os primeiros documentos ao passar o mouse dá contexto.",
+   "Para mostrar de relance o tipo de conteúdo de uma pasta (texto, gráfico ou imagem) antes de abri-la."
+  ],
+  "quandoEvitar": [
+   "Use `file-tree` para navegar por arquivos e subpastas de verdade, com seleção e teclado.",
+   "Use `card-folder` quando o conteúdo é um conjunto de fichas com abas para ler uma de cada vez.",
+   "Se abrir a pasta deve listar ou abrir arquivos, o bloco sozinho não basta: aberto, ele só desenha três folhas, sem links."
+  ],
+  "teclado": [
+   {
+    "teclas": ["Enter", "Espaço"],
+    "acao": "Abrem ou fecham a pasta, espalhando ou recolhendo as folhas."
+   },
+   {
+    "teclas": ["Tab"],
+    "acao": "Com foco vindo do teclado, a pasta entreabre como no hover do mouse."
+   }
+  ],
+  "acessibilidade": [
+   "A pasta inteira é um `<button>` nativo com `aria-expanded`; o desenho (aba, folhas e contador) fica com `aria-hidden`, então o nome acessível vem do nome e da linha abaixo dele.",
+   "Aberta, a linha abaixo troca a descrição pelos nomes das três primeiras folhas mais “and N more”, em inglês fixo, e é isso que o leitor de tela passa a ouvir.",
+   "As imagens das folhas têm `alt` vazio, porque são decorativas."
+  ],
+  "movimento": [
+   "Com o mouse por cima ou foco de teclado, a aba inclina 24° para trás em 3D e as folhas espiam; ao clicar, a aba abre a 42° e as folhas sobem em leque numa mola com pequeno quique, 45 ms uma após a outra.",
+   "A aba usa uma mola mais pesada, praticamente sem quique; ao fechar, as folhas voltam na ordem inversa e a linha sob o nome troca com um deslize curto.",
+   "Com “reduzir movimento” ligado, a aba não gira, as folhas saltam para o lugar e a linha só esmaece."
+  ],
+  "responsivo": [
+   "Tudo escala a partir de `--folder-size` (padrão 13rem), definido na pasta ou num pai; a pasta reserva espaço acima de si para as folhas subirem, mas abertas elas passam um pouco das laterais."
+  ],
+  "notasIA": [
+   "Importe o componente nomeado `ProjectFolder`; o export padrão é uma prateleira de três pastas em que abrir uma fecha as outras, feita com `open` e `onOpenChange`.",
+   "`files` desenha só as três primeiras folhas (`kind` `text`, `chart` ou `image`, com `image` para a URL) e conta o resto; para mostrar o conteúdo de verdade, reaja a `onOpenChange`.",
+   "Deixe espaço lateral entre pastas vizinhas para o leque aberto; `tone=\"accent\"` pinta a pasta na cor de destaque e o papel das folhas fica claro nos dois temas."
+  ]
+ },
+ "sign-in": {
+  "quandoUsar": [
+   "Cartão de entrada solto numa página sua, com e-mail mais código de 6 dígitos como caminho principal e passkey e três provedores de login único como alternativas.",
+   "Protótipos que precisam de um fluxo de entrada navegável sem backend: envio, verificação e provedores são simulados com temporizadores.",
+   "Quando vale corrigir erros comuns de domínio no e-mail: “gmial.com” vira a sugestão “gmail.com”, aplicada com um clique."
+  ],
+  "quandoEvitar": [
+   "Use `login-centered` quando o login ocupa a tela inteira, o passkey deve vir primeiro ou o mesmo cartão precisa alternar para a criação de conta.",
+   "Use `signup-form` para criar conta com nome, senha e aceite de termos.",
+   "Use `otp-input` quando você já tem o fluxo e só falta o campo do código."
+  ],
+  "teclado": [
+   {
+    "teclas": ["Enter"],
+    "acao": "No campo de e-mail, segue para o código; numa casa do código, envia a verificação, que também dispara sozinha ao completar as 6 casas."
+   },
+   {
+    "teclas": ["←", "→"],
+    "acao": "No passo do código, movem o foco entre as casas (comportamento do `otp-input`)."
+   },
+   {
+    "teclas": ["Backspace"],
+    "acao": "Numa casa vazia do código, apaga a anterior e volta o foco para ela."
+   },
+   {
+    "teclas": ["Tab"],
+    "acao": "Percorre os controles do passo; o botão de reenvio continua focável durante a contagem, com `aria-disabled`."
+   }
+  ],
+  "acessibilidade": [
+   "Cada mudança de passo é anunciada por uma região `role=\"status\"` com `aria-live=\"polite\"` escondida; a linha de status visível do rodapé fica com `aria-hidden`.",
+   "O foco acompanha o fluxo: primeira casa do código, título de boas-vindas ao concluir e o campo de e-mail, com o texto selecionado, ao trocar de e-mail ou sair.",
+   "Os provedores formam um `role=\"group\"` nomeado com `aria-label` por botão, o reenvio diz no `aria-label` quantos segundos faltam e a sugestão de domínio é um botão “Use …”."
+  ],
+  "movimento": [
+   "Os passos cruzam de lado saindo de um leve desfoque, voltando pelo lado oposto, e a altura do cartão segue o passo novo numa mola sem ultrapassagem só durante a troca.",
+   "Ao concluir pelo código, o avatar pequeno cresce até o grande (layout compartilhado), um anel se desenha em volta, um selo de visto surge e título, detalhes e botão sobem em sequência.",
+   "Com “reduzir movimento” ligado, os passos só esmaecem, a altura troca na hora e o avatar, o anel e o selo aparecem sem animação."
+  ],
+  "responsivo": [
+   "O cartão tem `min(100%, 432px)`; uma container query de até 380 px aperta margens, título e botões de provedor, e até 480 px de viewport o raio diminui."
+  ],
+  "desempenho": [
+   "Um `ResizeObserver` mede o conteúdo para animar a altura e a contagem de reenvio usa um temporizador de 1 s só no passo do código; os temporizadores são limpos ao desmontar."
+  ],
+  "notasIA": [
+   "Nada é autenticado de verdade: `submitEmail`, `verify` e `signInWith` usam `setTimeout` e `onSignIn(account, method)` só avisa o fim da simulação; troque essas funções pelas chamadas reais.",
+   "Só há duas props, `demoCode` (padrão `123456`, exibido como dica no campo do código) e `onSignIn`; tire a dica em produção e saiba que os textos estão fixos em inglês.",
+   "Depende de `avatar`, `button`, `input` e `otp-input`; o “Sign up” do rodapé só muda a linha de status, então ligue-o à sua rota de cadastro, por exemplo com `signup-form`."
+  ]
+ },
+ "signup-form": {
+  "quandoUsar": [
+   "Página ou cartão de criação de conta com login único (Google, Apple, GitHub) e, abaixo, nome, e-mail de trabalho e senha com medidor de força.",
+   "Fluxos em que o erro deve aparecer no campo certo: as mensagens surgem ao sair de um campo preenchido ou ao enviar, e o foco vai para o primeiro inválido.",
+   "Quando a criação precisa terminar num estado claro de conclusão, com o método usado e a preferência de e-mails, sem trocar de página."
+  ],
+  "quandoEvitar": [
+   "Use `sign-in` ou `login-centered` para quem já tem conta.",
+   "Use `newsletter-signup` quando só precisa coletar um e-mail.",
+   "Use `password-strength` quando quer só o medidor de força dentro de um formulário seu."
+  ],
+  "teclado": [
+   {
+    "teclas": ["Enter"],
+    "acao": "Em qualquer campo, envia o formulário; com erro, o foco vai para o primeiro campo inválido."
+   },
+   {
+    "teclas": ["Espaço"],
+    "acao": "Na caixa “Email me product updates”, marca ou desmarca (checkbox Radix)."
+   }
+  ],
+  "acessibilidade": [
+   "Os campos vêm de `input` e `password-field`, com rótulo visível e mensagem de erro ligada a cada um; ao enviar com erro, o foco vai para o primeiro campo inválido.",
+   "A linha de força é ligada à senha por `aria-describedby` e vira `role=\"alert\"` em erro; o medidor colorido fica com `aria-hidden`, então o nível chega em palavras, de “Weak” a “Strong”.",
+   "O erro de envio, seu (`serverError`) ou lançado por `onSubmit`, aparece em `role=\"alert\"`; os passos são anunciados por `role=\"status\"` e o título de boas-vindas recebe o foco ao concluir."
+  ],
+  "movimento": [
+   "Os passos cruzam de lado saindo de um leve desfoque, a altura do cartão segue numa mola sem ultrapassagem só durante a troca e a conclusão desenha um círculo e depois um visto.",
+   "O texto de força troca no lugar subindo de um leve desfoque enquanto o medidor acende barra a barra, com cor por nível, e a linha de erro de envio abre a própria altura numa mola.",
+   "Com “reduzir movimento” ligado, os passos só esmaecem, a altura e as linhas trocam na hora, o visto aparece pronto e o medidor muda de cor sem transição."
+  ],
+  "responsivo": [
+   "O cartão tem `min(100%, 432px)`; uma container query de até 380 px aperta margens, título, botões de provedor e barras do medidor, e até 480 px de viewport o raio diminui."
+  ],
+  "notasIA": [
+   "`onSubmit(details)` recebe `name`, `email`, `password` e `productUpdates`; lance um `Error` para mostrar a mensagem dele, e saiba que a conclusão espera no mínimo 700 ms mesmo com resposta rápida.",
+   "`serverError` mostra um erro da sua API acima do botão; `onProvider(provider)` é chamado no clique, mas o bloco simula o redirecionamento e conclui em 900 ms com dados de exemplo.",
+   "As regras são fixas (nome com 2 ou mais caracteres, e-mail completo, senha com 8 ou mais) e as mensagens estão em inglês; “Terms”, “Privacy policy” e “Sign in” só mudam a linha de status."
+  ]
+ },
+ "site-footer": {
+  "quandoUsar": [
+   "Rodapé de site de produto ou documentação com colunas de links, inscrição de newsletter, links legais, redes sociais e um link de status do sistema.",
+   "Rodapé discreto de duas linhas (`variant=\"minimal\"`) para páginas em que as colunas seriam excesso.",
+   "Fechar uma landing do próprio ryan-ui com a marca grande em degradê (`variant=\"logo\"`)."
+  ],
+  "quandoEvitar": [
+   "Use `newsletter-signup` quando a inscrição é a chamada principal da seção, com a pilha de edições e a contagem de leitores.",
+   "Use `cta-section` para fechar a página com uma chamada para ação em vez de navegação.",
+   "A variante `variant=\"logo\"` só serve para a marca do ryan-ui: o arco grande está desenhado no arquivo e `brand.mark` troca apenas o ícone pequeno."
+  ],
+  "teclado": [
+   {
+    "teclas": ["Enter"],
+    "acao": "No campo da newsletter, envia a inscrição; vazio ou inválido, o erro aparece ali mesmo."
+   }
+  ],
+  "acessibilidade": [
+   "As colunas ficam num `<nav aria-label=\"Footer\">` com cada título em `<h2>`, as listas legal e social têm `aria-label` e links sem `href` viram `<button>`.",
+   "O campo da newsletter tem rótulo escondido, `aria-invalid` e `aria-describedby` para a linha de mensagem, que é `aria-live=\"polite\"` e vira `role=\"alert\"` em erro.",
+   "Links `external` abrem em nova aba com `rel=\"noopener noreferrer\"`, mas o aviso é só a seta com `aria-hidden`; se importar, inclua “nova aba” no `label`."
+  ],
+  "movimento": [
+   "Na variante `logo`, o arco grande sobe 40 px e aparece em 0,9 s na primeira vez que 30% dele entra na tela, cortado pela borda de baixo e esmaecendo no degradê da marca.",
+   "A linha da newsletter troca no lugar entre dica, erro e confirmação, subindo de um leve desfoque, e a seta dos links externos se desloca no hover.",
+   "Com “reduzir movimento” ligado, o arco aparece pronto, as mensagens trocam na hora e as transições dos links e do campo são removidas."
+  ],
+  "responsivo": [
+   "Container queries do rodapé: até 760 px a marca e a newsletter empilham sobre as colunas; até 520 px as colunas passam para duas, a newsletter ocupa a largura toda e a linha de baixo empilha."
+  ],
+  "notasIA": [
+   "Importe o componente nomeado `SiteFooter`; o export padrão é `SiteFooterBlock`, o preview com troca de layout, e todas as props têm valores de exemplo do ryan-ui para você substituir.",
+   "Passe `columns`, `legal` e `socials` com `href`, porque sem ele os links viram botões que só chamam `onNavigate`; `newsletter={null}` e `status={null}` escondem essas partes.",
+   "`newsletter.onSubscribe(email)` pode devolver uma Promise: rejeitar mostra o erro e resolver mostra “Subscribed”; sem a função, o bloco espera 0,9 s e finge sucesso."
+  ]
+ },
+ "site-header": {
+  "quandoUsar": [
+   "Navegação do topo de um site de produto ou documentação: marca, poucas seções, “Sign in” e uma ação principal, fixa no topo e opaca ao rolar.",
+   "Seções com muitos destinos que pedem painéis de mega menu com descrição por link e um cartão em destaque (`variant=\"mega\"`).",
+   "Sites que precisam funcionar no celular: abaixo de 760 px de largura do cabeçalho, os links dobram numa folha de menu."
+  ],
+  "quandoEvitar": [
+   "Use `page-header` para o cabeçalho de uma página dentro do app, com título do projeto, abas e ações.",
+   "Use `animated-sidebar` quando a navegação do app é um menu lateral com grupos e muitas seções.",
+   "Use `drawer` quando o menu do celular precisa ser um diálogo modal: a folha daqui não prende o foco."
+  ],
+  "teclado": [
+   {
+    "teclas": ["←", "→"],
+    "acao": "Movem o foco entre os itens do topo, dando a volta; com um painel aberto, o painel acompanha o item."
+   },
+   {
+    "teclas": ["↓"],
+    "acao": "Num item com painel, abre o painel e leva o foco ao primeiro link."
+   },
+   {
+    "teclas": ["↑", "↓"],
+    "acao": "Dentro do painel, movem entre os links; `↑` no primeiro link fecha o painel e devolve o foco ao item."
+   },
+   {
+    "teclas": ["Home", "End"],
+    "acao": "Dentro do painel, vão ao primeiro ou ao último link."
+   },
+   {
+    "teclas": ["Esc"],
+    "acao": "Fecha o painel e devolve o foco ao item; com a folha do celular aberta, fecha a folha e devolve o foco ao botão de menu."
+   },
+   {
+    "teclas": ["Enter", "Espaço"],
+    "acao": "Num item com painel, abrem ou fecham o painel; no botão de menu, abrem ou fecham a folha."
+   }
+  ],
+  "acessibilidade": [
+   "Os links do topo ficam num `<nav>` nomeado por `label` (“Main”); itens simples recebem `aria-current=\"page\"`, mas num item com painel o estado atual é só visual.",
+   "Gatilhos de painel têm `aria-expanded` e `aria-controls`, o painel é uma `role=\"region\"` com o nome do item e a face que sai fica `inert` durante a troca.",
+   "O botão de menu tem `aria-expanded`, `aria-controls` e rótulo que alterna; a folha não move nem prende o foco ao abrir, e `Esc` a fecha devolvendo o foco ao botão."
+  ],
+  "movimento": [
+   "Passado `scrollThreshold` (8 px), o fundo fica opaco com borda e sombra e só clareia de novo perto do topo; o realce de hover (fora do `centered`) e o indicador da seção atual deslizam entre os links.",
+   "O painel abre após 70 ms de intenção do mouse, a altura segue o conteúdo numa mola sem ultrapassagem e, ao passar para outro item, o conteúdo entra pelo lado para onde você se moveu.",
+   "A folha do celular desce da barra abrindo a altura numa mola, com as linhas em sequência; com “reduzir movimento” ligado, painel e folha só esmaecem e o ícone de menu não gira."
+  ],
+  "responsivo": [
+   "O cabeçalho é o próprio contêiner: abaixo de 760 px somem os links, a ação secundária e o painel, aparece o botão de menu e alargar de novo fecha a folha.",
+   "A folha rola por dentro até `--site-header-sheet-max` (padrão `100dvh - 65px`); defina essa variável quando o cabeçalho mora num contêiner de altura fixa."
+  ],
+  "desempenho": [
+   "Ouve `scroll` de forma passiva na janela ou em `scrollContainer` e usa um `ResizeObserver` no cabeçalho; os temporizadores de intenção do hover são limpos ao desmontar."
+  ],
+  "notasIA": [
+   "Importe o componente nomeado `SiteHeader`; o export padrão é `SiteHeaderBlock`, o preview com troca de layout dentro de uma página que rola.",
+   "Se a página rola dentro de um elemento, passe-o em `scrollContainer`: ele decide quando o fundo fica opaco e recebe `overflow: hidden` enquanto a folha do celular está aberta.",
+   "Itens com `links` só viram painel no `mega`; como o evento do clique não chega a `onNavigate`, para roteamento no cliente deixe os destinos sem `href` (viram botões) e navegue no callback."
+  ]
+ },
+ "stats-band": {
+  "quandoUsar": [
+   "Faixa de três ou quatro números de destaque numa landing ou página institucional, cada um com um gráfico mínimo que o comprova: tendência, disponibilidade, distribuição ou mapa.",
+   "Quando cada número tem uma linha de contexto que vale mostrar sob demanda, no hover ou no foco."
+  ],
+  "quandoEvitar": [
+   "Use `metric-card` para um número com contexto num painel; esta faixa é uma seção de página e conta só uma vez, ao entrar na tela.",
+   "Use `animated-counter` quando precisa só de um número que anima entre valores.",
+   "Use `bar-chart` ou `line-chart` quando o gráfico é o conteúdo principal e a pessoa precisa ler valores nele."
+  ],
+  "teclado": [
+   {
+    "teclas": ["Tab"],
+    "acao": "Chega a cada número que tem `context`; com foco, a linha de detalhe dá lugar à de contexto e o visual ganha a cor de destaque."
+   }
+  ],
+  "acessibilidade": [
+   "Leitores de tela recebem só o valor final de cada número, em texto escondido; a contagem animada e os visuais ficam com `aria-hidden`, então ponha em `detail` ou `context` o que o gráfico mostra.",
+   "A faixa é uma `<section>` nomeada pelo `title` (ou “Key numbers”) e os números formam uma `<dl>`; `detail` e `context` ficam os dois no DOM, então ambos são lidos.",
+   "Um número com `context` recebe `tabIndex=0`, mas o contorno de foco é removido: o foco aparece só pela troca de linha e pela cor do visual."
+  ],
+  "movimento": [
+   "Na primeira vez que 40% da lista entra na tela, os números sobem em sequência (90 ms de intervalo) e contam de zero ao valor em 1,6 s (`duration`); números compactos contam já na unidade final, de 0,0M a 2,3M.",
+   "Quando cada número está quase no valor, o visual se desenha: linha e mapa se revelam da esquerda para a direita, as barras crescem em onda e, em `divided`, as linhas finas correm pela faixa e entre os números.",
+   "Com “reduzir movimento” ligado (lido depois da hidratação, com o CSS cobrindo a primeira pintura), os números já aparecem no valor final e visuais e linhas ficam prontos, sem transição."
+  ],
+  "responsivo": [
+   "Container queries da faixa: até 800 px os números ficam dois a dois e uma faixa de três empilha numa coluna; até 520 px vai um por linha, com o visual ao lado do número.",
+   "A largura final de cada número fica reservada desde o início, então a contagem nunca empurra o layout."
+  ],
+  "desempenho": [
+   "A contagem escreve direto no `textContent` do número a cada quadro, sem re-renderizar o React, e `useInView` com `once` dispara uma vez só.",
+   "O visual `map` desenha cerca de 760 círculos SVG, um por ponto de terra da grade de 80 × 30, e é o mais pesado dos quatro."
+  ],
+  "notasIA": [
+   "Importe o componente nomeado `StatsBand`; o export padrão é `StatsBandBlock`, o preview com troca de layout, e `stats` usa os dados de exemplo de `stats-band-data.ts`.",
+   "Cada `Stat` leva `value`, `label` e, se quiser, `prefix`, `suffix`, `decimals`, `notation: \"compact\"`, `detail`, `context` e `visual` (`trend`, `uptime`, `distribution` ou `map`); a grade vai até 4 colunas.",
+   "`locale` é `en-US` por padrão para servidor e cliente formatarem igual; use `pt-BR` para vírgula decimal, e troque a `key` para tocar a contagem de novo."
+  ]
+ },
+ "token-swap": {
+  "quandoUsar": [
+   "Troca de tokens com dinheiro fictício em demos, tutoriais ou jogos: dois campos com seletor de token, botão de inverter, taxa e tarifas.",
+   "Cartão de conversão autônomo em que o valor recebido é calculado na hora a partir dos preços em dólar que você fornece."
+  ],
+  "quandoEvitar": [
+   "Use `money-input` para um campo de valor numa moeda dentro de um formulário comum.",
+   "Use `prediction-market` para comprar resultados de sim ou não.",
+   "Para ativos reais não serve como está: não há carteira nem cotação, tarifa de rede e slippage são constantes e uma troca rejeitada volta ao início sem mensagem."
+  ],
+  "teclado": [
+   {
+    "teclas": ["Enter"],
+    "acao": "No campo do valor, confirma a troca quando o valor é maior que zero e cabe no saldo."
+   },
+   {
+    "teclas": ["Enter", "Espaço", "↓"],
+    "acao": "No seletor de token, abrem o menu de tokens (Radix)."
+   },
+   {
+    "teclas": ["↑", "↓"],
+    "acao": "No menu, movem entre os tokens; `Enter` ou `Espaço` escolhe, e escolher o token do outro lado inverte o par."
+   },
+   {
+    "teclas": ["Esc"],
+    "acao": "Fecha o menu e devolve o foco ao seletor."
+   }
+  ],
+  "acessibilidade": [
+   "Cada campo tem rótulo visível e `aria-describedby` para a linha do valor em dólar, que vira o aviso de saldo insuficiente junto com `aria-invalid`; o campo de recebimento é só leitura e sai da ordem de Tab.",
+   "Os seletores são menus Radix com itens de rádio, cada gatilho diz no `aria-label` o lado e o token, e o botão de inverter diz no `aria-label` como o par vai ficar.",
+   "Ao confirmar, o formulário fica `inert` e o recibo é `role=\"status\"`, mas o foco não é levado ao recibo nem reposto em “New swap”; mova-o você se precisar."
+  ],
+  "movimento": [
+   "Ao inverter, os dois campos trocam de lugar numa mola com leve quique, o que sobe cresce um pouco enquanto o outro afunda e a seta gira 180°.",
+   "A linha da taxa e o rótulo do botão trocam deslizando na vertical; ao confirmar, o recibo cobre o formulário numa mola, o círculo surge e o visto se desenha.",
+   "Com “reduzir movimento” ligado, os campos trocam na hora, a seta não gira, os rótulos só esmaecem, o menu abre sem animação e o indicador de espera gira mais devagar."
+  ],
+  "notasIA": [
+   "Importe o componente nomeado `TokenSwap`; o export padrão é o preview, e `sampleTokens` são tokens e preços inventados, sem relação com ativos reais.",
+   "`onSwap(quote)` recebe `pay`, `receive`, `amount` e `received`: devolva uma Promise para segurar o estado pendente; os saldos só mudam no estado local após o sucesso e o `balance` de cada token é só o inicial.",
+   "A taxa vem dos `price` em dólar (preço de quem paga dividido pelo de quem recebe) e a tarifa de `feeRate` (padrão 0,3%); controle o valor com `amount` e `onAmountChange` ou use `defaultAmount`."
+  ]
+ },
+ "wallet-card": {
+  "quandoUsar": [
+   "Painel ou landing de produto financeiro que mostra o cartão com saldo e as últimas transações, com um botão para esconder os valores.",
+   "Quando o verso do cartão (assinatura e código de segurança) faz parte da história e deve abrir com um giro."
+  ],
+  "quandoEvitar": [
+   "Use `tilt-card` quando só quer a inclinação 3D para outro conteúdo, sem verso, máscara ou transações.",
+   "Use `metric-card` para mostrar um saldo com contexto num painel, sem o desenho do cartão.",
+   "Use `sortable-data-table` para históricos longos: a lista daqui é curta, sem paginação, filtro ou ordenação."
+  ],
+  "teclado": [
+   {
+    "teclas": ["Enter", "Espaço"],
+    "acao": "Nos botões “Show back” e “Hide amounts”, viram o cartão ou mascaram os valores; o cartão em si não recebe foco."
+   }
+  ],
+  "acessibilidade": [
+   "A face que não está à mostra fica com `aria-hidden` e `inert`; o número é lido como “Card ending in” mais os quatro dígitos, e os valores mascarados como “Balance hidden”, em texto escondido.",
+   "Os dois controles são botões com `aria-pressed`; o clique no cartão é só um atalho de ponteiro numa `div` sem papel, então os botões são o caminho acessível.",
+   "Rótulos e textos escondidos estão fixos em inglês (“Show amounts”, “Recent activity”, “Card ending in”)."
+  ],
+  "movimento": [
+   "Com mouse, o cartão inclina até 11° na direção do ponteiro em 3D numa mola, sob um brilho que acompanha o ponteiro, e volta reto ao sair.",
+   "O giro de 180° usa uma mola com pequeno quique; ao mascarar, cada dígito vira ponto um após o outro (16 ms de intervalo) e as transações sobem em sequência ao montar.",
+   "O toque não inclina o cartão; com “reduzir movimento” ligado também não há inclinação, o giro é imediato, os dígitos trocam sem deslize e as transações aparecem de uma vez."
+  ],
+  "responsivo": [
+   "A raiz é um contêiner de até 23rem; o cartão mantém a proporção de cartão de pagamento (1,586) e o saldo escala com a largura, de 1,5rem a 2rem (`8.6cqi`)."
+  ],
+  "notasIA": [
+   "Importe o componente nomeado `WalletCard`; o export padrão é o preview com dados de exemplo (titular, saldo e quatro transações).",
+   "Controle `masked` com `onMaskedChange` e `flipped` com `onFlippedChange` para guardar a escolha; `transactions={[]}` esconde a lista e cada `amount` é um número com sinal, negativo para saída.",
+   "Os valores são formatados sempre em `en-US` com a moeda de `currency`; o cartão só usa `last4`, e o `cvv` é impresso no verso protegido só pela máscara do saldo, então evite passar o código real."
+  ]
+ }
+}

@@ -1,0 +1,31 @@
+/* Referência da API: por componente, o nome em mono 14px/600, a descrição e a tabela de props num cartão. */
+.blocks { display: grid; min-width: 0; grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+.block { display: grid; min-width: 0; grid-template-columns: minmax(0, 1fr); }
+.name { margin: 0; color: var(--foreground); font-family: var(--font-mono); font-size: .875rem; font-weight: 600; letter-spacing: 0; line-height: 1.2; }
+.doc { max-width: 42rem; margin: .375rem 0 0; color: var(--text-secondary); font-size: .84375rem; line-height: 1.5; }
+.block .card { margin-top: .75rem; }
+.groupTitle { margin: 0; color: var(--foreground); font-family: var(--font-display); font-size: .9375rem; font-weight: 500; letter-spacing: -.01em; line-height: 1.1; }
+.typeBlock { display: grid; min-width: 0; grid-template-columns: minmax(0, 1fr); margin-top: 1.125rem; }
+
+/* Tabela: cabeçalho um tom acima com rótulos de 12.5px; nome da prop em mono 13px/600; tipo e padrão em chips; descrição de 13.5px. */
+.table { min-width: 36rem; table-layout: fixed; }
+.table thead th { color: var(--text-muted); background: var(--surface-muted); font-size: .78125rem; font-weight: 400; line-height: 1.4; white-space: nowrap; }
+.table th:nth-child(1) { width: 19.3%; }
+.table th:nth-child(2) { width: 25%; }
+.table[data-columns="4"] th:nth-child(3) { width: 13.5%; }
+.table[data-columns="3"] th:nth-child(1) { width: 24%; }
+.table[data-columns="3"] th:nth-child(2) { width: 32%; }
+.table[data-columns="2"] { min-width: 28rem; }
+.table[data-columns="2"] th:nth-child(1) { width: 32%; }
+.rowDoc { display: block; margin-top: .25rem; color: var(--text-muted); font-size: .78125rem; font-weight: 400; }
+.table tbody th, .table tbody td { font-size: .84375rem; line-height: 1.5; overflow-wrap: anywhere; }
+.prop { color: var(--foreground); font-family: var(--font-mono); font-size: .8125rem; font-weight: 600; letter-spacing: 0; }
+.required { display: inline-block; margin-left: .5rem; color: var(--warning); font-size: .6875rem; font-weight: 500; }
+.table td:nth-child(2), .table[data-columns="4"] td:nth-child(3) { padding-right: .375rem; }
+.chip { border-radius: 6px; padding: .0625rem .25rem; color: var(--text-secondary); background: var(--surface-muted); font-family: var(--font-mono); font-size: .73125rem; letter-spacing: 0; line-height: 1.6667; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.chip + .chip { margin-left: .25rem; }
+.text { color: var(--text-secondary); }
+.dash { color: var(--text-muted); }
+
+.exports { display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; margin: .75rem 0 0; padding: 0; font-size: .8125rem; list-style: none; }
+.exports > li { display: inline-flex; align-items: baseline; gap: .5rem; }

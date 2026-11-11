@@ -99,6 +99,11 @@
         "path": "registry/blocks/morphing-tabs/morphing-tabs.module.css",
         "type": "registry:component",
         "target": "@components/ryan-ui/blocks/morphing-tabs/morphing-tabs.module.css"
+      },
+      {
+        "path": "lib/media.ts",
+        "type": "registry:lib",
+        "target": "@components/ryan-ui/lib/media.ts"
       }
     ],
     "meta": {

@@ -1,0 +1,1038 @@
+{
+ "agent-activity": {
+  "quandoUsar": [
+   "Mostrar ao vivo o que um agente faz numa tarefa longa: cada passo tem um tipo (`search`, `read`, `write`, `think`, `run`) que escolhe o ícone.",
+   "Passos que coletam achados curtos, como arquivos, sites ou resultados: eles aparecem como chips, um a um, enquanto a lista `items` cresce.",
+   "Execuções com muitos passos, em que os concluídos devem dobrar numa linha só, com contagem e tempo total, e abrir de novo sob demanda."
+  ],
+  "quandoEvitar": [
+   "Use `todo-list` quando o plano inteiro é conhecido desde o início e basta marcar cada passo como pendente, em andamento ou concluído.",
+   "Use `tool-result` quando é preciso mostrar a entrada e a saída completas de cada chamada de ferramenta.",
+   "Use `loading-states` para uma espera curta, sem passos para listar."
+  ],
+  "teclado": [
+   {
+    "teclas": [
+     "Enter",
+     "Espaço"
+    ],
+    "acao": "Com o foco na linha de resumo, abre ou fecha a lista de passos concluídos."
+   },
+   {
+    "teclas": [
+     "Tab"
+    ],
+    "acao": "Leva o foco à linha de resumo, o único controle do componente; ela só existe depois que o primeiro passo termina."
+   }
+  ],
+  "acessibilidade": [
+   "A raiz é uma `<section>` com `aria-label` igual a `title`; o resumo é um `<button>` com `aria-expanded` e `aria-controls`, e a lista recolhida fica `inert`.",
+   "Uma região `role=\"status\"` invisível anuncia o título do passo em andamento e, no fim, quantos passos terminaram; passos pendentes e com erro levam um sufixo só para leitor de tela.",
+   "Os textos fixos (“steps finished”, “Done”, “(waiting)”, “(failed)”) estão em inglês no código e não têm prop de tradução."
+  ],
+  "movimento": [
+   "No passo em andamento, um anel pulsa em volta do ícone e um brilho corre pelo título; os chips entram um a um com uma mola curta, sem ultrapassagem.",
+   "Ao terminar, o passo sai da lista ao vivo e dobra para a linha de resumo com uma mola de altura, enquanto o número de concluídos rola para o novo valor.",
+   "Com “reduzir movimento” ligado, pulso, brilho e giro param, as alturas trocam na hora e os chips aparecem sem animação."
+  ],
+  "responsivo": [
+   "Ocupa 100% da largura do pai: o cabeçalho e o `detail` de cada passo cortam com reticências numa linha, enquanto o título do passo e os chips quebram linha."
+  ],
+  "notasIA": [
+   "É controlado pelos dados: passe `steps` com `id` estável e atualize `status` (`pending`, `running`, `done`, `error`), `items` e `duration` enquanto o agente trabalha; o componente não mede o tempo sozinho.",
+   "Cada texto de `items` serve de `key` do chip: não repita o mesmo texto dentro de um passo.",
+   "Os concluídos começam recolhidos; use `defaultExpanded` ou o par `expanded` e `onExpandedChange` para abri-los, por exemplo quando um passo termina com `error`."
+  ]
+ },
+ "ai-sidebar": {
+  "quandoUsar": [
+   "Um assistente que fica ao lado do conteúdo que comenta (documento, painel, editor) e empurra a página em vez de cobri-la.",
+   "Conversas curtas e contextuais sobre a tela atual, com sugestões prontas que enviam o prompt num toque.",
+   "Layouts divididos: o painel escolhe entre encaixar e sobrepor pela largura do próprio contêiner, não da janela."
+  ],
+  "quandoEvitar": [
+   "Use `chat-app` quando a conversa é a tela inteira, com lista de conversas e respostas que podem ser paradas ou refeitas.",
+   "Use `drawer` para um painel lateral temporário que não é uma conversa.",
+   "Use `prompt-input` com `message-scroller` quando precisar de anexos, menu de modelo ou botão de parar: a caixa de prompt embutida aqui só envia texto."
+  ],
+  "teclado": [
+   {
+    "teclas": [
+     "Enter"
+    ],
+    "acao": "Na caixa de prompt, envia o texto; durante a composição de um IME não envia."
+   },
+   {
+    "teclas": [
+     "Shift + Enter"
+    ],
+    "acao": "Quebra a linha sem enviar."
+   },
+   {
+    "teclas": [
+     "Esc"
+    ],
+    "acao": "Com o foco dentro do painel, fecha o painel."
+   },
+   {
+    "teclas": [
+     "Enter",
+     "Espaço"
+    ],
+    "acao": "Numa sugestão, envia o texto dela como prompt."
+   },
+   {
+    "teclas": [
+     "Tab"
+    ],
+    "acao": "Percorre fechar, sugestões, caixa de prompt e enviar; com o painel fechado, nada dentro dele recebe foco."
+   }
+  ],
+  "acessibilidade": [
+   "O painel é um `<aside>` rotulado pelo título; ao abrir, o foco vai para a caixa de prompt e, ao fechar, volta ao elemento que o tinha antes, se ele ainda existir (o `launcher` embutido sai do DOM ao abrir, então não o recebe de volta).",
+   "A lista de mensagens é `aria-live=\"polite\"` e cada mensagem leva um prefixo só para leitor de tela; fechado, o painel fica `inert`, e aberto no modo sobreposto é a página atrás que fica `inert`.",
+   "Rótulos como “Close”, “Send message”, “Conversation” e “Suggestions” estão fixos em inglês; `title`, `subtitle`, `placeholder` e `emptyText` são seus."
+  ],
+  "movimento": [
+   "Encaixado, o painel abre com uma mola na largura e empurra a página; sobreposto, desliza por cima dela com um véu que esmaece.",
+   "Mensagens novas sobem com um leve ganho de escala, as sugestões entram em sequência quando o painel abre e a lista rola suave até o fim a cada mensagem.",
+   "Com “reduzir movimento” ligado, painel, mensagens e sugestões trocam de estado na hora e a rolagem até o fim deixa de ser suave."
+  ],
+  "responsivo": [
+   "Um `ResizeObserver` mede o contêiner: abaixo de `overlayBelow` (640 px por padrão) o painel desliza sobre a página, com largura `min(100%, max(width, 320px))`.",
+   "A caixa de prompt cresce com o texto até 132 px e depois rola por dentro; as sugestões ficam numa linha só, com rolagem horizontal."
+  ],
+  "desempenho": [
+   "São dois `ResizeObserver` por instância (contêiner e lista) e a lista não é virtualizada: conversas muito longas pesam no DOM."
+  ],
+  "notasIA": [
+   "Envolva a página: `children` é o conteúdo ao lado do painel, e a raiz usa `height: 100%`, então o pai precisa ter altura definida.",
+   "A conversa é sua: passe `messages` (`id`, `role`, `content`), acrescente a mensagem em `onSend` e ligue `pending` enquanto a resposta não chega; `content` aceita nós, como um `StreamingResponse`.",
+   "Use `open` com `onOpenChange` e `launcher={false}` quando a página já tem o próprio botão; o item depende de `loading-states` para o indicador de `pending`."
+  ]
+ },
+ "approval-card": {
+  "quandoUsar": [
+   "Um agente propõe uma ação com efeito real (reembolso, envio, exclusão) e uma pessoa precisa aprovar ou rejeitar antes de ela acontecer.",
+   "Pedidos que precisam de contexto: um resumo, fatos em pares de rótulo e valor e, se quiser, uma prévia da mudança atrás do botão de detalhes.",
+   "Filas de revisão em que o cartão continua na tela depois da decisão, mostrando o que foi decidido e um “Undo”."
+  ],
+  "quandoEvitar": [
+   "Use `tool-approval` para um pedido compacto dentro da conversa, com permitir uma vez, permitir sempre ou negar.",
+   "Use `confirm-morph` ou `hold-to-confirm` quando é a própria pessoa que dispara uma ação destrutiva e só falta confirmá-la.",
+   "Use `dialog` quando a decisão deve bloquear o resto da tela até ser tomada."
+  ],
+  "teclado": [
+   {
+    "teclas": [
+     "Enter",
+     "Espaço"
+    ],
+    "acao": "Aciona o botão em foco: detalhes, rejeitar, aprovar ou desfazer."
+   },
+   {
+    "teclas": [
+     "Tab"
+    ],
+    "acao": "Percorre os controles na ordem do DOM: botão de detalhes, rejeitar e aprovar."
+   }
+  ],
+  "acessibilidade": [
+   "A raiz é uma `<section>` rotulada pelo `title`; o botão de detalhes expõe `aria-expanded` e `aria-controls`, e o resultado aparece numa região `role=\"status\"`.",
+   "Ao decidir, o botão pressionado sai do DOM e o código não move o foco, que fica no `body`; se a fila é usada pelo teclado, mova o foco você mesmo em `onStatusChange`.",
+   "“Show details”, “Hide details”, “Undo” e “needs your approval” estão fixos em inglês; só `approveLabel`, `rejectLabel` e `resolvedLabels` podem ser traduzidos."
+  ],
+  "movimento": [
+   "Ao decidir, o ícone vira um visto ou um xis que se desenha, uma onda sai do emblema e os botões dão lugar ao resultado com um esmaecer curto.",
+   "Os detalhes abrem com uma mola de altura e as linhas de fatos entram em sequência.",
+   "Com “reduzir movimento” ligado, sobram só trocas de opacidade: sem onda, sem traço se desenhando e sem transições de cor ou escala."
+  ],
+  "responsivo": [
+   "Quando a janela tem até 26rem de largura (media query, não do contêiner), os dois botões dividem a linha inteira; o cartão sempre ocupa 100% do pai."
+  ],
+  "notasIA": [
+   "O cartão só registra a decisão: execute a ação em `onStatusChange` e, para refletir o que o servidor respondeu, controle `status` (`pending`, `approved`, `rejected`).",
+   "“Undo” devolve o cartão a `pending` e chama `onStatusChange(\"pending\")`; se a ação não pode ser desfeita depois de executada, passe `allowUndo={false}`.",
+   "O botão de detalhes só aparece quando há `details` ou `children`; cada `label` de `details` serve de `key`, então não repita rótulos."
+  ]
+ },
+ "citations": {
+  "quandoUsar": [
+   "Respostas de IA ou textos de pesquisa em que cada afirmação aponta para uma fonte numerada.",
+   "Quando o leitor deve conferir título, site e trecho da fonte sem sair do parágrafo, e abrir o original só se quiser.",
+   "Quando há uma lista de fontes no fim e ela deve destacar a fonte do chip apontado no texto, e o chip quando se aponta a linha."
+  ],
+  "quandoEvitar": [
+   "Use `hover-card` para a prévia de uma pessoa ou de um link solto, sem numeração nem lista de fontes.",
+   "Use `tooltip` quando a nota é só um texto curto, sem link nem conteúdo interativo.",
+   "Fontes sem endereço não cabem aqui: o endereço é obrigatório, e tanto o título do cartão quanto a linha da lista são links para ele."
+  ],
+  "teclado": [
+   {
+    "teclas": [
+     "Tab"
+    ],
+    "acao": "Passa pelos chips no texto e pelas linhas da lista; o foco numa linha acende os chips da mesma fonte."
+   },
+   {
+    "teclas": [
+     "Enter",
+     "Espaço"
+    ],
+    "acao": "No chip, abre o cartão da fonte e leva o foco para ele."
+   },
+   {
+    "teclas": [
+     "Enter"
+    ],
+    "acao": "No título do cartão ou numa linha da lista, abre a fonte em nova aba."
+   },
+   {
+    "teclas": [
+     "Esc"
+    ],
+    "acao": "Fecha o cartão e devolve o foco ao chip."
+   }
+  ],
+  "acessibilidade": [
+   "Cada chip é um `<button>` com `aria-label` “Source N: título”; o cartão é um popover do Radix (`role=\"dialog\"`) que só recebe o foco quando aberto por clique ou teclado, nunca por hover.",
+   "A lista é uma `<section>` rotulada pelo próprio título, com um `<ol>` de links que abrem em nova aba com `rel=\"noreferrer noopener\"`.",
+   "Os rótulos “Source N” estão fixos em inglês; o título da lista vem da prop `title` de `CitationSources` (padrão “Sources”)."
+  ],
+  "movimento": [
+   "O cartão cresce a partir do chip, com escala e esmaecer, e suas linhas entram em sequência; o chip ativo aumenta um pouco.",
+   "Um único realce desliza entre as linhas da lista com uma mola, seguindo o ponteiro, o foco ou o chip ativo; as linhas entram escalonadas na montagem.",
+   "Com “reduzir movimento” ligado, cartão e linhas aparecem sem animação e o realce troca de linha na hora."
+  ],
+  "responsivo": [
+   "O cartão tem no máximo 20rem de largura e encolhe com a janela; abre acima do chip e o Radix o reposiciona para caber, com 12 px de folga.",
+   "O chip nunca se separa da palavra anterior na quebra de linha; na lista, o título corta em duas linhas, e no cartão o trecho corta em quatro."
+  ],
+  "notasIA": [
+   "São três partes do mesmo arquivo: `Citations` recebe `sources` e envolve o texto, `Citation source=\"id\"` vai dentro da frase e `CitationSources` lista tudo; as duas últimas lançam erro fora de `Citations`.",
+   "O número vem da posição em `sources` (índice + 1), não da ordem em que o chip aparece no texto; um `source` que não existe em `sources` não renderiza nada.",
+   "Ponha `<Citation>` logo depois da palavra e antes da pontuação; `site` é opcional e, sem ele, aparece o host de `url`."
+  ]
+ },
+ "file-diff": {
+  "quandoUsar": [
+   "Mostrar a alteração que um agente fez ou propõe num arquivo, a partir do texto de antes e de depois.",
+   "Revisões em que importa ver o trecho exato que mudou dentro da linha e quantas linhas entraram e saíram.",
+   "Arquivos novos, apagados ou renomeados: o cabeçalho ganha a etiqueta “New file”, “Deleted” ou “Renamed” e, no último caso, o caminho anterior."
+  ],
+  "quandoEvitar": [
+   "Use `code-block` para mostrar código sem comparação, com botão de copiar.",
+   "Use `image-compare` quando a diferença é visual, entre duas imagens.",
+   "Para diff lado a lado, com cores de sintaxe ou de arquivos enormes, procure outra solução: aqui o diff é unificado, sem realce de sintaxe e calculado no navegador."
+  ],
+  "teclado": [
+   {
+    "teclas": [
+     "Tab"
+    ],
+    "acao": "Percorre os botões do cabeçalho, a área do diff (que é focável) e as faixas dobradas."
+   },
+   {
+    "teclas": [
+     "Enter",
+     "Espaço"
+    ],
+    "acao": "Aciona o botão em foco: recolher o arquivo, mostrar ou dobrar todas as linhas inalteradas, ou abrir uma faixa dobrada."
+   },
+   {
+    "teclas": [
+     "↑",
+     "↓",
+     "←",
+     "→"
+    ],
+    "acao": "Com o foco na área do diff, rolam o conteúdo; é a rolagem nativa de uma região com `tabIndex={0}`."
+   }
+  ],
+  "acessibilidade": [
+   "A área do diff é um `role=\"group\"` focável, rotulado com o nome do arquivo e as contagens; números e sinais ficam `aria-hidden`, e cada linha alterada começa com “Added:” ou “Removed:” só para leitor de tela.",
+   "Os botões do cabeçalho têm `aria-label`, `aria-expanded` ou `aria-pressed`; ao abrir uma faixa dobrada, o foco passa para as linhas reveladas, porque o botão deixa de existir.",
+   "Com o arquivo recolhido, o corpo fica `inert`; todos os rótulos estão fixos em inglês."
+  ],
+  "movimento": [
+   "As linhas entram em sequência, com um atraso curto entre elas (igual a partir da 25ª), e os cinco blocos do cabeçalho aparecem um após o outro.",
+   "O corpo abre e fecha com uma mola de altura; uma faixa dobrada cresce a partir dos 32 px da própria linha, sem pulo.",
+   "Com “reduzir movimento” ligado, as linhas aparecem de uma vez e as alturas trocam na hora."
+  ],
+  "responsivo": [
+   "Linhas longas não quebram: o corpo rola na horizontal com a coluna de números presa à esquerda, e `maxHeight` limita a altura e liga a rolagem vertical.",
+   "Abaixo de 26rem de largura do próprio componente (container query), os cinco blocos somem; no caminho, o diretório corta com reticências antes do nome do arquivo."
+  ],
+  "desempenho": [
+   "O diff é calculado no navegador por LCS: depois de aparar o início e o fim iguais, a tabela tem o tamanho de (linhas do meio antes) × (linhas do meio depois); o resultado é memorizado por `before` e `after`.",
+   "Não há virtualização: cada linha visível é um nó no DOM; as faixas inalteradas dobradas não são renderizadas, então mantenha `context` baixo em arquivos grandes."
+  ],
+  "notasIA": [
+   "Passe `filename`, `before` e `after` com o texto completo: `before` vazio indica arquivo novo e `after` vazio, arquivo apagado; o componente não lê um patch pronto.",
+   "`context` (padrão 3) define quantas linhas iguais ficam em volta de cada mudança; trechos maiores dobram numa linha clicável, e um diff novo volta a começar dobrado.",
+   "Para vários arquivos, renderize um `FileDiff` por arquivo e use `defaultOpen={false}` ou o par `open` e `onOpenChange` para deixar só alguns abertos."
+  ]
+ },
+ "image-generation": {
+  "quandoUsar": [
+   "Um pedido de imagem numa conversa ou num editor, com prompt, progresso e resultado no mesmo cartão.",
+   "Gerações que levam alguns segundos e têm progresso conhecido: o cartão mostra a fase e a porcentagem em vez de um spinner.",
+   "Quando o resultado pede ações imediatas: gerar de novo, baixar a imagem e copiar o prompt."
+  ],
+  "quandoEvitar": [
+   "Use `skeleton` para reservar o lugar de uma imagem comum que só está carregando.",
+   "Use `image-viewer` para uma galeria de imagens prontas, com zoom e navegação.",
+   "Use `progress` ou `toast-progress` para tarefas longas que não terminam numa imagem."
+  ],
+  "teclado": [
+   {
+    "teclas": [
+     "Enter",
+     "Espaço"
+    ],
+    "acao": "Aciona o botão em foco: “Regenerate”, “Copy prompt”, “Generate” ou “Try again”."
+   },
+   {
+    "teclas": [
+     "Enter"
+    ],
+    "acao": "Ativa o link “Download”, que aponta para `src` com o atributo `download`."
+   }
+  ],
+  "acessibilidade": [
+   "Enquanto gera, a moldura é um `role=\"progressbar\"` com `aria-valuenow` e `aria-valuetext` (fase e porcentagem); no fim, uma região `role=\"status\"` anuncia “Image ready”.",
+   "O erro aparece num `role=\"alert\"`; a imagem usa `alt`, que por padrão repete o `prompt`, então passe um `alt` que descreva o resultado.",
+   "Fases, botões e anúncios estão fixos em inglês; só `prompt`, `model`, `alt` e `error` são seus."
+  ],
+  "movimento": [
+   "Durante a geração, uma onda diagonal de opacidade percorre uma grade de 8 × 6 células, a linha de progresso enche e o rótulo da fase troca saindo de um desfoque.",
+   "Quando a imagem termina de carregar, ela passa de desfocada e levemente ampliada para nítida em menos de um segundo, e as ações entram em sequência no rodapé.",
+   "Com “reduzir movimento” ligado, a onda para e as células ficam fixas, a imagem aparece sem desfoque nem zoom e as trocas são imediatas."
+  ],
+  "responsivo": [
+   "Ocupa 100% do pai e a moldura mantém `aspectRatio` (padrão `4 / 3`); o prompt corta em duas linhas e as ações quebram para a linha de baixo."
+  ],
+  "desempenho": [
+   "Sem `status`, um `setInterval` de 70 ms move o progresso; cada cartão em geração anima 48 células, e o desfoque de 28 px na revelação é caro: evite vários gerando ao mesmo tempo."
+  ],
+  "notasIA": [
+   "Sem `status`, o cartão não gera nada: roda uma prévia cronometrada de `duration` ms ao montar e a cada “Regenerate”; em uso real, controle `status` (`idle`, `generating`, `done`, `error`) e `progress` de 0 a 1.",
+   "`onRegenerate` é chamado por “Generate”, “Regenerate” e “Try again”: dispare a nova geração ali e troque `src` quando ela terminar.",
+   "A imagem só aparece com `status` em `done` e `src` carregado; “Download” é um link com `download` para o mesmo `src`."
+  ]
+ },
+ "loading-states": {
+  "quandoUsar": [
+   "O intervalo em que a IA já recebeu o pedido e ainda não tem nada para mostrar.",
+   "`ThinkingDots` dentro de uma bolha de chat e `ThinkingShimmer` em linha, no ponto em que a resposta vai começar.",
+   "Esperas mais longas: `ThinkingPhrases` alterna frases de status e `ThinkingSteps` mostra “Step 2 of 5” quando o número de passos é conhecido."
+  ],
+  "quandoEvitar": [
+   "Use `loader` para carregamento genérico fora de conversas de IA: spinner, pontos, barras, anel e órbita em três tamanhos.",
+   "Use `skeleton` quando dá para reservar o formato do conteúdo que vai chegar.",
+   "Use `todo-list` ou `agent-activity` quando cada passo do agente precisa aparecer com nome e estado."
+  ],
+  "acessibilidade": [
+   "Cada indicador é um `role=\"status\"`; nos pontos e nos passos o desenho fica `aria-hidden`, e o nome acessível é o `label` ou “Step N of M” seguido do `label`.",
+   "Em `ThinkingPhrases` a frase fica dentro do `role=\"status\"`, então cada troca é uma atualização da região viva: prefira frases curtas e um `interval` folgado.",
+   "Os textos padrão (“Thinking…”, as quatro frases, “Step … of …”) estão em inglês: `label` e `phrases` são traduzíveis, o “Step N of M” não."
+  ],
+  "movimento": [
+   "Um brilho varre as letras (`ThinkingShimmer`), três pontos sobem em onda (`ThinkingDots`), um ponto orbita um anel ao lado da frase (`ThinkingPhrases`) e o pip do passo atual pulsa (`ThinkingSteps`).",
+   "Frases, número do passo e rótulo trocam subindo de um desfoque leve e saindo para cima; os pips enchem com uma mola sem ultrapassagem.",
+   "Com “reduzir movimento” ligado, cada indicador vira um estado parado e legível: texto sem brilho, pontos e órbita imóveis, e trocas de texto imediatas."
+  ],
+  "responsivo": [
+   "As frases e o rótulo do passo ficam numa linha e cortam com reticências; `ThinkingSteps` mostra um pip por passo até 8 passos e, acima disso, uma barra única."
+  ],
+  "desempenho": [
+   "Só `ThinkingPhrases` usa timer (um `setInterval`, com mínimo de 600 ms); os outros indicadores são animações CSS."
+  ],
+  "notasIA": [
+   "Importe a variante direto (`ThinkingShimmer`, `ThinkingDots`, `ThinkingPhrases`, `ThinkingSteps`) ou use `LoadingStates` com `variant`; `showLabel` e `duration` só existem nos componentes individuais.",
+   "`ThinkingSteps` é controlado: passe `current` (a partir de 1) e `total`, e troque `label` a cada passo; valores fora da faixa são ajustados para o intervalo válido.",
+   "Monte o indicador só enquanto espera e troque-o pelo conteúdo quando a resposta começar; `ai-sidebar` e `chat-app` já dependem deste item."
+  ]
+ },
+ "message": {
+  "quandoUsar": [
+   "A resposta do assistente numa conversa em que ele não usa bolha: avatar, nome, texto formatado e ações embaixo.",
+   "Respostas com listas, títulos, código, negrito e links: `content` aceita um subconjunto pequeno de Markdown.",
+   "Quando cada resposta precisa de copiar, tentar de novo e avaliar com polegar para cima ou para baixo."
+  ],
+  "quandoEvitar": [
+   "Use `message-bubble` para as mensagens da pessoa e para conversas em estilo de bolhas.",
+   "Use `streaming-response` enquanto o texto ainda está chegando palavra por palavra.",
+   "Use `chat-thread` ou `comment-thread` para conversas entre pessoas, com reações, respostas e confirmação de leitura."
+  ],
+  "teclado": [
+   {
+    "teclas": [
+     "Tab"
+    ],
+    "acao": "Passa pelos links, pelos blocos de código (focáveis para rolar) e por cada botão de ação; o foco dentro da linha faz a barra aparecer."
+   },
+   {
+    "teclas": [
+     "Enter",
+     "Espaço"
+    ],
+    "acao": "Aciona a ação em foco: copiar, tentar de novo ou avaliar; repetir a mesma avaliação a limpa."
+   },
+   {
+    "teclas": [
+     "←",
+     "→"
+    ],
+    "acao": "Com o foco num bloco de código largo, rolam o código na horizontal (rolagem nativa)."
+   }
+  ],
+  "acessibilidade": [
+   "A raiz é um `<article>` com `aria-label` “Message from” mais o `name`; o avatar fica `aria-hidden`.",
+   "A barra é um `role=\"toolbar\"` em que cada botão tem `aria-label`; os de avaliação usam `aria-pressed`, e uma região `role=\"status\"` anuncia “Message copied”.",
+   "Em telas de toque a barra fica sempre visível; com mouse ela aparece no hover ou quando o foco entra na linha, e uma avaliação já dada continua à mostra."
+  ],
+  "movimento": [
+   "Ao montar, os blocos do conteúdo entram em sequência, subindo de um desfoque leve; `animateIn={false}` desliga isso.",
+   "Os botões da barra entram um após o outro, o ícone de copiar vira um visto, o de tentar de novo dá uma volta com uma mola e o polegar escolhido dá um pequeno salto.",
+   "Com “reduzir movimento” ligado, os blocos só esmaecem, sem atraso entre eles, os ícones trocam com esmaecer e não há giro nem salto."
+  ],
+  "responsivo": [
+   "A grade tem a coluna do avatar e uma coluna flexível; textos longos quebram em qualquer ponto e os blocos de código rolam na horizontal em vez de alargar a página."
+  ],
+  "notasIA": [
+   "Passe o texto em `content` (parágrafos, listas, títulos com `#`, blocos entre crases triplas, código em linha, `**negrito**` e links `http`, `https`, `mailto`, `/` ou `#`); tabelas e itálico saem como texto comum.",
+   "O botão de tentar de novo só existe com `onRetry`, e os de avaliação só com `onRatingChange`, `defaultRating` ou `rating={…}` (vale `rating={null}`); `actions=\"always\"` ou `\"none\"` fixa ou esconde a barra.",
+   "Com `children`, você renderiza o conteúdo e `content` vira só o texto a copiar; em históricos longos, passe `animateIn={false}`."
+  ]
+ },
+ "message-bubble": {
+  "quandoUsar": [
+   "Conversas em estilo de mensageiro: as bolhas da pessoa ficam à direita na cor de destaque e as do assistente, à esquerda numa superfície neutra.",
+   "Sequências de mensagens do mesmo remetente: `MessageBubbleGroup` aperta os cantos internos e deixa a cauda só na última bolha.",
+   "Quando a mensagem enviada deve mostrar hora e estado de entrega (`sending`, `sent`, `delivered`, `read`, `failed`) ou a outra parte está digitando (`typing`)."
+  ],
+  "quandoEvitar": [
+   "Use `message` para respostas longas do assistente, com Markdown e barra de copiar, tentar de novo e avaliar.",
+   "Use `chat-thread` quando precisar da conversa pronta, com reações, confirmação de leitura, indicador de digitação e campo de escrita.",
+   "Use `chat-app` quando quiser a tela de chat inteira, com lista de conversas e caixa de prompt."
+  ],
+  "acessibilidade": [
+   "Cada bolha começa com o autor só para leitor de tela (“You”, “Assistant” ou o `author` que você passar), e o estado de entrega tem um texto oculto equivalente aos tiques.",
+   "Os pontos de digitação são um `role=\"status\"` com `aria-label` “Typing”; `MessageBubbleGroup` é um `role=\"group\"` que recebe o nome de `label`.",
+   "A bolha não cria região viva para mensagens novas: ponha a lista num contêiner com esse papel, como o `message-scroller`, que usa `role=\"log\"`."
+  ],
+  "movimento": [
+   "A bolha surge a partir do canto da cauda, crescendo e subindo com uma mola de leve quique; `animateIn={false}` desliga isso para o histórico.",
+   "Cada tique novo se desenha quando o `status` muda (os que já existiam ao montar não repetem); `sending` mostra um pequeno giro e `typing`, três pontos em onda.",
+   "Com “reduzir movimento” ligado, a bolha e os tiques só esmaecem, e o giro e os pontos ficam parados."
+  ],
+  "responsivo": [
+   "A bolha ocupa no máximo 82% da largura do contêiner, até 34rem; o texto preserva as quebras de linha e quebra palavras longas."
+  ],
+  "notasIA": [
+   "Agrupe mensagens seguidas do mesmo remetente num `MessageBubbleGroup from=\"user\"`: ele define `from` e `position` de cada filho, que precisam ser `MessageBubble` diretos (um wrapper no meio quebra isso).",
+   "`timestamp` já chega formatado (por exemplo “9:41”) e `status` desenha os tiques; num grupo, passe os dois só na última bolha, como faz o demo.",
+   "Para o indicador de digitação, renderize uma bolha com `typing` e troque-a pela mensagem quando o texto chegar; fora de grupos, `position` e `tail` controlam cantos e cauda."
+  ]
+ },
+ "message-scroller": {
+  "quandoUsar": [
+   "A área de rolagem de uma conversa que recebe mensagens novas ou texto em streaming e deve acompanhar o fim enquanto o leitor está lá.",
+   "Quando rolar para cima deve soltar o acompanhamento, sem puxar o leitor de volta, e oferecer um atalho para a mensagem mais recente.",
+   "Registros ao vivo em geral (logs de execução, feeds de eventos) em que o conteúdo novo entra por baixo."
+  ],
+  "quandoEvitar": [
+   "Use `scroll-area` para conteúdo estático que só precisa de barras finas e esmaecer nas bordas.",
+   "Use `chat-thread` ou `chat-app` quando quiser a conversa pronta, com mensagens e campo de escrita, e não só o contêiner.",
+   "Use `infinite-masonry` para feeds que carregam mais itens ao chegar ao fim, em vez de acompanhar o que chega."
+  ],
+  "teclado": [
+   {
+    "teclas": [
+     "↑",
+     "↓",
+     "Page Up",
+     "Page Down",
+     "Home",
+     "End",
+     "Espaço"
+    ],
+    "acao": "Com o foco na área, rolam a conversa (rolagem nativa) e interrompem na hora o deslize automático até o fim."
+   },
+   {
+    "teclas": [
+     "Tab"
+    ],
+    "acao": "Leva o foco à área de rolagem, que é focável, depois ao que houver de interativo nas mensagens e ao botão de pular."
+   },
+   {
+    "teclas": [
+     "Enter",
+     "Espaço"
+    ],
+    "acao": "No botão “Jump to latest”, volta ao fim; o foco passa para a área de rolagem, porque o botão some."
+   }
+  ],
+  "acessibilidade": [
+   "A área visível é um `role=\"region\"` focável com o nome de `label`; o conteúdo é um `role=\"log\"` com `aria-live=\"polite\"`, então mensagens novas são anunciadas.",
+   "O botão de pular mostra o texto de `jumpLabel`, e o contador tem `aria-label` com o número de mensagens novas (em inglês, sem prop de tradução).",
+   "Ao acionar o botão pelo teclado, o foco vai para a área de rolagem em vez de se perder quando o botão sai."
+  ],
+  "movimento": [
+   "Mensagens novas sobem com uma mola e um leve ganho de escala; as que já estavam na primeira renderização não animam.",
+   "A volta ao fim é um deslize com mola na posição de rolagem; o botão de pular surge de baixo e o número de não lidas rola a cada novo total.",
+   "Com “reduzir movimento” ligado, a rolagem vai direto ao fim, e mensagens e botão só esmaecem."
+  ],
+  "responsivo": [
+   "A altura vem de `--message-scroller-height` (padrão 22rem) ou de `className` e `style`; a rolagem é interna, e as bordas de cima e de baixo esmaecem quando há mais conteúdo naquela direção."
+  ],
+  "desempenho": [
+   "Dois `ResizeObserver` acompanham o conteúdo e a moldura; não há virtualização e cada filho ganha um wrapper animado, então limite o histórico em conversas muito longas."
+  ],
+  "notasIA": [
+   "Cada filho direto conta como uma mensagem: dê `key` estável a cada um; o contador de não lidas compara a quantidade de filhos, então aparar mensagens antigas enquanto chegam novas faz ele parar de subir.",
+   "Defina a altura (variável `--message-scroller-height`, `className` ou `style`); `onAtBottomChange` avisa quando o leitor sai do fim ou volta, e `threshold` (32 px) diz o que ainda conta como fim.",
+   "Combina com `message-bubble` ou `message` como filhos; passe `animateIn={false}` a eles, porque a entrada animada já é feita aqui (`animateItems`)."
+  ]
+ },
+ "prompt-input": {
+  "quandoUsar": [
+   "A caixa de prompt de um assistente: cresce com o texto, envia com Enter e quebra linha com Shift + Enter.",
+   "Respostas que podem ser interrompidas: com `running`, o botão de enviar vira um botão de parar no mesmo lugar.",
+   "Pedidos com anexos em chips e um menu para escolher o modelo, tudo dentro da mesma caixa."
+  ],
+  "quandoEvitar": [
+   "Use `textarea` para um campo de várias linhas num formulário, sem envio por Enter nem botão de parar.",
+   "Use `mention-input` quando o texto precisa de menções a pessoas com @ ou a canais com #.",
+   "Use `chat-app` quando quiser a tela de chat inteira, com conversa, respostas em streaming e caixa de prompt já ligadas."
+  ],
+  "teclado": [
+   {
+    "teclas": [
+     "Enter"
+    ],
+    "acao": "Na caixa de texto, envia quando há texto ou anexo; durante a composição de um IME não envia."
+   },
+   {
+    "teclas": [
+     "Shift + Enter"
+    ],
+    "acao": "Quebra a linha sem enviar; a caixa cresce até `maxRows` linhas e depois rola por dentro."
+   },
+   {
+    "teclas": [
+     "Enter",
+     "Espaço",
+     "↓"
+    ],
+    "acao": "No seletor de modelo, abre o menu com o foco no primeiro modelo."
+   },
+   {
+    "teclas": [
+     "↑",
+     "↓",
+     "Home",
+     "End"
+    ],
+    "acao": "No menu, move entre os modelos; as setas dão a volta do último ao primeiro."
+   },
+   {
+    "teclas": [
+     "Enter",
+     "Espaço"
+    ],
+    "acao": "No menu, escolhe o modelo em foco, fecha o menu e devolve o foco ao seletor."
+   },
+   {
+    "teclas": [
+     "Esc"
+    ],
+    "acao": "Fecha o menu sem trocar o modelo e devolve o foco ao seletor."
+   }
+  ],
+  "acessibilidade": [
+   "A caixa de texto tem o nome de `label` (padrão “Prompt”) e a descrição oculta “Press Enter to send, Shift and Enter for a new line.” por `aria-describedby`; a dica visível fica `aria-hidden`.",
+   "Os botões só de ícone têm `aria-label` fixo em inglês (“Attach files”, “Remove …”, “Send prompt”, “Stop response”), o seletor se anuncia como “Model: …” e o menu é um grupo de rádio do Radix.",
+   "Depois de enviar, o foco volta para a caixa de texto; enviar e parar são o mesmo `<button>`, que só troca o `aria-label`, e o parar fica desativado sem `onStop`."
+  ],
+  "movimento": [
+   "A caixa acompanha a altura do texto com uma mola curta; a bandeja de anexos abre a própria altura, cada chip entra crescendo e os outros deslizam quando um sai.",
+   "Quando `running` vira `true`, a seta sai para cima, um quadrado de parar cresce no lugar e um arco gira em volta do botão; o nome do modelo troca deslizando na vertical.",
+   "Com “reduzir movimento” ligado, a altura troca na hora, chips e ícones só esmaecem, o arco para e o menu aparece com um esmaecer rápido."
+  ],
+  "responsivo": [
+   "É um contêiner de largura: abaixo de 22rem a dica “Enter to send” some; o nome do modelo corta com reticências, e o nome de cada anexo também, a partir de 11rem.",
+   "O menu de modelos abre acima do seletor, com pelo menos 15rem de largura, e o Radix o reposiciona para caber na tela, com 12 px de folga."
+  ],
+  "notasIA": [
+   "Ligue `onSubmit`, que recebe `value` já aparado, `attachments` e `model`, e controle `running` com `onStop`; sem `onStop`, o botão de parar fica desativado durante a resposta.",
+   "Sem `onAttach`, o botão abre o seletor do sistema e cria chips só com nome e tamanho, sem guardar o `File`; para enviar arquivos de verdade, passe `onAttach` e controle `attachments`.",
+   "Por padrão, texto e anexos são limpos após o envio (`clearOnSubmit`); com `models` vazio o menu some, e `model` com `onModelChange` deixa a escolha controlada."
+  ]
+ },
+ "streaming-response": {
+  "quandoUsar": [
+   "Mostrar a resposta de um modelo chegando palavra por palavra, com pausas naturais em vírgulas, fins de frase e entre parágrafos.",
+   "Streams reais: se `text` cresce com o novo pedaço anexado ao final, a revelação continua de onde estava em vez de recomeçar.",
+   "Demos e onboarding em que a pessoa pode pausar, pular para o fim ou repetir a resposta pela linha de status."
+  ],
+  "quandoEvitar": [
+   "Use `message` para respostas já prontas, com Markdown e ações de copiar, repetir e avaliar; aqui o texto é simples, dividido só em parágrafos.",
+   "Use `text-reveal` para revelar um trecho curto de interface com movimento contido, sem cursor nem controles.",
+   "Use `loading-states` enquanto ainda não chegou nenhuma palavra."
+  ],
+  "teclado": [
+   {
+    "teclas": [
+     "Enter",
+     "Espaço"
+    ],
+    "acao": "Nos controles da linha de status, pausa ou retoma, pula para o fim ou repete; pausar e pular ficam desativados quando o texto termina."
+   }
+  ],
+  "acessibilidade": [
+   "As palavras animadas ficam `aria-hidden`; uma cópia oculta tem o texto inteiro desde o início, então o leitor de tela lê a resposta completa, não uma palavra por vez.",
+   "A linha de status é um `role=\"status\"` com “Streaming”, “Paused” ou “Complete” e, no fim, o total de palavras; os botões só de ícone têm `aria-label` e `title` fixos em inglês.",
+   "Com `controls={false}` não há linha de status: nada anuncia que a resposta terminou, então avise de outro jeito se isso importar."
+  ],
+  "movimento": [
+   "Cada palavra sobe de um desfoque suave atrás de um cursor; o ritmo desacelera em vírgulas, fins de frase e entre parágrafos.",
+   "O cursor respira de leve enquanto as palavras chegam, pisca na pausa e some ao terminar; uma barra fina acima da linha de status mostra o progresso.",
+   "Com “reduzir movimento” ligado, o texto inteiro aparece de uma vez e os botões de pausar, pular e repetir somem; a linha de status mostra “Complete”."
+  ],
+  "responsivo": [
+   "Num contêiner esticado em coluna, a linha de status fica no fundo enquanto o texto cresce acima dela, e quebra em duas linhas quando falta largura."
+  ],
+  "desempenho": [
+   "Cada palavra é um `<span>` e cada passo é um `setTimeout` seguido de nova renderização; para respostas longas que já terminaram, passe `instant`."
+  ],
+  "notasIA": [
+   "Num stream real, passe o texto acumulado em `text`: anexar ao final continua a revelação, mas qualquer outra mudança recomeça do zero; quebras de linha simples viram espaço.",
+   "`onComplete` dispara uma vez por execução, assim que todas as palavras já recebidas aparecem; se o stream demora entre pedaços, ele dispara antes do fim real, então use um sinal de fim seu.",
+   "Ao parar um stream no meio, guarde só o que a pessoa viu com `takeWords(text, shown)`, usando o número que veio de `onProgress`; para histórico, use `instant`."
+  ]
+ },
+ "todo-list": {
+  "quandoUsar": [
+   "Mostrar o plano de um agente como uma lista em que cada passo avança de pendente para em andamento e depois para concluído.",
+   "Planos de tamanho conhecido, em que vale mostrar “2 of 5” e uma barra de progresso no cabeçalho.",
+   "Transcrições compactas: recolhida, a lista vira uma linha que ainda mostra o passo em andamento."
+  ],
+  "quandoEvitar": [
+   "Use `agent-activity` quando os passos surgem durante o trabalho, coletam achados em chips ou precisam de duração e de estado de erro.",
+   "Use `stepper` para mostrar em que etapa de um fluxo a própria pessoa está.",
+   "Use `onboarding-checklist` quando é a pessoa quem marca as tarefas; aqui os passos não são clicáveis."
+  ],
+  "teclado": [
+   {
+    "teclas": [
+     "Enter",
+     "Espaço"
+    ],
+    "acao": "No cabeçalho, recolhe ou abre a lista; é o único controle do componente."
+   }
+  ],
+  "acessibilidade": [
+   "O cabeçalho é um `<button>` com `aria-expanded` e `aria-controls`; recolhido, ele mostra o passo em andamento, então o nome do botão continua dizendo o que está acontecendo.",
+   "A contagem é uma região `aria-live=\"polite\"` que lê “N of M steps done”, e a barra é um `role=\"progressbar\"` com `aria-valuenow` igual aos concluídos e `aria-valuemax` igual ao total.",
+   "Cada passo começa com o estado só para leitor de tela (“To do:”, “In progress:”, “Done:”); esses textos, “All steps done” e a palavra “progress” no rótulo da barra estão fixos em inglês."
+  ],
+  "movimento": [
+   "O passo em andamento ganha um spinner e um brilho que corre pelo rótulo; ao concluir, o visto pousa com um pequeno quique e se desenha, e um risco atravessa o rótulo da esquerda para a direita.",
+   "Na montagem os passos sobem em sequência; passos acrescentados depois abrem a própria altura, a barra avança com uma mola e o número de concluídos rola.",
+   "Com “reduzir movimento” ligado, tudo só esmaece: o spinner fica parado, não há brilho nem desenho do visto, e o risco aparece de uma vez."
+  ],
+  "responsivo": [
+   "Ocupa 100% do pai; recolhido, o passo atual no cabeçalho corta com reticências numa linha, e aberto os rótulos dos passos quebram linha."
+  ],
+  "notasIA": [
+   "É controlado pelos dados: passe `items` com `id` estável e mude o `status` de cada um (`pending`, `running`, `done`); não há estado de erro nem duração.",
+   "`detail` só aparece enquanto o passo está `running`: use-o para o arquivo ou o comando daquele momento.",
+   "Começa aberta; use `defaultOpen={false}` ou o par `open` e `onOpenChange` para recolher, e `showProgress={false}` para tirar a contagem e a barra."
+  ]
+ },
+ "tool-approval": {
+  "quandoUsar": [
+   "Pedir permissão dentro da conversa antes de um agente rodar uma ferramenta, mostrando o nome dela e os argumentos exatos da chamada.",
+   "Quando a pessoa precisa de três saídas: permitir uma vez, permitir sempre ou negar.",
+   "Transcrições longas: depois da decisão, o pedido encolhe para uma linha que registra a resposta e pode ser reaberta com “Change”."
+  ],
+  "quandoEvitar": [
+   "Use `approval-card` para uma decisão de negócio com resumo, detalhes em pares de rótulo e valor e um “Undo”.",
+   "Use `tool-result` para registrar uma chamada que já rodou, com entrada, saída e duração.",
+   "Use `dialog` quando a decisão deve bloquear o resto da tela até ser tomada."
+  ],
+  "teclado": [
+   {
+    "teclas": [
+     "Tab"
+    ],
+    "acao": "Percorre “Deny”, “Always allow” e “Allow once”, nessa ordem."
+   },
+   {
+    "teclas": [
+     "Enter",
+     "Espaço"
+    ],
+    "acao": "Num botão de decisão, decide e leva o foco ao “Change” da linha de resultado, ou ao próprio pedido com `allowChange={false}`."
+   },
+   {
+    "teclas": [
+     "Enter",
+     "Espaço"
+    ],
+    "acao": "Em “Change”, reabre o pedido e leva o foco a “Allow once”."
+   }
+  ],
+  "acessibilidade": [
+   "A raiz é um `role=\"group\"` com o nome “Permission request for” mais o `tool`, e os argumentos ficam num grupo “Arguments”; um valor cortado mostra o texto inteiro no `title`.",
+   "Quando a decisão sai de um botão do pedido, o foco vai para o botão que o substitui e não cai no `body`; o resultado fica numa região `role=\"status\"`.",
+   "“Wants to run”, “Permission request for” e “Arguments” estão fixos em inglês; os textos dos botões e do resultado se traduzem por `labels`."
+  ],
+  "movimento": [
+   "Ao decidir, o pedido sai subindo com um desfoque leve, a linha de resultado entra no lugar e a moldura acompanha a nova altura com uma mola.",
+   "O ícone do resultado se desenha: um visto para permitir e um xis em dois traços para negar.",
+   "Com “reduzir movimento” ligado, as trocas são só de opacidade, a altura muda na hora e os ícones já aparecem desenhados."
+  ],
+  "responsivo": [
+   "É um contêiner de largura: abaixo de 21rem os dois botões de permitir dividem uma linha e “Deny” desce para baixo deles, em largura total; na linha de resultado, o argumento some."
+  ],
+  "notasIA": [
+   "Pause o agente até `onDecisionChange` trazer `once`, `always` ou `denied`; a regra de “Always allow” é sua, porque o componente só registra a escolha.",
+   "`args` aceita um objeto (uma linha `chave: valor` por campo, valores que não são texto em JSON) ou uma string com quebras de linha; a linha de resultado mostra só o primeiro valor.",
+   "Traduza com `labels` (`once`, `always`, `deny`, `allowedOnce`, `allowedAlways`, `denied`, `change`); para o histórico, renderize pedidos já decididos com `defaultDecision`."
+  ]
+ },
+ "tool-result": {
+  "quandoUsar": [
+   "A transcrição de um agente: cada chamada de ferramenta vira uma linha com estado, nome, resumo e duração, que abre para mostrar entrada e saída.",
+   "Chamadas ainda em execução: um cronômetro conta ao vivo e a saída mostra linhas de espera até o resultado chegar.",
+   "Depuração: objetos aparecem como JSON indentado e colorido, com um botão de copiar em cada bloco."
+  ],
+  "quandoEvitar": [
+   "Use `tool-approval` antes da chamada, quando a pessoa precisa permitir ou negar a execução.",
+   "Use `json-viewer` para JSON grande ou aninhado, com árvore recolhível, busca e paginação.",
+   "Use `agent-activity` para uma linha do tempo dos passos do agente, sem a entrada e a saída de cada chamada."
+  ],
+  "teclado": [
+   {
+    "teclas": [
+     "Enter",
+     "Espaço"
+    ],
+    "acao": "No cabeçalho, abre ou recolhe o registro."
+   },
+   {
+    "teclas": [
+     "Tab"
+    ],
+    "acao": "Com o registro aberto, passa pelos botões de copiar e pelos blocos de código, que são focáveis; recolhido, nada do corpo recebe foco."
+   },
+   {
+    "teclas": [
+     "↑",
+     "↓"
+    ],
+    "acao": "Com o foco num bloco de código, rolam o conteúdo que passa de 15rem de altura (rolagem nativa)."
+   }
+  ],
+  "acessibilidade": [
+   "O cabeçalho é um `<button>` com `aria-expanded` e `aria-controls`; o nome dele inclui o estado (“Running”, “Succeeded”, “Failed”), a ferramenta, o resumo e a duração com “running for” ou “took”.",
+   "Recolhido, o corpo continua montado, mas `inert`; cada botão de copiar tem `aria-label` próprio (“Copy input”, “Copy output”, “Copy error”).",
+   "Enquanto roda, a saída é um esqueleto `role=\"status\"` com o nome “Waiting for the result”; todos esses textos estão fixos em inglês."
+  ],
+  "movimento": [
+   "O estado troca de spinner para um selo que entra com um pequeno quique e um visto ou xis que se desenha; ao abrir, entrada e saída sobem em sequência.",
+   "O corpo abre e fecha com uma mola na altura medida e cresce do mesmo jeito quando o resultado chega com o registro aberto.",
+   "Com “reduzir movimento” ligado, spinner e esqueleto param, os ícones só esmaecem, as alturas trocam na hora e o cronômetro conta de segundo em segundo."
+  ],
+  "responsivo": [
+   "O nome da ferramenta ocupa no máximo 55% da linha e o resumo corta com reticências; nos blocos de código as linhas longas quebram, e acima de 15rem o bloco rola por dentro."
+  ],
+  "desempenho": [
+   "Cada registro tem um `ResizeObserver`; sem `durationMs`, o estado `running` liga também um `setInterval` de 100 ms (1 s com “reduzir movimento”), que renderiza o registro a cada tique."
+  ],
+  "notasIA": [
+   "Ao terminar, mude `status` para `success` ou `error` e passe `durationMs` com `output` ou `error`: sem `durationMs`, a duração some quando o estado deixa de ser `running`.",
+   "Objetos passados na entrada e na saída viram JSON indentado e colorido; strings aparecem como estão, então mande o objeto, não o texto já serializado.",
+   "Começa recolhido; numa lista, controle `open` e `onOpenChange` para manter um registro aberto por vez, como faz o demo."
+  ]
+ },
+ "voice-orb": {
+  "quandoUsar": [
+   "O rosto de um assistente de voz: mostra de quem é a vez, entre repouso, ouvindo, pensando e falando.",
+   "Quando há um nível de áudio ao vivo, do microfone ou da reprodução, para os anéis e as barras acompanharem a voz.",
+   "Como o botão principal da conversa por voz, para começar a ouvir ou interromper a fala, com `onPress`."
+  ],
+  "quandoEvitar": [
+   "Use `loading-states` para indicar que a IA está pensando numa conversa de texto.",
+   "Use `button` com um ícone de microfone quando basta ligar e desligar a gravação, sem estados nem nível de áudio.",
+   "Use `loader` para um carregamento genérico, sem relação com voz."
+  ],
+  "teclado": [
+   {
+    "teclas": [
+     "Enter",
+     "Espaço"
+    ],
+    "acao": "Com `onPress`, o orbe é um `<button>` e essas teclas o acionam; sem `onPress`, ele não recebe foco."
+   }
+  ],
+  "acessibilidade": [
+   "Com `onPress` o orbe é um `<button>` com `aria-label` igual a `label`; sem `onPress`, é um `role=\"img\"` com o mesmo nome.",
+   "O estado fica num `role=\"status\"`, visível como legenda ou só para leitor de tela com `showLabel={false}`; os textos padrão (“Tap to talk”, “Listening”, “Thinking”, “Speaking”) mudam por `stateLabels`.",
+   "O `label` não muda com o estado: se o toque faz coisas diferentes, como começar a ouvir ou interromper, troque o `label` a cada estado."
+  ],
+  "movimento": [
+   "Em repouso o núcleo respira; ouvindo, anéis contornados se abrem em volta; pensando, um arco gira; falando, o núcleo se enche da cor de destaque e os anéis viram discos suaves.",
+   "Ouvindo e falando, as barras e os anéis seguem `level` a cada quadro: a barra do meio sobe mais e os anéis de fora seguem com uma mola mais frouxa, como uma onda; pensando, as barras ondulam sozinhas.",
+   "Com “reduzir movimento” ligado, cada estado vira uma forma parada: barras fixas por estado, anéis num tamanho só, sem respiração, giro nem pulso do núcleo."
+  ],
+  "desempenho": [
+   "Cada uma das cinco barras roda um callback por quadro enquanto o orbe está montado, mesmo em repouso ou com “reduzir movimento”; mantenha um orbe por tela e desmonte-o fora da conversa por voz.",
+   "Passe `level` como `MotionValue`, por exemplo alimentado por um `AnalyserNode`, para atualizar a cada quadro sem renderizar o React; um número em `level` exige uma renderização a cada mudança."
+  ],
+  "notasIA": [
+   "O orbe não lê o microfone: calcule o volume de 0 a 1 e passe em `level`, de preferência como `MotionValue`; `state` decide cores, anéis e o movimento das barras.",
+   "Use `onPress` para começar a ouvir ou interromper a fala, e mude `label` conforme o que o toque faz em cada estado.",
+   "`size` é o diâmetro em pixels, anéis incluídos (padrão 176); o orbe não encolhe com o contêiner, então escolha o tamanho pensando na menor tela."
+  ]
+ },
+ "crash-game": {
+  "quandoUsar": [
+   "Demos ou áreas de jogo com saldo fictício em que a graça é sacar antes de a curva estourar.",
+   "Mostrar movimento ao vivo: uma curva exponencial desenhada a cada quadro, o histórico de estouros em chips e o saldo contando até o novo valor.",
+   "Simulações e testes de probabilidade, com um `random` próprio para repetir rodadas e `onRoundEnd` para registrar cada resultado."
+  ],
+  "quandoEvitar": [
+   "Não use com dinheiro real nem prêmios: o saldo é fictício, o sorteio roda no navegador com `random` e nada prova que a rodada foi justa.",
+   "Use `slide-game` quando o resultado deve sair de uma vez, sem decisão durante a rodada.",
+   "Use `mines-game` quando a pessoa decide passo a passo, no próprio ritmo, sem um relógio correndo."
+  ],
+  "teclado": [
+   {
+    "teclas": [
+     "Enter",
+     "Espaço"
+    ],
+    "acao": "No botão principal, aposta, saca durante a rodada e aposta de novo; é o mesmo `<button>` a rodada inteira, então o foco não sai dele."
+   },
+   {
+    "teclas": [
+     "Enter"
+    ],
+    "acao": "No campo de aposta, confirma o valor e o ajusta entre `minBet` e o saldo."
+   },
+   {
+    "teclas": [
+     "Tab"
+    ],
+    "acao": "Passa por zerar o saldo, aposta, ½, 2×, Max, saque automático e o botão principal; os campos ficam desativados durante a rodada."
+   }
+  ],
+  "acessibilidade": [
+   "O cartão é uma `<section>` com o nome de `title`, e uma região `role=\"status\"` anuncia início, saque e estouro de cada rodada (“Round started…”, “Cashed out at…”, “Crashed at…”).",
+   "O gráfico é `aria-hidden`; o saldo tem um texto oculto “Play-money balance” com o valor, e os atalhos ½, 2× e Max têm `aria-label` próprio.",
+   "Quando a ação não está disponível, o botão principal usa `aria-disabled` em vez de `disabled`, para continuar focável; todos os textos estão em inglês."
+  ],
+  "movimento": [
+   "O multiplicador sobe numa curva exponencial redesenhada a cada quadro, com escalas que se esticam junto, como uma câmera se afastando; o ponto da frente pulsa.",
+   "No estouro, curva e número passam para a cor de perigo, um anel se expande do ponto e o número treme; o saque deixa uma marca na curva e o saldo conta até o novo valor com um “+” que sobe.",
+   "Com “reduzir movimento” ligado, a rodada continua, mas a curva avança em poucos passos por segundo, sem pulso, anel nem tremor."
+  ],
+  "responsivo": [
+   "O cartão vai até 34rem e é um contêiner: o gráfico tem de 13rem a 16.5rem de altura conforme a largura, e aposta e saque automático ficam lado a lado a partir de 26rem."
+  ],
+  "desempenho": [
+   "Durante a rodada, um callback por quadro reescreve os caminhos do SVG direto no DOM, sem renderizar o React; um `ResizeObserver` redesenha o gráfico quando ele muda de tamanho."
+  ],
+  "notasIA": [
+   "O saldo é fictício e pode viver no componente (`defaultBalance`) ou fora dele (`balance` com `onBalanceChange`); `onRoundEnd` informa aposta, ponto de estouro, saque e pagamento.",
+   "Passe `random` com semente para testes ou replays: ele é chamado uma vez por rodada, na aposta; `margin` (0 a 0.5) deixa estouros cedo um pouco mais prováveis e `maxMultiplier` (50) limita o estouro.",
+   "A pasta traz a própria cópia de `play-money.tsx` (saldo, campo de aposta, botão e histórico); `speed` controla a subida, com o multiplicador igual a e^(`speed` × segundos)."
+  ]
+ },
+ "mines-game": {
+  "quandoUsar": [
+   "Demos ou áreas de jogo com saldo fictício em que cada gema encontrada aumenta o multiplicador e a pessoa decide quando parar.",
+   "Jogos jogáveis pelo teclado: o tabuleiro 5 × 5 tem foco itinerante e setas para andar entre as casas.",
+   "Explicar risco e recompensa: mais minas dão saltos maiores no multiplicador, que é o pagamento justo menos `margin`."
+  ],
+  "quandoEvitar": [
+   "Não use com dinheiro real nem prêmios: o saldo é fictício e as minas são sorteadas no navegador com `random`.",
+   "Use `crash-game` quando a tensão deve vir do tempo, sacando antes do estouro de uma curva ao vivo.",
+   "Use `plinko-game` ou `slide-game` quando o resultado deve sair sozinho, sem decisões durante a rodada."
+  ],
+  "teclado": [
+   {
+    "teclas": [
+     "↑",
+     "↓",
+     "←",
+     "→"
+    ],
+    "acao": "No tabuleiro, movem o foco entre as casas e param na borda, sem dar a volta."
+   },
+   {
+    "teclas": [
+     "Home",
+     "End"
+    ],
+    "acao": "Levam o foco à primeira ou à última casa da linha atual."
+   },
+   {
+    "teclas": [
+     "Enter",
+     "Espaço"
+    ],
+    "acao": "Numa casa fechada durante a rodada, vira a casa."
+   },
+   {
+    "teclas": [
+     "Tab"
+    ],
+    "acao": "Entra no tabuleiro pela última casa focada, a única na ordem de foco, e depois segue para os controles de aposta e de minas."
+   },
+   {
+    "teclas": [
+     "Enter",
+     "Espaço"
+    ],
+    "acao": "No botão principal, aposta, saca depois da primeira gema e aposta de novo; é o mesmo `<button>` o tempo todo."
+   },
+   {
+    "teclas": [
+     "Enter"
+    ],
+    "acao": "No campo de aposta, confirma o valor e o ajusta entre `minBet` e o saldo."
+   }
+  ],
+  "acessibilidade": [
+   "O tabuleiro é um `role=\"group\"` com foco itinerante (só uma casa tem `tabIndex={0}`), e cada casa diz linha, coluna e estado (“hidden”, “gem” ou “mine”) no `aria-label`.",
+   "Casas já viradas ou fora de rodada usam `aria-disabled` e continuam na navegação; cada jogada é anunciada numa região `role=\"status\"`, e o número de minas, noutra região viva.",
+   "Saldo, atalhos de aposta e botão principal seguem o padrão dos outros jogos, com `aria-disabled` para manter o foco; todos os textos estão em inglês."
+  ],
+  "movimento": [
+   "As casas viram em 3D com uma mola de leve quique; no fim da rodada, as que faltam viram numa onda que parte da casa em foco, e uma mina faz o tabuleiro tremer.",
+   "O multiplicador dá um pequeno salto a cada gema, o número de minas rola na direção do ajuste e, numa nova aposta, as casas abertas fecham numa varredura diagonal.",
+   "Com “reduzir movimento” ligado, as casas viram na hora, sem onda, tremor, entrada escalonada nem elevação no hover."
+  ],
+  "responsivo": [
+   "O cartão vai até 40rem e é um contêiner: estreito, o tabuleiro fica acima dos controles; a partir de 34rem os dois ficam lado a lado, com o painel em 15rem e o tabuleiro em até 24rem."
+  ],
+  "notasIA": [
+   "`mines` (1 a 24) pode ser controlado com `onMinesChange`; a cada fim de rodada, `onRoundEnd` traz gemas, multiplicador, resultado (`cashed-out` ou `mine`), aposta e pagamento.",
+   "`random` só é chamado na aposta, para esconder as minas, então um gerador com semente torna o tabuleiro repetível; achar todas as gemas encerra a rodada com saque automático.",
+   "Como os outros jogos, é dinheiro de mentira com a própria cópia de `play-money.tsx`; o saldo pode ser controlado com `balance` e `onBalanceChange`."
+  ]
+ },
+ "plinko-game": {
+  "quandoUsar": [
+   "Demos ou áreas de jogo com saldo fictício em que várias bolas caem ao mesmo tempo, cada uma com a própria aposta.",
+   "Mostrar uma distribuição binomial em ação: as casas do meio saem mais e pagam menos, as das pontas são raras e pagam mais.",
+   "Quando a pessoa escolhe o risco (`low`, `medium`, `high`) e vê a tabela de multiplicadores mudar na hora."
+  ],
+  "quandoEvitar": [
+   "Não use com dinheiro real nem prêmios: o saldo é fictício e o caminho de cada bola é sorteado no navegador com `random`.",
+   "Use `crash-game` ou `mines-game` quando a pessoa deve decidir durante a rodada, sacando antes de perder.",
+   "Use `slide-game` para um resultado por aposta com as chances de cada multiplicador à mostra."
+  ],
+  "teclado": [
+   {
+    "teclas": [
+     "Enter",
+     "Espaço"
+    ],
+    "acao": "No botão “Drop a ball”, solta uma bola; repetir solta outras, até `maxBalls` caindo juntas."
+   },
+   {
+    "teclas": [
+     "↑",
+     "↓",
+     "←",
+     "→"
+    ],
+    "acao": "No grupo de risco, troca entre “Low”, “Medium” e “High” (rádios nativos); fica bloqueado enquanto há bolas caindo."
+   },
+   {
+    "teclas": [
+     "Enter"
+    ],
+    "acao": "No campo de aposta, confirma o valor e o ajusta entre `minBet` e o saldo."
+   },
+   {
+    "teclas": [
+     "Tab"
+    ],
+    "acao": "Passa por zerar o saldo, aposta, ½, 2×, Max, o risco marcado e o botão de soltar."
+   }
+  ],
+  "acessibilidade": [
+   "O tabuleiro é `aria-hidden`; o leitor de tela encontra a lista de multiplicadores das casas, da esquerda para a direita, e ouve cada pouso (“Ball N landed on…”) numa região `role=\"status\"`.",
+   "O risco é um grupo de rádios nativos rotulado “Risk”, cada um dentro de um `<label>`; o contorno de foco do teclado aparece no segmento.",
+   "Com várias bolas, cada pouso gera um anúncio novo; textos e anúncios estão fixos em inglês."
+  ],
+  "movimento": [
+   "Cada bola cai e, em cada fileira, quica para a esquerda ou para a direita com um pequeno impulso para cima antes da gravidade; o pino tocado acende e cresce.",
+   "A casa onde a bola cai afunda e acende, fica com um anel até a próxima queda, e os valores trocam com um leve deslize quando o risco muda.",
+   "Com “reduzir movimento” ligado, nenhuma bola é desenhada: o resultado sai após uma pausa curta e a casa só acende, sem afundar."
+  ],
+  "responsivo": [
+   "O cartão vai até 42rem e é um contêiner: o tabuleiro fica acima dos controles e passa para o lado a partir de 36rem, com no máximo 27rem de largura.",
+   "O tabuleiro é um SVG que escala inteiro, e as casas acompanham a largura dele; abaixo de 22rem o “×” some dos rótulos."
+  ],
+  "desempenho": [
+   "Um callback por quadro move todas as bolas direto no DOM, sem renderizar o React a cada passo; `maxBalls` (8) limita quantas caem juntas e `rows` vai de 6 a 12."
+  ],
+  "notasIA": [
+   "`risk` recalcula a tabela pela chance binomial de cada casa; para uma tabela sua, passe `multipliers` com exatamente `rows + 1` valores, senão ela é ignorada.",
+   "A aposta sai do saldo quando a bola é solta e o pagamento entra no pouso, quando `onDrop` chega com casa, multiplicador, aposta e pagamento.",
+   "O campo de aposta continua editável com bolas caindo e cada bola guarda a aposta do momento em que saiu; é dinheiro de mentira, com a própria cópia de `play-money.tsx`."
+  ]
+ },
+ "slide-game": {
+  "quandoUsar": [
+   "Demos ou áreas de jogo com saldo fictício em que uma aposta faz uma faixa de multiplicadores correr e parar sozinha.",
+   "Quando as chances devem ficar à mostra: a lista abaixo da faixa traz a porcentagem de cada multiplicador, calculada dos pesos.",
+   "Sorteios configuráveis: `tiles` define os multiplicadores e o peso de cada um."
+  ],
+  "quandoEvitar": [
+   "Não use com dinheiro real nem prêmios: o saldo é fictício e o resultado é sorteado no navegador com `random`.",
+   "Use `crash-game` ou `mines-game` quando a pessoa deve decidir durante a rodada.",
+   "Use `plinko-game` quando várias apostas devem rodar ao mesmo tempo, com um risco que a pessoa escolhe."
+  ],
+  "teclado": [
+   {
+    "teclas": [
+     "Enter",
+     "Espaço"
+    ],
+    "acao": "No botão principal, aposta e solta a faixa; durante o deslize ele fica `aria-disabled`, mas mantém o foco."
+   },
+   {
+    "teclas": [
+     "Enter"
+    ],
+    "acao": "No campo de aposta, confirma o valor e o ajusta entre `minBet` e o saldo."
+   }
+  ],
+  "acessibilidade": [
+   "A faixa é `aria-hidden`; o resultado chega ao leitor de tela pela região `role=\"status\"` do cartão (“Sliding with a bet of…”, “Landed on…”), e as chances ficam numa lista rotulada.",
+   "Saldo com texto oculto, atalhos de aposta com `aria-label` e botão principal com `aria-disabled` seguem o padrão dos outros jogos; todos os textos estão em inglês."
+  ],
+  "movimento": [
+   "A faixa dispara, passa a maior parte do percurso desacelerando e para um pouco fora do centro, assentando no ladrilho com uma mola; o ponteiro do marcador dá toques conforme os ladrilhos passam por ele.",
+   "Ao parar, o ladrilho vencedor cresce com sombra, os outros esmaecem e o marcador cresce junto; na montagem, os ladrilhos entram do centro para fora.",
+   "Com “reduzir movimento” ligado, a faixa não corre: ela reaparece na posição final com um esmaecer curto, sem o toque do ponteiro, sem crescimento e sem entrada escalonada."
+  ],
+  "responsivo": [
+   "O cartão vai até 36rem e é um contêiner: aposta e botão ficam lado a lado a partir de 28rem; a faixa ocupa a largura toda e esmaece nas bordas, com ladrilhos fixos de 76 px."
+  ],
+  "notasIA": [
+   "`tiles` recebe `multiplier` e `weight` (peso 2 sai duas vezes mais que peso 1); entradas com peso zero ou multiplicador negativo são descartadas, e sem nenhuma válida volta a tabela padrão.",
+   "`duration` (3.8 s) é o tempo da corrida até parar; `onRoundEnd` chega quando a faixa para, e `random` só é chamado na aposta, para sortear o resultado e preencher a faixa.",
+   "A tabela padrão tem pesos que somam 100 e paga em média 0.97 da aposta; é dinheiro de mentira, com a própria cópia de `play-money.tsx`."
+  ]
+ }
+}

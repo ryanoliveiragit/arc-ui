@@ -1,0 +1,17 @@
+/* Índice "Nesta página": coluna de 200px, presa 36px abaixo do cabeçalho. A página decide quando ele aparece. */
+.rail { position: sticky; top: calc(var(--site-header-height) + 2.25rem); align-self: start; min-width: 0; max-height: calc(100dvh - var(--site-header-height) - 3.75rem); overflow-y: auto; padding-top: .375rem; scrollbar-width: none; }
+.rail::-webkit-scrollbar { display: none; }
+.title { margin: 0 0 .75rem; color: var(--foreground); font-size: .8125rem; font-weight: 500; line-height: 1.4; }
+
+/* Links de 13px com 5px em cima e embaixo e 14px à esquerda; a linha fina corre a lista inteira e a seção à vista ganha a marca de 2px. */
+.list { display: grid; gap: 1px; margin: 0; border-left: 1px solid var(--border-subtle); padding: 0; list-style: none; }
+.link { position: relative; display: block; border-radius: 0 6px 6px 0; padding: .3125rem 0 .3125rem .875rem; color: var(--text-muted); font-size: .8125rem; line-height: 1.4; text-decoration: none; --focus-outline-offset: -1px; transition: color var(--duration-fast) var(--ease-standard); }
+.link[aria-current] { color: var(--foreground); }
+.link[aria-current]::before { position: absolute; top: .25rem; bottom: .25rem; left: -1px; width: 2px; border-radius: 1px; background: var(--site-mark); content: ""; }
+
+.extra { display: grid; justify-items: start; gap: .4375rem; margin-top: 1.25rem; border-top: 1px solid var(--border-subtle); padding: .875rem 0 .5rem; }
+.extraLink { display: inline-flex; align-items: center; gap: .4375rem; border: 0; border-radius: 4px; padding: 0; background: none; color: var(--text-muted); font-size: .78125rem; line-height: 1.4; text-decoration: none; cursor: pointer; transition: color var(--duration-fast) var(--ease-standard); }
+.extraLink > svg { flex: none; }
+
+@media (hover: hover) and (pointer: fine) { .link:hover, .extraLink:hover { color: var(--foreground); } }
+@media (prefers-reduced-motion: reduce) { .link, .extraLink { transition: none; } }

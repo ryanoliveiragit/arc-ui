@@ -9,5 +9,16 @@ button, input, select, textarea { font: inherit; letter-spacing: inherit; }
 img, svg { max-width: 100%; }
 code, pre, kbd { font-family: "Geist Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace; }
 ::selection { background: color-mix(in oklab, var(--accent) 22%, transparent); }
-:root { --site-header-height: 3.75rem; --site-max: 90rem; --site-gutter: clamp(1rem, 3vw, 2rem); --font-mono: "Geist Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace; }
+/* Medidas da casca do site (cabeçalho, barra lateral, coluna de conteúdo e índice da página). */
+:root {
+  --site-header-height: 4.0625rem; /* 64px + 1px de borda */
+  --site-max: 95rem; /* 1520px: largura máxima do conteúdo, centralizado em telas largas */
+  --site-gutter: clamp(1.125rem, 1.8vw, 1.625rem); /* 18px no celular, 26px no computador */
+  --site-sidebar-width: 15.125rem; /* 242px */
+  --site-content-pad: clamp(1.125rem, 4vw, 4rem); /* respiro lateral do conteúdo: 57.6px em 1440, 64px no máximo */
+  --site-rail-width: 12.5rem; /* índice "Nesta página": 200px */
+  --site-rail-gap: 3.5rem; /* 56px entre o conteúdo e o índice */
+  --site-mark: var(--accent-strong); /* linhas de destaque: sublinhado da aba ativa, marcador do índice */
+  --font-mono: "Geist Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
