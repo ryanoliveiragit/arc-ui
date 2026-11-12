@@ -56,6 +56,8 @@ export interface MorphSelectProps {
   /** Adds a hidden input for native form submission. */
   name?: string;
   disabled?: boolean;
+  /** Start with the list open, without moving focus (for previews and onboarding). Later opens move focus as usual. */
+  defaultOpen?: boolean;
   className?: string;
 }
 
@@ -119,7 +121,7 @@ const triggerWidth = (node: HTMLElement) => {
 };
 
 export function MorphSelect({ label, hideLabel = false, items, value, defaultValue = null, onValueChange, placeholder = "Select", searchable = "auto", searchPlaceholder,
-  panelWidth = 272, maxListHeight = 296, align = "start", name, disabled = false, className }: MorphSelectProps) {
+  panelWidth = 272, maxListHeight = 296, align = "start", name, disabled = false, defaultOpen = false, className }: MorphSelectProps) {
   const reduced = useReducedFlag();
   const uid = useId();
   const labelId = `${uid}-label`, listId = `${uid}-list`, optionId = (index: number) => `${uid}-option-${index}`;
@@ -248,15 +250,23 @@ export function MorphSelect({ label, hideLabel = false, items, value, defaultVal
   const suppressClick = useRef(false);
   const [announcement, setAnnouncement] = useState("");
 
-  const openList = (focus?: string | null, seed = "") => {
+  const openList = (focus?: string | null, seed = "", quiet = false) => {
     if (disabled || open) return;
     setQuery(seed);
     setActive(focus !== undefined ? focus : selected);
     scrollIntent.current = true;
-    pendingFocus.current = canSearch ? "input" : "trigger";
+    pendingFocus.current = quiet ? null : canSearch ? "input" : "trigger";
     setAnnouncement("");
     setOpen(true);
   };
+
+  // defaultOpen opens once after the first paint, so the surface still grows out of the trigger, and leaves focus where it is.
+  const openedByDefault = useRef(false);
+  useEffect(() => {
+    if (!defaultOpen || openedByDefault.current) return;
+    openedByDefault.current = true;
+    openList(undefined, "", true);
+  });
 
   const close = useCallback((restoreFocus: boolean) => {
     typeahead.current.buffer = "";

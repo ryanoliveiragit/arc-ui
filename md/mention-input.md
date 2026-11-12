@@ -52,7 +52,7 @@ import { avatar } from "@/components/ryan-ui/lib/media";
 import { Caption, Stack } from "./_kit";
 import type { DemoStage } from "./_kit";
 
-export const stage: DemoStage = { height: 460 };
+export const stage: DemoStage = { height: 480 };
 
 const people = [
   { id: "emma-collins", name: "Emma Collins", role: "Product designer", avatar: avatar("emma-collins") },
@@ -66,12 +66,19 @@ const channels = [
   { id: "frontend", name: "frontend", description: "Web engineering", members: 31 },
 ];
 
+// The comment already holds a #channel mention and is mid-way through typing "@", so the preview shows a mention token
+// and the open suggestions together. The space below the field is reserved for the list.
+const start = "Moving the review to #design. Looping in @";
+const initial: MentionValue = { text: start, mentions: [{ kind: "channel", id: "design", label: "design", start: 21, end: 28 }] };
+
 export default function MentionInputDemo() {
-  const [value, setValue] = useState<MentionValue>({ text: "", mentions: [] });
+  const [value, setValue] = useState<MentionValue>(initial);
   return (
     <Stack gap={3} width={440}>
-      <MentionInput aria-label="Comment" value={value} onChange={setValue} people={people} channels={channels} placeholder="Write a comment. Type @ for people or # for channels." minRows={3} placement="bottom" />
-      <Caption>{value.mentions.length ? `${value.mentions.length} mention${value.mentions.length > 1 ? "s" : ""}: ${value.mentions.map((m) => m.label).join(", ")}` : "Try “@em” or “#la”."}</Caption>
+      <div style={{ paddingBottom: 176 }}>
+        <MentionInput aria-label="Comment" value={value} onChange={setValue} people={people} channels={channels} placeholder="Write a comment. Type @ for people or # for channels." minRows={3} placement="bottom" defaultOpen />
+      </div>
+      <Caption>{value.mentions.length ? `${value.mentions.length} mention${value.mentions.length > 1 ? "s" : ""}: ${value.mentions.map((m) => (m.kind === "channel" ? "#" : "@") + m.label).join(", ")}. Type @ or # to add more.` : "Type @ for people or # for channels."}</Caption>
     </Stack>
   );
 }
@@ -99,6 +106,7 @@ A textarea with `@` people and `#` channel mentions. Mentions are atomic: the ca
 | `minRows` | `number` | `1` | — |
 | `maxRows` | `number` | `8` | The field grows to this many rows, then scrolls. |
 | `placement` | `"auto" \| "top" \| "bottom"` | `"auto"` | Where suggestions open. `auto` flips above when there is no room below. |
+| `defaultOpen` | `boolean` | `false` | Show the suggestions for the text before the end of the value on first render, without focusing the field (for previews and onboarding). They close on a click outside; once the field is focused it behaves as usual. |
 | `maxSuggestions` | `number` | `6` | — |
 | `disabled` | `boolean` | — | — |
 | `name` | `string` | — | — |

@@ -135,7 +135,7 @@ export function StagePanel({ stage }: { stage: StageController }) {
   const maxWidth = widthPx[stage.width];
   const loading = <div className={styles.loading}><Skeleton label="Carregando demo" lines={3} /></div>;
   return (
-    <div className={styles.panel} data-status={stage.status} data-layout={framed ? "frame" : stage.layout} style={{ minHeight: framed ? undefined : stage.height }}>
+    <div className={styles.panel} data-demo-stage="1" data-status={stage.status} data-layout={framed ? "frame" : stage.layout} style={{ minHeight: framed ? undefined : stage.height }}>
       {loadError ? (
         <div className={styles.notice}><Alert tone="danger" title="O demo não carregou">{loadError.message}</Alert></div>
       ) : !module ? loading : framed ? (

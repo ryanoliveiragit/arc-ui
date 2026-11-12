@@ -51,11 +51,16 @@ import { Card } from "@/components/ryan-ui/card/card";
 import { Avatar } from "@/components/ryan-ui/avatar/avatar";
 import { Button } from "@/components/ryan-ui/button/button";
 import { avatar, photo } from "@/components/ryan-ui/lib/media";
-import { Caption, Stack } from "./_kit";
+import { Caption, Stack, demoStage } from "./_kit";
+import type { DemoStage } from "./_kit";
 
 const cover = photo("lisbon-bridge");
 
+export const stage: DemoStage = { height: 680 };
+
 export default function CardDemo() {
+  // On the docs page the quick look grows inside the preview, so it opens whole and the page around it keeps scrolling.
+  const [container] = useState(demoStage);
   const [status, setStatus] = useState("Updated 2 hours ago");
   return (
     <Stack gap={4} width={360}>
@@ -66,6 +71,7 @@ export default function CardDemo() {
         avatar={<Avatar name="Emma Collins" src={avatar("emma-collins")} size="sm" />}
         meta="Emma Collins"
         status={status}
+        container={container}
         action={<Button size="sm" variant="secondary" onClick={e => { e.stopPropagation(); setStatus("Updated just now"); }}>Refresh</Button>}
         details={
           <div style={{ display: "grid", gap: "var(--space-3)", color: "var(--text-secondary)" }}>
@@ -99,6 +105,7 @@ Extraída do código-fonte. As descrições das props vêm dos comentários do c
 | `open` | `boolean` | — | — |
 | `defaultOpen` | `boolean` | `false` | — |
 | `onOpenChange` | `(open: boolean) => void` | — | — |
+| `container` | `HTMLElement \| null` | — | Opens the quick look inside this element instead of over the whole page: the dim covers only the element and the quick look centers in it. The element needs position: relative and overflow: hidden. The page around it stays usable while the quick look is open: nothing is scroll-locked or hidden from assistive technology, and Escape, the dim and the close control still close it. |
 | `...props` | `HTMLAttributes<HTMLElement>` | — | Também aceita as props deste tipo. |
 
 ## Teclado

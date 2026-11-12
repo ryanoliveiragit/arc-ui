@@ -48,25 +48,27 @@ O demo da página do item, com os imports como ficam depois de instalar pela CLI
 ```tsx
 import HoverCard, { HoverCardProfile } from "@/components/ryan-ui/hover-card/hover-card";
 import { avatar } from "@/components/ryan-ui/lib/media";
-import { Stack } from "./_kit";
+import { Room, demoStage } from "./_kit";
 
 const link: React.CSSProperties = { font: "inherit", color: "var(--text-primary)", fontWeight: 600, background: "none", border: 0, padding: 0, cursor: "pointer", textDecoration: "underline", textDecorationColor: "var(--border-strong)", textUnderlineOffset: 3 };
 
 export default function HoverCardDemo() {
+  // Emma's card is already open, inside the stage, so the preview shows what hovering a name does.
+  const stage = demoStage();
   return (
-    <Stack width={460}>
+    <Room below={150} width={460}>
       <p style={{ margin: 0, color: "var(--text-secondary)", lineHeight: 1.7 }}>
         The new onboarding flow was designed by{" "}
-        <HoverCard content={<HoverCardProfile name="Emma Collins" role="Product designer, Growth" avatar={avatar("emma-collins")} bio="Designs onboarding and activation. Previously at a fintech start-up." stats={[{ label: "Projects", value: 24 }, { label: "Reviews", value: 138 }]} meta="Lisbon, 4:12 PM" />}>
+        <HoverCard defaultOpen container={stage} content={<HoverCardProfile name="Emma Collins" role="Product designer, Growth" avatar={avatar("emma-collins")} bio="Designs onboarding and activation. Previously at a fintech start-up." stats={[{ label: "Projects", value: 24 }, { label: "Reviews", value: 138 }]} meta="Lisbon, 4:12 PM" />}>
           <button type="button" style={link}>Emma Collins</button>
         </HoverCard>{" "}
         and built with{" "}
-        <HoverCard content={<HoverCardProfile name="Marcus Johnson" role="Frontend engineer, Platform" avatar={avatar("marcus-johnson")} bio="Maintains the component library and the build pipeline." stats={[{ label: "Commits", value: "1.2k" }, { label: "Reviews", value: 412 }]} meta="Austin, 10:12 AM" />}>
+        <HoverCard container={stage} content={<HoverCardProfile name="Marcus Johnson" role="Frontend engineer, Platform" avatar={avatar("marcus-johnson")} bio="Maintains the component library and the build pipeline." stats={[{ label: "Commits", value: "1.2k" }, { label: "Reviews", value: 412 }]} meta="Austin, 10:12 AM" />}>
           <button type="button" style={link}>Marcus Johnson</button>
         </HoverCard>
         . Hover or focus a name to preview the profile.
       </p>
-    </Stack>
+    </Room>
   );
 }
 ```
@@ -85,6 +87,8 @@ Extraída do código-fonte. As descrições das props vêm dos comentários do c
 | `align` | `"start" \| "center" \| "end"` | `"start"` | — |
 | `openDelay` | `number` | `OPEN_DELAY` | Milliseconds of hover before the first card opens. |
 | `closeDelay` | `number` | `CLOSE_DELAY` | Milliseconds of grace after the pointer leaves, so it can travel into the card. |
+| `container` | `HTMLElement \| null` | — | Render the card inside this element and limit collisions to it (used by the demo stages). |
+| `defaultOpen` | `boolean` | `false` | Starts with the card open, for previews. It then behaves as usual: leaving the trigger and card, Escape, or a press elsewhere closes it. |
 | `className` | `string` | — | — |
 
 ### `HoverCardProfile`

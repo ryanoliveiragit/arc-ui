@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import PromptInput from "@/registry/components/prompt-input/prompt-input";
 import type { PromptAttachment, PromptModel, PromptSubmission } from "@/registry/components/prompt-input/prompt-input";
-import { Caption, Stack } from "./_kit";
+import { Caption, Stack, demoStage } from "./_kit";
 
 const models: PromptModel[] = [
   { id: "atlas-pro", label: "Atlas Pro", description: "Slower, best for hard problems" },
@@ -41,6 +41,7 @@ export default function PromptInputDemo() {
     <Stack width={560} gap={4}>
       <PromptInput
         placeholder="Ask about your data"
+        container={demoStage()}
         models={models}
         model={model}
         onModelChange={setModel}

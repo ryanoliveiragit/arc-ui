@@ -29,6 +29,14 @@ export interface BottomSheetProps {
   closeLabel?: string;
   className?: string;
   children: ReactNode;
+  /**
+   * Renders the sheet inside this element instead of the page body: it rises from the element's bottom edge, the detents become
+   * fractions of the element's height and the dim covers only the element. The element needs position: relative and overflow: hidden.
+   * The page around it stays usable while the sheet is open: nothing is scroll-locked or hidden from assistive technology.
+   */
+  container?: HTMLElement | null;
+  /** Runs when the sheet opens, before it moves focus to itself. Call `event.preventDefault()` to leave focus where it is. */
+  onOpenAutoFocus?: (event: Event) => void;
 }
 
 type Stop = number | "closed";
@@ -65,7 +73,7 @@ function velocityOf(samples: Drag["samples"], now: number) {
   return (last.y - first.y) / ((last.t - first.t) / 1000);
 }
 
-export function BottomSheet({ trigger, open: openProp, defaultOpen = false, onOpenChange, ...props }: BottomSheetProps) {
+export function BottomSheet({ trigger, open: openProp, defaultOpen = false, onOpenChange, container, ...props }: BottomSheetProps) {
   const [uncontrolled, setUncontrolled] = useState(defaultOpen);
   const open = openProp ?? uncontrolled;
   const setOpen = useCallback((next: boolean) => {
@@ -73,14 +81,15 @@ export function BottomSheet({ trigger, open: openProp, defaultOpen = false, onOp
     onOpenChange?.(next);
   }, [openProp, onOpenChange]);
   const dismiss = useCallback(() => setOpen(false), [setOpen]);
-  return <DialogPrimitive.Root open={open} onOpenChange={setOpen}>
+  // Inside a container the sheet is part of a page section, not the whole page, so it is not modal.
+  return <DialogPrimitive.Root open={open} onOpenChange={setOpen} modal={!container}>
     {trigger ? <DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger> : null}
     {/* The sheet stays mounted while it leaves, so a close can be caught and reversed mid-flight. */}
-    <AnimatePresence>{open && <DialogPrimitive.Portal key="sheet" forceMount><Sheet {...props} onDismiss={dismiss} /></DialogPrimitive.Portal>}</AnimatePresence>
+    <AnimatePresence>{open && <DialogPrimitive.Portal key="sheet" forceMount container={container ?? undefined}><Sheet {...props} contained={Boolean(container)} onDismiss={dismiss} /></DialogPrimitive.Portal>}</AnimatePresence>
   </DialogPrimitive.Root>;
 }
 
-function Sheet({ title, description, detents = [.45, .92], initialDetent = 0, onDetentChange, closeLabel = "Close", className, children, onDismiss }: Omit<BottomSheetProps, "trigger" | "open" | "defaultOpen" | "onOpenChange"> & { onDismiss: () => void }) {
+function Sheet({ title, description, detents = [.45, .92], initialDetent = 0, onDetentChange, closeLabel = "Close", className, children, onOpenAutoFocus, contained, onDismiss }: Omit<BottomSheetProps, "trigger" | "open" | "defaultOpen" | "onOpenChange" | "container"> & { contained: boolean; onDismiss: () => void }) {
   const [isPresent, safeToRemove] = usePresence();
   const reduced = useReducedMotion() ?? false;
   const detentKey = detents.join(",");
@@ -329,7 +338,9 @@ function Sheet({ title, description, detents = [.45, .92], initialDetent = 0, on
   }
   function bodyFocus(event: FocusEvent<HTMLDivElement>) {
     if (detentRef.current === top || !(event.target instanceof Element)) return;
-    if (event.target.getBoundingClientRect().bottom > window.innerHeight - 8) rest(top);
+    // The visible bottom edge is the container's when the sheet lives in one (a fixed sheet has no offset parent).
+    const edge = sheetRef.current?.offsetParent?.getBoundingClientRect().bottom ?? window.innerHeight;
+    if (event.target.getBoundingClientRect().bottom > edge - 8) rest(top);
   }
 
   // With focus on the sheet or its content, reading keys open the sheet first and then scroll the content.
@@ -348,19 +359,20 @@ function Sheet({ title, description, detents = [.45, .92], initialDetent = 0, on
   const expanded = detent === top;
   const style = { y, opacity: presence, "--sheet-max": stops[top], "--sheet-extension": `${EXTENSION}px` } as unknown as CSSProperties;
 
+  // Radix draws no overlay for a non-modal sheet, so inside a container the dim is a plain layer: a press on it is a press outside
+  // the sheet, which dismisses it like the overlay would.
+  const dim = <motion.div className={styles.overlay} style={{ opacity: backdrop }} data-contained={contained ? "" : undefined} aria-hidden={contained ? true : undefined} />;
   return <>
-    <DialogPrimitive.Overlay asChild forceMount>
-      <motion.div className={styles.overlay} style={{ opacity: backdrop }} />
-    </DialogPrimitive.Overlay>
+    {contained ? dim : <DialogPrimitive.Overlay asChild forceMount>{dim}</DialogPrimitive.Overlay>}
     <DialogPrimitive.Content
       asChild
       forceMount
       {...(description ? {} : { "aria-describedby": undefined })}
-      onOpenAutoFocus={event => { event.preventDefault(); sheetRef.current?.focus({ preventScroll: true }); }}
+      onOpenAutoFocus={event => { onOpenAutoFocus?.(event); if (event.defaultPrevented) return; event.preventDefault(); sheetRef.current?.focus({ preventScroll: true }); }}
       // Radix waits for the click before treating a press as outside. A press on the trigger while the sheet leaves reopens it first, so that press must not close it again.
       onPointerDownOutside={event => { const { present, at } = presenceChange.current; if (!present || event.detail.originalEvent.timeStamp < at) event.preventDefault(); }}
     >
-      <motion.div ref={sheetRef} className={[styles.sheet, className].filter(Boolean).join(" ")} style={style} data-expanded={expanded ? "" : undefined} onKeyDown={sheetKey}>
+      <motion.div ref={sheetRef} className={[styles.sheet, className].filter(Boolean).join(" ")} style={style} data-expanded={expanded ? "" : undefined} data-contained={contained ? "" : undefined} onKeyDown={sheetKey}>
         <div className={styles.header} onPointerDown={headerDown} onPointerMove={headerMove} onPointerUp={headerUp} onPointerCancel={headerUp}>
           <button type="button" className={styles.grabber} data-grabber="" aria-label={expanded ? "Collapse sheet" : "Expand sheet"} aria-expanded={expanded} onClick={grabberClick} onKeyDown={grabberKey}>
             <span className={styles.grabberBar} aria-hidden="true" />

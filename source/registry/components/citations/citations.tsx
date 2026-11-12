@@ -32,6 +32,8 @@ export interface CitationsProps {
   activeId?: string | null;
   /** Called when hover, focus or an open card changes the highlighted source. */
   onActiveIdChange?: (id: string | null) => void;
+  /** Render the source cards inside this element and limit collisions to it (used by the demo stages). */
+  container?: HTMLElement | null;
   /** Class name added to the root element. */
   className?: string;
 }
@@ -39,6 +41,8 @@ export interface CitationsProps {
 export interface CitationProps {
   /** Id of the source this chip cites. */
   source: string;
+  /** Starts with this chip's card pinned open, for previews. Focus stays where it is until a person uses the card. */
+  defaultOpen?: boolean;
   /** Class name added to the chip. */
   className?: string;
 }
@@ -55,6 +59,7 @@ interface CitationsContextValue {
   active: string | null;
   setActive: (id: string | null) => void;
   scope: string;
+  container: HTMLElement | null;
 }
 
 const CitationsContext = createContext<CitationsContextValue | null>(null);
@@ -80,12 +85,12 @@ function SiteMark({ site, index }: { site: string; index: number }) {
  * Groups an answer with its sources. Inside it, `<Citation>` is a numbered chip that opens a card with the source, and `<CitationSources>`
  * lists them all. The parts share one highlight: pointing at a chip marks its row in the list, and pointing at a row lights up its chips.
  */
-export function Citations({ sources, children, activeId, onActiveIdChange, className }: CitationsProps) {
+export function Citations({ sources, children, activeId, onActiveIdChange, container = null, className }: CitationsProps) {
   const scope = useId();
   const [internal, setInternal] = useState<string | null>(null);
   const active = activeId === undefined ? internal : activeId;
   const setActive = useCallback((id: string | null) => { setInternal(id); onActiveIdChange?.(id); }, [onActiveIdChange]);
-  const value = useMemo(() => ({ sources, active, setActive, scope }), [sources, active, setActive, scope]);
+  const value = useMemo(() => ({ sources, active, setActive, scope, container }), [sources, active, setActive, scope, container]);
   return (
     <CitationsContext.Provider value={value}>
       <div className={[styles.root, className].filter(Boolean).join(" ")}>{children}</div>
@@ -94,11 +99,15 @@ export function Citations({ sources, children, activeId, onActiveIdChange, class
 }
 
 /** A numbered chip for the middle of a sentence. Hover, focus plus Enter, or a tap opens a card with the source; a click pins it open. */
-export function Citation({ source, className }: CitationProps) {
-  const { sources, active, setActive } = useCitations("Citation");
+export function Citation({ source, defaultOpen = false, className }: CitationProps) {
+  const { sources, active, setActive, container } = useCitations("Citation");
   const index = sources.findIndex(entry => entry.id === source);
   const entry = sources[index];
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(defaultOpen);
+  /** A card that starts pinned does not pull focus in on its first frame. */
+  const quiet = useRef(defaultOpen);
+  const startOpen = useRef(defaultOpen);
+  useEffect(() => { if (startOpen.current && entry) setActive(entry.id); }, [entry, setActive]);
   // A card opened by hovering closes when the pointer leaves and never takes focus; one opened by click or keyboard behaves like a popover.
   const byHover = useRef(false);
   const skipFocusReturn = useRef(false);
@@ -142,15 +151,16 @@ export function Citation({ source, className }: CitationProps) {
           </button>
         </Popover.Trigger>
       </span>
-      <Popover.Portal>
+      <Popover.Portal container={container ?? undefined}>
         <Popover.Content
           className={styles.card}
           side="top"
           align="center"
           sideOffset={8}
           collisionPadding={12}
+          collisionBoundary={container ?? undefined}
           aria-label={`Source ${index + 1}`}
-          onOpenAutoFocus={event => { if (byHover.current) event.preventDefault(); }}
+          onOpenAutoFocus={event => { if (byHover.current || quiet.current) { quiet.current = false; event.preventDefault(); } }}
           onCloseAutoFocus={event => { if (skipFocusReturn.current) event.preventDefault(); }}
           onPointerEnter={() => window.clearTimeout(timer.current)}
           onPointerLeave={event => { if (event.pointerType === "mouse") hover(false); }}

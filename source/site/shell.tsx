@@ -149,7 +149,7 @@ export default function Shell() {
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
   return (
-    <div className={styles.app}>
+    <div className={styles.app} data-site-chrome="1">
       <button type="button" className={styles.skip} onClick={() => mainRef.current?.focus()}>Pular para o conteúdo</button>
       <SiteHeader route={route} menuOpen={menuOpen} menuRef={menuButton} onOpenMenu={() => { focusDrawerSearch.current = false; setMenuOpen(true); }} onOpenSearch={() => setSearchOpen(true)} />
 

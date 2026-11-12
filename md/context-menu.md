@@ -48,7 +48,7 @@ O demo da página do item, com os imports como ficam depois de instalar pela CLI
 import { useState } from "react";
 import { Copy, Download, FolderInput, Pencil, Pin, Trash2 } from "lucide-react";
 import ContextMenu from "@/components/ryan-ui/context-menu/context-menu";
-import { Caption, Stack, Surface } from "./_kit";
+import { Caption, Room, Stack, Surface, demoStage } from "./_kit";
 
 export default function ContextMenuDemo() {
   const [last, setLast] = useState("Nothing yet");
@@ -56,8 +56,11 @@ export default function ContextMenuDemo() {
   const act = (name: string) => () => setLast(name);
   return (
     <Stack gap={4} align="center" width={420}>
+      <Room below={184} width={420}>
       <ContextMenu
         label="Q3 roadmap actions"
+        defaultOpen
+        container={demoStage()}
         items={[
           { id: "rename", label: "Rename", icon: <Pencil size={15} aria-hidden="true" />, onSelect: act("Rename") },
           { id: "copy", label: "Copy link", icon: <Copy size={15} aria-hidden="true" />, onSelect: act("Copy link") },
@@ -72,6 +75,7 @@ export default function ContextMenuDemo() {
           <span style={{ color: "var(--text-muted)", fontSize: "var(--text-xs)" }}>Right-click, or long-press on touch</span>
         </Surface>
       </ContextMenu>
+      </Room>
       <Caption>Last choice: {last}</Caption>
     </Stack>
   );
@@ -89,6 +93,8 @@ Extraída do código-fonte. As descrições das props vêm dos comentários do c
 | `children` (obrigatória) | `ReactNode` | — | — |
 | `items` (obrigatória) | `ContextMenuItem[]` | — | — |
 | `label` | `string` | `"Context menu"` | — |
+| `container` | `HTMLElement \| null` | — | Render the menu inside this element: it is placed and kept within that element instead of the viewport (used by the demo stages). |
+| `defaultOpen` | `boolean \| { x: number; y: number }` | `false` | Starts with the menu open at a point inside the target, as if it had just been right-clicked. `x` and `y` are fractions of the target's size (default 0.62 and 0.58). Focus stays where it is until a person uses the menu. |
 
 ### Tipos exportados
 

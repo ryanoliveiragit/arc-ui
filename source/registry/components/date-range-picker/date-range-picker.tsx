@@ -48,6 +48,8 @@ export interface DateRangePickerProps {
   months?: "auto" | 1 | 2;
   /** The element the panel should stay inside. Defaults to the viewport. */
   boundary?: () => HTMLElement | null;
+  /** Start with the panel open, without moving focus into it or scrolling the page (for previews and onboarding). Later opens behave as usual. */
+  defaultOpen?: boolean;
   className?: string;
 }
 
@@ -263,7 +265,7 @@ function Months({ children, direction, reduced }: { children: ReactNode; directi
     variants={reduced ? fade : slide} initial="enter" animate="center" exit="exit">{children}</motion.div>;
 }
 
-export function DateRangePicker({ value, defaultValue = null, onChange, label = "Date range", placeholder = "Select dates", presets = defaultDateRangePresets, minDate, maxDate, weekStartsOn = 0, locale = "en-US", months = "auto", boundary, className }: DateRangePickerProps) {
+export function DateRangePicker({ value, defaultValue = null, onChange, label = "Date range", placeholder = "Select dates", presets = defaultDateRangePresets, minDate, maxDate, weekStartsOn = 0, locale = "en-US", months = "auto", boundary, defaultOpen = false, className }: DateRangePickerProps) {
   const reduced = useReducedFlag();
   const today = useToday();
   const uid = useId();
@@ -302,6 +304,10 @@ export function DateRangePicker({ value, defaultValue = null, onChange, label = 
   const panelRef = useRef<HTMLDivElement>(null);
   const railRef = useRef<HTMLDivElement>(null);
   const pendingFocus = useRef<"trigger" | "day" | null>(null);
+  /** The current open came from defaultOpen: no focus move and no scroll, so the page stays where the reader is. */
+  const quietOpen = useRef(false);
+  /** The panel has been open at least once; until then nothing scrolls the trigger back into view. */
+  const everOpened = useRef(false);
 
   /* ---------- One surface: the trigger's box springs to the panel's box and back ---------- */
   // Before the first measurement the surface simply fills the root and the root wraps the trigger, so server markup already looks right.
@@ -378,6 +384,8 @@ export function DateRangePicker({ value, defaultValue = null, onChange, label = 
   // trigger comes back into view if that scroll left it off screen.
   useEffect(() => {
     if (!open) return;
+    everOpened.current = true;
+    if (quietOpen.current) return;
     const frame = requestAnimationFrame(() => {
       const node = panelRef.current;
       if (!node) return;
@@ -390,6 +398,9 @@ export function DateRangePicker({ value, defaultValue = null, onChange, label = 
   }, [open, reduced]);
   useEffect(() => {
     if (open) return;
+    quietOpen.current = false;
+    // Only after a real close: on mount (or before the first open) the page must not scroll to the field.
+    if (!everOpened.current) return;
     const trigger = triggerRef.current;
     if (!trigger) return;
     const rect = trigger.getBoundingClientRect();
@@ -416,7 +427,7 @@ export function DateRangePicker({ value, defaultValue = null, onChange, label = 
     return single ? end : addMonths(end, -1);
   };
 
-  const openPanel = () => {
+  const openPanel = (quiet = false) => {
     if (!today) return;
     const layout = measureLayout();
     setCompact(layout.single);
@@ -427,9 +438,18 @@ export function DateRangePicker({ value, defaultValue = null, onChange, label = 
     setView(viewFor(committed, layout.single, today));
     setDirection(0);
     setFocusKey(keyOf(committed?.start ?? today));
-    pendingFocus.current = "day";
+    pendingFocus.current = quiet ? null : "day";
+    quietOpen.current = quiet;
     setOpen(true);
   };
+
+  // defaultOpen waits for the viewer's date (it is unknown during server render), then opens once, quietly.
+  const openedByDefault = useRef(false);
+  useEffect(() => {
+    if (!defaultOpen || openedByDefault.current || !today) return;
+    openedByDefault.current = true;
+    openPanel(true);
+  }, [defaultOpen, today]);
 
   const close = useCallback((focus: boolean) => {
     if (focus) pendingFocus.current = "trigger";
@@ -573,7 +593,7 @@ export function DateRangePicker({ value, defaultValue = null, onChange, label = 
   return <motion.div ref={rootRef} className={[styles.root, className].filter(Boolean).join(" ")} style={{ width: rootWidth }} data-open={open || undefined} onKeyDown={onRootKey} onBlur={onRootBlur}>
     {/* The trigger stays in place under the panel. Its icons fade, while the value itself flies to the panel footer and back. */}
     <button ref={triggerRef} type="button" className={styles.trigger} aria-haspopup="dialog" aria-expanded={open} aria-controls={open ? `${uid}-panel` : undefined}
-      aria-label={`${label}: ${committedText}`} disabled={!today} inert={open || undefined} onClick={openPanel}>
+      aria-label={`${label}: ${committedText}`} disabled={!today} inert={open || undefined} onClick={() => openPanel()}>
       <motion.span className={styles.triggerIcon} initial={false} animate={quiet} transition={quietTransition}><CalendarDays size={16} strokeWidth={1.75} aria-hidden="true" /></motion.span>
       {open || !layoutId
         ? <motion.span key="resting" className={styles.value} data-empty={!committed || undefined} initial={false} animate={open ? { opacity: 0 } : { opacity: 1 }} transition={quietTransition}>

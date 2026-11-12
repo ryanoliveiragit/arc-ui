@@ -49,16 +49,19 @@ O demo da página do item, com os imports como ficam depois de instalar pela CLI
 import { useState } from "react";
 import { Archive, Copy, Link2, Share2, Trash2, Download, Bold, Italic, Underline } from "lucide-react";
 import ButtonGroup from "@/components/ryan-ui/button-group/button-group";
-import { Caption, Row, Stack } from "./_kit";
+import { Caption, Field, Row, Stack, demoStage } from "./_kit";
 
 export default function ButtonGroupDemo() {
   const [shareLabel, setShareLabel] = useState("Share");
   const [last, setLast] = useState("None yet");
   const share = () => { setShareLabel("Copied"); setLast("Link copied"); window.setTimeout(() => setShareLabel("Share"), 1600); };
   return (
-    <Stack gap={6} align="center" width={560}>
+    // Três usos lado a lado, cada um com o seu rótulo: assim o grupo vertical não parece um menu solto ao lado dos outros.
+    <Stack gap={8} align="center" width={560}>
+      <Field label="Actions with an attached menu">
       <ButtonGroup
         label="Document actions"
+        container={demoStage()}
         items={[
           { id: "share", label: shareLabel, reserve: ["Share", "Copied"], icon: <Share2 size={15} aria-hidden="true" />, onSelect: share },
           { id: "download", label: "Download", icon: <Download size={15} aria-hidden="true" />, onSelect: () => setLast("Download started") },
@@ -73,7 +76,9 @@ export default function ButtonGroupDemo() {
           ],
         }}
       />
-      <Row justify="center" gap={5}>
+      </Field>
+      <Row justify="center" align="start" gap={10}>
+        <Field label="Solid, icon only">
         <ButtonGroup
           label="Text formatting"
           variant="solid"
@@ -84,16 +89,19 @@ export default function ButtonGroupDemo() {
             { id: "underline", label: "Underline", icon: <Underline size={15} aria-hidden="true" />, iconOnly: true, onSelect: () => setLast("Underline") },
           ]}
         />
+        </Field>
+        <Field label="Vertical">
         <ButtonGroup
           label="View mode"
           orientation="vertical"
           size="sm"
           items={[
-            { id: "day", label: "Day" },
-            { id: "week", label: "Week" },
-            { id: "month", label: "Month" },
+            { id: "day", label: "Day", onSelect: () => setLast("Day view") },
+            { id: "week", label: "Week", onSelect: () => setLast("Week view") },
+            { id: "month", label: "Month", onSelect: () => setLast("Month view") },
           ]}
         />
+        </Field>
       </Row>
       <Caption>Last action: {last}</Caption>
     </Stack>
@@ -119,6 +127,7 @@ Related actions joined into one surface: a shared border and radius, hairline di
 | `orientation` | `"horizontal" \| "vertical"` | `"horizontal"` | — |
 | `collapseLabels` | `boolean` | `true` | When the row does not fit its container, segments with an icon drop their label and keep the icon. Horizontal only. |
 | `disabled` | `boolean` | `false` | Disables every segment and the menu. |
+| `container` | `HTMLElement \| null` | — | Render the menu inside this element and limit collisions to it (used by the demo stages). |
 | `className` | `string` | — | — |
 | `style` | `CSSProperties` | — | — |
 

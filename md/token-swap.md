@@ -42,13 +42,15 @@ Primeira vez no projeto: instale a base uma vez (`npx shadcn@latest add https://
 
 ## Uso
 
-O demo da página do item, com os imports como ficam depois de instalar pela CLI.
+O demo da página do item, com os imports como ficam depois de instalar pela CLI. `Stack`, `Row`, `Caption`, `Field` e `Surface` (de `./_kit`) são auxiliares de layout do site: troque pelo layout do seu projeto.
 
 ```tsx
 import TokenSwapPreview from "@/components/ryan-ui/blocks/token-swap/token-swap";
+import { demoStage } from "./_kit";
 
 export default function TokenSwapDemo() {
-  return <TokenSwapPreview />;
+  // The token menus open inside the preview stage, so a menu near the edge is never cut.
+  return <TokenSwapPreview container={demoStage()} />;
 }
 ```
 
@@ -71,6 +73,7 @@ Swap card with play money: two amount fields with token pickers, a flip button t
 | `feeRate` | `number` | `0.003` | Share of the paid amount kept as a fee. Defaults to 0.3%. |
 | `onSwap` | `(quote: SwapQuote) => void \| Promise<void>` | — | Runs when the person confirms. The card shows its pending state until the returned promise settles; without it, a short delay stands in. |
 | `className` | `string` | — | Extra class for the card. |
+| `container` | `HTMLElement \| null` | — | Render the token menus inside this element and keep them within it (used by the demo stage). |
 
 ### `TokenSwapPreview`
 

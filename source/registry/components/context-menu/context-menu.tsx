@@ -22,21 +22,29 @@ export interface ContextMenuProps {
   children: ReactNode;
   items: ContextMenuItem[];
   label?: string;
+  /** Render the menu inside this element: it is placed and kept within that element instead of the viewport (used by the demo stages). */
+  container?: HTMLElement | null;
+  /** Starts with the menu open at a point inside the target, as if it had just been right-clicked. `x` and `y` are fractions of the
+   *  target's size (default 0.62 and 0.58). Focus stays where it is until a person uses the menu. */
+  defaultOpen?: boolean | { x: number; y: number };
 }
+
+type Bounds = { left: number; top: number; width: number; height: number };
 
 type Highlight = { index: number; top: number; height: number; danger: boolean; glide: boolean };
 
 const MENU_WIDTH = 208;
 
-// Keeps the menu 8px inside the viewport. Rows are 34px with 5px padding and a 1px border; the real size is measured before paint.
-function clampTo(x: number, y: number, width: number, height: number) {
-  const left = Math.max(8, Math.min(x, window.innerWidth - width - 8));
-  const top = Math.max(8, Math.min(y, window.innerHeight - height - 8));
-  // The menu grows from the pointer, even when it is clamped away from a viewport edge.
-  return { x: left, y: top, originX: Math.max(0, Math.min(width, x - left)), originY: Math.max(0, Math.min(height, y - top)) };
+// Keeps the menu 8px inside its bounds (the viewport, or the container). Rows are 34px with 5px padding and a 1px border; the real size is measured before paint.
+// Returns coordinates for the menu's own positioning: viewport pixels, or pixels inside the container.
+function clampTo(x: number, y: number, width: number, height: number, bounds: Bounds, contained: boolean) {
+  const left = Math.max(bounds.left + 8, Math.min(x, bounds.left + bounds.width - width - 8));
+  const top = Math.max(bounds.top + 8, Math.min(y, bounds.top + bounds.height - height - 8));
+  // The menu grows from the pointer, even when it is clamped away from an edge.
+  return { x: contained ? left - bounds.left : left, y: contained ? top - bounds.top : top, originX: Math.max(0, Math.min(width, x - left)), originY: Math.max(0, Math.min(height, y - top)) };
 }
 
-export function ContextMenu({ children, items, label = "Context menu" }: ContextMenuProps) {
+export function ContextMenu({ children, items, label = "Context menu", container, defaultOpen = false }: ContextMenuProps) {
   const reduced = useReducedMotion();
   const [open, setOpen] = useState(false);
   // The portal mounts on first open (client only) and stays so the menu can animate out.
@@ -55,39 +63,67 @@ export function ContextMenu({ children, items, label = "Context menu" }: Context
   const live = useRef(false);
 
   const anchor = useRef({ x: 0, y: 0 });
+  /** Set for a menu that starts open: its first frame does not pull focus into the menu. */
+  const quiet = useRef(false);
+  const contained = Boolean(container);
+  const bounds = (): Bounds => {
+    if (container) { const rect = container.getBoundingClientRect(); return { left: rect.left, top: rect.top, width: rect.width, height: rect.height }; }
+    return { left: 0, top: 0, width: window.innerWidth, height: window.innerHeight };
+  };
 
   useEffect(() => { live.current = open; }, [open]);
   // Re-clamp against the menu's real size before the first frame, so long labels or many rows never overflow the viewport.
   useLayoutEffect(() => {
     const node = menuRef.current;
     if (!open || !node) return;
-    const next = clampTo(anchor.current.x, anchor.current.y, node.offsetWidth, node.offsetHeight);
+    const next = clampTo(anchor.current.x, anchor.current.y, node.offsetWidth, node.offsetHeight, bounds(), contained);
     setPoint(current => (current.x === next.x && current.y === next.y && current.originX === next.originX && current.originY === next.originY ? current : { ...next, key: current.key }));
   }, [open, point.key]);
   useEffect(() => () => window.clearTimeout(clearTimer.current), []);
   useEffect(() => {
     if (!open) return;
-    menuRef.current?.querySelector<HTMLElement>('[role="menuitem"]:not(:disabled)')?.focus({ preventScroll: true });
+    if (quiet.current) quiet.current = false;
+    else menuRef.current?.querySelector<HTMLElement>('[role="menuitem"]:not(:disabled)')?.focus({ preventScroll: true });
     const closeOnPointerDown = (event: PointerEvent) => {
       if (!menuRef.current?.contains(event.target as Node)) setOpen(false);
     };
     const closeOnViewportChange = (event: Event) => {
       if (event.target instanceof Node && menuRef.current?.contains(event.target)) return;
+      // A menu inside a container moves with it, so scrolling the page around it does not misplace it.
+      if (contained && event.type === "scroll" && !(event.target instanceof Node && container?.contains(event.target))) return;
       setOpen(false);
     };
+    // Escape also closes a menu that opened without taking focus (one that starts open); inside the menu, onMenuKeyDown handles it.
+    const closeOnEscape = (event: globalThis.KeyboardEvent) => {
+      if (event.key === "Escape" && !menuRef.current?.contains(document.activeElement)) setOpen(false);
+    };
     document.addEventListener("pointerdown", closeOnPointerDown);
+    document.addEventListener("keydown", closeOnEscape);
     window.addEventListener("scroll", closeOnViewportChange, true);
     window.addEventListener("resize", closeOnViewportChange);
     return () => {
       document.removeEventListener("pointerdown", closeOnPointerDown);
+      document.removeEventListener("keydown", closeOnEscape);
       window.removeEventListener("scroll", closeOnViewportChange, true);
       window.removeEventListener("resize", closeOnViewportChange);
     };
-  }, [open, point.key]);
+  }, [open, point.key, contained, container]);
+
+  // A menu that starts open appears at a point inside the target on the first frame.
+  const startOpen = useRef(defaultOpen);
+  useLayoutEffect(() => {
+    const start = startOpen.current;
+    const rect = targetRef.current?.getBoundingClientRect();
+    if (!start || !rect) return;
+    const at = typeof start === "object" ? start : { x: .62, y: .58 };
+    quiet.current = true;
+    showMenu(rect.left + rect.width * at.x, rect.top + rect.height * at.y);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- runs once on mount
+  }, []);
 
   function showMenu(x: number, y: number) {
     anchor.current = { x, y };
-    const estimate = clampTo(x, y, MENU_WIDTH, Math.min(300, items.length * 34 + 12));
+    const estimate = clampTo(x, y, MENU_WIDTH, Math.min(300, items.length * 34 + 12), bounds(), contained);
     setPoint(current => ({ ...estimate, key: current.key + 1 }));
     window.clearTimeout(clearTimer.current);
     pointer.current = false;
@@ -150,14 +186,14 @@ export function ContextMenu({ children, items, label = "Context menu" }: Context
       {children}
     </div>
     {portal ? createPortal(<AnimatePresence>
-      {open && <motion.div key={point.key} ref={node => { if (node) menuRef.current = node; }} className={styles.menu} role="menu" aria-label={label} tabIndex={-1} style={{ left: point.x, top: point.y, transformOrigin: `${point.originX}px ${point.originY}px` }} onKeyDown={onMenuKeyDown} onFocus={onMenuFocus} onPointerMoveCapture={() => { pointer.current = true; }} onKeyDownCapture={() => { pointer.current = false; }} onPointerLeave={event => { if (live.current) event.currentTarget.focus({ preventScroll: true }); }}
+      {open && <motion.div key={point.key} ref={node => { if (node) menuRef.current = node; }} className={styles.menu} data-contained={contained || undefined} role="menu" aria-label={label} tabIndex={-1} style={{ left: point.x, top: point.y, transformOrigin: `${point.originX}px ${point.originY}px` }} onKeyDown={onMenuKeyDown} onFocus={onMenuFocus} onPointerMoveCapture={() => { pointer.current = true; }} onKeyDownCapture={() => { pointer.current = false; }} onPointerLeave={event => { if (live.current) event.currentTarget.focus({ preventScroll: true }); }}
         initial={reduced ? { opacity: 0 } : { opacity: 0, scale: .96 }} animate={{ opacity: 1, scale: 1 }} exit={reduced ? { opacity: 0, transition: { duration: motionTokens.duration.instant } } : { opacity: 0, scale: .98, transition: { duration: motionTokens.duration.instant, ease: [...motionTokens.ease.standard] } }} transition={reduced ? { duration: motionTokens.duration.instant } : { default: motionTokens.spring.snappy, opacity: { duration: motionTokens.duration.fast, ease: [...motionTokens.ease.enter] } }}>
         <motion.span className={styles.highlight} data-tone={highlight?.danger ? "danger" : undefined} aria-hidden="true" initial={false} animate={highlight ? { y: highlight.top, height: highlight.height, opacity: 1 } : { opacity: 0 }} transition={{ default: highlight?.glide && !reduced ? motionTokens.spring.snappy : { duration: 0 }, opacity: { duration: reduced ? 0 : motionTokens.duration.instant } }}/>
         {items.map((item, index) => <button key={item.id} type="button" role="menuitem" tabIndex={-1} data-index={index} data-tone={item.destructive ? "danger" : undefined} style={{ "--i": index } as CSSProperties} disabled={item.disabled} className={[styles.item, item.destructive ? styles.destructive : ""].filter(Boolean).join(" ")} onPointerMove={event => { if (!live.current) return; window.clearTimeout(clearTimer.current); if (document.activeElement !== event.currentTarget) event.currentTarget.focus({ preventScroll: true }); if (highlight?.index !== index) place(event.currentTarget, true); }} onPointerLeave={() => { if (live.current) menuRef.current?.focus({ preventScroll: true }); }} onClick={() => { if (!live.current) return; live.current = false; item.onSelect?.(); setOpen(false); targetRef.current?.focus(); }}>
           <span className={styles.icon} aria-hidden="true">{item.icon ?? (item.checked ? <Check size={15} /> : <MoreHorizontal size={15} />)}</span><span>{item.label}</span>
         </button>)}
       </motion.div>}
-    </AnimatePresence>, document.body) : null}
+    </AnimatePresence>, container ?? document.body) : null}
   </>;
 }
 

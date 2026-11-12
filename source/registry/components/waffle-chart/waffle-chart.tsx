@@ -162,6 +162,8 @@ export function WaffleChart({ data, label, unit = "", formatValue, rows = 10, co
     const index = data.findIndex(item => item.key === key), item = data[index];
     if (!item) return "transparent";
     if (item.color) return item.color;
+    // accentKey={null}: no series color at all, every category takes a neutral step (shapes still tell them apart).
+    if (accentKey === null) return `color-mix(in oklab, var(--foreground) ${SHADES[index % SHADES.length]}%, var(--surface))`;
     if (key === accent) return "var(--series-1)";
     const rank = data.filter(entry => entry.key !== accent).findIndex(entry => entry.key === key);
     return rank < 3 ? `var(--series-${rank + 2})` : `color-mix(in oklab, var(--foreground) ${SHADES[(rank - 3) % SHADES.length]}%, var(--surface))`;

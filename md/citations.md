@@ -48,7 +48,7 @@ O demo da página do item, com os imports como ficam depois de instalar pela CLI
 ```tsx
 import { Citation, Citations, CitationSources } from "@/components/ryan-ui/citations/citations";
 import type { CitationSource } from "@/components/ryan-ui/citations/citations";
-import { Caption, Stack, Surface } from "./_kit";
+import { Caption, Stack, Surface, demoStage } from "./_kit";
 import type { DemoStage } from "./_kit";
 
 export const stage: DemoStage = { height: 640 };
@@ -89,12 +89,12 @@ export default function CitationsDemo() {
   return (
     <Stack width={560} gap={3}>
       <Surface padding={6}>
-        <Citations sources={sources}>
+        <Citations sources={sources} container={demoStage()}>
           <p>
             Operating systems let people ask for less motion, and browsers pass that choice to your CSS through a media feature
             <Citation source="mdn" />. The accessibility guidelines treat it as more than taste: movement that an interaction starts should be
             possible to switch off unless it is essential
-            <Citation source="wcag" />. In practice you rarely remove animation altogether. Swapping a long slide for a short fade keeps the
+            <Citation source="wcag" defaultOpen />. In practice you rarely remove animation altogether. Swapping a long slide for a short fade keeps the
             feedback without the travel
             <Citation source="webdev" />
             <Citation source="webkit" />.
@@ -122,6 +122,7 @@ Groups an answer with its sources. Inside it, `<Citation>` is a numbered chip th
 | `children` (obrigatória) | `ReactNode` | — | The text with `<Citation>` chips inside it, and usually a `<CitationSources>` list after it. |
 | `activeId` | `string \| null` | — | Id of the highlighted source (controlled). |
 | `onActiveIdChange` | `(id: string \| null) => void` | — | Called when hover, focus or an open card changes the highlighted source. |
+| `container` | `HTMLElement \| null` | `null` | Render the source cards inside this element and limit collisions to it (used by the demo stages). |
 | `className` | `string` | — | Class name added to the root element. |
 
 ### `Citation`
@@ -131,6 +132,7 @@ A numbered chip for the middle of a sentence. Hover, focus plus Enter, or a tap 
 | Prop | Tipo | Padrão | Descrição |
 | --- | --- | --- | --- |
 | `source` (obrigatória) | `string` | — | Id of the source this chip cites. |
+| `defaultOpen` | `boolean` | `false` | Starts with this chip's card pinned open, for previews. Focus stays where it is until a person uses the card. |
 | `className` | `string` | — | Class name added to the chip. |
 
 ### `CitationSources`

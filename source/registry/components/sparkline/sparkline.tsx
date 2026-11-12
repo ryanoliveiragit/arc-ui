@@ -11,7 +11,9 @@ export interface SparklineProps {
   value?: string;
   change?: string;
   tone?: "accent" | "success" | "warning" | "danger";
+  /** Preferred width of the chart in px; it shrinks to fit a narrower container. Default 160. */
   width?: number;
+  /** Height in px at the preferred width; the chart keeps this aspect ratio when it shrinks. Default 52. */
   height?: number;
   /** One label per point, such as a date. It replaces the change while that point is scrubbed. */
   labels?: string[];
@@ -231,7 +233,7 @@ export function Sparkline({ data, label, value, change, tone = "accent", width =
     onPointerUp: (event: PointerEvent<HTMLDivElement>) => { if (event.pointerType !== "mouse") setActive(null); },
     onPointerLeave: () => setActive(null), onPointerCancel: () => setActive(null), onBlur: () => setActive(null), onKeyDown,
   } : {};
-  return <figure ref={ref} className={styles.figure} aria-label={description}>
+  return <figure ref={ref} className={styles.figure} style={{ width, maxWidth: "100%" }} aria-label={description}>
     <figcaption className={styles.caption}>
       <span className={styles.label}><Roll text={label} whole /></span>
       {headline !== undefined && <strong><Roll text={headline} morph /></strong>}

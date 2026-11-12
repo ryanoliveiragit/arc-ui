@@ -51,9 +51,10 @@ O demo da página do item, com os imports como ficam depois de instalar pela CLI
 ```tsx
 import { NotificationCenter, type NotificationItem } from "@/components/ryan-ui/notification-center/notification-center";
 import { avatar } from "@/components/ryan-ui/lib/media";
+import { Room, demoStage, useQuietFirstOpen } from "./_kit";
 import type { DemoStage } from "./_kit";
 
-export const stage: DemoStage = { layout: "center", height: 560 };
+export const stage: DemoStage = { layout: "center", height: 660 };
 
 const notifications: NotificationItem[] = [
   { id: "n1", title: "Emma Collins commented on Checkout redesign", description: "The review step looks great. Can we show the total while editing?", time: "2m ago", tone: "info", actor: { name: "Emma Collins", photo: avatar("emma-collins") } },
@@ -64,7 +65,13 @@ const notifications: NotificationItem[] = [
 ];
 
 export default function NotificationCenterDemo() {
-  return <NotificationCenter notifications={notifications} />;
+  // The panel is already open under the bell, inside the stage.
+  const quiet = useQuietFirstOpen();
+  return (
+    <Room below={540}>
+      <NotificationCenter notifications={notifications} defaultOpen onOpenAutoFocus={quiet} container={demoStage()} />
+    </Room>
+  );
 }
 ```
 
@@ -81,8 +88,11 @@ Extraída do código-fonte. As descrições das props vêm dos comentários do c
 | `onReadChange` | `(notification: NotificationItem, read: boolean) => void` | — | — |
 | `onDismiss` | `(notification: NotificationItem) => void` | — | — |
 | `open` | `boolean` | — | — |
+| `defaultOpen` | `boolean` | `false` | Starts with the panel open (uncontrolled). |
 | `onOpenChange` | `(open: boolean) => void` | — | — |
 | `avoidCollisions` | `boolean` | `true` | — |
+| `container` | `HTMLElement \| null` | — | Render the panel inside this element and limit collisions to it (used by the demo stages). |
+| `onOpenAutoFocus` | `(event: Event) => void` | — | Called before the panel moves focus in on open; call event.preventDefault() to keep focus where it is (for a panel that starts open). |
 
 ### Tipos exportados
 

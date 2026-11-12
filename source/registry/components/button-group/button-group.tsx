@@ -61,6 +61,8 @@ export interface ButtonGroupProps {
   collapseLabels?: boolean;
   /** Disables every segment and the menu. */
   disabled?: boolean;
+  /** Render the menu inside this element and limit collisions to it (used by the demo stages). */
+  container?: HTMLElement | null;
   className?: string;
   style?: CSSProperties;
 }
@@ -151,7 +153,7 @@ const inert = (node: HTMLElement) => (node as HTMLButtonElement).disabled || nod
  * between segments under the pointer or keyboard focus, the pressed segment answers in place, and an optional chevron
  * segment opens more actions in a menu aligned to the group's edge.
  */
-export function ButtonGroup({ items, menu, label, variant = "outline", size = "md", orientation = "horizontal", collapseLabels = true, disabled = false, className, style }: ButtonGroupProps) {
+export function ButtonGroup({ items, menu, label, variant = "outline", size = "md", orientation = "horizontal", collapseLabels = true, disabled = false, container, className, style }: ButtonGroupProps) {
   const reduced = useReducedMotion() ?? false;
   const root = useRef<HTMLDivElement>(null);
   const vertical = orientation === "vertical";
@@ -326,8 +328,8 @@ export function ButtonGroup({ items, menu, label, variant = "outline", size = "m
   // Non-modal: no scroll lock, so opening the menu never shifts the page by a scrollbar's width.
   return <DropdownPrimitive.Root open={menuOpen} onOpenChange={setMenuOpen} modal={false}>
     {group}
-    <DropdownPrimitive.Portal>
-      <DropdownPrimitive.Content className={styles.menu} side="bottom" align={vertical ? "start" : "end"} alignOffset={-1} sideOffset={6} collisionPadding={12} loop>
+    <DropdownPrimitive.Portal container={container ?? undefined}>
+      <DropdownPrimitive.Content className={styles.menu} side="bottom" align={vertical ? "start" : "end"} alignOffset={-1} sideOffset={6} collisionPadding={12} collisionBoundary={container ?? undefined} loop>
         {menu.items.map((action, index) => {
           const classes = [styles.item, action.destructive ? styles.destructive : ""].filter(Boolean).join(" ");
           const body = <>{action.icon ? <span className={styles.itemIcon} aria-hidden="true">{action.icon}</span> : null}<span className={styles.itemLabel}>{action.label}</span></>;

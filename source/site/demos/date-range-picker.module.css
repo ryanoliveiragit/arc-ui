@@ -1,0 +1,7 @@
+/* The field sits at the left edge of a box as wide as the open panel (two months and the preset rail, 710 px), so the
+   open panel is centered in the stage. The box is a size container: the room below the field follows the stage width. */
+.box { display: flex; width: min(710px, 100%); flex-direction: column; align-items: flex-start; gap: var(--space-3); container-type: inline-size; }
+/* Room below the field for the open panel: two months are about 354 px tall. Under 680 px of box width (a stage under
+   728 px) the picker shows one month with the presets in a row on top, which is taller. */
+.room { padding-bottom: 330px; }
+@container (max-width: 679px) { .room { padding-bottom: 404px; } }

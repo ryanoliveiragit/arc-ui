@@ -66,6 +66,7 @@ A deck and a table. Dealing sends each card from the deck to its position along 
 | `positions` | `number` | `5` | How many positions the table has, from 1 to 7. Five makes a poker hand, and the hand gets named. |
 | `onDeal` | `(hand: PlayingCard[]) => void` | — | Called after every deal with the cards now on the table, in position order. |
 | `label` | `string` | `"Card table"` | Accessible name of the table. |
+| `dealOnMount` | `boolean` | `false` | Deal a full hand once the table has been measured, so a preview opens with cards on the table. |
 | `className` | `string` | — | Extra class for the root. |
 
 ### `CardDealerPreview`

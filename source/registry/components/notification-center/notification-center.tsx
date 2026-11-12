@@ -25,8 +25,14 @@ export interface NotificationCenterProps {
   onReadChange?: (notification: NotificationItem, read: boolean) => void;
   onDismiss?: (notification: NotificationItem) => void;
   open?: boolean;
+  /** Starts with the panel open (uncontrolled). */
+  defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
   avoidCollisions?: boolean;
+  /** Render the panel inside this element and limit collisions to it (used by the demo stages). */
+  container?: HTMLElement | null;
+  /** Called before the panel moves focus in on open; call event.preventDefault() to keep focus where it is (for a panel that starts open). */
+  onOpenAutoFocus?: (event: Event) => void;
 }
 
 type View = "all" | "unread";
@@ -106,10 +112,10 @@ function NotificationVisual({ item }: { item: NotificationItem }) {
   </span>;
 }
 
-export function NotificationCenter({ notifications: initial, label = "Notifications", onReadChange, onDismiss, open, onOpenChange, avoidCollisions = true }: NotificationCenterProps) {
+export function NotificationCenter({ notifications: initial, label = "Notifications", onReadChange, onDismiss, open, defaultOpen = false, onOpenChange, avoidCollisions = true, container, onOpenAutoFocus }: NotificationCenterProps) {
   const reduce = useReducedMotion();
   const layoutId = useId();
-  const [internalOpen, setInternalOpen] = useState(false);
+  const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const [items, setItems] = useState(initial);
   const [view, setView] = useState<View>("all");
   const [expandedId, setExpandedId] = useState<string | null>(null);
@@ -176,8 +182,8 @@ export function NotificationCenter({ notifications: initial, label = "Notificati
         <AnimatePresence initial={false}>{unreadCount > 0 && <motion.span key="badge" className={styles.badge} aria-hidden="true" initial={reduce ? { opacity: 0 } : { opacity: 0, scale: .6 }} animate={{ opacity: 1, scale: 1 }} exit={reduce ? fadeOut : { opacity: 0, scale: .6, transition: exitFast }} transition={reduce ? instant : motionTokens.spring.snappy}><RollingCount value={unreadCount} display={unreadCount > 9 ? "9+" : String(unreadCount)} reduce={reduce} /></motion.span>}</AnimatePresence>
       </button>
     </PopoverPrimitive.Trigger>
-    <PopoverPrimitive.Portal>
-      <PopoverPrimitive.Content className={styles.panel} align="center" side="bottom" sideOffset={12} collisionPadding={12} avoidCollisions={avoidCollisions} aria-label={label}>
+    <PopoverPrimitive.Portal container={container ?? undefined}>
+      <PopoverPrimitive.Content className={styles.panel} align="center" side="bottom" sideOffset={12} collisionPadding={12} collisionBoundary={container ?? undefined} avoidCollisions={avoidCollisions} aria-label={label} onOpenAutoFocus={onOpenAutoFocus}>
         <div className={styles.header}>
           <div><div className={styles.heading}><h2>{label}</h2><span className={styles.count}><RollingCount value={unreadCount} reduce={reduce} /></span></div><p aria-live="polite"><SwapText reduce={reduce}>{summary}</SwapText></p></div>
           <PopoverPrimitive.Close className={styles.close} aria-label="Close notifications"><X size={17} strokeWidth={1.75} aria-hidden="true" /></PopoverPrimitive.Close>
@@ -187,7 +193,7 @@ export function NotificationCenter({ notifications: initial, label = "Notificati
           <div className={styles.viewSwitch} role="group" aria-label="Show notifications">
             {(["all", "unread"] as const).map((next) => <button key={next} ref={next === "unread" ? unreadTabRef : allTabRef} type="button" className={view === next ? styles.viewActive : undefined} aria-pressed={view === next} onClick={() => { setBulk(false); setView(next); setExpandedId(null); }}>{view === next && <motion.span className={styles.viewHighlight} layoutId={`${layoutId}-view`} transition={reduce ? instant : motionTokens.spring.morph} />}<span>{next === "all" ? "All" : "Unread"}</span></button>)}
           </div>
-          <AnimatePresence initial={false}>{unreadCount > 0 && <motion.button key="mark-all" type="button" className={styles.markAll} onClick={markAllRead} initial={reduce ? { opacity: 0 } : { opacity: 0, filter: `blur(${motionTokens.blur.subtle}px)` }} animate={{ opacity: 1, filter: "blur(0px)" }} exit={reduce ? fadeOut : { opacity: 0, filter: `blur(${motionTokens.blur.subtle}px)`, transition: exitFast }} transition={reduce ? instant : enter}><CheckCheck size={15} strokeWidth={1.75} aria-hidden="true" /><span>Mark all read</span></motion.button>}</AnimatePresence>
+          <AnimatePresence initial={false}>{unreadCount > 0 && <motion.button key="mark-all" type="button" className={styles.markAll} aria-label="Mark all read" onClick={markAllRead} initial={reduce ? { opacity: 0 } : { opacity: 0, filter: `blur(${motionTokens.blur.subtle}px)` }} animate={{ opacity: 1, filter: "blur(0px)" }} exit={reduce ? fadeOut : { opacity: 0, filter: `blur(${motionTokens.blur.subtle}px)`, transition: exitFast }} transition={reduce ? instant : enter}><CheckCheck size={15} strokeWidth={1.75} aria-hidden="true" /><span>Mark all read</span></motion.button>}</AnimatePresence>
         </div>
 
         {/* Rows collapse their own height on the way out, so the list and the panel close the gap together. */}

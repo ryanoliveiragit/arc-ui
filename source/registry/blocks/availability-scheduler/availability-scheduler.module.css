@@ -57,7 +57,12 @@
 .rangeText { grid-column: 2; color: var(--text-secondary); line-height: 1.35; font-variant-numeric: tabular-nums; }
 .dayRow[data-empty] .rangeText { color: var(--text-muted); }
 
+/* Medium widths keep the summary beside the grid, just narrower; only small containers stack it below. */
 @container scheduler (max-width: 46rem) {
+  .layout { grid-template-columns: minmax(0, 1fr) minmax(0, 15rem); column-gap: var(--space-6); }
+  .rangeText { text-wrap: balance; }
+}
+@container scheduler (max-width: 40rem) {
   .layout { grid-template-columns: minmax(0, 1fr); }
 }
 @container scheduler (max-width: 30rem) {

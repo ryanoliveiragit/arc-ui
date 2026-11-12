@@ -49,7 +49,7 @@ O demo da página do item, com os imports como ficam depois de instalar pela CLI
 import { useEffect, useRef, useState } from "react";
 import PromptInput from "@/components/ryan-ui/prompt-input/prompt-input";
 import type { PromptAttachment, PromptModel, PromptSubmission } from "@/components/ryan-ui/prompt-input/prompt-input";
-import { Caption, Stack } from "./_kit";
+import { Caption, Stack, demoStage } from "./_kit";
 
 const models: PromptModel[] = [
   { id: "atlas-pro", label: "Atlas Pro", description: "Slower, best for hard problems" },
@@ -89,6 +89,7 @@ export default function PromptInputDemo() {
     <Stack width={560} gap={4}>
       <PromptInput
         placeholder="Ask about your data"
+        container={demoStage()}
         models={models}
         model={model}
         onModelChange={setModel}
@@ -132,6 +133,7 @@ Extraída do código-fonte. As descrições das props vêm dos comentários do c
 | `maxRows` | `number` | `8` | Lines the box grows to before it scrolls. |
 | `clearOnSubmit` | `boolean` | `true` | Empties the text and the attachments after a send. |
 | `disabled` | `boolean` | `false` | Blocks typing, attaching and sending. |
+| `container` | `HTMLElement \| null` | — | Render the model menu inside this element and limit collisions to it (used by the demo stages). |
 | `className` | `string` | — | Extra class for the root element. |
 
 ### Tipos exportados

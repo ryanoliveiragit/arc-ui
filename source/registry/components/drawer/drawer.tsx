@@ -49,7 +49,11 @@ export interface DrawerContentProps
   description?: string;
   children: ReactNode;
   side?: "left" | "right" | "top" | "bottom";
-  /** Renders the drawer inside this element instead of the page body, anchored to its edges. The element needs position: relative and overflow: hidden. */
+  /**
+   * Renders the drawer inside this element instead of the page body, anchored to its edges. The element needs position: relative and
+   * overflow: hidden. Pair it with `modal={false}` on Drawer, so the page around the element keeps scrolling and stays usable while the
+   * drawer is open (Escape, the close button and a press on the scrim still close it).
+   */
   container?: HTMLElement | null;
 }
 
@@ -141,31 +145,35 @@ export function DrawerContent({
     <div className={styles.body}>{children}</div>
   </>;
 
+  // Radix draws no overlay for a non-modal drawer, so inside a container the scrim is a plain layer: a press on it is a press
+  // outside the panel, which closes the drawer like the overlay would.
   // Under a bare Radix root the open state is unknown here, so CSS keyframes keyed off data-state animate the layers instead.
   if (drawer === null) {
     return (
       <DialogPrimitive.Portal container={container}>
-        <DialogPrimitive.Overlay className={`${styles.overlay} ${styles.keyframes}`} data-contained={container ? "" : undefined} />
+        {container ? <div className={`${styles.overlay} ${styles.keyframes}`} data-contained="" data-state="open" aria-hidden="true" /> : <DialogPrimitive.Overlay className={`${styles.overlay} ${styles.keyframes}`} />}
         <DialogPrimitive.Content {...props} onInteractOutside={onInteractOutside} data-side={side} data-contained={container ? "" : undefined} className={`${classes} ${styles.keyframes}`}>{inner}</DialogPrimitive.Content>
       </DialogPrimitive.Portal>
     );
   }
 
+  const scrim = (
+    <motion.div
+      className={styles.overlay}
+      data-contained={container ? "" : undefined}
+      aria-hidden={container ? true : undefined}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0, transition: reduced ? fade : { duration: motionTokens.duration.fast, ease: [...motionTokens.ease.standard] } }}
+      transition={reduced ? fade : { duration: motionTokens.duration.standard, ease: [...motionTokens.ease.enter] }}
+    />
+  );
   // The panel springs fully opaque from its own edge and returns to it faster than it arrived, from wherever it is.
   return (
     <AnimatePresence custom={drawer.flung}>
       {drawer.open && (
         <DialogPrimitive.Portal key="drawer" forceMount container={container}>
-          <DialogPrimitive.Overlay asChild forceMount>
-            <motion.div
-              className={styles.overlay}
-              data-contained={container ? "" : undefined}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0, transition: reduced ? fade : { duration: motionTokens.duration.fast, ease: [...motionTokens.ease.standard] } }}
-              transition={reduced ? fade : { duration: motionTokens.duration.standard, ease: [...motionTokens.ease.enter] }}
-            />
-          </DialogPrimitive.Overlay>
+          {container ? scrim : <DialogPrimitive.Overlay asChild forceMount>{scrim}</DialogPrimitive.Overlay>}
           <DialogPrimitive.Content
             {...props}
             asChild

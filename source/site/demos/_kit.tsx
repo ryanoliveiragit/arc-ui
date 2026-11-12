@@ -1,5 +1,34 @@
+import { useCallback, useRef } from "react";
 import type { CSSProperties, ReactNode } from "react";
 import styles from "./_kit.module.css";
+
+/**
+ * O elemento do palco ([data-demo-stage]) quando o demo roda dentro dele; null na página de preview avulsa.
+ * Demos com sobreposição usam ele como fronteira: o popover/diálogo abre já aberto e fica contido no palco,
+ * com o gatilho visível, em vez de posicionar à janela inteira (que cortaria na rolagem da página).
+ */
+export const demoStage = (): HTMLElement | null =>
+  typeof document === "undefined" ? null : document.querySelector<HTMLElement>("[data-demo-stage]");
+
+/**
+ * Para sobreposições que o demo já mostra abertas: no carregamento o foco não entra no painel (a página não pula para o
+ * demo nem tira o foco de quem está lendo); nas aberturas seguintes, pelo gatilho, o componente move o foco como sempre.
+ * Passe o retorno em onOpenAutoFocus.
+ */
+export function useQuietFirstOpen() {
+  const first = useRef(true);
+  return useCallback((event: Event) => {
+    if (first.current) { first.current = false; event.preventDefault(); }
+  }, []);
+}
+
+/**
+ * Reserva o espaço que a sobreposição aberta ocupa junto do gatilho. No palco centralizado, o conjunto gatilho + painel
+ * fica no meio do quadro, sem sobra de um lado e sem o painel encostar na borda do outro.
+ */
+export function Room({ children, below = 0, above = 0, width, align = "center" }: { children: ReactNode; below?: number; above?: number; width?: number; align?: CSSProperties["alignItems"] }) {
+  return <div style={{ display: "flex", flexDirection: "column", alignItems: align, paddingTop: above, paddingBottom: below, width: width ? "100%" : undefined, maxWidth: width }}>{children}</div>;
+}
 
 /**
  * Como o palco mostra um demo. Um demo pode exportar `stage` para mudar o padrão:

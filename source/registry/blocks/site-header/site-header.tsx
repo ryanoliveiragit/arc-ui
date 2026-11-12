@@ -80,6 +80,8 @@ export interface SiteHeaderProps {
   scrollThreshold?: number;
   /** Accessible name of the navigation landmark. */
   label?: string;
+  /** Mega variant: the item whose panel starts open, as a preview would show it. It closes like any panel (outside press, Escape) and never moves focus on its own. */
+  defaultOpenItem?: string;
   className?: string;
 }
 
@@ -199,6 +201,7 @@ export const SiteHeader = forwardRef<HTMLElement, SiteHeaderProps>(function Site
   scrollContainer,
   scrollThreshold = 8,
   label = "Main",
+  defaultOpenItem,
   className,
 }, ref) {
   const id = useId();
@@ -207,7 +210,8 @@ export const SiteHeader = forwardRef<HTMLElement, SiteHeaderProps>(function Site
   const [innerCurrent, setInnerCurrent] = useState(defaultCurrent);
   const current = currentProp ?? innerCurrent;
   const [hovered, setHovered] = useState<string | null>(null);
-  const [open, setOpen] = useState<{ value: string; direction: number } | null>(null);
+  const [open, setOpen] = useState<{ value: string; direction: number } | null>(() =>
+    variant === "mega" && defaultOpenItem && items.some(item => item.value === defaultOpenItem && item.links?.length) ? { value: defaultOpenItem, direction: 0 } : null);
   const [panel, setPanel] = useState<{ height: number | null; grow: boolean }>({ height: null, grow: true });
   const [menuOpen, setMenuOpen] = useState(false);
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -514,6 +518,15 @@ SiteHeader.displayName = "SiteHeader";
 const variantOptions = [{ value: "mega", label: "Mega menu" }, { value: "simple", label: "Simple" }, { value: "centered", label: "Centered" }];
 const pageLabels: Record<string, string> = { product: "Product", resources: "Resources", pricing: "Pricing", customers: "Customers" };
 
+/** Example page content under the header, so the scrolling page reads as a real site and not as placeholder tiles. */
+const pageCopy = {
+  product: { lede: "Components and blocks that move with intent, ready to copy into your app.", cards: [["Components", "Buttons, inputs, menus and charts with considered motion."], ["Blocks", "Whole sections: sign-in, pricing, changelog and footers."], ["Themes", "Light and dark from one set of design tokens."], ["Motion", "Springs that settle quickly and respect reduced motion."], ["Accessibility", "Keyboard paths and screen reader names built in."], ["Install", "One command per item with the shadcn CLI."]] },
+  resources: { lede: "Everything you need to install, theme and ship the library.", cards: [["Documentation", "Install, theming and the API of every item."], ["Guides", "When to use each item, and when not to."], ["Changelog", "What changed in every release."], ["Examples", "Full screens assembled from the blocks."], ["Accessibility notes", "Keyboard and screen reader details per item."], ["Community", "Questions, ideas and things people built."]] },
+  pricing: { lede: "Free and open source. Copy the code and make it yours.", cards: [["Every item", "All components and blocks, MIT licensed."], ["Updates", "New items land in the same registry."], ["Your code", "The source lives in your project, no runtime package."], ["Themes", "Swap the accent and every item follows."], ["Support", "Issues and requests on GitHub."], ["Credits", "Built on the open source core of Arc."]] },
+  customers: { lede: "Teams that ship their product interface with these blocks.", cards: [["Northwind", "Rebuilt checkout with the form blocks."], ["Ledgerly", "Every dashboard chart comes from the library."], ["Atlas", "Moved its docs site to the new layout."], ["Harbor & Co", "Shares one set of forms across five apps."], ["Lumen", "Built onboarding around the stepper."], ["Quill", "Themes every product from a single token set."]] },
+} satisfies Record<string, { lede: string; cards: [string, string][] }>;
+const copyOf = (value: string) => pageCopy[value as keyof typeof pageCopy] ?? pageCopy.product;
+
 /** Preview: the header inside a small scrolling page, with a switch between its three layouts. */
 export function SiteHeaderBlock({ variant: initial = "mega" }: { variant?: SiteHeaderVariant }) {
   const [variant, setVariant] = useState<SiteHeaderVariant>(initial);
@@ -524,6 +537,7 @@ export function SiteHeaderBlock({ variant: initial = "mega" }: { variant?: SiteH
     <SegmentedControl label="Header layout" options={variantOptions} value={variant} onValueChange={value => setVariant(value as SiteHeaderVariant)} />
     <div className={styles.frame} ref={scrollRef}>
       <SiteHeader
+        defaultOpenItem={initial === "mega" ? "product" : undefined}
         variant={variant}
         current={current}
         onCurrentChange={setCurrent}
@@ -535,11 +549,12 @@ export function SiteHeaderBlock({ variant: initial = "mega" }: { variant?: SiteH
       <div className={styles.page}>
         <div className={styles.pageHero}>
           <h2>{pageLabels[current] ?? "ryan-ui"}</h2>
+          <p>{copyOf(current).lede}</p>
           <p className={styles.srOnly} aria-live="polite">{last ? `Opened ${last}` : ""}</p>
         </div>
-        <div className={styles.pageRows} aria-hidden="true">
-          {Array.from({ length: 6 }, (_, index) => <div key={index} className={styles.pageRow}><span /><span /><span /></div>)}
-        </div>
+        <ul className={styles.pageCards}>
+          {copyOf(current).cards.map(([title, text]) => <li key={title}><strong>{title}</strong><span>{text}</span></li>)}
+        </ul>
       </div>
     </div>
   </div>;

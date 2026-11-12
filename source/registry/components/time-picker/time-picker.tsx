@@ -17,6 +17,8 @@ export interface TimePickerProps {
   minuteStep?: 1 | 5 | 10 | 15 | 30;
   format?: "12h" | "24h";
   disabled?: boolean;
+  /** Start with the list open, centered on the selected time (used by previews). Focus stays where it is. */
+  defaultOpen?: boolean;
   className?: string;
 }
 
@@ -33,7 +35,7 @@ const valueRoll: Variants = {
 /** Reduced motion keeps a short crossfade; the resting state matches valueRoll so server and client markup agree. */
 const valueFade: Variants = { enter: { opacity: 0 }, center: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: motionTokens.duration.instant } }, exit: { opacity: 0, transition: { duration: motionTokens.duration.instant } } };
 
-export function TimePicker({ label, value, defaultValue = "09:00", onChange, description, placeholder = "Select a time", minuteStep = 15, format = "12h", disabled = false, className }: TimePickerProps) {
+export function TimePicker({ label, value, defaultValue = "09:00", onChange, description, placeholder = "Select a time", minuteStep = 15, format = "12h", disabled = false, defaultOpen = false, className }: TimePickerProps) {
   const id = useId();
   const labelId = `${id}-label`;
   const valueId = `${id}-value`;
@@ -71,6 +73,16 @@ export function TimePicker({ label, value, defaultValue = "09:00", onChange, des
     centerOnOpen.current = true;
     setOpen(true);
   };
+  // defaultOpen: open once after the first render, the same way a click would (centered on the selected time), without moving focus.
+  const openedByDefault = useRef(false);
+  useEffect(() => {
+    if (!defaultOpen || openedByDefault.current) return;
+    openedByDefault.current = true;
+    const selectedIndex = options.indexOf(selected);
+    setActiveIndex(selectedIndex >= 0 ? selectedIndex : 0);
+    centerOnOpen.current = true;
+    setOpen(true);
+  }, [defaultOpen, options, selected]);
   const onKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
     if (event.key === "Escape") { event.preventDefault(); setOpen(false); return; }
     if (event.key === "Enter" || event.key === " ") {

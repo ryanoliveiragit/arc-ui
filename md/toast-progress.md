@@ -52,7 +52,7 @@ import { FileArchive } from "lucide-react";
 import ToastProgress from "@/components/ryan-ui/toast-progress/toast-progress";
 import type { ToastProgressStatus } from "@/components/ryan-ui/toast-progress/toast-progress";
 import { Button } from "@/components/ryan-ui/button/button";
-import { Caption, Row } from "./_kit";
+import { Caption, Row, demoStage } from "./_kit";
 import type { DemoStage } from "./_kit";
 import styles from "./toast-progress.module.css";
 
@@ -73,6 +73,13 @@ export default function ToastProgressDemo() {
   const timer = useRef<number | undefined>(undefined);
   const stop = () => window.clearInterval(timer.current);
   useEffect(() => stop, []);
+  // On the docs page the preview starts an upload on its own, so the toast and its bar are visible before anything is pressed.
+  useEffect(() => {
+    if (!demoStage()) return;
+    start(0);
+    return stop;
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- runs on the first mount in the preview
+  }, []);
 
   function start(from: number, failAt?: number) {
     stop();

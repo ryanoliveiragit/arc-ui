@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Archive, MailOpen, Pin, Trash2 } from "lucide-react";
 import SwipeActions, { SwipeActionsRow } from "@/registry/components/swipe-actions/swipe-actions";
 import { avatar } from "@/lib/media";
-import { Caption, Stack } from "./_kit";
+import { Caption, Stack, demoStage } from "./_kit";
 
 const initial = [
   { id: 1, from: "Emma Collins", subject: "Updated mockups for the onboarding flow", time: "9:41", face: "emma-collins" as const },
@@ -14,6 +14,7 @@ const initial = [
 export default function SwipeActionsDemo() {
   const [messages, setMessages] = useState(initial);
   const [last, setLast] = useState("None yet");
+  const stage = demoStage();
   const remove = (id: number, what: string) => { setMessages(list => list.filter(message => message.id !== id)); setLast(what); };
   return (
     <Stack gap={4} width={440}>
@@ -22,6 +23,7 @@ export default function SwipeActionsDemo() {
           <SwipeActionsRow
             key={message.id}
             label={message.subject}
+            container={stage}
             leading={[{ label: "Unread", icon: <MailOpen size={18} aria-hidden="true" />, tone: "accent", keepRow: true, onSelect: () => setLast(`Marked "${message.subject}" unread`) }]}
             trailing={[
               { label: "Delete", icon: <Trash2 size={18} aria-hidden="true" />, tone: "danger", onSelect: () => remove(message.id, "Deleted") },

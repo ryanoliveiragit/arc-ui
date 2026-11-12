@@ -269,6 +269,8 @@ const INVOICES = [
   { id: "INV-2040", customer: "Juniper & Vale", amount: "$640.00", state: "Due Friday" },
   { id: "INV-2039", customer: "Harbor City FC", amount: "$2,150.00", state: "Paid" },
   { id: "INV-2038", customer: "Stonebridge Studio", amount: "$310.00", state: "Draft" },
+  { id: "INV-2037", customer: "Alder & Finch", amount: "$940.00", state: "Paid" },
+  { id: "INV-2036", customer: "Kite Supply Co.", amount: "$1,725.00", state: "Due Monday" },
 ];
 
 /** Ready preview: the search living at the end of an app toolbar, above a page it can cover. */

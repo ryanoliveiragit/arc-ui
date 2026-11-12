@@ -51,25 +51,35 @@ O demo da página do item, com os imports como ficam depois de instalar pela CLI
 ```tsx
 import { useState } from "react";
 import ColorPicker from "@/components/ryan-ui/color-picker/color-picker";
-import { Caption, Stack } from "./_kit";
+import { Caption } from "./_kit";
+import type { DemoStage } from "./_kit";
+
+export const stage: DemoStage = { height: 580 };
+
+/** The swatch is the panel's top-left corner: it sits at the left of a box as wide as the panel, so the open panel is centered. */
+const PANEL = 304;
 
 export default function ColorPickerDemo() {
+  // The preview opens the picker on load (focus stays on the page); the space it grows into is reserved below the swatch.
   const [color, setColor] = useState("#2F6BFF");
   return (
-    <Stack gap={4} align="center" style={{ minHeight: 360 }}>
-      <ColorPicker
-        label="Accent"
-        value={color}
-        onValueChange={setColor}
-        defaultSwatches={[
-          { id: "a", color: "#2F6BFF" },
-          { id: "b", color: "#E5484D" },
-          { id: "c", color: "#30A46C" },
-          { id: "d", color: "#F5A524" },
-        ]}
-      />
-      <Caption>Current value: {color}. Open the swatch to change format or save colors.</Caption>
-    </Stack>
+    <div style={{ display: "flex", width: `min(${PANEL}px, 100%)`, flexDirection: "column", alignItems: "flex-start", gap: "var(--space-3)" }}>
+      <div style={{ paddingBottom: 400 }}>
+        <ColorPicker
+          label="Accent"
+          value={color}
+          onValueChange={setColor}
+          defaultOpen
+          defaultSwatches={[
+            { id: "a", color: "#2F6BFF" },
+            { id: "b", color: "#E5484D" },
+            { id: "c", color: "#30A46C" },
+            { id: "d", color: "#F5A524" },
+          ]}
+        />
+      </div>
+      <Caption>Current value: {color}. Drag the area, switch the format or save a swatch.</Caption>
+    </div>
   );
 }
 ```
@@ -92,6 +102,7 @@ Extraída do código-fonte. As descrições das props vêm dos comentários do c
 | `onSwatchesChange` | `(swatches: ColorSwatch[]) => void` | — | — |
 | `maxSwatches` | `number` | `7` | Most saved swatches. Saving past it drops the oldest. |
 | `defaultFormat` | `"hex" \| "rgb" \| "hsl" \| "oklch"` | `"hex"` | — |
+| `defaultOpen` | `boolean` | `false` | Start with the panel open, without moving focus into it (for previews and onboarding). Later opens move focus as usual. |
 | `className` | `string` | — | — |
 
 ### Tipos exportados

@@ -49,16 +49,18 @@ O demo da página do item, com os imports como ficam depois de instalar pela CLI
 import { Bold, Italic, Link2, Share2 } from "lucide-react";
 import Tooltip from "@/components/ryan-ui/tooltip/tooltip";
 import { Button } from "@/components/ryan-ui/button/button";
-import { Caption, Row, Stack } from "./_kit";
+import { Caption, Row, Stack, demoStage } from "./_kit";
 
 export default function TooltipDemo() {
+  // The first tip is already showing, inside the stage; hovering any other control hands over to it.
+  const stage = demoStage();
   return (
     <Stack align="center" gap={5}>
       <Row justify="center">
-        <Tooltip content="Bold (Ctrl+B)"><Button variant="secondary" aria-label="Bold"><Bold size={16} aria-hidden="true" /></Button></Tooltip>
-        <Tooltip content="Italic (Ctrl+I)"><Button variant="secondary" aria-label="Italic"><Italic size={16} aria-hidden="true" /></Button></Tooltip>
-        <Tooltip content="Insert link" side="bottom"><Button variant="secondary" aria-label="Insert link"><Link2 size={16} aria-hidden="true" /></Button></Tooltip>
-        <Tooltip content="Share with your team" side="right"><Button variant="secondary" aria-label="Share"><Share2 size={16} aria-hidden="true" /></Button></Tooltip>
+        <Tooltip content="Bold (Ctrl+B)" defaultOpen container={stage}><Button variant="secondary" aria-label="Bold"><Bold size={16} aria-hidden="true" /></Button></Tooltip>
+        <Tooltip content="Italic (Ctrl+I)" container={stage}><Button variant="secondary" aria-label="Italic"><Italic size={16} aria-hidden="true" /></Button></Tooltip>
+        <Tooltip content="Insert link" side="bottom" container={stage}><Button variant="secondary" aria-label="Insert link"><Link2 size={16} aria-hidden="true" /></Button></Tooltip>
+        <Tooltip content="Share with your team" side="right" container={stage}><Button variant="secondary" aria-label="Share"><Share2 size={16} aria-hidden="true" /></Button></Tooltip>
       </Row>
       <Caption>Hover or focus a control; moving between them is instant.</Caption>
     </Stack>
@@ -77,6 +79,8 @@ Extraída do código-fonte. As descrições das props vêm dos comentários do c
 | `content` (obrigatória) | `ReactNode` | — | — |
 | `children` (obrigatória) | `ReactElement` | — | — |
 | `side` | `"top" \| "bottom" \| "left" \| "right"` | `"top"` | — |
+| `container` | `HTMLElement \| null` | — | Render the tooltip inside this element and limit collisions to it (used by the demo stages). |
+| `defaultOpen` | `boolean` | `false` | Starts open, for previews and first-run hints. It stays until the person interacts (hover or focus on its trigger, Escape, a press elsewhere) or another tooltip opens; scrolling does not dismiss it. |
 
 ## Teclado
 
