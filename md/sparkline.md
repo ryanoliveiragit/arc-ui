@@ -67,7 +67,7 @@ export default function SparklineDemo() {
       <Surface width={520}>
         <Row gap={8} justify="center" align="start" style={{ rowGap: "var(--space-8)" }}>
           {rows.map((r) => (
-            <Sparkline key={r.label} data={r.data} label={r.label} value={r.value} change={r.change} tone={r.tone} labels={days} formatValue={(v) => r.fmt(v)} width={170} height={56} />
+            <Sparkline key={r.label} data={r.data} label={r.label} value={r.value} change={r.change} tone={r.tone} labels={days} formatValue={(v) => r.fmt(v)} width={212} height={60} />
           ))}
         </Row>
       </Surface>
@@ -90,8 +90,8 @@ Extraída do código-fonte. As descrições das props vêm dos comentários do c
 | `value` | `string` | — | — |
 | `change` | `string` | — | — |
 | `tone` | `"accent" \| "success" \| "warning" \| "danger"` | `"accent"` | — |
-| `width` | `number` | `160` | — |
-| `height` | `number` | `52` | — |
+| `width` | `number` | `160` | Preferred width of the chart in px; it shrinks to fit a narrower container. Default 160. |
+| `height` | `number` | `52` | Height in px at the preferred width; the chart keeps this aspect ratio when it shrinks. Default 52. |
 | `labels` | `string[]` | — | One label per point, such as a date. It replaces the change while that point is scrubbed. |
 | `formatValue` | `(value: number, index: number) => string` | — | Formats a scrubbed point for the headline. Defaults to a grouped number. |
 | `area` | `boolean` | `true` | A quiet neutral fill under the line. |

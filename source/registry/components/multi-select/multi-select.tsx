@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import type { Variants } from "motion/react";
 import { ChevronDown, X } from "lucide-react";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
+import type { FocusEvent, KeyboardEvent } from "react";
 import { motionTokens } from "@/lib/motion-tokens";
 import styles from "./multi-select.module.css";
 
@@ -23,6 +24,8 @@ export interface MultiSelectProps {
   description?: string;
   maxVisible?: number;
   disabled?: boolean;
+  /** Start with the menu open, without moving focus (for previews and onboarding). */
+  defaultOpen?: boolean;
   className?: string;
 }
 
@@ -58,13 +61,17 @@ function CheckMark({ reduce }: { reduce: boolean | null }) {
   </svg>;
 }
 
-export function MultiSelect({ label, options, value, defaultValue = [], onValueChange, placeholder = "Select options", description, maxVisible = 2, disabled = false, className }: MultiSelectProps) {
+export function MultiSelect({ label, options, value, defaultValue = [], onValueChange, placeholder = "Select options", description, maxVisible = 2, disabled = false, defaultOpen = false, className }: MultiSelectProps) {
   const id = useId();
   const labelId = `${id}-label`;
   const valueId = `${id}-value`;
+  const listboxId = `${id}-listbox`;
+  const descriptionId = description ? `${id}-description` : undefined;
+  const optionId = (index: number) => `${id}-option-${index}`;
+  const menuRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const [internal, setInternal] = useState(defaultValue);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(defaultOpen && !disabled);
   const [activeIndex, setActiveIndex] = useState(-1);
   const selected = value ?? internal;
   const selectedSet = useMemo(() => new Set(selected), [selected]);
@@ -84,6 +91,13 @@ export function MultiSelect({ label, options, value, defaultValue = [], onValueC
     return () => document.removeEventListener("pointerdown", close);
   }, []);
 
+  // Arrow keys keep the highlighted row in view when the list scrolls.
+  useEffect(() => {
+    if (!open || activeIndex < 0) return;
+    const row = menuRef.current?.querySelector<HTMLElement>(`#${CSS.escape(optionId(activeIndex))}`);
+    row?.scrollIntoView({ block: "nearest" });
+  }, [activeIndex, open]);
+
   const update = (next: string[]) => { if (value === undefined) setInternal(next); onValueChange?.(next); };
   const toggle = (option: MultiSelectOption) => {
     if (disabled || option.disabled) return;
@@ -91,11 +105,12 @@ export function MultiSelect({ label, options, value, defaultValue = [], onValueC
   };
   const clear = () => { update([]); setOpen(false); };
   const enabled = options.map((option, index) => option.disabled ? -1 : index).filter((index) => index >= 0);
-  const onKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+  const onKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
     if (disabled) return;
-    if (event.key === "Enter" && open && activeIndex >= 0) { event.preventDefault(); toggle(options[activeIndex]!); return; }
+    if ((event.key === "Enter" || event.key === " ") && open && activeIndex >= 0) { event.preventDefault(); toggle(options[activeIndex]!); return; }
     if (event.key === "Enter" || event.key === " ") { event.preventDefault(); setOpen((current) => !current); return; }
-    if (event.key === "Escape") { setOpen(false); return; }
+    if (event.key === "Escape" && open) { event.preventDefault(); event.stopPropagation(); setOpen(false); return; }
+    if ((event.key === "Home" || event.key === "End") && open && enabled.length) { event.preventDefault(); setActiveIndex(enabled[event.key === "Home" ? 0 : enabled.length - 1]!); return; }
     if ((event.key === "ArrowDown" || event.key === "ArrowUp") && enabled.length) {
       event.preventDefault(); setOpen(true);
       const current = enabled.indexOf(activeIndex);
@@ -104,10 +119,16 @@ export function MultiSelect({ label, options, value, defaultValue = [], onValueC
     }
   };
   const reduce = useReducedMotion();
+  // Escape closes from anywhere in the field (the clear button too), and tabbing out of the field closes the menu.
+  const onRootKeyDown = (event: KeyboardEvent<HTMLDivElement>) => { if (event.key === "Escape" && open) { event.stopPropagation(); setOpen(false); } };
+  const onRootBlur = (event: FocusEvent<HTMLDivElement>) => {
+    const next = event.relatedTarget as Node | null;
+    if (open && next && !event.currentTarget.contains(next)) setOpen(false);
+  };
 
-  return <div ref={rootRef} className={[styles.field, className].filter(Boolean).join(" ")}>
+  return <div ref={rootRef} className={[styles.field, className].filter(Boolean).join(" ")} onKeyDown={onRootKeyDown} onBlur={onRootBlur}>
     <span id={labelId} className={styles.label}>{label}</span>
-    <div className={styles.control}><button type="button" className={`${styles.trigger} ${selected.length ? styles.hasClear : ""}`} disabled={disabled} aria-labelledby={`${labelId} ${valueId}`} aria-haspopup="listbox" aria-expanded={open} aria-controls={`${id}-listbox`} onClick={() => setOpen((current) => !current)} onKeyDown={onKeyDown}>
+    <div className={styles.control}><button type="button" role="combobox" className={`${styles.trigger} ${selected.length ? styles.hasClear : ""}`} disabled={disabled} aria-labelledby={`${labelId} ${valueId}`} aria-describedby={descriptionId} aria-haspopup="listbox" aria-expanded={open} aria-controls={open ? listboxId : undefined} aria-activedescendant={open && activeIndex >= 0 ? optionId(activeIndex) : undefined} onClick={() => setOpen((current) => !current)} onKeyDown={onKeyDown}>
       <span id={valueId} className={styles.srOnly}>{selected.length ? selected.map(labelFor).join(", ") : placeholder}</span>
       <span className={styles.value} aria-hidden="true">
         <AnimatePresence initial={false}>
@@ -124,16 +145,18 @@ export function MultiSelect({ label, options, value, defaultValue = [], onValueC
       exit={{ opacity: 0, ...(reduce ? {} : { scale: 0.6, filter: `blur(${motionTokens.blur.subtle}px)` }), transition: { duration: motionTokens.duration.instant, ease: standard } }}
       whileTap={{ scale: reduce ? 1 : 0.96, transition: { duration: motionTokens.duration.instant, ease: standard } }}><X size={14} aria-hidden="true" /></motion.button>}</AnimatePresence>
     <AnimatePresence initial={false}>
-      {open && <motion.div id={`${id}-listbox`} className={styles.menu} role="listbox" aria-label={label} aria-multiselectable="true"
+      {open && <motion.div ref={menuRef} id={listboxId} className={styles.menu} role="listbox" aria-label={label} aria-multiselectable="true"
+        // Rows are not focusable: focus stays on the trigger, which points at the highlighted row with aria-activedescendant.
+        onMouseDown={(event) => event.preventDefault()}
         initial={reduce ? { opacity: 0 } : { opacity: 0, y: -6, scale: .97 }}
         animate={{ opacity: 1, y: 0, scale: 1, transition: reduce ? { duration: motionTokens.duration.instant } : { ...motionTokens.spring.snappy, opacity: { duration: motionTokens.duration.fast, ease: enter } } }}
         exit={{ opacity: 0, ...(reduce ? {} : { y: -4, scale: .98 }), transition: { duration: motionTokens.duration.instant, ease: standard } }}>
-        {options.map((option, index) => <button type="button" role="option" aria-selected={selectedSet.has(option.value)} aria-disabled={option.disabled || undefined} key={option.value} className={styles.option} data-active={activeIndex === index} disabled={option.disabled} onPointerMove={() => { if (activeIndex !== index) setActiveIndex(index); }} onClick={() => toggle(option)}>
+        {options.map((option, index) => <div role="option" id={optionId(index)} aria-selected={selectedSet.has(option.value)} aria-disabled={option.disabled || undefined} key={option.value} className={styles.option} data-active={activeIndex === index} onPointerMove={() => { if (!option.disabled && activeIndex !== index) setActiveIndex(index); }} onClick={() => toggle(option)}>
           <span>{option.label}</span><AnimatePresence initial={false}>{selectedSet.has(option.value) && <CheckMark key="check" reduce={reduce} />}</AnimatePresence>
-        </button>)}
+        </div>)}
       </motion.div>}
     </AnimatePresence>
     </div>
-    {description && <span className={styles.description}>{description}</span>}
+    {description && <span id={descriptionId} className={styles.description}>{description}</span>}
   </div>;
 }

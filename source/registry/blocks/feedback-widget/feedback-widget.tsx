@@ -205,8 +205,8 @@ export function FeedbackWidget({ label = "Feedback", title = "How is it going?",
   );
 }
 
-/** Ready preview: a help article with the widget in its corner. */
-export default function FeedbackWidgetPreview() {
+/** Ready preview: a help article with the widget in its corner. `defaultOpen` starts with the panel open. */
+export default function FeedbackWidgetPreview({ defaultOpen = false }: { defaultOpen?: boolean } = {}) {
   return (
     <section className={styles.preview}>
       <div className={styles.page}>
@@ -215,7 +215,7 @@ export default function FeedbackWidgetPreview() {
         <p className={styles.pageText}>Export your sheet as a CSV file, then open Contacts and choose Import. Columns named Name, Email and Company are matched for you; anything else can be mapped by hand before the import runs.</p>
         <p className={styles.pageText}>Rows with an email that already exists are merged, never duplicated. A summary shows what was added, what was updated and which rows were skipped.</p>
         <p className={styles.pageHint}>Was this article useful? Tell us with the button in the corner.</p>
-        <FeedbackWidget contained />
+        <FeedbackWidget contained defaultOpen={defaultOpen} />
       </div>
     </section>
   );

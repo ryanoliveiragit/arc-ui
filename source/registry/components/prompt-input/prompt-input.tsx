@@ -79,6 +79,8 @@ export interface PromptInputProps {
   clearOnSubmit?: boolean;
   /** Blocks typing, attaching and sending. */
   disabled?: boolean;
+  /** Render the model menu inside this element and limit collisions to it (used by the demo stages). */
+  container?: HTMLElement | null;
   /** Extra class for the root element. */
   className?: string;
 }
@@ -94,7 +96,7 @@ function formatSize(bytes: number) {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-export function PromptInput({ value, defaultValue = "", onValueChange, onSubmit, running = false, onStop, attachments, defaultAttachments = noAttachments, onAttachmentsChange, onAttach, models = noModels, model, defaultModel, onModelChange, placeholder = "Ask anything", label = "Prompt", maxRows = 8, clearOnSubmit = true, disabled = false, className }: PromptInputProps) {
+export function PromptInput({ value, defaultValue = "", onValueChange, onSubmit, running = false, onStop, attachments, defaultAttachments = noAttachments, onAttachmentsChange, onAttach, models = noModels, model, defaultModel, onModelChange, placeholder = "Ask anything", label = "Prompt", maxRows = 8, clearOnSubmit = true, disabled = false, container, className }: PromptInputProps) {
   const reduce = !!useReducedMotion();
   const hintId = useId();
   const areaRef = useRef<HTMLTextAreaElement>(null);
@@ -211,8 +213,8 @@ export function PromptInput({ value, defaultValue = "", onValueChange, onSubmit,
               </span>
               <ChevronDown className={styles.chevron} width={14} height={14} strokeWidth={2} aria-hidden="true" />
             </Menu.Trigger>
-            <Menu.Portal>
-              <Menu.Content className={styles.menu} side="top" align="start" sideOffset={8} collisionPadding={12} loop>
+            <Menu.Portal container={container ?? undefined}>
+              <Menu.Content className={styles.menu} side="top" align="start" sideOffset={8} collisionPadding={12} collisionBoundary={container ?? undefined} loop>
                 <Menu.Label className={styles.menuLabel}>Model</Menu.Label>
                 <Menu.RadioGroup value={current.id} onValueChange={next => { if (model === undefined) setOwnModel(next); onModelChange?.(next); }}>
                   {models.map((item, index) => (

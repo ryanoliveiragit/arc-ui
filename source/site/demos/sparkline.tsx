@@ -19,7 +19,7 @@ export default function SparklineDemo() {
       <Surface width={520}>
         <Row gap={8} justify="center" align="start" style={{ rowGap: "var(--space-8)" }}>
           {rows.map((r) => (
-            <Sparkline key={r.label} data={r.data} label={r.label} value={r.value} change={r.change} tone={r.tone} labels={days} formatValue={(v) => r.fmt(v)} width={170} height={56} />
+            <Sparkline key={r.label} data={r.data} label={r.label} value={r.value} change={r.change} tone={r.tone} labels={days} formatValue={(v) => r.fmt(v)} width={212} height={60} />
           ))}
         </Row>
       </Surface>

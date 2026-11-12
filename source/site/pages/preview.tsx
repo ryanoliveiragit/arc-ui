@@ -44,7 +44,7 @@ export function PreviewPage({ name, run, variant }: { name: string; run: number;
   }
   const stage = resolveStage(item.kind, module?.stage);
   return (
-    <main className={styles.preview} data-layout={stage.layout}>
+    <main className={styles.preview} data-demo-stage="1" data-layout={stage.layout}>
       <DemoMount name={name} run={run} variant={variant} onStatus={onStatus} onModule={setModule} renderError={() => null} />
       {error ? <div className={styles.message} role="alert"><p>O demo de {item.title} não abriu.</p><pre>{error.message}</pre></div> : null}
     </main>

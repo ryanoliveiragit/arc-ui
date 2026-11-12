@@ -47,8 +47,9 @@ O demo da página do item, com os imports como ficam depois de instalar pela CLI
 ```tsx
 import FeedbackWidgetPreview from "@/components/ryan-ui/blocks/feedback-widget/feedback-widget";
 
+// The preview starts with the panel open, so the moods and the note are visible; it opens without taking focus from the page.
 export default function FeedbackWidgetDemo() {
-  return <FeedbackWidgetPreview />;
+  return <FeedbackWidgetPreview defaultOpen />;
 }
 ```
 
@@ -77,7 +78,7 @@ A floating feedback button that grows into a small form, from its own corner, on
 
 ### `FeedbackWidgetPreview`
 
-Ready preview: a help article with the widget in its corner.
+Ready preview: a help article with the widget in its corner. `defaultOpen` starts with the panel open.
 
 Sem props próprias: aceita as do elemento ou do primitivo que envolve.
 

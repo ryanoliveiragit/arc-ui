@@ -49,6 +49,12 @@ export interface ImageViewerProps {
   label?: string;
   /** Extra class for the thumbnail grid. */
   className?: string;
+  /**
+   * Opens the lightbox inside this element instead of over the whole page: the backdrop covers only the element and the image fits
+   * in it. The element needs position: relative and overflow: hidden. The page around it stays usable while the lightbox is open:
+   * nothing is scroll-locked or hidden from assistive technology, and Escape, the close button and a tap beside the image still close it.
+   */
+  container?: HTMLElement | null;
 }
 
 interface Rect { x: number; y: number; width: number; height: number; }
@@ -160,7 +166,7 @@ function Slide({ item, fit, view, reduce, zoomed, apiRef, onAspect, onOpened, on
   );
 }
 
-export function ImageViewer({ images, value, defaultValue = null, onValueChange, columns = 3, thumbnailRatio = 1, loop = true, maxZoom = 4, label = "Image gallery", className }: ImageViewerProps) {
+export function ImageViewer({ images, value, defaultValue = null, onValueChange, columns = 3, thumbnailRatio = 1, loop = true, maxZoom = 4, label = "Image gallery", className, container }: ImageViewerProps) {
   const reduce = !!useReducedMotion();
   const [internal, setInternal] = useState<number | null>(defaultValue);
   const requested = value !== undefined ? value : internal;
@@ -187,18 +193,30 @@ export function ImageViewer({ images, value, defaultValue = null, onValueChange,
     onValueChange?.(next);
   }, [onValueChange, value]);
 
-  /** Where a thumbnail sits on screen, or null when it is scrolled out of view (then the image fades instead of flying). */
+  /** The lightbox's own coordinate space: the viewport, or the container when it opens inside one. Pointer positions convert into it. */
+  const space = useCallback(() => {
+    if (!container) return { left: 0, top: 0, width: window.innerWidth, height: window.innerHeight };
+    const box = container.getBoundingClientRect();
+    return { left: box.left + container.clientLeft, top: box.top + container.clientTop, width: container.clientWidth, height: container.clientHeight };
+  }, [container]);
+  const local = useCallback((x: number, y: number) => { const box = space(); return { x: x - box.left, y: y - box.top }; }, [space]);
+
+  /** Where a thumbnail sits in the lightbox's space, or null when it is out of view (then the image fades instead of flying). */
   const rectOf = useCallback((index: number): Rect | null => {
     const box = thumbs.current[index]?.getBoundingClientRect();
-    if (!box || box.width === 0 || box.bottom < 0 || box.top > window.innerHeight || box.right < 0 || box.left > window.innerWidth) return null;
-    return { x: box.left, y: box.top, width: box.width, height: box.height };
-  }, []);
+    const area = space();
+    if (!box || box.width === 0) return null;
+    const x = box.left - area.left, y = box.top - area.top;
+    if (y + box.height < 0 || y > area.height || x + box.width < 0 || x > area.width) return null;
+    return { x, y, width: box.width, height: box.height };
+  }, [space]);
 
   // The lightbox outlives `current` by one animation: closing keeps it mounted until the image is back in its thumbnail.
   useEffect(() => {
     if (current !== null) {
       lastIndex.current = current;
-      setStage({ width: window.innerWidth, height: window.innerHeight });
+      const area = space();
+      setStage({ width: area.width, height: area.height });
       zoomGoal.current = 1;
       setZoomLevel(1);
       setView(previous => {
@@ -211,7 +229,7 @@ export function ImageViewer({ images, value, defaultValue = null, onValueChange,
       return;
     }
     setView(previous => previous && previous.phase !== "closing" ? { ...previous, phase: "closing", origin: rectOf(previous.index) } : previous);
-  }, [current, rectOf]);
+  }, [current, rectOf, space]);
 
   const closing = view?.phase === "closing";
   useEffect(() => {
@@ -223,10 +241,12 @@ export function ImageViewer({ images, value, defaultValue = null, onValueChange,
   const open = view !== null;
   useEffect(() => {
     if (!open) return;
-    const onResize = () => setStage({ width: window.innerWidth, height: window.innerHeight });
+    const onResize = () => { const area = space(); setStage({ width: area.width, height: area.height }); };
     window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, [open]);
+    const observer = container && typeof ResizeObserver !== "undefined" ? new ResizeObserver(onResize) : null;
+    if (container) observer?.observe(container);
+    return () => { window.removeEventListener("resize", onResize); observer?.disconnect(); };
+  }, [open, container, space]);
 
   const item = view ? images[view.index] : undefined;
   const aspect = view && item ? aspects[view.index] ?? (item.width && item.height ? item.width / item.height : 4 / 3) : 4 / 3;
@@ -253,8 +273,9 @@ export function ImageViewer({ images, value, defaultValue = null, onValueChange,
     const box = fitNow.current;
     const from = api.zoom.get();
     const to = clamp(next, 1, maxZoom);
-    const pointX = (clientX ?? box.x + box.width / 2) - (box.x + box.width / 2);
-    const pointY = (clientY ?? box.y + box.height / 2) - (box.y + box.height / 2);
+    const at = clientX === undefined || clientY === undefined ? null : local(clientX, clientY);
+    const pointX = (at ? at.x : box.x + box.width / 2) - (box.x + box.width / 2);
+    const pointY = (at ? at.y : box.y + box.height / 2) - (box.y + box.height / 2);
     const limitX = box.width * (to - 1) / 2, limitY = box.height * (to - 1) / 2;
     const x = clamp(pointX - (pointX - api.panX.get()) * (to / from), -limitX, limitX);
     const y = clamp(pointY - (pointY - api.panY.get()) * (to / from), -limitY, limitY);
@@ -262,7 +283,7 @@ export function ImageViewer({ images, value, defaultValue = null, onValueChange,
     else { for (const [motionValue, target] of [[api.zoom, to], [api.panX, x], [api.panY, y]] as const) { motionValue.stop(); motionValue.jump(target); } }
     zoomGoal.current = to;
     setZoomLevel(to);
-  }, [maxZoom, reduce]);
+  }, [local, maxZoom, reduce]);
 
   // The wheel zooms toward the cursor. It needs a non-passive listener so the page behind never scrolls.
   useEffect(() => {
@@ -289,7 +310,7 @@ export function ImageViewer({ images, value, defaultValue = null, onValueChange,
   function onPointerDown(event: ReactPointerEvent<HTMLDivElement>) {
     if (view?.phase === "closing" || (event.pointerType === "mouse" && event.button !== 0)) return;
     event.currentTarget.setPointerCapture(event.pointerId);
-    pointers.current.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    pointers.current.set(event.pointerId, local(event.clientX, event.clientY));
     const api = apiRef.current;
     if (!api) return;
     if (pointers.current.size === 2) {
@@ -304,7 +325,7 @@ export function ImageViewer({ images, value, defaultValue = null, onValueChange,
   function onPointerMove(event: ReactPointerEvent<HTMLDivElement>) {
     const api = apiRef.current, state = drag.current;
     if (!api || !state || !pointers.current.has(event.pointerId)) return;
-    pointers.current.set(event.pointerId, { x: event.clientX, y: event.clientY });
+    pointers.current.set(event.pointerId, local(event.clientX, event.clientY));
     const box = fitNow.current;
     if (state.mode === "pinch") {
       const [a, b] = [...pointers.current.values()];
@@ -342,7 +363,8 @@ export function ImageViewer({ images, value, defaultValue = null, onValueChange,
       const rest = [...pointers.current.values()][0];
       if (api.zoom.get() < 1.06) zoomTo(1); else { zoomGoal.current = api.zoom.get(); setZoomLevel(api.zoom.get()); }
       // One finger stays down: it carries on as a pan, never as a tap.
-      if (rest) startDrag(rest.x, rest.y, true, true); else drag.current = null;
+      // The pointer map is in the lightbox's space; a drag works in screen coordinates.
+      if (rest) { const area = space(); startDrag(rest.x + area.left, rest.y + area.top, true, true); } else drag.current = null;
       return;
     }
     drag.current = null;
@@ -387,6 +409,7 @@ export function ImageViewer({ images, value, defaultValue = null, onValueChange,
     transition: hidden ? { duration: motionTokens.duration.instant } : { ...motionTokens.spring.smooth, delay: .08 },
   });
   const gridStyle = { "--viewer-columns": columns, "--viewer-ratio": thumbnailRatio } as CSSProperties;
+  const scrim = <motion.div className={styles.scrim} data-contained={container ? "" : undefined} aria-hidden={container ? true : undefined} initial={{ opacity: 0 }} animate={{ opacity: hidden ? 0 : 1 }} transition={{ duration: hidden ? motionTokens.duration.standard : motionTokens.duration.considered, ease: standard }} />;
 
   return (
     <>
@@ -399,14 +422,15 @@ export function ImageViewer({ images, value, defaultValue = null, onValueChange,
           </li>
         ))}
       </ul>
-      <DialogPrimitive.Root open={open} onOpenChange={next => { if (!next) change(null); }}>
-        <DialogPrimitive.Portal>
-          <DialogPrimitive.Overlay asChild>
-            <motion.div className={styles.scrim} initial={{ opacity: 0 }} animate={{ opacity: hidden ? 0 : 1 }} transition={{ duration: hidden ? motionTokens.duration.standard : motionTokens.duration.considered, ease: standard }} />
-          </DialogPrimitive.Overlay>
+      {/* Inside a container the lightbox is part of a page section, not the whole page, so it is not modal to the page. */}
+      <DialogPrimitive.Root open={open} onOpenChange={next => { if (!next) change(null); }} modal={!container}>
+        <DialogPrimitive.Portal container={container ?? undefined}>
+          {/* Radix draws no overlay for a non-modal dialog, so inside a container the backdrop is a plain layer. */}
+          {container ? (open ? scrim : null) : <DialogPrimitive.Overlay asChild>{scrim}</DialogPrimitive.Overlay>}
           <DialogPrimitive.Content
             ref={contentRef}
             className={styles.lightbox}
+            data-contained={container ? "" : undefined}
             aria-describedby={undefined}
             onOpenAutoFocus={event => { event.preventDefault(); contentRef.current?.focus(); }}
             onCloseAutoFocus={event => { event.preventDefault(); thumbs.current[lastIndex.current]?.focus(); }}

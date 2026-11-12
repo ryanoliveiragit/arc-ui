@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { ReactElement, ReactNode } from "react";
 import * as TooltipPrimitive from "@radix-ui/react-tooltip";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
@@ -11,6 +11,10 @@ export interface TooltipProps {
   content: ReactNode;
   children: ReactElement;
   side?: "top" | "bottom" | "left" | "right";
+  /** Render the tooltip inside this element and limit collisions to it (used by the demo stages). */
+  container?: HTMLElement | null;
+  /** Starts open, for previews and first-run hints. It stays until the person interacts (hover or focus on its trigger, Escape, a press elsewhere) or another tooltip opens; scrolling does not dismiss it. */
+  defaultOpen?: boolean;
 }
 
 const DELAY = 250;
@@ -28,6 +32,10 @@ const warmth = {
   opened() { openCount += 1; window.clearTimeout(coolTimer); warmth.set(true); },
   closed() { openCount = Math.max(0, openCount - 1); if (openCount) return; window.clearTimeout(coolTimer); coolTimer = window.setTimeout(() => warmth.set(false), SKIP_WINDOW); },
 };
+
+/* A tooltip that starts open hands over to whichever tooltip a person opens next. */
+const openers = new Set<(id: string) => void>();
+const announceOpen = (id: string) => openers.forEach(listener => listener(id));
 
 /** String content crossfades when it changes while open, and the bubble springs to the new text size. */
 function TooltipText({ text }: { text: string }) {
@@ -57,21 +65,35 @@ function TooltipText({ text }: { text: string }) {
   </motion.span>;
 }
 
-export function Tooltip({ content, children, side = "top" }: TooltipProps) {
+export function Tooltip({ content, children, side = "top", container, defaultOpen = false }: TooltipProps) {
+  const id = useId();
   const isWarm = useSyncExternalStore(warmth.subscribe, warmth.get, () => false);
   // Controlled so the instant flag lands in the same render that mounts the content (Radix reports uncontrolled changes a frame late).
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(defaultOpen);
   const [instant, setInstant] = useState(false);
+  /** True while a tooltip that started open has not been touched yet: Radix's close-on-scroll is ignored until then. */
+  const pinned = useRef(defaultOpen);
   useEffect(() => {
     if (!open) return;
     warmth.opened();
     return warmth.closed;
   }, [open]);
+  useEffect(() => {
+    if (!defaultOpen) return;
+    const onOtherOpen = (other: string) => { if (other !== id && pinned.current) { pinned.current = false; setOpen(false); } };
+    openers.add(onOtherOpen);
+    return () => { openers.delete(onOtherOpen); };
+  }, [defaultOpen, id]);
+  const release = () => { pinned.current = false; };
   return <TooltipPrimitive.Provider delayDuration={DELAY} skipDelayDuration={0}>
-    <TooltipPrimitive.Root open={open} delayDuration={isWarm ? 0 : DELAY} onOpenChange={next => { if (next) setInstant(warmth.get()); setOpen(next); }}>
-      <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
-      <TooltipPrimitive.Portal>
-        <TooltipPrimitive.Content className={styles.tooltip} data-instant={instant || undefined} side={side} sideOffset={8} collisionPadding={12}>
+    <TooltipPrimitive.Root open={open} delayDuration={isWarm ? 0 : DELAY} onOpenChange={next => {
+      if (!next && pinned.current) return;
+      if (next) { pinned.current = false; setInstant(warmth.get()); announceOpen(id); }
+      setOpen(next);
+    }}>
+      <TooltipPrimitive.Trigger asChild onPointerEnter={release} onFocus={release}>{children}</TooltipPrimitive.Trigger>
+      <TooltipPrimitive.Portal container={container ?? undefined}>
+        <TooltipPrimitive.Content className={styles.tooltip} data-instant={instant || undefined} side={side} sideOffset={8} collisionPadding={12} collisionBoundary={container ?? undefined} onEscapeKeyDown={release} onPointerDownOutside={release}>
           {typeof content === "string" || typeof content === "number" ? <TooltipText text={String(content)}/> : content}
         </TooltipPrimitive.Content>
       </TooltipPrimitive.Portal>

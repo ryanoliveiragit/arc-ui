@@ -52,7 +52,12 @@ O demo da página do item, com os imports como ficam depois de instalar pela CLI
 import EmptyStates from "@/components/ryan-ui/blocks/empty-states/empty-states";
 
 export default function EmptyStatesDemo() {
-  return <EmptyStates />;
+  // The card is a panel inside a page: give it a page margin and center it in the frame instead of gluing it to the top edge.
+  return (
+    <div style={{ display: "grid", minHeight: "100dvh", alignContent: "center", justifyItems: "center", padding: "var(--space-6)" }}>
+      <div style={{ width: "min(100%, 40rem)" }}><EmptyStates /></div>
+    </div>
+  );
 }
 ```
 

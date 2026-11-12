@@ -51,16 +51,19 @@ import { MultiSelect } from "@/components/ryan-ui/multi-select/multi-select";
 import { Caption, Stack } from "./_kit";
 import type { DemoStage } from "./_kit";
 
-export const stage: DemoStage = { height: 520 };
+export const stage: DemoStage = { height: 560 };
 
 const options = ["Design", "Engineering", "Marketing", "Sales", "Support", "Finance", "Legal", "People"].map((l) => ({ value: l.toLowerCase(), label: l }));
 
 export default function MultiSelectDemo() {
+  // The preview opens the menu on load (focus stays on the page); the space below the field is reserved for it.
   const [value, setValue] = useState<string[]>(["design", "engineering", "support"]);
   return (
     <Stack gap={3} width={360}>
-      <MultiSelect label="Teams" description="Who can see this report?" options={options} value={value} onValueChange={setValue} placeholder="Select teams" />
-      <Caption>{value.length} of {options.length} teams selected.</Caption>
+      <div style={{ paddingBottom: 324 }}>
+        <MultiSelect label="Teams" options={options} value={value} onValueChange={setValue} placeholder="Select teams" defaultOpen />
+      </div>
+      <Caption>{value.length} of {options.length} teams can see this report. Arrow keys move, Enter or Space toggles.</Caption>
     </Stack>
   );
 }
@@ -83,6 +86,7 @@ Extraída do código-fonte. As descrições das props vêm dos comentários do c
 | `description` | `string` | — | — |
 | `maxVisible` | `number` | `2` | — |
 | `disabled` | `boolean` | `false` | — |
+| `defaultOpen` | `boolean` | `false` | Start with the menu open, without moving focus (for previews and onboarding). |
 | `className` | `string` | — | — |
 
 ### Tipos exportados

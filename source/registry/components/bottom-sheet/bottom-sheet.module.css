@@ -32,6 +32,10 @@
   will-change: transform;
 }
 
+/* Inside a container the sheet rises from the container's bottom edge and its detents are fractions of the container's height. */
+.overlay[data-contained] { position: absolute; z-index: 1; }
+.sheet[data-contained] { position: absolute; z-index: 2; height: calc(var(--sheet-max) * 100% + var(--sheet-extension)); padding-bottom: var(--sheet-extension); box-shadow: 0 -1px 0 var(--border), var(--shadow-raised); }
+
 /* The whole header is the handle, so a drag can start anywhere above the content. */
 .header { position: relative; flex: none; padding: var(--space-2) var(--space-5) var(--space-4); cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none; }
 .sheet[data-dragging] .header { cursor: grabbing; }

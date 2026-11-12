@@ -1,6 +1,6 @@
 import { Citation, Citations, CitationSources } from "@/registry/components/citations/citations";
 import type { CitationSource } from "@/registry/components/citations/citations";
-import { Caption, Stack, Surface } from "./_kit";
+import { Caption, Stack, Surface, demoStage } from "./_kit";
 import type { DemoStage } from "./_kit";
 
 export const stage: DemoStage = { height: 640 };
@@ -41,12 +41,12 @@ export default function CitationsDemo() {
   return (
     <Stack width={560} gap={3}>
       <Surface padding={6}>
-        <Citations sources={sources}>
+        <Citations sources={sources} container={demoStage()}>
           <p>
             Operating systems let people ask for less motion, and browsers pass that choice to your CSS through a media feature
             <Citation source="mdn" />. The accessibility guidelines treat it as more than taste: movement that an interaction starts should be
             possible to switch off unless it is essential
-            <Citation source="wcag" />. In practice you rarely remove animation altogether. Swapping a long slide for a short fade keeps the
+            <Citation source="wcag" defaultOpen />. In practice you rarely remove animation altogether. Swapping a long slide for a short fade keeps the
             feedback without the travel
             <Citation source="webdev" />
             <Citation source="webkit" />.

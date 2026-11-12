@@ -9,6 +9,9 @@
 
 .scrim { position: fixed; inset: 0; z-index: 80; background: color-mix(in oklab, var(--background) 90%, transparent); backdrop-filter: blur(10px); }
 .lightbox { position: fixed; inset: 0; z-index: 81; color: var(--foreground); outline: none; }
+/* Inside a container (a panel, a docs preview) the backdrop and the lightbox cover only that element. */
+.scrim[data-contained] { position: absolute; z-index: 1; }
+.lightbox[data-contained] { position: absolute; z-index: 2; }
 /* The stage owns every gesture, so the browser must not pan or zoom the page under it. */
 .stage { position: absolute; inset: 0; overflow: hidden; touch-action: none; user-select: none; -webkit-user-select: none; }
 .slide, .layer { position: absolute; inset: 0; }

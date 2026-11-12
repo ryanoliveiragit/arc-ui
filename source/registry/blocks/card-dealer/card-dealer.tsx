@@ -28,6 +28,8 @@ export interface CardDealerProps {
   onDeal?: (hand: PlayingCard[]) => void;
   /** Accessible name of the table. */
   label?: string;
+  /** Deal a full hand once the table has been measured, so a preview opens with cards on the table. */
+  dealOnMount?: boolean;
   /** Extra class for the root. */
   className?: string;
 }
@@ -142,7 +144,7 @@ function TableCard({ card, slot, depth, spots, positions, order, base, riffle, r
  * on the way, one after another. Shuffle riffles the deck into a new random order and Reset restores the factory
  * order. With five positions the finished hand is named like a poker hand.
  */
-export function CardDealer({ positions = 5, onDeal, label = "Card table", className }: CardDealerProps) {
+export function CardDealer({ positions = 5, onDeal, label = "Card table", dealOnMount = false, className }: CardDealerProps) {
   const reduce = useReducedMotion() ?? false;
   const count = Math.min(Math.max(Math.round(positions), 1), 7);
   const [deck, setDeck] = useState<PlayingCard[]>(factoryDeck);
@@ -196,6 +198,14 @@ export function CardDealer({ positions = 5, onDeal, label = "Card table", classN
     setBase(wait);
     dealRef.current?.(next.filter((card): card is PlayingCard => card != null));
   };
+  // dealOnMount: one deal, a beat after the positions are known (the cards need real spots to fly to).
+  const dealtOnMount = useRef(false);
+  useEffect(() => {
+    if (!dealOnMount || dealtOnMount.current || !spots) return;
+    dealtOnMount.current = true;
+    const id = window.setTimeout(() => deal(count), reduce ? 0 : 450);
+    timers.current.push(id);
+  });
   const gather = () => { setHand(Array.from({ length: count }, () => null)); setOrder({}); setBase(0); };
   const shuffle = () => {
     const all = [...deck, ...cardsOnTable];
@@ -251,7 +261,7 @@ export function CardDealer({ positions = 5, onDeal, label = "Card table", classN
 export default function CardDealerPreview() {
   return (
     <section className={styles.preview}>
-      <CardDealer />
+      <CardDealer dealOnMount />
     </section>
   );
 }

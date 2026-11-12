@@ -49,16 +49,22 @@ O demo da página do item, com os imports como ficam depois de instalar pela CLI
 import { useState } from "react";
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from "@/components/ryan-ui/dialog/dialog";
 import { Button } from "@/components/ryan-ui/button/button";
-import { Caption, Row, Stack } from "./_kit";
+import { Caption, Row, Stack, demoStage, useQuietFirstOpen } from "./_kit";
+import type { DemoStage } from "./_kit";
+
+export const stage: DemoStage = { height: 440 };
 
 export default function DialogDemo() {
+  // On the docs page the dialog opens already, inside the preview: its scrim covers only the preview and the page keeps scrolling.
+  const [container] = useState(demoStage);
+  const quiet = useQuietFirstOpen();
   const [status, setStatus] = useState("Project “Atlas” is active.");
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(container !== null);
   return (
     <Stack align="center" gap={4}>
-      <Dialog open={open} onOpenChange={setOpen}>
+      <Dialog open={open} onOpenChange={setOpen} modal={!container}>
         <DialogTrigger asChild><Button variant="danger">Delete project</Button></DialogTrigger>
-        <DialogContent title="Delete Atlas?" description="This removes 42 files and 3 members' access. It cannot be undone.">
+        <DialogContent container={container} onOpenAutoFocus={quiet} title="Delete Atlas?" description="This removes 42 files and 3 members' access. It cannot be undone.">
           <Row justify="flex-end">
             <DialogClose asChild><Button variant="ghost">Keep project</Button></DialogClose>
             <Button variant="danger" onClick={() => { setStatus("Project “Atlas” was deleted."); setOpen(false); }}>Delete</Button>
@@ -86,6 +92,7 @@ Sem props próprias: aceita as do elemento ou do primitivo que envolve.
 | `title` (obrigatória) | `string` | — | — |
 | `description` | `string` | — | — |
 | `children` (obrigatória) | `ReactNode` | — | — |
+| `container` | `HTMLElement \| null` | — | Renders the dialog inside this element instead of the page body: the scrim covers only the element and the dialog centers in it. The element needs position: relative and overflow: hidden. Pair it with `modal={false}` on Dialog, so the page around the element keeps scrolling and stays usable while the dialog is open (Escape, the close button and a press on the scrim still close it). |
 | `...props` | `ComponentPropsWithoutRef<typeof DialogPrimitive.Content>` | — | Também aceita as props deste tipo. |
 
 ### Outras exportações

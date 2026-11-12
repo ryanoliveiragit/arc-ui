@@ -34,6 +34,8 @@ export interface ColorPickerProps {
   /** Most saved swatches. Saving past it drops the oldest. */
   maxSwatches?: number;
   defaultFormat?: ColorFormat;
+  /** Start with the panel open, without moving focus into it (for previews and onboarding). Later opens move focus as usual. */
+  defaultOpen?: boolean;
   className?: string;
 }
 
@@ -239,7 +241,7 @@ const newId = () => `swatch-${Date.now().toString(36)}-${swatchCount++}`;
 
 export function ColorPicker({
   value, defaultValue = "#2F6BFF", onValueChange, background = "#FFFFFF", label = "Color", swatches: swatchesProp, defaultSwatches, onSwatchesChange,
-  maxSwatches = 7, defaultFormat = "hex", className,
+  maxSwatches = 7, defaultFormat = "hex", defaultOpen = false, className,
 }: ColorPickerProps) {
   const uid = useId().replace(/[^a-zA-Z0-9-]/g, "");
   const hydrated = useHydrated();
@@ -254,8 +256,10 @@ export function ColorPicker({
   }
   const [ownSwatches, setOwnSwatches] = useState<ColorSwatch[]>(defaultSwatches ?? []);
   const swatches = swatchesProp ?? ownSwatches;
-  const [open, setOpen] = useState(false);
-  const [shown, setShown] = useState(false);
+  const [open, setOpen] = useState(defaultOpen);
+  const [shown, setShown] = useState(defaultOpen);
+  /** The panel is open from defaultOpen and the user has not opened it yet: focus stays where it is, so the page does not jump on load. */
+  const quietOpen = useRef(defaultOpen);
   const [kind, setKind] = useState<ColorFormat>(defaultFormat);
   const [draft, setDraft] = useState<string | null>(null);
   const [invalid, setInvalid] = useState(false);
@@ -272,7 +276,7 @@ export function ColorPicker({
   const dragged = useRef(false);
   const fieldX = useMotionValue(0);
   /** Whether the panel is meant to be open right now, read when a closing animation finishes. */
-  const openNow = useRef(false);
+  const openNow = useRef(defaultOpen);
 
   const hex = toHex(hsva);
   const rgb = hsvToRgb(hsva);
@@ -326,10 +330,10 @@ export function ColorPicker({
   }, [fade, open, progress, reduced, shown]);
 
   useEffect(() => {
-    if (open) requestAnimationFrame(() => areaThumb.current?.focus({ preventScroll: true }));
+    if (open && !quietOpen.current) requestAnimationFrame(() => areaThumb.current?.focus({ preventScroll: true }));
   }, [open]);
 
-  function show() { openNow.current = true; setShown(true); setOpen(true); }
+  function show() { quietOpen.current = false; openNow.current = true; setShown(true); setOpen(true); }
   function hide(returnFocus = true) {
     openNow.current = false;
     setOpen(false); setDraft(null); setInvalid(false);
@@ -491,7 +495,7 @@ export function ColorPicker({
           <div className={styles.contrast}>
             <span className={styles.sample} aria-hidden="true">Aa</span>
             <span className={styles.ratio}><motion.span>{ratioText}</motion.span>:1</span>
-            <span className={styles.against}>against background</span>
+            <span className={styles.against}>on background</span>
             <span className={styles.grade} data-grade={grade === "Fails" ? "fail" : grade === "AA large" ? "large" : "pass"}>
               <AnimatePresence mode="popLayout" initial={false}>
                 <motion.span key={grade} initial={hidden} animate={{ opacity: 1, y: "0em", filter: "blur(0px)" }}

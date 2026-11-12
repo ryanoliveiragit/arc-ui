@@ -85,6 +85,7 @@ A website header in three layouts. It sticks to the top and turns solid once the
 | `scrollContainer` | `RefObject<HTMLElement \| null>` | — | The element that scrolls, when it is not the window. The header turns solid once it scrolls. |
 | `scrollThreshold` | `number` | `8` | Pixels of scroll before the background turns solid. Defaults to 8. |
 | `label` | `string` | `"Main"` | Accessible name of the navigation landmark. |
+| `defaultOpenItem` | `string` | — | Mega variant: the item whose panel starts open, as a preview would show it. It closes like any panel (outside press, Escape) and never moves focus on its own. |
 | `className` | `string` | — | — |
 
 ### `SiteHeaderBlock`

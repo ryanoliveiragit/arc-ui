@@ -57,7 +57,7 @@ export default function OtpInputDemo() {
   const done = code.length === 6;
   const wrong = done && code !== "482913";
   return (
-    <Stack width={380} gap={3}>
+    <Stack width={380} gap={3} align="center" style={{ textAlign: "center" }}>
       <OtpInput
         label="Verification code"
         description="Enter the 6-digit code we sent to maya@northwind.studio."

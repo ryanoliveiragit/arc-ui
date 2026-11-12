@@ -1,6 +1,6 @@
 import { Flame, Heart, PartyPopper, Rocket, ThumbsUp, Laugh } from "lucide-react";
 import Reactions from "@/registry/components/reactions/reactions";
-import { Caption, Stack, Surface } from "./_kit";
+import { Caption, Room, Surface, demoStage, useQuietFirstOpen } from "./_kit";
 
 const options = [
   { id: "like", label: "Like", icon: ThumbsUp },
@@ -12,8 +12,10 @@ const options = [
 ];
 
 export default function ReactionsDemo() {
+  // The picker is already open over the bar, inside the stage, so the full set of reactions shows.
+  const quiet = useQuietFirstOpen();
   return (
-    <Stack gap={4} align="center" width={440}>
+    <Room above={64} width={440}>
       <Surface padding={5} style={{ display: "grid", gap: "var(--space-4)" }}>
         <div>
           <strong style={{ display: "block" }}>v2.0 is live</strong>
@@ -21,6 +23,9 @@ export default function ReactionsDemo() {
         </div>
         <Reactions
           label="Reactions to the v2.0 announcement"
+          defaultOpen
+          onOpenAutoFocus={quiet}
+          container={demoStage()}
           options={options}
           defaultValue={[
             { id: "celebrate", count: 24, reacted: false },
@@ -30,6 +35,6 @@ export default function ReactionsDemo() {
         />
       </Surface>
       <Caption>Tap a pill to add or remove your reaction, or open the picker for more.</Caption>
-    </Stack>
+    </Room>
   );
 }

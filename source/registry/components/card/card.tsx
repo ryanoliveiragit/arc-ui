@@ -25,6 +25,12 @@ export interface CardProps extends HTMLAttributes<HTMLElement> {
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
+  /**
+   * Opens the quick look inside this element instead of over the whole page: the dim covers only the element and the quick look
+   * centers in it. The element needs position: relative and overflow: hidden. The page around it stays usable while the quick look
+   * is open: nothing is scroll-locked or hidden from assistive technology, and Escape, the dim and the close control still close it.
+   */
+  container?: HTMLElement | null;
 }
 
 type Side = "card" | "panel";
@@ -74,7 +80,7 @@ function px(node: Element, value: string) {
   return value.trim().endsWith("rem") ? amount * parseFloat(getComputedStyle(node.ownerDocument.documentElement).fontSize) : amount;
 }
 
-export function Card({ title, description, media, action, avatar, meta, status, details, open: openProp, defaultOpen = false, onOpenChange, children, className, style, ...props }: CardProps) {
+export function Card({ title, description, media, action, avatar, meta, status, details, open: openProp, defaultOpen = false, onOpenChange, container, children, className, style, ...props }: CardProps) {
   const reduced = useReducedMotion() ?? false;
   const group = useId();
   const cardRef = useRef<HTMLElement>(null);
@@ -112,10 +118,13 @@ export function Card({ title, description, media, action, avatar, meta, status, 
     const node = cardRef.current;
     if (open) setLanding(null); // eslint-disable-line react-hooks/set-state-in-effect -- reopening mid-return cancels the landing
     else if (closed && morph && node) {
+      // The landing is measured in the quick look's own space: the viewport, or the container it opens in.
       const box = node.getBoundingClientRect();
-      setLanding({ top: box.top, left: box.left, width: box.width, height: box.height });
+      const origin = container ? container.getBoundingClientRect() : null;
+      const left = origin && container ? origin.left + container.clientLeft : 0, top = origin && container ? origin.top + container.clientTop : 0;
+      setLanding({ top: box.top - top, left: box.left - left, width: box.width, height: box.height });
     }
-  }, [open, morph]);
+  }, [open, morph, container]);
   // Once the surface has visually landed, the card takes over. Any last sub-pixel of travel carries on in the card itself, so the handoff has no seam.
   useEffect(() => {
     if (!returning) return;
@@ -159,15 +168,20 @@ export function Card({ title, description, media, action, avatar, meta, status, 
   if (!details) return card;
 
   // The quick look grows out of the card: the surface, photo, and copy travel on one spring while the details settle in beneath them.
-  return <Dialog.Root open={open} onOpenChange={setOpen}>
+  // Inside a container the quick look is part of a page section, not the whole page, so it is not modal to the page,
+  // and Radix draws no overlay for it: the dim is a plain layer, and a press on it still closes the quick look.
+  const contained = container ? "" : undefined;
+  const dim = <motion.div key="overlay" className={styles.overlay} data-contained={contained} aria-hidden={container ? true : undefined} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, transition: reduced ? fade : { duration: duration.exit, ease: [...ease.standard] } }} transition={reduced ? fade : { duration: duration.standard, ease: [...ease.enter] }} />;
+  return <Dialog.Root open={open} onOpenChange={setOpen} modal={!container}>
     <LayoutGroup id={group}>
       {card}
       <AnimatePresence>
-        {(open || returning) && <Dialog.Portal key="quick-look" forceMount>
-          <AnimatePresence>{open && <Dialog.Overlay key="overlay" asChild forceMount><motion.div className={styles.overlay} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, transition: reduced ? fade : { duration: duration.exit, ease: [...ease.standard] } }} transition={reduced ? fade : { duration: duration.standard, ease: [...ease.enter] }} /></Dialog.Overlay>}</AnimatePresence>
+        {(open || returning) && <Dialog.Portal key="quick-look" forceMount container={container ?? undefined}>
+          <AnimatePresence>{open && (container ? dim : <Dialog.Overlay key="overlay" asChild forceMount>{dim}</Dialog.Overlay>)}</AnimatePresence>
           <Dialog.Content asChild forceMount {...(description ? {} : { "aria-describedby": undefined })}>
             <motion.div
               className={styles.panel}
+              data-contained={contained}
               data-framer-portal-id={group}
               data-returning={returning || undefined}
               layoutScroll

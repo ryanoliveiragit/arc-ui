@@ -49,6 +49,12 @@ export interface MorphingModalProps {
   className?: string;
   /** Extra class for the trigger button. */
   triggerClassName?: string;
+  /**
+   * Renders the modal inside this element instead of the page body: the scrim covers only the element and the panel centers in it.
+   * The element needs position: relative and overflow: hidden. The page around it stays usable while the modal is open: nothing is
+   * scroll-locked or hidden from assistive technology, and Escape, the scrim and the close button still close it.
+   */
+  container?: HTMLElement | null;
 }
 
 /** Reads a length token in px. Motion keeps corners round during the morph only when it knows the radius as a number. */
@@ -86,7 +92,7 @@ const FIRST_FIELD = "[data-autofocus], input:not([type='hidden']):not(:disabled)
 
 const partStill: Variants = { hidden: { opacity: 0, transition: fade }, shown: { opacity: 1, transition: fade } };
 
-export function MorphingModal({ trigger, title, description, children, footer, open: openProp, defaultOpen = false, onOpenChange, variant = "accent", width = 420, disabled = false, className, triggerClassName }: MorphingModalProps) {
+export function MorphingModal({ trigger, title, description, children, footer, open: openProp, defaultOpen = false, onOpenChange, variant = "accent", width = 420, disabled = false, className, triggerClassName, container }: MorphingModalProps) {
   const [internal, setInternal] = useState(defaultOpen);
   const open = openProp ?? internal;
   const setOpen = useCallback((next: boolean) => { if (openProp === undefined) setInternal(next); onOpenChange?.(next); }, [onOpenChange, openProp]);
@@ -100,8 +106,11 @@ export function MorphingModal({ trigger, title, description, children, footer, o
   const shared = reduced ? undefined : layoutId;
   const parts = reduced ? partStill : partMotion;
 
+  const scrim = <motion.div className={styles.scrim} data-contained={container ? "" : undefined} aria-hidden={container ? true : undefined} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: motionTokens.duration.standard, ease: standard } }} transition={{ duration: motionTokens.duration.standard, ease: enter }} />;
+
+  // Inside a container the modal is part of a page section, not the whole page, so it is not modal to the page.
   return (
-    <DialogPrimitive.Root open={open} onOpenChange={setOpen}>
+    <DialogPrimitive.Root open={open} onOpenChange={setOpen} modal={!container}>
       <DialogPrimitive.Trigger asChild disabled={disabled}>
         <motion.button type="button" layoutId={shared} className={[styles.trigger, styles[variant], triggerClassName].filter(Boolean).join(" ")} style={{ borderRadius: triggerRadius }} transition={{ layout: closeSpring }}>
           {/* A layout child keeps its own size while the button's box is stretched toward the panel. */}
@@ -110,10 +119,9 @@ export function MorphingModal({ trigger, title, description, children, footer, o
       </DialogPrimitive.Trigger>
       <AnimatePresence>
         {open && (
-          <DialogPrimitive.Portal key="modal" forceMount>
-            <DialogPrimitive.Overlay asChild forceMount>
-              <motion.div className={styles.scrim} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: motionTokens.duration.standard, ease: standard } }} transition={{ duration: motionTokens.duration.standard, ease: enter }} />
-            </DialogPrimitive.Overlay>
+          <DialogPrimitive.Portal key="modal" forceMount container={container ?? undefined}>
+            {/* Radix draws no overlay for a non-modal dialog, so inside a container the scrim is a plain layer; a press on it still closes the modal. */}
+            {container ? scrim : <DialogPrimitive.Overlay asChild forceMount>{scrim}</DialogPrimitive.Overlay>}
             <DialogPrimitive.Content
               asChild
               forceMount
@@ -129,6 +137,7 @@ export function MorphingModal({ trigger, title, description, children, footer, o
                 ref={panel}
                 layoutId={shared}
                 className={[styles.panel, className].filter(Boolean).join(" ")}
+                data-contained={container ? "" : undefined}
                 style={{ borderRadius: panelRadius, maxWidth: width }}
                 transition={{ layout: openSpring }}
                 initial={reduced ? { opacity: 0 } : undefined}

@@ -51,7 +51,8 @@ import { BellRing, CalendarCheck, MailPlus, ReceiptText } from "lucide-react";
 import { CenterMorphModal } from "@/components/ryan-ui/center-morph-modal/center-morph-modal";
 import type { CenterMorphItem } from "@/components/ryan-ui/center-morph-modal/center-morph-modal";
 import { Button } from "@/components/ryan-ui/button/button";
-import { Caption, Stack } from "./_kit";
+import { Caption, Stack, demoStage } from "./_kit";
+import type { DemoStage } from "./_kit";
 import styles from "./center-morph-modal.module.css";
 
 function Steps({ when, then }: { when: string; then: string[] }) {
@@ -88,12 +89,17 @@ const recipes: CenterMorphItem[] = [
   },
 ];
 
+export const stage: DemoStage = { height: 560 };
+
 export default function CenterMorphModalDemo() {
+  // On the docs page the chosen card grows to the center of the preview, so the modal opens whole and the page keeps scrolling.
+  const [container] = useState(demoStage);
   const [open, setOpen] = useState<string | null>(null);
   const [enabled, setEnabled] = useState<string[]>([]);
   return (
     <Stack gap={4} width={560}>
       <CenterMorphModal
+        container={container}
         items={recipes.map(recipe => enabled.includes(recipe.id) ? { ...recipe, meta: "On" } : recipe)}
         value={open}
         onValueChange={setOpen}
@@ -129,6 +135,7 @@ Extraída do código-fonte. As descrições das props vêm dos comentários do c
 | `minColumnWidth` | `number` | `220` | Narrowest a card may get in px before the grid drops a column. |
 | `width` | `number` | `480` | Maximum width of the modal in px. |
 | `className` | `string` | — | Extra class for the grid. |
+| `container` | `HTMLElement \| null` | — | Renders the modal inside this element instead of the page body: the scrim covers only the element and the card grows to its center. The element needs position: relative and overflow: hidden. The page around it stays usable while the modal is open: nothing is scroll-locked or hidden from assistive technology, and Escape, the scrim and the close button still close it. |
 
 ### Tipos exportados
 

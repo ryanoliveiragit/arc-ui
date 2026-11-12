@@ -19,7 +19,10 @@
   --soft: var(--border-strong);
   position: relative; display: flex; min-width: 0; flex-direction: column; cursor: default; -webkit-tap-highlight-color: transparent;
 }
-.stat:focus { outline: none; }
+/* Pointer focus stays quiet; keyboard focus keeps the foundation outline (a stat without detail or visual changes nothing else). */
+.stat:focus:not(:focus-visible) { outline: none; }
+.stat { --focus-outline-offset: 6px; }
+.stat:focus-visible { border-radius: var(--radius-control); }
 .figure { order: -1; margin: 0 0 var(--space-5); }
 .label { color: var(--foreground); font-size: var(--text-sm); font-weight: 500; line-height: var(--leading-body); text-wrap: pretty; }
 .caption { display: grid; margin: 2px 0 0; color: var(--text-muted); font-size: var(--text-sm); line-height: var(--leading-body); }

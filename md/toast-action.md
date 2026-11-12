@@ -55,7 +55,7 @@ import ToastAction from "@/components/ryan-ui/toast-action/toast-action";
 import type { ToastActionCloseReason } from "@/components/ryan-ui/toast-action/toast-action";
 import { Button } from "@/components/ryan-ui/button/button";
 import { motionTokens } from "@/components/ryan-ui/lib/motion-tokens";
-import { Caption } from "./_kit";
+import { Caption, demoStage } from "./_kit";
 import type { DemoStage } from "./_kit";
 import styles from "./toast-action.module.css";
 
@@ -72,9 +72,11 @@ const hint = "Delete a file, then hover or focus the toast to hold its countdown
 
 export default function ToastActionDemo() {
   const reduce = useReducedMotion();
-  const [files, setFiles] = useState(sharedFiles);
-  const [removed, setRemoved] = useState<{ file: SharedFile; index: number; count: number } | null>(null);
-  const [open, setOpen] = useState(false);
+  // On the docs page the preview starts right after a delete: the last file is gone and its Undo toast is counting down.
+  const [inStage] = useState(() => demoStage() !== null);
+  const [files, setFiles] = useState(() => inStage ? sharedFiles.slice(0, -1) : sharedFiles);
+  const [removed, setRemoved] = useState<{ file: SharedFile; index: number; count: number } | null>(() => inStage ? { file: sharedFiles[sharedFiles.length - 1]!, index: sharedFiles.length - 1, count: 1 } : null);
+  const [open, setOpen] = useState(inStage);
   const [note, setNote] = useState(hint);
 
   function remove(file: SharedFile) {

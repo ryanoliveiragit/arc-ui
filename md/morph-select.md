@@ -49,7 +49,7 @@ O demo da página do item, com os imports como ficam depois de instalar pela CLI
 import { useState } from "react";
 import MorphSelect from "@/components/ryan-ui/morph-select/morph-select";
 import { avatar } from "@/components/ryan-ui/lib/media";
-import { Caption, Stack } from "./_kit";
+import { Caption } from "./_kit";
 import type { DemoStage } from "./_kit";
 
 export const stage: DemoStage = { height: 520 };
@@ -68,13 +68,19 @@ const items = [
   ] },
 ];
 
+/** Width of the open list: the trigger sits at the left of a box this wide, so the list it grows into is centered. */
+const PANEL = 272;
+
 export default function MorphSelectDemo() {
-  const [value, setValue] = useState<string | null>(null);
+  // The preview opens the list on load (focus stays on the page); the space it grows into is reserved below.
+  const [value, setValue] = useState<string | null>("marcus");
   return (
-    <Stack gap={3} width={300}>
-      <MorphSelect label="Assignee" items={items} value={value} onValueChange={(v) => setValue(v)} placeholder="Choose a teammate" />
-      <Caption>Open it, glide with the arrows, or type a name to jump.</Caption>
-    </Stack>
+    <div style={{ display: "flex", width: `min(${PANEL}px, 100%)`, flexDirection: "column", alignItems: "flex-start", gap: "var(--space-3)" }}>
+      <div style={{ paddingBottom: 268 }}>
+        <MorphSelect label="Assignee" items={items} value={value} onValueChange={(v) => setValue(v)} placeholder="Choose a teammate" defaultOpen />
+      </div>
+      <Caption>Glide with the arrows, or type a name to jump.</Caption>
+    </div>
   );
 }
 ```
@@ -101,6 +107,7 @@ Extraída do código-fonte. As descrições das props vêm dos comentários do c
 | `align` | `"start" \| "end"` | `"start"` | Which edge of the trigger stays put while the surface grows. |
 | `name` | `string` | — | Adds a hidden input for native form submission. |
 | `disabled` | `boolean` | `false` | — |
+| `defaultOpen` | `boolean` | `false` | Start with the list open, without moving focus (for previews and onboarding). Later opens move focus as usual. |
 | `className` | `string` | — | — |
 
 ### Tipos exportados

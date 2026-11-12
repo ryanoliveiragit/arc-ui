@@ -35,6 +35,8 @@ export interface SwipeActionsRowProps {
   trailing?: SwipeAction[];
   /** Lets a long swipe commit the outermost action without a tap. On by default. */
   fullSwipe?: boolean;
+  /** Render the menu inside this element and limit collisions to it (used by the demo stages). */
+  container?: HTMLElement | null;
   children: ReactNode;
   className?: string;
 }
@@ -87,7 +89,7 @@ function velocityOf(samples: [number, number][]) {
   return elapsed > 0 ? (last[1] - first[1]) / elapsed : 0;
 }
 
-export function SwipeActionsRow({ label, leading = [], trailing = [], fullSwipe = true, children, className }: SwipeActionsRowProps) {
+export function SwipeActionsRow({ label, leading = [], trailing = [], fullSwipe = true, container, children, className }: SwipeActionsRowProps) {
   const { openId, setOpenId, rows } = useContext(GroupContext);
   const id = useId();
   const reduced = useReducedMotion() ?? false;
@@ -301,8 +303,8 @@ export function SwipeActionsRow({ label, leading = [], trailing = [], fullSwipe 
         <Menu.Trigger className={styles.more} data-swipe-more="" aria-label={`More actions for ${label}`} onPointerDown={event => event.preventDefault()} onClick={event => { if (event.detail > 0) setMenuOpen(open => !open); }}>
           <MoreHorizontal size={18} strokeWidth={1.75} aria-hidden="true" />
         </Menu.Trigger>
-        <Menu.Portal>
-          <Menu.Content className={styles.menu} align="end" sideOffset={6} collisionPadding={12} loop onCloseAutoFocus={event => { if (!focusNeighbour.current) return; focusNeighbour.current = false; event.preventDefault(); moveFocusToNeighbour(); }}>
+        <Menu.Portal container={container ?? undefined}>
+          <Menu.Content className={styles.menu} align="end" sideOffset={6} collisionPadding={12} collisionBoundary={container ?? undefined} loop onCloseAutoFocus={event => { if (!focusNeighbour.current) return; focusNeighbour.current = false; event.preventDefault(); moveFocusToNeighbour(); }}>
             {menuItems.map(({ action, side, index }, order) => <Menu.Item key={`${side}-${index}`} className={styles.item} data-tone={action.tone} style={{ "--i": order } as CSSProperties} onSelect={() => { focusNeighbour.current = !action.keepRow; commit(side, index); }}>
               <span className={styles.itemIcon} aria-hidden="true">{action.icon}</span>{action.label}
             </Menu.Item>)}

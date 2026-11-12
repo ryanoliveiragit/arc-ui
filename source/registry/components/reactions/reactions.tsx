@@ -27,6 +27,15 @@ export interface ReactionsProps {
   onValueChange?: (next: Reaction[], change: { id: string; reacted: boolean }) => void;
   /** Accessible name for the bar. */
   label?: string;
+  /** Picker open state; omit it to let the bar manage its own open/closed state. */
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  /** Starts with the picker open (uncontrolled). */
+  defaultOpen?: boolean;
+  /** Render the picker inside this element and limit collisions to it (used by the demo stages). */
+  container?: HTMLElement | null;
+  /** Called before the picker moves focus in on open; call event.preventDefault() to keep focus where it is (for a picker that starts open). */
+  onOpenAutoFocus?: (event: Event) => void;
   className?: string;
 }
 
@@ -177,14 +186,16 @@ function Picker({ options, reacted, reduced, onPick }: { options: ReactionOption
   </>;
 }
 
-export function Reactions({ options, value, defaultValue = [], onValueChange, label = "Reactions", className }: ReactionsProps) {
+export function Reactions({ options, value, defaultValue = [], onValueChange, label = "Reactions", open, defaultOpen = false, onOpenChange, container, onOpenAutoFocus, className }: ReactionsProps) {
   const reduced = useReduced();
   const groupId = useId();
   const [own, setOwn] = useState(defaultValue);
   const list = value ?? own;
   const [pops, setPops] = useState<Record<string, number>>({});
   const [announcement, setAnnouncement] = useState("");
-  const [open, setOpen] = useState(false);
+  const [internalOpen, setInternalOpen] = useState(defaultOpen);
+  const isOpen = open ?? internalOpen;
+  const setOpen = (next: boolean) => { if (open === undefined) setInternalOpen(next); onOpenChange?.(next); };
   const bar = useRef<HTMLDivElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
   const refocus = useRef<string | null>(null);
@@ -246,25 +257,25 @@ export function Reactions({ options, value, defaultValue = [], onValueChange, la
             </motion.button>;
           })}
         </AnimatePresence>
-        <PopoverPrimitive.Root open={open} onOpenChange={setOpen}>
+        <PopoverPrimitive.Root open={isOpen} onOpenChange={setOpen}>
           {/* The add button anchors the picker, so it answers a press with colour and never scales. */}
           <PopoverPrimitive.Trigger asChild>
             <motion.button ref={trigger} layout="position" transition={reduced ? { layout: { duration: 0 } } : { layout: motionTokens.spring.morph }} type="button" className={styles.add} aria-label="Add reaction">
               <span className={styles.addIcon} aria-hidden="true">
                 <AnimatePresence initial={false}>
-                  <motion.span key={open ? "close" : "add"} className={styles.addGlyph} initial={reduced ? fadeIn : iconIn} animate={rest} exit={reduced ? fadeOut : iconOut} transition={reduced ? { duration: motionTokens.duration.fast } : iconEnter}>
-                    {open ? <X size={16} strokeWidth={1.75} /> : <SmilePlus size={16} strokeWidth={1.75} />}
+                  <motion.span key={isOpen ? "close" : "add"} className={styles.addGlyph} initial={reduced ? fadeIn : iconIn} animate={rest} exit={reduced ? fadeOut : iconOut} transition={reduced ? { duration: motionTokens.duration.fast } : iconEnter}>
+                    {isOpen ? <X size={16} strokeWidth={1.75} /> : <SmilePlus size={16} strokeWidth={1.75} />}
                   </motion.span>
                 </AnimatePresence>
               </span>
-              {!open && <span className={styles.tip} aria-hidden="true">Add reaction</span>}
+              {!isOpen && <span className={styles.tip} aria-hidden="true">Add reaction</span>}
             </motion.button>
           </PopoverPrimitive.Trigger>
           <AnimatePresence>
-            {open && <PopoverPrimitive.Portal forceMount>
+            {isOpen && <PopoverPrimitive.Portal forceMount container={container ?? undefined}>
               {/* Focus returns by hand: at once after a pick or Escape, and not at all when people click away. */}
-              <PopoverPrimitive.Content forceMount asChild side="top" align="center" sideOffset={8} collisionPadding={12} aria-label="Add a reaction"
-                onEscapeKeyDown={() => trigger.current?.focus()} onCloseAutoFocus={event => event.preventDefault()}>
+              <PopoverPrimitive.Content forceMount asChild side="top" align="center" sideOffset={8} collisionPadding={12} collisionBoundary={container ?? undefined} aria-label="Add a reaction"
+                onOpenAutoFocus={onOpenAutoFocus} onEscapeKeyDown={() => trigger.current?.focus()} onCloseAutoFocus={event => event.preventDefault()}>
                 <motion.div className={styles.picker} initial={reduced ? fadeIn : { opacity: 0, scale: .5, filter: blur(motionTokens.blur.soft) }} animate={rest}
                   exit={reduced ? fadeOut : { opacity: 0, scale: .9, filter: blur(motionTokens.blur.subtle), transition: { duration: motionTokens.duration.fast, ease: standard } }}
                   transition={reduced ? { duration: motionTokens.duration.fast } : { scale: motionTokens.spring.snappy, opacity: { duration: motionTokens.duration.fast, ease: standard }, filter: { duration: motionTokens.duration.fast, ease: enter } }}>

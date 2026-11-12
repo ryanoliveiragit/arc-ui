@@ -51,7 +51,7 @@ import { ImageViewer } from "@/components/ryan-ui/image-viewer/image-viewer";
 import type { ImageViewerItem } from "@/components/ryan-ui/image-viewer/image-viewer";
 import { photo } from "@/components/ryan-ui/lib/media";
 import type { PhotoId } from "@/components/ryan-ui/lib/media";
-import { Caption, Stack } from "./_kit";
+import { Caption, Stack, demoStage } from "./_kit";
 import type { DemoStage } from "./_kit";
 
 export const stage: DemoStage = { height: 520 };
@@ -67,10 +67,12 @@ const shots: [PhotoId, string, string][] = [
 const images: ImageViewerItem[] = shots.map(([id, alt, caption]) => { const { src, width, height } = photo(id); return { src, alt, caption, width, height }; });
 
 export default function ImageViewerDemo() {
+  // On the docs page the lightbox opens inside the preview: the photo grows out of its thumbnail and fits the preview, and the page keeps scrolling.
+  const [container] = useState(demoStage);
   const [open, setOpen] = useState<number | null>(null);
   return (
     <Stack width={460} gap={3}>
-      <ImageViewer images={images} value={open} onValueChange={setOpen} label="Trip photos" />
+      <ImageViewer images={images} value={open} onValueChange={setOpen} label="Trip photos" container={container} />
       <Caption>{open === null ? "Open a photo. Inside: arrows or swipe to move, wheel, pinch or double-click to zoom, drag to pan, Escape to close." : `Viewing photo ${open + 1} of ${images.length}.`}</Caption>
     </Stack>
   );
@@ -95,6 +97,7 @@ Extraída do código-fonte. As descrições das props vêm dos comentários do c
 | `maxZoom` | `number` | `4` | Largest zoom factor. |
 | `label` | `string` | `"Image gallery"` | Accessible name of the gallery and of the lightbox. |
 | `className` | `string` | — | Extra class for the thumbnail grid. |
+| `container` | `HTMLElement \| null` | — | Opens the lightbox inside this element instead of over the whole page: the backdrop covers only the element and the image fits in it. The element needs position: relative and overflow: hidden. The page around it stays usable while the lightbox is open: nothing is scroll-locked or hidden from assistive technology, and Escape, the close button and a tap beside the image still close it. |
 
 ### Tipos exportados
 

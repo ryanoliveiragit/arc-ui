@@ -10,7 +10,7 @@ import { motionTokens } from "@/lib/motion-tokens";
 import styles from "./split-button.module.css";
 
 export interface SplitButtonAction { label: string; onSelect?: () => void; disabled?: boolean; destructive?: boolean; icon?: ReactNode; }
-export interface SplitButtonProps { label: string; actions: SplitButtonAction[]; onClick?: () => void; disabled?: boolean; icon?: ReactNode; variant?: "primary" | "secondary"; }
+export interface SplitButtonProps { label: string; actions: SplitButtonAction[]; onClick?: () => void; disabled?: boolean; icon?: ReactNode; variant?: "primary" | "secondary"; /** Start with the menu open (used by the demos). */ defaultOpen?: boolean; /** Render the menu inside this element and limit collisions to it (used by the demo stages). */ container?: HTMLElement | null; /** Modal menus (the default) lock page scroll and block outside pointer events while open. Pass false for a menu that starts open on a page people keep scrolling. */ modal?: boolean; /** Called before the menu moves focus in on open; call event.preventDefault() to keep focus where it is (for a menu that starts open). */ onOpenAutoFocus?: (event: Event) => void; }
 
 const rest: TargetAndTransition = { opacity: 1, y: 0, scale: 1, filter: "blur(0px)" };
 const fadeIn: TargetAndTransition = { ...rest, opacity: 0 };
@@ -84,12 +84,15 @@ function MorphText({ text, reduced }: { text: string; reduced: boolean }) {
 }
 
 /** The main action morphs its icon and label in place while its width follows on a spring; the menu half never scales, so the menu opens from a still anchor. */
-export function SplitButton({ label, actions, onClick, disabled, icon, variant = "primary" }: SplitButtonProps) {
+export function SplitButton({ label, actions, onClick, disabled, icon, variant = "primary", defaultOpen, container, modal = true, onOpenAutoFocus }: SplitButtonProps) {
+  // Radix forwards onOpenAutoFocus to the menu's focus scope at runtime, but its public DropdownMenu types leave it out.
+  // A menu that starts open must not pull focus in: Tab is blocked inside a menu, so a keyboard visitor would be stuck on load.
+  const focusProps = (onOpenAutoFocus ? { onOpenAutoFocus } : {}) as Record<string, never>;
   const reduced = useReducedMotion() ?? false;
   const contentRef = useRef<HTMLSpanElement>(null);
   const glyph = iconKey(icon);
   const width = useMorphWidth(contentRef, `${glyph}|${label}`, reduced);
-  return <DropdownPrimitive.Root>
+  return <DropdownPrimitive.Root defaultOpen={defaultOpen} modal={modal}>
     <div className={[styles.group, variant === "secondary" ? styles.secondary : ""].filter(Boolean).join(" ")}>
       <button className={styles.primary} type="button" onClick={onClick} disabled={disabled}>
         <motion.span className={styles.primarySlot} style={{ width }} aria-hidden="true">
@@ -102,7 +105,7 @@ export function SplitButton({ label, actions, onClick, disabled, icon, variant =
       </button>
       <DropdownPrimitive.Trigger className={styles.trigger} type="button" aria-label={`${label} more actions`} disabled={disabled}><ChevronDown className={styles.chevron} size={16} strokeWidth={1.75} aria-hidden="true" /></DropdownPrimitive.Trigger>
     </div>
-    <DropdownPrimitive.Portal><DropdownPrimitive.Content className={styles.menu} sideOffset={4} align="end" collisionPadding={12} loop>
+    <DropdownPrimitive.Portal container={container ?? undefined}><DropdownPrimitive.Content className={styles.menu} sideOffset={4} align="end" collisionPadding={12} collisionBoundary={container ?? undefined} loop {...focusProps}>
       {actions.map((action, index) => <DropdownPrimitive.Item key={action.label} className={[styles.item, action.destructive ? styles.destructive : ""].filter(Boolean).join(" ")} style={{ "--i": index } as CSSProperties} disabled={action.disabled} onSelect={action.onSelect}>{action.icon ? <span className={styles.icon} aria-hidden="true">{action.icon}</span> : null}{action.label}</DropdownPrimitive.Item>)}
     </DropdownPrimitive.Content></DropdownPrimitive.Portal>
   </DropdownPrimitive.Root>;

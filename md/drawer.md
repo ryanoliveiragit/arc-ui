@@ -46,19 +46,26 @@ Primeira vez no projeto: instale a base uma vez (`npx shadcn@latest add https://
 O demo da página do item, com os imports como ficam depois de instalar pela CLI. `Stack`, `Row`, `Caption`, `Field` e `Surface` (de `./_kit`) são auxiliares de layout do site: troque pelo layout do seu projeto.
 
 ```tsx
+import { useState } from "react";
 import Drawer, { DrawerClose, DrawerContent, DrawerTrigger } from "@/components/ryan-ui/drawer/drawer";
 import { Button } from "@/components/ryan-ui/button/button";
-import { Caption, Field, Row, Stack } from "./_kit";
+import { Caption, Field, Row, Stack, demoStage, useQuietFirstOpen } from "./_kit";
+import type { DemoStage } from "./_kit";
+
+export const stage: DemoStage = { height: 520 };
 
 const input: React.CSSProperties = { height: 36, padding: "0 var(--space-3)", border: "1px solid var(--border)", borderRadius: "var(--radius-control)", background: "var(--surface)", color: "var(--text-primary)", font: "inherit", width: "100%" };
 
 export default function DrawerDemo() {
+  // On the docs page both drawers slide inside the preview, and the profile one is already open: the page keeps scrolling.
+  const [container] = useState(demoStage);
+  const quiet = useQuietFirstOpen();
   return (
     <Stack align="center" gap={4}>
       <Row justify="center">
-        <Drawer>
+        <Drawer defaultOpen={container !== null} modal={!container}>
           <DrawerTrigger asChild><Button variant="secondary">Edit profile</Button></DrawerTrigger>
-          <DrawerContent title="Edit profile" description="Update how you appear to your team.">
+          <DrawerContent container={container} onOpenAutoFocus={quiet} title="Edit profile" description="Update how you appear to your team.">
             <Stack gap={4}>
               <Field label="Display name"><input style={input} defaultValue="Emma Collins" /></Field>
               <Field label="Role"><input style={input} defaultValue="Product designer" /></Field>
@@ -66,14 +73,14 @@ export default function DrawerDemo() {
             </Stack>
           </DrawerContent>
         </Drawer>
-        <Drawer>
+        <Drawer modal={!container}>
           <DrawerTrigger asChild><Button variant="ghost">Filters (left)</Button></DrawerTrigger>
-          <DrawerContent side="left" title="Filters" description="Narrow the list of invoices.">
+          <DrawerContent container={container} side="left" title="Filters" description="Narrow the list of invoices.">
             <Stack gap={3}><Caption>Status: Paid, Pending, Overdue</Caption><DrawerClose asChild><Button>Apply filters</Button></DrawerClose></Stack>
           </DrawerContent>
         </Drawer>
       </Row>
-      <Caption>Opens as a side surface; Escape or the close button dismisses it.</Caption>
+      <Caption>Opens as a side surface; Escape, the scrim or the close button dismisses it.</Caption>
     </Stack>
   );
 }
@@ -95,7 +102,7 @@ Sem props próprias: aceita as do elemento ou do primitivo que envolve.
 | `description` | `string` | — | — |
 | `children` (obrigatória) | `ReactNode` | — | — |
 | `side` | `"left" \| "right" \| "top" \| "bottom"` | `"right"` | — |
-| `container` | `HTMLElement \| null` | — | Renders the drawer inside this element instead of the page body, anchored to its edges. The element needs position: relative and overflow: hidden. |
+| `container` | `HTMLElement \| null` | — | Renders the drawer inside this element instead of the page body, anchored to its edges. The element needs position: relative and overflow: hidden. Pair it with `modal={false}` on Drawer, so the page around the element keeps scrolling and stays usable while the drawer is open (Escape, the close button and a press on the scrim still close it). |
 | `...props` | `ComponentPropsWithoutRef<typeof DialogPrimitive.Content>` | — | Também aceita as props deste tipo. |
 
 ### Outras exportações

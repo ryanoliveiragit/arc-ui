@@ -3,11 +3,16 @@ import { Card } from "@/registry/components/card/card";
 import { Avatar } from "@/registry/components/avatar/avatar";
 import { Button } from "@/registry/components/button/button";
 import { avatar, photo } from "@/lib/media";
-import { Caption, Stack } from "./_kit";
+import { Caption, Stack, demoStage } from "./_kit";
+import type { DemoStage } from "./_kit";
 
 const cover = photo("lisbon-bridge");
 
+export const stage: DemoStage = { height: 680 };
+
 export default function CardDemo() {
+  // On the docs page the quick look grows inside the preview, so it opens whole and the page around it keeps scrolling.
+  const [container] = useState(demoStage);
   const [status, setStatus] = useState("Updated 2 hours ago");
   return (
     <Stack gap={4} width={360}>
@@ -18,6 +23,7 @@ export default function CardDemo() {
         avatar={<Avatar name="Emma Collins" src={avatar("emma-collins")} size="sm" />}
         meta="Emma Collins"
         status={status}
+        container={container}
         action={<Button size="sm" variant="secondary" onClick={e => { e.stopPropagation(); setStatus("Updated just now"); }}>Refresh</Button>}
         details={
           <div style={{ display: "grid", gap: "var(--space-3)", color: "var(--text-secondary)" }}>

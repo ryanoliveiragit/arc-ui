@@ -46,7 +46,7 @@ O demo da página do item, com os imports como ficam depois de instalar pela CLI
 ```tsx
 import { Flame, Heart, PartyPopper, Rocket, ThumbsUp, Laugh } from "lucide-react";
 import Reactions from "@/components/ryan-ui/reactions/reactions";
-import { Caption, Stack, Surface } from "./_kit";
+import { Caption, Room, Surface, demoStage, useQuietFirstOpen } from "./_kit";
 
 const options = [
   { id: "like", label: "Like", icon: ThumbsUp },
@@ -58,8 +58,10 @@ const options = [
 ];
 
 export default function ReactionsDemo() {
+  // The picker is already open over the bar, inside the stage, so the full set of reactions shows.
+  const quiet = useQuietFirstOpen();
   return (
-    <Stack gap={4} align="center" width={440}>
+    <Room above={64} width={440}>
       <Surface padding={5} style={{ display: "grid", gap: "var(--space-4)" }}>
         <div>
           <strong style={{ display: "block" }}>v2.0 is live</strong>
@@ -67,6 +69,9 @@ export default function ReactionsDemo() {
         </div>
         <Reactions
           label="Reactions to the v2.0 announcement"
+          defaultOpen
+          onOpenAutoFocus={quiet}
+          container={demoStage()}
           options={options}
           defaultValue={[
             { id: "celebrate", count: 24, reacted: false },
@@ -76,7 +81,7 @@ export default function ReactionsDemo() {
         />
       </Surface>
       <Caption>Tap a pill to add or remove your reaction, or open the picker for more.</Caption>
-    </Stack>
+    </Room>
   );
 }
 ```
@@ -94,6 +99,11 @@ Extraída do código-fonte. As descrições das props vêm dos comentários do c
 | `defaultValue` | `Reaction[]` | `[]` | — |
 | `onValueChange` | `(next: Reaction[], change: { id: string; reacted: boolean }) => void` | — | Called with the next reactions and the change that produced them. |
 | `label` | `string` | `"Reactions"` | Accessible name for the bar. |
+| `open` | `boolean` | — | Picker open state; omit it to let the bar manage its own open/closed state. |
+| `onOpenChange` | `(open: boolean) => void` | — | — |
+| `defaultOpen` | `boolean` | `false` | Starts with the picker open (uncontrolled). |
+| `container` | `HTMLElement \| null` | — | Render the picker inside this element and limit collisions to it (used by the demo stages). |
+| `onOpenAutoFocus` | `(event: Event) => void` | — | Called before the picker moves focus in on open; call event.preventDefault() to keep focus where it is (for a picker that starts open). |
 | `className` | `string` | — | — |
 
 ### Tipos exportados

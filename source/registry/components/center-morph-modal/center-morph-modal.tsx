@@ -47,6 +47,12 @@ export interface CenterMorphModalProps {
   width?: number;
   /** Extra class for the grid. */
   className?: string;
+  /**
+   * Renders the modal inside this element instead of the page body: the scrim covers only the element and the card grows to its
+   * center. The element needs position: relative and overflow: hidden. The page around it stays usable while the modal is open:
+   * nothing is scroll-locked or hidden from assistive technology, and Escape, the scrim and the close button still close it.
+   */
+  container?: HTMLElement | null;
 }
 
 /** Reads a length token in px. Motion keeps corners round during the morph only when it knows the radius as a number. */
@@ -80,7 +86,7 @@ const revealPart: Variants = {
 };
 const revealStill: Variants = { hidden: { opacity: 0, transition: fade }, shown: { opacity: 1, transition: fade } };
 
-export function CenterMorphModal({ items, value, defaultValue = null, onValueChange, renderFooter, minColumnWidth = 220, width = 480, className }: CenterMorphModalProps) {
+export function CenterMorphModal({ items, value, defaultValue = null, onValueChange, renderFooter, minColumnWidth = 220, width = 480, className, container }: CenterMorphModalProps) {
   const [internal, setInternal] = useState<string | null>(defaultValue);
   const openId = value === undefined ? internal : value;
   const setOpenId = useCallback((next: string | null) => { if (value === undefined) setInternal(next); onValueChange?.(next); }, [onValueChange, value]);
@@ -98,6 +104,8 @@ export function CenterMorphModal({ items, value, defaultValue = null, onValueCha
   const shared = (part: string, id: string) => reduced ? undefined : `${base}-${part}-${id}`;
   const parts = reduced ? revealStill : revealPart;
   const footer = active && renderFooter ? renderFooter(active, close) : null;
+
+  const scrim = <motion.div className={styles.scrim} data-contained={container ? "" : undefined} aria-hidden={container ? true : undefined} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: motionTokens.duration.standard, ease: standard } }} transition={{ duration: motionTokens.duration.standard, ease: enter }} />;
 
   return (
     <>
@@ -129,13 +137,13 @@ export function CenterMorphModal({ items, value, defaultValue = null, onValueCha
         ))}
       </div>
 
-      <DialogPrimitive.Root open={active !== null} onOpenChange={next => { if (!next) close(); }}>
+      {/* Inside a container the modal is part of a page section, not the whole page, so it is not modal to the page. */}
+      <DialogPrimitive.Root open={active !== null} onOpenChange={next => { if (!next) close(); }} modal={!container}>
         <AnimatePresence>
           {active && (
-            <DialogPrimitive.Portal key={active.id} forceMount>
-              <DialogPrimitive.Overlay asChild forceMount>
-                <motion.div className={styles.scrim} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: motionTokens.duration.standard, ease: standard } }} transition={{ duration: motionTokens.duration.standard, ease: enter }} />
-              </DialogPrimitive.Overlay>
+            <DialogPrimitive.Portal key={active.id} forceMount container={container ?? undefined}>
+              {/* Radix draws no overlay for a non-modal dialog, so inside a container the scrim is a plain layer; a press on it still closes the modal. */}
+              {container ? scrim : <DialogPrimitive.Overlay asChild forceMount>{scrim}</DialogPrimitive.Overlay>}
               <DialogPrimitive.Content
                 asChild
                 forceMount
@@ -149,6 +157,7 @@ export function CenterMorphModal({ items, value, defaultValue = null, onValueCha
                 <motion.div
                   layoutId={shared("card", active.id)}
                   className={styles.panel}
+                  data-contained={container ? "" : undefined}
                   style={{ borderRadius: panelRadius, maxWidth: width }}
                   transition={{ layout: openSpring }}
                   initial={reduced ? { opacity: 0 } : undefined}

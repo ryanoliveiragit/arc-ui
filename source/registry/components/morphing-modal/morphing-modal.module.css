@@ -12,6 +12,9 @@
 /* Centered with auto margins, so transform stays free for the morph. It clips its content while the box grows. */
 .panel { position: fixed; inset: 0; z-index: 51; display: flex; width: calc(100vw - var(--space-8)); height: fit-content; max-height: calc(100vh - var(--space-8)); max-height: calc(100dvh - var(--space-8)); margin: auto; overflow: hidden; border: 1px solid var(--border); background: var(--surface-raised); color: var(--foreground); box-shadow: var(--shadow-floating); font-family: var(--font-body); }
 .panel:focus { outline: none; }
+/* Inside a container (a panel, a docs preview) the scrim and the panel anchor to that element instead of the viewport. */
+.scrim[data-contained] { position: absolute; z-index: 1; }
+.panel[data-contained] { position: absolute; z-index: 2; width: calc(100% - var(--space-8)); max-height: calc(100% - var(--space-8)); }
 .scrim[data-state="closed"], .panel[data-state="closed"] { pointer-events: none !important; }
 .inner { display: flex; width: 100%; min-height: 0; flex-direction: column; overflow-y: auto; }
 .tint { position: absolute; inset: 0; z-index: 1; border: 0; pointer-events: none; }

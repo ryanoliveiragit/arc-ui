@@ -49,17 +49,25 @@ O demo da página do item, com os imports como ficam depois de instalar pela CLI
 import { useState } from "react";
 import { Calendar, Clock, Save, Send, Trash2 } from "lucide-react";
 import SplitButton from "@/components/ryan-ui/split-button/split-button";
-import { Caption, Row, Stack } from "./_kit";
+import { Caption, Room, Row, Stack, demoStage, useQuietFirstOpen } from "./_kit";
 
 export default function SplitButtonDemo() {
   const [mode, setMode] = useState<"Send" | "Schedule" | "Save draft">("Send");
   const [last, setLast] = useState("Nothing yet");
+  // The main button's menu is already open, inside the stage (non-modal, so the page keeps scrolling).
+  const stage = demoStage();
+  const quiet = useQuietFirstOpen();
   const icons = { Send: <Send size={15} aria-hidden="true" />, Schedule: <Calendar size={15} aria-hidden="true" />, "Save draft": <Save size={15} aria-hidden="true" /> };
   return (
-    <Stack gap={6} align="center">
+    <Stack gap={4} align="center">
+      <Room below={172}>
       <Row justify="center">
         <SplitButton
           label={mode}
+          defaultOpen
+          modal={false}
+          onOpenAutoFocus={quiet}
+          container={stage}
           icon={icons[mode]}
           onClick={() => setLast(`${mode} pressed`)}
           actions={[
@@ -71,6 +79,7 @@ export default function SplitButtonDemo() {
         />
         <SplitButton
           variant="secondary"
+          container={stage}
           label="Export"
           onClick={() => setLast("Exported as CSV")}
           actions={[
@@ -79,6 +88,7 @@ export default function SplitButtonDemo() {
           ]}
         />
       </Row>
+      </Room>
       <Caption>Pick an alternative from the menu and the main action morphs. Last: {last}</Caption>
     </Stack>
   );
@@ -101,6 +111,10 @@ The main action morphs its icon and label in place while its width follows on a 
 | `disabled` | `boolean` | — | — |
 | `icon` | `ReactNode` | — | — |
 | `variant` | `"primary" \| "secondary"` | `"primary"` | — |
+| `defaultOpen` | `boolean` | — | — |
+| `container` | `HTMLElement \| null` | — | — |
+| `modal` | `boolean` | `true` | — |
+| `onOpenAutoFocus` | `(event: Event) => void` | — | — |
 
 ### Tipos exportados
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, useCallback, useId, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { forwardRef, useCallback, useEffect, useId, useImperativeHandle, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { ChangeEvent, KeyboardEvent as ReactKeyboardEvent, ReactNode, UIEvent } from "react";
 import { AnimatePresence, animate, motion, useMotionValue, useReducedMotion } from "motion/react";
 import type { Transition } from "motion/react";
@@ -69,6 +69,11 @@ export interface MentionInputProps {
   maxRows?: number;
   /** Where suggestions open. `auto` flips above when there is no room below. */
   placement?: "auto" | "top" | "bottom";
+  /**
+   * Show the suggestions for the text before the end of the value on first render, without focusing the field
+   * (for previews and onboarding). They close on a click outside; once the field is focused it behaves as usual.
+   */
+  defaultOpen?: boolean;
   maxSuggestions?: number;
   disabled?: boolean;
   name?: string;
@@ -165,7 +170,7 @@ function Highlight({ text, query }: { text: string; query: string }) {
  */
 export const MentionInput = forwardRef<MentionInputHandle, MentionInputProps>(function MentionInput({
   value: valueProp, defaultValue, onChange, people, channels, onMentionAdd, onSubmit, submitOnEnter = false,
-  placeholder, minRows = 1, maxRows = 8, placement = "auto", maxSuggestions = 6, disabled, name, id,
+  placeholder, minRows = 1, maxRows = 8, placement = "auto", maxSuggestions = 6, disabled, name, id, defaultOpen = false,
   "aria-label": ariaLabel, "aria-describedby": describedBy, className,
 }, ref) {
   const reduced = !!useReducedMotion();
@@ -183,8 +188,21 @@ export const MentionInput = forwardRef<MentionInputHandle, MentionInputProps>(fu
   const lastCaret = useRef(0);
   const pending = useRef<Mention | null>(null);
 
-  const [caret, setCaret] = useState<number | null>(null);
-  const [focused, setFocused] = useState(false);
+  const [caret, setCaret] = useState<number | null>(() => defaultOpen ? (valueProp ?? defaultValue ?? EMPTY).text.length : null);
+  const [focused, setFocused] = useState(defaultOpen);
+  /** Suggestions shown by defaultOpen while the field has no real focus: a click outside closes them. */
+  const quiet = useRef(defaultOpen);
+  useEffect(() => {
+    if (!quiet.current || !focused) return;
+    const down = (event: PointerEvent) => {
+      if (rootRef.current?.contains(event.target as Node)) return;
+      quiet.current = false;
+      setFocused(false);
+      setCaret(null);
+    };
+    document.addEventListener("pointerdown", down);
+    return () => document.removeEventListener("pointerdown", down);
+  }, [focused]);
   const [dismissed, setDismissed] = useState<number | null>(null);
   const [active, setActive] = useState(0);
 
@@ -469,7 +487,7 @@ export const MentionInput = forwardRef<MentionInputHandle, MentionInputProps>(fu
         onSelect={onSelect}
         onKeyDown={onKeyDown}
         onScroll={onScroll}
-        onFocus={() => setFocused(true)}
+        onFocus={() => { quiet.current = false; setFocused(true); }}
         onBlur={() => { setFocused(false); setCaret(null); }}
       />
     </motion.div>

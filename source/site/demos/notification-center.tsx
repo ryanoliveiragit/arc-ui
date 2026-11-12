@@ -1,8 +1,9 @@
 import { NotificationCenter, type NotificationItem } from "@/registry/components/notification-center/notification-center";
 import { avatar } from "@/lib/media";
+import { Room, demoStage, useQuietFirstOpen } from "./_kit";
 import type { DemoStage } from "./_kit";
 
-export const stage: DemoStage = { layout: "center", height: 560 };
+export const stage: DemoStage = { layout: "center", height: 660 };
 
 const notifications: NotificationItem[] = [
   { id: "n1", title: "Emma Collins commented on Checkout redesign", description: "The review step looks great. Can we show the total while editing?", time: "2m ago", tone: "info", actor: { name: "Emma Collins", photo: avatar("emma-collins") } },
@@ -13,5 +14,11 @@ const notifications: NotificationItem[] = [
 ];
 
 export default function NotificationCenterDemo() {
-  return <NotificationCenter notifications={notifications} />;
+  // The panel is already open under the bell, inside the stage.
+  const quiet = useQuietFirstOpen();
+  return (
+    <Room below={540}>
+      <NotificationCenter notifications={notifications} defaultOpen onOpenAutoFocus={quiet} container={demoStage()} />
+    </Room>
+  );
 }

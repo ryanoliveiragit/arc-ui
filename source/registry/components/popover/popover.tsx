@@ -20,15 +20,16 @@ PopoverTrigger.displayName = "PopoverTrigger";
 
 export const PopoverContent = forwardRef<
   HTMLDivElement,
-  ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>
->(function PopoverContent({ className, align = "start", sideOffset = 6, collisionPadding = 10, ...props }, ref) {
-  return <PopoverPrimitive.Portal>
+  ComponentPropsWithoutRef<typeof PopoverPrimitive.Content> & { /** Render the panel inside this element and limit collisions to it (used by the demo stages). */ container?: HTMLElement | null }
+>(function PopoverContent({ className, align = "start", sideOffset = 6, collisionPadding = 10, container, ...props }, ref) {
+  return <PopoverPrimitive.Portal container={container ?? undefined}>
     <PopoverPrimitive.Content
       {...props}
       ref={ref}
       align={align}
       sideOffset={sideOffset}
       collisionPadding={collisionPadding}
+      collisionBoundary={container ?? undefined}
       className={[styles.content, className].filter(Boolean).join(" ")}
     />
   </PopoverPrimitive.Portal>;

@@ -48,16 +48,24 @@ O demo da página do item, com os imports como ficam depois de instalar pela CLI
 import { useState } from "react";
 import { Copy, Pencil, Share2, Trash2, Archive } from "lucide-react";
 import DropdownMenu from "@/components/ryan-ui/dropdown-menu/dropdown-menu";
-import { Caption, Row, Stack } from "./_kit";
+import { Caption, Room, Row, Stack, demoStage, useQuietFirstOpen } from "./_kit";
 
 export default function DropdownMenuDemo() {
   const [last, setLast] = useState("Nothing yet");
   const act = (name: string) => () => setLast(name);
+  // The first menu is already open, inside the stage. Non-modal, so the docs page keeps scrolling while it shows.
+  const stage = demoStage();
+  const quiet = useQuietFirstOpen();
   return (
-    <Stack gap={6} align="center">
+    <Stack gap={4} align="center">
+      <Room below={206}>
       <Row justify="center">
         <DropdownMenu
           label="Project actions"
+          defaultOpen
+          modal={false}
+          onOpenAutoFocus={quiet}
+          container={stage}
           items={[
             { label: "Rename", icon: <Pencil size={15} aria-hidden="true" />, onSelect: act("Rename") },
             { label: "Duplicate", icon: <Copy size={15} aria-hidden="true" />, onSelect: act("Duplicate") },
@@ -68,6 +76,7 @@ export default function DropdownMenuDemo() {
         />
         <DropdownMenu
           label="Sort by"
+          container={stage}
           items={[
             { label: "Most recent", onSelect: act("Most recent") },
             { label: "Name", onSelect: act("Name") },
@@ -75,6 +84,7 @@ export default function DropdownMenuDemo() {
           ]}
         />
       </Row>
+      </Room>
       <Caption>Last choice: {last}. Arrow keys move, Escape closes.</Caption>
     </Stack>
   );
@@ -92,6 +102,10 @@ Extraída do código-fonte. As descrições das props vêm dos comentários do c
 | `label` (obrigatória) | `string` | — | — |
 | `items` (obrigatória) | `DropdownItem[]` | — | — |
 | `icon` | `ReactNode` | — | — |
+| `defaultOpen` | `boolean` | — | — |
+| `container` | `HTMLElement \| null` | — | — |
+| `modal` | `boolean` | `true` | — |
+| `onOpenAutoFocus` | `(event: Event) => void` | — | — |
 
 ### Tipos exportados
 

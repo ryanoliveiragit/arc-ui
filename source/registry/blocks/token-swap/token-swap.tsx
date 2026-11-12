@@ -50,6 +50,8 @@ export interface TokenSwapProps {
   onSwap?: (quote: SwapQuote) => void | Promise<void>;
   /** Extra class for the card. */
   className?: string;
+  /** Render the token menus inside this element and keep them within it (used by the demo stage). */
+  container?: HTMLElement | null;
 }
 
 /** Made-up tokens with made-up prices. Nothing here maps to a real asset. */
@@ -76,7 +78,7 @@ function Mark({ token }: { token: SwapToken }) {
   return <span className={styles.mark} data-tone={token.tone ?? "sky"} aria-hidden="true">{token.symbol.slice(0, 1)}</span>;
 }
 
-function TokenPicker({ label, token, tokens, balances, onPick }: { label: string; token: SwapToken; tokens: SwapToken[]; balances: Record<string, number>; onPick: (symbol: string) => void }) {
+function TokenPicker({ label, token, tokens, balances, onPick, container }: { label: string; token: SwapToken; tokens: SwapToken[]; balances: Record<string, number>; onPick: (symbol: string) => void; container?: HTMLElement | null }) {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
@@ -84,8 +86,8 @@ function TokenPicker({ label, token, tokens, balances, onPick }: { label: string
           <Mark token={token} /><span>{token.symbol}</span><ChevronDown className={styles.chevron} size={14} aria-hidden="true" />
         </button>
       </DropdownMenu.Trigger>
-      <DropdownMenu.Portal>
-        <DropdownMenu.Content className={styles.menu} align="end" sideOffset={8} collisionPadding={12}>
+      <DropdownMenu.Portal container={container ?? undefined}>
+        <DropdownMenu.Content className={styles.menu} align="end" sideOffset={8} collisionPadding={12} collisionBoundary={container ?? undefined} loop>
           <DropdownMenu.Label className={styles.menuLabel}>Select a token</DropdownMenu.Label>
           <DropdownMenu.RadioGroup value={token.symbol} onValueChange={onPick}>
             {tokens.map(option => (
@@ -106,7 +108,7 @@ function TokenPicker({ label, token, tokens, balances, onPick }: { label: string
 type Phase = "idle" | "pending" | "done";
 
 /** Swap card with play money: two amount fields with token pickers, a flip button that makes the two fields trade places, live rate and fee rows, and a pending then confirmed state. */
-export function TokenSwap({ tokens = sampleTokens, defaultPay, defaultReceive, amount, defaultAmount = "1.5", onAmountChange, feeRate = 0.003, onSwap, className }: TokenSwapProps) {
+export function TokenSwap({ tokens = sampleTokens, defaultPay, defaultReceive, amount, defaultAmount = "1.5", onAmountChange, feeRate = 0.003, onSwap, className, container }: TokenSwapProps) {
   const reduceMotion = useReducedMotion();
   const uid = useId();
   // Each field keeps its identity when the pair flips, so the two cards visibly trade places.
@@ -117,7 +119,21 @@ export function TokenSwap({ tokens = sampleTokens, defaultPay, defaultReceive, a
   const [inverted, setInverted] = useState(false);
   const [phase, setPhase] = useState<Phase>("idle");
   const [receipt, setReceipt] = useState<SwapQuote | null>(null);
+  const [failed, setFailed] = useState(false);
   const alive = useRef(true);
+  // Focus follows the flow: the card holds it while the form is inert, the receipt's button takes it when the swap lands,
+  // the amount field gets it back on "New swap", and the confirm button after a failed swap.
+  const cardRef = useRef<HTMLDivElement>(null);
+  const againRef = useRef<HTMLButtonElement>(null);
+  const confirmRef = useRef<HTMLButtonElement>(null);
+  const focusNext = useRef<"again" | "amount" | "confirm" | null>(null);
+  useEffect(() => {
+    const target = focusNext.current;
+    if (!target) return;
+    focusNext.current = null;
+    const node = target === "again" ? againRef.current : target === "confirm" ? confirmRef.current : cardRef.current?.querySelector<HTMLInputElement>("input:not([readonly])");
+    node?.focus({ preventScroll: true });
+  }, [phase]);
   useEffect(() => { alive.current = true; return () => { alive.current = false; }; }, []);
 
   const find = (symbol: string | undefined) => tokens.find(token => token.symbol === symbol) ?? tokens[0];
@@ -147,21 +163,25 @@ export function TokenSwap({ tokens = sampleTokens, defaultPay, defaultReceive, a
   const confirm = async () => {
     if (!ready) return;
     const quote: SwapQuote = { pay: pay.symbol, receive: receive.symbol, amount: value, received };
+    // The form turns inert while pending; keep focus on the card (not <body>) if it was inside the form.
+    if (cardRef.current?.contains(document.activeElement)) cardRef.current.focus({ preventScroll: true });
+    setFailed(false);
     setPhase("pending");
-    try { await (onSwap?.(quote) ?? new Promise<void>(resolve => window.setTimeout(resolve, 1700))); } catch { if (alive.current) setPhase("idle"); return; }
+    try { await (onSwap?.(quote) ?? new Promise<void>(resolve => window.setTimeout(resolve, 1700))); } catch { if (alive.current) { focusNext.current = "confirm"; setFailed(true); setPhase("idle"); } return; }
     if (!alive.current) return;
+    focusNext.current = "again";
     setBalances(current => ({ ...current, [quote.pay]: (current[quote.pay] ?? 0) - quote.amount, [quote.receive]: (current[quote.receive] ?? 0) + quote.received }));
     setReceipt(quote);
     setPhase("done");
   };
-  const reset = () => { setPhase("idle"); setReceipt(null); setAmount(""); };
+  const reset = () => { focusNext.current = "amount"; setPhase("idle"); setReceipt(null); setAmount(""); };
 
   const swap = reduceMotion ? { duration: 0 } : { type: "spring" as const, visualDuration: 0.45, bounce: 0.18 };
   const cta = phase === "pending" ? "Confirming swap" : value <= 0 ? "Enter an amount" : short ? `Not enough ${pay.symbol}` : `Swap ${pay.symbol} for ${receive.symbol}`;
   const [base, quote] = inverted ? [receive, pay] : [pay, receive];
 
   return (
-    <div className={[styles.swap, className].filter(Boolean).join(" ")} data-phase={phase}>
+    <div ref={cardRef} tabIndex={-1} className={[styles.swap, className].filter(Boolean).join(" ")} data-phase={phase}>
       <form className={styles.form} inert={phase !== "idle"} onSubmit={event => { event.preventDefault(); void confirm(); }}>
         <header className={styles.header}>
           <h2 className={styles.title}>Swap</h2>
@@ -188,7 +208,7 @@ export function TokenSwap({ tokens = sampleTokens, defaultPay, defaultReceive, a
                   </div>
                   <div className={styles.fieldMain}>
                     <input id={`${uid}-${side.key}`} className={styles.amount} value={shown} readOnly={!paying} tabIndex={paying ? 0 : -1} inputMode="decimal" autoComplete="off" placeholder="0" aria-invalid={paying && short ? true : undefined} aria-describedby={`${uid}-${side.key}-worth`} onChange={event => { if (paying) setAmount(clean(event.target.value)); }} />
-                    <TokenPicker label={paying ? "Pay with" : "Receive"} token={token} tokens={tokens} balances={balances} onPick={symbol => pick(index, symbol)} />
+                    <TokenPicker label={paying ? "Pay with" : "Receive"} token={token} tokens={tokens} balances={balances} onPick={symbol => pick(index, symbol)} container={container} />
                   </div>
                   <p id={`${uid}-${side.key}-worth`} className={styles.worth}>{paying && short ? `You only have ${format(balance)} ${token.symbol}` : worth > 0 ? `About ${dollars(worth)}` : "\u00a0"}</p>
                 </motion.div>
@@ -220,7 +240,7 @@ export function TokenSwap({ tokens = sampleTokens, defaultPay, defaultReceive, a
           <div className={styles.row}><dt>Minimum received</dt><dd>{received > 0 ? `${format(received * (1 - SLIPPAGE))} ${receive.symbol}` : "—"}</dd></div>
         </dl>
 
-        <button type="submit" className={styles.confirm} disabled={!ready && phase === "idle"} data-pending={phase === "pending" ? "true" : undefined}>
+        <button ref={confirmRef} type="submit" className={styles.confirm} disabled={!ready && phase === "idle"} data-pending={phase === "pending" ? "true" : undefined}>
           <AnimatePresence mode="popLayout" initial={false}>
             <motion.span key={cta} className={styles.confirmLabel} initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -10 }} transition={{ duration: motionTokens.duration.fast, ease: motionTokens.ease.standard }}>
               {phase === "pending" ? <span className={styles.spinner} aria-hidden="true" /> : null}{cta}
@@ -228,6 +248,8 @@ export function TokenSwap({ tokens = sampleTokens, defaultPay, defaultReceive, a
           </AnimatePresence>
         </button>
       </form>
+      {/* Outside the form: an inert form drops out of the accessibility tree, and this line must still be announced. */}
+      <p className={styles.notice} role="status" data-quiet={failed && phase === "idle" ? undefined : ""}>{phase === "pending" ? "Confirming the swap…" : failed ? "The swap did not go through. Nothing was charged; try again." : ""}</p>
 
       <AnimatePresence>
         {phase === "done" && receipt ? (
@@ -239,7 +261,7 @@ export function TokenSwap({ tokens = sampleTokens, defaultPay, defaultReceive, a
             <p className={styles.receiptTitle}>Swap confirmed</p>
             <p className={styles.receiptLine}>{format(receipt.amount)} {receipt.pay} <ArrowLeftRight size={13} aria-hidden="true" /> {format(receipt.received)} {receipt.receive}</p>
             <p className={styles.receiptNote}>Balances updated. This is play money: nothing left this page.</p>
-            <button type="button" className={styles.again} onClick={reset}>New swap</button>
+            <button ref={againRef} type="button" className={styles.again} onClick={reset}>New swap</button>
           </motion.div>
         ) : null}
       </AnimatePresence>
@@ -248,10 +270,10 @@ export function TokenSwap({ tokens = sampleTokens, defaultPay, defaultReceive, a
 }
 
 /** Ready preview: the swap card centered on a quiet stage. */
-export function TokenSwapPreview() {
+export function TokenSwapPreview({ container }: { container?: HTMLElement | null } = {}) {
   return (
     <section className={styles.preview} aria-label="Token swap">
-      <TokenSwap />
+      <TokenSwap container={container} />
     </section>
   );
 }

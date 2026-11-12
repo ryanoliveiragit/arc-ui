@@ -16,6 +16,8 @@ export interface SelectProps extends Omit<ComponentPropsWithoutRef<typeof Select
   id?: string;
   className?: string;
   options: { value: string; label: string; disabled?: boolean }[];
+  /** Render the list inside this element and limit collisions to it (used by the demo stages). */
+  container?: HTMLElement | null;
 }
 
 /** The shown value rolls in the direction of the list: a later option rises from below, an earlier one drops from above. */
@@ -28,7 +30,7 @@ const valueRoll: Variants = {
 const valueFade: Variants = { enter: { opacity: 0 }, center: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: motionTokens.duration.instant } }, exit: { opacity: 0, transition: { duration: motionTokens.duration.instant } } };
 
 export const Select = forwardRef<HTMLButtonElement, SelectProps>(function Select(
-  { label, description, placeholder = "Select an option", options, id, className, disabled, onValueChange, ...rootProps },
+  { label, description, placeholder = "Select an option", options, id, className, disabled, onValueChange, container, ...rootProps },
   ref,
 ) {
   const generatedId = useId();
@@ -64,8 +66,8 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(function Select
             <ChevronDown size={16} strokeWidth={1.75} aria-hidden="true" />
           </SelectPrimitive.Icon>
         </SelectPrimitive.Trigger>
-        <SelectPrimitive.Portal>
-          <SelectPrimitive.Content className={styles.content} position="popper" sideOffset={4} collisionPadding={12}>
+        <SelectPrimitive.Portal container={container ?? undefined}>
+          <SelectPrimitive.Content className={styles.content} position="popper" sideOffset={4} collisionPadding={12} collisionBoundary={container ?? undefined}>
             <SelectPrimitive.ScrollUpButton className={styles.scrollButton}>
               <ChevronUp size={16} strokeWidth={1.75} aria-hidden="true" />
             </SelectPrimitive.ScrollUpButton>

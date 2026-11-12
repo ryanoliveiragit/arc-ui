@@ -1,7 +1,7 @@
 import { useState } from "react";
 import MorphSelect from "@/registry/components/morph-select/morph-select";
 import { avatar } from "@/lib/media";
-import { Caption, Stack } from "./_kit";
+import { Caption } from "./_kit";
 import type { DemoStage } from "./_kit";
 
 export const stage: DemoStage = { height: 520 };
@@ -20,12 +20,18 @@ const items = [
   ] },
 ];
 
+/** Width of the open list: the trigger sits at the left of a box this wide, so the list it grows into is centered. */
+const PANEL = 272;
+
 export default function MorphSelectDemo() {
-  const [value, setValue] = useState<string | null>(null);
+  // The preview opens the list on load (focus stays on the page); the space it grows into is reserved below.
+  const [value, setValue] = useState<string | null>("marcus");
   return (
-    <Stack gap={3} width={300}>
-      <MorphSelect label="Assignee" items={items} value={value} onValueChange={(v) => setValue(v)} placeholder="Choose a teammate" />
-      <Caption>Open it, glide with the arrows, or type a name to jump.</Caption>
-    </Stack>
+    <div style={{ display: "flex", width: `min(${PANEL}px, 100%)`, flexDirection: "column", alignItems: "flex-start", gap: "var(--space-3)" }}>
+      <div style={{ paddingBottom: 268 }}>
+        <MorphSelect label="Assignee" items={items} value={value} onValueChange={(v) => setValue(v)} placeholder="Choose a teammate" defaultOpen />
+      </div>
+      <Caption>Glide with the arrows, or type a name to jump.</Caption>
+    </div>
   );
 }

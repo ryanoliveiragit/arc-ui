@@ -22,3 +22,8 @@ code, pre, kbd { font-family: "Geist Mono Variable", ui-monospace, SFMono-Regula
   --font-mono: "Geist Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+/* Sobreposições dos demos (popover, menu, lista de seleção, dica) presas ao palco do preview. Os demos passam o palco como
+   container do Portal do Radix; aqui o invólucro que o Radix posiciona deixa de ser fixo na janela e vira absoluto no palco,
+   e o floating-ui passa a medir relativo a ele (o palco é o offsetParent). Assim o painel abre inteiro dentro do quadro,
+   ao lado do gatilho, e nunca é cortado pela borda do palco nem escapa por cima da página. */
+[data-demo-stage] [data-radix-popper-content-wrapper] { position: absolute !important; }

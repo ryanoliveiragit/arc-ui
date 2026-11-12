@@ -22,6 +22,8 @@ export interface DatePickerProps extends Omit<ButtonHTMLAttributes<HTMLButtonEle
   format?: Intl.DateTimeFormatOptions;
   /** Adds a Today button to the calendar header. */
   showToday?: boolean;
+  /** Start with the calendar open, without moving focus into it (for previews and onboarding). Later opens move focus as usual. */
+  defaultOpen?: boolean;
 }
 
 const monthStart = (date: Date) => new Date(date.getFullYear(), date.getMonth(), 1);
@@ -42,11 +44,13 @@ const statusRise: Variants = {
   exit: { opacity: 0, y: "-0.3em", filter: `blur(${blur.subtle}px)`, transition: { duration: 0.14, ease: ease.standard } },
 };
 
-export function DatePicker({ label, value, onChange, description, placeholder = "Select a date", minDate, maxDate, disabledDates, locale = "en-US", format = { month: "short", day: "numeric", year: "numeric" }, showToday, id, className, disabled, ...buttonProps }: DatePickerProps) {
+export function DatePicker({ label, value, onChange, description, placeholder = "Select a date", minDate, maxDate, disabledDates, locale = "en-US", format = { month: "short", day: "numeric", year: "numeric" }, showToday, defaultOpen = false, id, className, disabled, ...buttonProps }: DatePickerProps) {
   const generatedId = useId();
   const controlId = id ?? generatedId;
   const hintId = description ? `${controlId}-description` : undefined;
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(defaultOpen);
+  /** The calendar is open from defaultOpen and the user has not opened it yet: focus stays where it is, so the page does not jump on load. */
+  const quietOpen = useRef(defaultOpen);
   const [month, setMonth] = useState(monthStart(value ?? new Date()));
   const rootRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -71,7 +75,7 @@ export function DatePicker({ label, value, onChange, description, placeholder = 
 
   /** Opening moves focus to the day that owns the tab stop, so arrows work at once; a pointer open shows no ring. */
   useEffect(() => {
-    if (open) popoverRef.current?.querySelector<HTMLButtonElement>("[data-present] [data-date][tabindex=\"0\"]")?.focus({ preventScroll: true });
+    if (open && !quietOpen.current) popoverRef.current?.querySelector<HTMLButtonElement>("[data-present] [data-date][tabindex=\"0\"]")?.focus({ preventScroll: true });
   }, [open]);
 
   /** Closing hands focus back to the trigger when it was inside the calendar, so keyboard users never land on the page body. */
@@ -81,7 +85,7 @@ export function DatePicker({ label, value, onChange, description, placeholder = 
     setOpen(false);
   };
   /** The calendar always opens on the month of the current value, or today's month. */
-  const show = () => { window.clearTimeout(closeTimer.current); setMonth(monthStart(value ?? new Date())); setOpen(true); };
+  const show = () => { quietOpen.current = false; window.clearTimeout(closeTimer.current); setMonth(monthStart(value ?? new Date())); setOpen(true); };
   /** A picked day lets the highlight glide onto it and the footer confirm it, then the calendar returns to the field. */
   const selectDate = (date: Date | undefined) => {
     onChange?.(date);

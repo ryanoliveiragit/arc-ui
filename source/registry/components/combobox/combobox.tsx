@@ -32,8 +32,13 @@ export interface ComboboxProps
   description?: string;
   placeholder?: string;
   emptyMessage?: string;
+  /** Start with the list open, without focusing the field (for previews and onboarding). */
+  defaultOpen?: boolean;
   className?: string;
 }
+
+/** Lowercase and without accents, so "sao" finds "São Paulo" and "muller" finds "Müller". */
+const fold = (text: string) => text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase();
 
 /** Follows the listbox height with a critically damped spring, so filtering never snaps the menu. */
 function AutoHeight({ children, reduceMotion }: { children: ReactNode; reduceMotion: boolean | null }) {
@@ -59,6 +64,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
     description,
     placeholder = "Search or select…",
     emptyMessage = "No matches found",
+    defaultOpen = false,
     id,
     className,
     disabled,
@@ -76,7 +82,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
   const optionRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const reduceMotion = useReducedMotion();
   const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(defaultOpen);
   const [query, setQuery] = useState("");
   const [activeIndex, setActiveIndex] = useState(-1);
   const selectedValue = controlledValue ?? uncontrolledValue;
@@ -99,10 +105,10 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
   }, [selectedValue, reduceMotion, open]);
 
   const filteredOptions = useMemo(() => {
-    const normalizedQuery = query.trim().toLocaleLowerCase();
+    const normalizedQuery = fold(query.trim());
     if (!normalizedQuery) return options;
     return options.filter((option) =>
-      [option.label, ...(option.keywords ?? [])].some((term) => term.toLocaleLowerCase().includes(normalizedQuery)),
+      [option.label, ...(option.keywords ?? [])].some((term) => fold(term).includes(normalizedQuery)),
     );
   }, [options, query]);
 
@@ -190,6 +196,8 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
     }
   };
 
+  /** Option ids come from the option's place in the full list, not its value: a value with spaces would break aria-activedescendant. */
+  const optionId = (option: ComboboxOption) => `${controlId}-option-${options.indexOf(option)}`;
   const inputValue = open ? query : selectedOption?.label ?? "";
   const activeOption = activeIndex >= 0 ? filteredOptions[activeIndex] : undefined;
 
@@ -212,7 +220,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
           aria-expanded={open}
           aria-controls={open ? listboxId : undefined}
           aria-autocomplete="list"
-          aria-activedescendant={open && activeOption ? `${controlId}-option-${activeOption.value}` : undefined}
+          aria-activedescendant={open && activeOption ? optionId(activeOption) : undefined}
           onFocus={(event) => {
             onFocus?.(event);
             openMenu();
@@ -260,7 +268,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
                 <div
                   key={option.value}
                   ref={(element) => { optionRefs.current[option.value] = element; }}
-                  id={`${controlId}-option-${option.value}`}
+                  id={optionId(option)}
                   className={styles.option}
                   data-active={index === activeIndex ? "true" : undefined}
                   data-disabled={option.disabled ? "true" : undefined}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FileText, Folder, Users } from "lucide-react";
 import ExpandingSearch, { type ExpandingSearchItem } from "@/registry/components/expanding-search/expanding-search";
-import { Caption, Stack } from "./_kit";
+import { Caption, Room, Surface } from "./_kit";
 import type { DemoStage } from "./_kit";
 
 export const stage: DemoStage = { height: 460 };
@@ -20,10 +20,19 @@ const items: ExpandingSearchItem[] = [
 
 export default function ExpandingSearchDemo() {
   const [picked, setPicked] = useState<string | null>(null);
+  // Where it lives in a product: the end of a toolbar. The icon sits on the right and the field grows left over the
+  // free space; the room below the toolbar is for the results panel.
   return (
-    <Stack gap={4} width={420} align="stretch">
-      <ExpandingSearch label="Search projects and docs" items={items} suggestions={items.slice(0, 3)} placeholder="Search projects, docs, teams…" onSelect={(i) => setPicked(i.title)} anchor="start" />
-      <Caption>{picked ? `Opened “${picked}”.` : "Click the icon, then type “brand” or “team”."}</Caption>
-    </Stack>
+    <Room below={232} width={520} align="stretch">
+      <Surface padding={3} style={{ display: "flex", alignItems: "center", gap: "var(--space-4)", paddingLeft: "var(--space-5)" }}>
+        <strong style={{ flex: "none", color: "var(--foreground)", fontSize: "var(--text-sm)", fontWeight: 500 }}>Atlas workspace</strong>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <ExpandingSearch label="Search projects and docs" items={items} suggestions={items.slice(0, 3)} placeholder="Search projects, docs, teams…" onSelect={(i) => setPicked(i.title)} anchor="end" />
+        </div>
+      </Surface>
+      <div style={{ marginTop: "var(--space-3)", textAlign: "center" }}>
+        <Caption>{picked ? `Opened “${picked}”.` : "Click the search icon, then type “brand” or “team”."}</Caption>
+      </div>
+    </Room>
   );
 }

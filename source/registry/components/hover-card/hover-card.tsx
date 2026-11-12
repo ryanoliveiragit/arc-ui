@@ -49,6 +49,10 @@ export interface HoverCardProps {
   openDelay?: number;
   /** Milliseconds of grace after the pointer leaves, so it can travel into the card. */
   closeDelay?: number;
+  /** Render the card inside this element and limit collisions to it (used by the demo stages). */
+  container?: HTMLElement | null;
+  /** Starts with the card open, for previews. It then behaves as usual: leaving the trigger and card, Escape, or a press elsewhere closes it. */
+  defaultOpen?: boolean;
   className?: string;
 }
 
@@ -96,7 +100,7 @@ const Surface = forwardRef<HTMLDivElement, SurfaceProps>(function Surface({ inst
   </motion.div>;
 });
 
-export function HoverCard({ children, content, side = "bottom", align = "start", openDelay = OPEN_DELAY, closeDelay = CLOSE_DELAY, className }: HoverCardProps) {
+export function HoverCard({ children, content, side = "bottom", align = "start", openDelay = OPEN_DELAY, closeDelay = CLOSE_DELAY, container, defaultOpen = false, className }: HoverCardProps) {
   const id = useId();
   const cardId = `${id}-card`;
   const state = useSyncExternalStore(cards.subscribe, cards.get, cards.server);
@@ -113,6 +117,9 @@ export function HoverCard({ children, content, side = "bottom", align = "start",
     const pending = timers.current;
     return () => { window.clearTimeout(pending.open); window.clearTimeout(pending.close); cards.close(id); };
   }, [id]);
+  // Opened once on mount, never re-opened by a later prop change.
+  const startOpen = useRef(defaultOpen);
+  useEffect(() => { if (startOpen.current) cards.open(id); }, [id]);
 
   const clearTimers = () => { window.clearTimeout(timers.current.open); window.clearTimeout(timers.current.close); };
   const show = () => { clearTimers(); dismissed.current = false; cards.open(id); };
@@ -148,8 +155,8 @@ export function HoverCard({ children, content, side = "bottom", align = "start",
       {children}
     </PopoverPrimitive.Anchor>
     <AnimatePresence>
-      {open && <PopoverPrimitive.Portal forceMount key="card">
-        <PopoverPrimitive.Content forceMount asChild id={cardId} role="tooltip" side={side} align={align} sideOffset={8} collisionPadding={12}
+      {open && <PopoverPrimitive.Portal forceMount key="card" container={container ?? undefined}>
+        <PopoverPrimitive.Content forceMount asChild id={cardId} role="tooltip" side={side} align={align} sideOffset={8} collisionPadding={12} collisionBoundary={container ?? undefined}
           onOpenAutoFocus={event => event.preventDefault()} onCloseAutoFocus={event => event.preventDefault()}
           onEscapeKeyDown={() => { dismissed.current = true; }}
           onInteractOutside={event => { if (triggerRef.current?.contains(event.target as Node)) event.preventDefault(); }}

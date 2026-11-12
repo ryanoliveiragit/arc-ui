@@ -84,3 +84,6 @@
 .preview { display: grid; min-height: 620px; flex: 1 1 auto; place-items: center; padding: var(--space-8) var(--space-4); background: var(--background); }
 
 @media (prefers-reduced-motion: reduce) { .form, .fieldInner, .token, .chevron, .confirm, .max { transition: none; } .menu, .menu[data-state="closed"] { animation: none; } .spinner { animation-duration: 1.6s; } }
+/* Status line under the form: visible only for a failed swap; otherwise it stays in the accessibility tree for announcements. */
+.notice { margin: calc(var(--space-1) * -1) 0 0; padding: 0 var(--space-4) var(--space-4); color: var(--danger); font-size: var(--text-sm); line-height: var(--leading-body); text-align: center; }
+.notice[data-quiet] { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

@@ -48,7 +48,11 @@ O demo da página do item, com os imports como ficam depois de instalar pela CLI
 ```tsx
 import { useState } from "react";
 import { Select } from "@/components/ryan-ui/select/select";
-import { Caption, Stack } from "./_kit";
+import { Caption, Stack, demoStage } from "./_kit";
+import type { DemoStage } from "./_kit";
+
+// Room for the open list below the trigger, so it never has to squeeze against the stage edge.
+export const stage: DemoStage = { height: 540 };
 
 export default function SelectDemo() {
   const [zone, setZone] = useState("");
@@ -60,6 +64,7 @@ export default function SelectDemo() {
         placeholder="Choose a time zone"
         value={zone}
         onValueChange={setZone}
+        container={demoStage()}
         options={[
           { value: "pst", label: "Pacific Time (UTC-8)" },
           { value: "mst", label: "Mountain Time (UTC-7)" },
@@ -89,6 +94,7 @@ Extraída do código-fonte. As descrições das props vêm dos comentários do c
 | `id` | `string` | — | — |
 | `className` | `string` | — | — |
 | `options` (obrigatória) | `{ value: string; label: string; disabled?: boolean }[]` | — | — |
+| `container` | `HTMLElement \| null` | — | Render the list inside this element and limit collisions to it (used by the demo stages). |
 | `...props` | `ComponentPropsWithoutRef<typeof SelectPrimitive.Root>` | — | Também aceita as props deste tipo, menos `children`. |
 
 ## Teclado

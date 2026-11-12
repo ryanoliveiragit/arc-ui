@@ -42,10 +42,14 @@ Primeira vez no projeto: instale a base uma vez (`npx shadcn@latest add https://
 
 ## Uso
 
-O demo da página do item, com os imports como ficam depois de instalar pela CLI.
+O demo da página do item, com os imports como ficam depois de instalar pela CLI. `Stack`, `Row`, `Caption`, `Field` e `Surface` (de `./_kit`) são auxiliares de layout do site: troque pelo layout do seu projeto.
 
 ```tsx
 import MorphingSearchPreview from "@/components/ryan-ui/blocks/morphing-search/morphing-search";
+import type { DemoStage } from "./_kit";
+
+// The toolbar app fills the frame; opened, the search panel covers the page inside it.
+export const stage: DemoStage = { height: 600 };
 
 export default function MorphingSearchDemo() {
   return <MorphingSearchPreview />;

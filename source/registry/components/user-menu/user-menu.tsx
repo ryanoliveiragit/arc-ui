@@ -247,8 +247,17 @@ export function UserMenu({ user, status: statusProp, defaultStatus = "available"
       setInnerOpen(false);
       onOpenChange?.(false);
     };
+    // Escape also closes a panel that opened without taking focus (one that starts open); inside the panel, its own key handler runs.
+    const onKeyDown = (event: globalThis.KeyboardEvent) => {
+      if (event.key !== "Escape" || surfaceRef.current?.contains(document.activeElement)) return;
+      reason.current = null;
+      setHighlight(null);
+      setInnerOpen(false);
+      onOpenChange?.(false);
+    };
     document.addEventListener("pointerdown", onPointerDown, true);
-    return () => document.removeEventListener("pointerdown", onPointerDown, true);
+    document.addEventListener("keydown", onKeyDown);
+    return () => { document.removeEventListener("pointerdown", onPointerDown, true); document.removeEventListener("keydown", onKeyDown); };
   }, [open, sheet, onOpenChange]);
 
   // The page behind the sheet stays put.

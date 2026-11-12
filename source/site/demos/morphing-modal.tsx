@@ -6,7 +6,8 @@ import { Input } from "@/registry/components/input/input";
 import Switch from "@/registry/components/switch/switch";
 import { Avatar } from "@/registry/components/avatar/avatar";
 import { avatar } from "@/lib/media";
-import { Caption, Row, Stack } from "./_kit";
+import { Caption, Row, Stack, demoStage } from "./_kit";
+import type { DemoStage } from "./_kit";
 import styles from "./morphing-modal.module.css";
 
 const members = [
@@ -15,7 +16,11 @@ const members = [
   { id: "hannah-walsh", name: "Hannah Walsh", role: "Can view" },
 ] as const;
 
+export const stage: DemoStage = { height: 520 };
+
 export default function MorphingModalDemo() {
+  // On the docs page each modal grows inside the preview, so it opens whole and the page around it keeps scrolling.
+  const [container] = useState(demoStage);
   const [name, setName] = useState("");
   const [isPrivate, setPrivate] = useState(true);
   const [created, setCreated] = useState<string | null>(null);
@@ -24,6 +29,7 @@ export default function MorphingModalDemo() {
     <Stack gap={5} align="center">
       <Row justify="center" gap={4}>
         <MorphingModal
+          container={container}
           trigger={<><Plus size={16} aria-hidden="true" />New project</>}
           title="New project"
           description="Projects keep tasks, files and people in one place."
@@ -40,7 +46,7 @@ export default function MorphingModalDemo() {
           </Stack>
         </MorphingModal>
 
-        <MorphingModal variant="neutral" width={380} trigger={<><UserPlus size={16} aria-hidden="true" />Share</>} title="Share “Q3 roadmap”" description="3 people have access.">
+        <MorphingModal container={container} variant="neutral" width={380} trigger={<><UserPlus size={16} aria-hidden="true" />Share</>} title="Share “Q3 roadmap”" description="3 people have access.">
           <ul className={styles.members}>
             {members.map(member => (
               <li key={member.id} className={styles.member}>
