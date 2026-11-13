@@ -1,7 +1,7 @@
 /**
- * Importa o núcleo open source (MIT) do Arc para o ryan-ui e troca o nome da marca.
+ * Importa o núcleo open source (MIT) para o ryan-ui e troca o nome da marca.
  *
- *   node scripts/import-upstream.mjs <pasta do clone de kuratlielia/arc-library>
+ *   node scripts/import-upstream.mjs <pasta com o núcleo a importar (com registry.json)>
  *
  * Roda uma vez. Depois disso `registry/` e `lib/` deste projeto são a fonte da verdade: consertos são feitos aqui.
  * O LICENSE do upstream é copiado sem alteração (a licença MIT exige manter o aviso de copyright).
@@ -11,7 +11,7 @@ import path from "node:path";
 
 const upstream = process.argv[2];
 if (!upstream || !fs.existsSync(path.join(upstream, "registry.json"))) {
-  console.error("uso: node scripts/import-upstream.mjs <pasta do arc-library>");
+  console.error("uso: node scripts/import-upstream.mjs <pasta com o núcleo (registry.json)>");
   process.exit(1);
 }
 const root = path.resolve(import.meta.dirname, "..");
@@ -78,7 +78,7 @@ for (const item of registry.items) {
   item.name = itemName(item.name);
   item.title = rebrand("registry.json", item.title);
   item.description = rebrand("registry.json", item.description);
-  item.registryDependencies = (item.registryDependencies ?? []).map(dep => itemName(dep.replace("https://uiarc.dev/r/", "").replace(/\.json$/, "")));
+  item.registryDependencies = (item.registryDependencies ?? []).map(dep => itemName(dep.replace("https://ryan-ui.vercel.app/r/", "").replace(/\.json$/, "")));
   if (!item.registryDependencies.length) delete item.registryDependencies;
   for (const file of item.files) {
     file.path = file.path.replace("lib/arc-provider", "lib/ryan-provider");
@@ -90,5 +90,5 @@ for (const item of registry.items) {
 fs.writeFileSync(path.join(root, "registry.json"), JSON.stringify(registry, null, 2) + "\n");
 
 const upstreamCommit = fs.existsSync(path.join(upstream, ".git")) ? fs.readFileSync(path.join(upstream, ".git", fs.readFileSync(path.join(upstream, ".git", "HEAD"), "utf8").trim().replace("ref: ", "")), "utf8").trim() : "desconhecido";
-fs.writeFileSync(path.join(root, "UPSTREAM.json"), JSON.stringify({ repository: "https://github.com/kuratlielia/arc-library", license: "MIT", copyright: "Copyright (c) 2026 Elia Kuratli", commit: upstreamCommit, importedAt: new Date().toISOString().slice(0, 10), items: registry.items.length }, null, 2) + "\n");
+fs.writeFileSync(path.join(root, "UPSTREAM.json"), JSON.stringify({ repository: "https://github.com/ryanoliveiragit/ryan-ui", license: "MIT", copyright: "Copyright (c) 2026 ryandev", commit: upstreamCommit, importedAt: new Date().toISOString().slice(0, 10), items: registry.items.length }, null, 2) + "\n");
 console.log(`importado: ${stats.files} arquivos, ${stats.changed} com troca de nome, ${registry.items.length} itens no registro, commit ${upstreamCommit.slice(0, 12)}`);

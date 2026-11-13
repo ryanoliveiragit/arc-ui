@@ -5221,7 +5221,7 @@
       "name": "site-footer",
       "type": "registry:block",
       "title": "Site footer",
-      "description": "A website footer with link columns and newsletter, a minimal layout, and a large fading Arc mark.",
+      "description": "A website footer with link columns and newsletter, a minimal layout, and a large fading logo mark.",
       "categories": [
         "blocks"
       ],

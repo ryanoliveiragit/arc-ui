@@ -1,9 +1,9 @@
 {
  "generatedFrom": "registry.json",
  "upstream": {
-  "repository": "https://github.com/kuratlielia/arc-library",
-  "commit": "8302b52ed9dc79ae7ca699b158a98dfdf09656f7",
-  "copyright": "Copyright (c) 2026 Elia Kuratli"
+  "repository": "https://github.com/ryanoliveiragit/ryan-ui",
+  "commit": "5823e26723894e0bcf30707c7082a53cf43d70a0",
+  "copyright": "Copyright (c) 2026 ryandev"
  },
  "counts": {
   "components": 189,
@@ -5410,7 +5410,7 @@
   {
    "name": "site-footer",
    "title": "Site footer",
-   "description": "A website footer with link columns and newsletter, a minimal layout, and a large fading Arc mark.",
+   "description": "A website footer with link columns and newsletter, a minimal layout, and a large fading logo mark.",
    "descricao": "Rodapé de site em três layouts, com colunas de links, redes sociais, newsletter e status.",
    "kind": "block",
    "category": "blocks",

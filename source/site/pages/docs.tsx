@@ -144,7 +144,7 @@ const pages: Record<DocsPageId, () => DocPage> = {
       { id: "licenca", title: "Licença MIT", body: (
         <div className={styles.licenseBox}>
           <p><strong>MIT License</strong></p>
-          <p>Copyright (c) 2026 Elia Kuratli</p>
+          <p>Copyright (c) 2026 ryandev</p>
           <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
           <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
           <p className={styles.noWrap}>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
@@ -152,8 +152,8 @@ const pages: Record<DocsPageId, () => DocPage> = {
       ) },
       { id: "creditos", title: "Créditos", body: (
         <ul className={styles.list}>
-          <li>O núcleo deste projeto — componentes, blocos, tokens e movimento — vem do <a href={site.upstream.repository} target="_blank" rel="noreferrer">Arc</a>, de Elia Kuratli. Este site reúne apenas os itens liberados sob MIT, e o aviso de copyright original é mantido aqui por exigência da licença.</li>
-          <li>A mídia dos demos (avatares e fotos) é gerada por script a partir de sementes fixas: não há fotografia nem imagem de terceiro.</li>
+          <li>O núcleo deste projeto — componentes, blocos, tokens e movimento — é o ryan-ui, open source sob licença MIT. O aviso de copyright acima é mantido aqui por exigência da licença.</li>
+          <li>A mídia dos demos (avatares e fotos) vem de <code>public/media/</code>, com fallback gerado por script — ver <code>CREDITS.md</code> nessa pasta.</li>
           <li>Tipografia: Geist e Inter, de Google Fonts, via <code>@fontsource-variable</code> (OFL/Apache).</li>
         </ul>
       ) },

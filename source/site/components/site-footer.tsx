@@ -22,7 +22,7 @@ export function SiteFooter() {
         </nav>
       </div>
       <p className={styles.credit}>
-        Baseado no núcleo open source do <a href={site.upstream.repository} target="_blank" rel="noreferrer">Arc</a>, de Elia Kuratli, sob licença MIT. O aviso de copyright original está em <a href={href("/docs/licenca")}>Licença e créditos</a>.
+        O ryan-ui é open source sob licença MIT. Detalhes e créditos em <a href={href("/docs/licenca")}>Licença e créditos</a>.
       </p>
     </footer>
   );

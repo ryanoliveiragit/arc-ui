@@ -4,7 +4,7 @@
 
 - Tipo: bloco
 - Página: https://ryanoliveiragit.github.io/arc-ui/#/b/site-footer
-- Descrição original (inglês): A website footer with link columns and newsletter, a minimal layout, and a large fading Arc mark.
+- Descrição original (inglês): A website footer with link columns and newsletter, a minimal layout, and a large fading logo mark.
 
 ## Instalação
 

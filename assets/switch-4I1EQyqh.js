@@ -1,0 +1,1 @@
+import{D as e,k as t,v as n}from"./index-BUvk02iz.js";import{t as r}from"./switch-dbZqvLL_.js";var i=t(e(),1),a=n();function o(){let[e,t]=(0,i.useState)(!0);return(0,a.jsx)(r,{label:`Weekly digest`,checked:e,onCheckedChange:t})}export{o as default};

@@ -1,14 +1,14 @@
 "use client";
 
 /**
- * Lets an app swap the link and image elements ryan-ui components render (kuratlielia/arc-library#13).
+ * Lets an app swap the link and image elements ryan-ui components render.
  *
  * Without a provider, ryan-ui renders a plain `<a>` and `<img>`, so components work in any React app (Vite, Remix, Astro,
  * plain React). Wrap the app once to use your framework's or your own components instead:
  *
  *   import Link from "next/link";
  *   import Image from "next/image";
- *   import { RyanProvider } from "@/components/arc/lib/arc-provider";
+ *   import { RyanProvider } from "@/lib/ryan-provider";
  *
  *   <RyanProvider link={Link} image={Image}>{children}</RyanProvider>
  *
