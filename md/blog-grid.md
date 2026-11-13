@@ -89,6 +89,8 @@ Sem props próprias: aceita as do elemento ou do primitivo que envolve.
 
 #### `BlogAuthor`
 
+Sample posts for the blog grid. Photos and portraits live in public/media (credits in public/media/CREDITS.md).
+
 | Campo | Tipo | Descrição |
 | --- | --- | --- |
 | `name` (obrigatória) | `string` | — |

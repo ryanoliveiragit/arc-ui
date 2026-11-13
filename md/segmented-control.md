@@ -42,25 +42,25 @@ Primeira vez no projeto: instale a base uma vez (`npx shadcn@latest add https://
 
 ## Uso
 
-O demo da página do item, com os imports como ficam depois de instalar pela CLI. `Stack`, `Row`, `Caption`, `Field` e `Surface` (de `./_kit`) são auxiliares de layout do site: troque pelo layout do seu projeto.
+O demo da página do item, com os imports como ficam depois de instalar pela CLI.
 
 ```tsx
 import { useState } from "react";
 import SegmentedControl from "@/components/ryan-ui/segmented-control/segmented-control";
-import { Caption, Stack } from "./_kit";
 
 export default function SegmentedControlDemo() {
-  const [range, setRange] = useState("week");
-  const [view, setView] = useState("chart");
-  const revenue: Record<string, string> = { day: "$1,240", week: "$8,915", month: "$37,402", year: "$441,870" };
+  const [view, setView] = useState("Review");
   return (
-    <Stack width={380} gap={6} align="center">
-      <Stack gap={2} align="center">
-        <SegmentedControl label="Time range" value={range} onValueChange={setRange} options={[{ value: "day", label: "Day" }, { value: "week", label: "Week" }, { value: "month", label: "Month" }, { value: "year", label: "Year" }]} />
-        <Caption>Revenue this {range}: {revenue[range]}</Caption>
-      </Stack>
-      <SegmentedControl label="View" value={view} onValueChange={setView} options={[{ value: "chart", label: "Chart" }, { value: "table", label: "Table" }]} />
-    </Stack>
+    <SegmentedControl
+      label="Project view"
+      value={view}
+      onValueChange={setView}
+      options={[
+        { value: "Review", label: "Review" },
+        { value: "Activity", label: "Activity" },
+        { value: "Files", label: "Files" },
+      ]}
+    />
   );
 }
 ```

@@ -4,7 +4,7 @@ import { Fragment, useEffect, useId, useLayoutEffect, useRef, useState, type CSS
 import { ChevronDown, FileCode2 } from "lucide-react";
 import { AnimatePresence, animate, motion, useMotionValue, useReducedMotion } from "motion/react";
 import { motionTokens } from "@/lib/motion-tokens";
-import { CopyButton } from "../copy-button/copy-button";
+import { CopyButton } from "@/registry/components/copy-button/copy-button";
 import styles from "./code-block.module.css";
 
 export interface CodeBlockProps {

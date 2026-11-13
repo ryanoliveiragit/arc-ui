@@ -51,7 +51,7 @@ export interface DonutChartProps {
 }
 
 type Slice = { key: string; label: string; value: number; color?: string; members?: DonutChartDatum[] };
-type Arc = { start: number; end: number };
+type ArcSpan = { start: number; end: number };
 type Segment = { start: MotionValue<number>; end: MotionValue<number>; lift: MotionValue<number>; off: () => void };
 
 const OTHER = "__other";
@@ -261,7 +261,7 @@ export function DonutChart({ data, label, unit = "", formatValue = value => grou
   useLayoutEffect(() => { geometry.current = { c, outer, inner, corner }; paint(); });
   useEffect(() => () => { cancelFrame(paint); for (const segment of segments.current.values()) segment.off(); segments.current.clear(); }, [paint]);
 
-  const targets = useRef(new Map<string, Arc>());
+  const targets = useRef(new Map<string, ArcSpan>());
   const latest = useRef({ drawn, slices });
   useLayoutEffect(() => { latest.current = { drawn, slices }; });
 

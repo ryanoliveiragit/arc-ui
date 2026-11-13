@@ -50,27 +50,33 @@ O demo da página do item, com os imports como ficam depois de instalar pela CLI
 ```tsx
 import { useState } from "react";
 import { MetricCard } from "@/components/ryan-ui/metric-card/metric-card";
-import { Button } from "@/components/ryan-ui/button/button";
-import { Caption, Row, Stack } from "./_kit";
+import SegmentedControl from "@/components/ryan-ui/segmented-control/segmented-control";
+import { Stack } from "./_kit";
 
-const weeks = [
-  { revenue: 48210, orders: 1284, sat: 94, rc: "+12.4%", oc: "+8.1%", cc: "+3 pts" },
-  { revenue: 41930, orders: 1176, sat: 91, rc: "-13.0%", oc: "-8.4%", cc: "-3 pts" },
-  { revenue: 55780, orders: 1391, sat: 97, rc: "+33.0%", oc: "+18.3%", cc: "+6 pts" },
-];
+const ranges = {
+  "7D": { label: "Weekly active users", value: 2486, change: "+18.4%", context: "Compared with the last 7 days" },
+  "30D": { label: "Monthly active users", value: 9312, change: "+6.2%", context: "Compared with the last 30 days" },
+  "90D": { label: "Quarterly active users", value: 21870, change: "\u22122.1%", context: "Compared with the last 90 days" },
+};
 
 export default function MetricCardDemo() {
-  const [i, setI] = useState(0);
-  const w = weeks[i] ?? weeks[0]!;
+  const [range, setRange] = useState<"7D" | "30D" | "90D">("7D");
+  const metric = ranges[range];
   return (
-    <Stack gap={6} align="center" width={820}>
-      <Row gap={4} justify="center" align="stretch">
-        <div style={{ width: 240 }}><MetricCard label="Revenue (USD)" value={w.revenue} context="vs. previous week" change={w.rc} /></div>
-        <div style={{ width: 240 }}><MetricCard label="Orders" value={w.orders} context="vs. previous week" change={w.oc} /></div>
-        <div style={{ width: 240 }}><MetricCard label="Satisfaction" value={w.sat} suffix="%" context="vs. previous week" change={w.cc} /></div>
-      </Row>
-      <Button variant="secondary" onClick={() => setI((i + 1) % weeks.length)}>Show next week</Button>
-      <Caption>Numbers roll and the change text slides in the direction the value moved.</Caption>
+    <Stack gap={5} align="center">
+      <div style={{ width: 300 }}>
+        <MetricCard label={metric.label} value={metric.value} change={metric.change} context={metric.context} />
+      </div>
+      <SegmentedControl
+        label="Metric range"
+        value={range}
+        onValueChange={(next) => setRange(next === "30D" || next === "90D" ? next : "7D")}
+        options={[
+          { value: "7D", label: "7D" },
+          { value: "30D", label: "30D" },
+          { value: "90D", label: "90D" },
+        ]}
+      />
     </Stack>
   );
 }

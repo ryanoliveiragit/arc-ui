@@ -87,7 +87,7 @@ function IssueCard({ issue, name, to }: { issue: NewsletterIssue; name: string; 
     <h3 className={styles.subject}>{issue.subject}</h3>
     <ul className={styles.stories}>
       {issue.stories.slice(0, 3).map(story => <li key={story.title} className={styles.story}>
-        <Image className={styles.thumb} src={story.image} alt="" width={88} height={88} sizes="44px" />
+        <Image className={styles.thumb} src={story.image} alt="" width={88} height={88} />
         <span className={styles.storyTitle}>{story.title}</span>
         <span className={styles.minutes}>{story.minutes} min</span>
       </li>)}
@@ -145,7 +145,7 @@ function IssueStack({ publication, delivered, to, reduced, compact }: { publicat
 function Readers({ readers, done, reduced }: { readers: { count: number; faces: string[] }; done: boolean; reduced: boolean }) {
   return <div className={styles.readers}>
     <span className={styles.faces} aria-hidden="true">
-      {readers.faces.slice(0, 3).map(src => <Image key={src} src={src} alt="" width={56} height={56} sizes="28px" />)}
+      {readers.faces.slice(0, 3).map(src => <Image key={src} src={src} alt="" width={56} height={56} />)}
     </span>
     <span className={styles.readerLine}>
       <span className={styles.count}><AnimatedCounter value={readers.count + (done ? 1 : 0)} /></span>

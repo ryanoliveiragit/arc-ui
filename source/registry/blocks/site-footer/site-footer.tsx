@@ -148,7 +148,7 @@ function Newsletter({ title, description, placeholder = "you@example.com", onSub
 
 /**
  * A website footer in three layouts: link columns with a newsletter signup, a single quiet row, and a closing
- * variant where the ryan-ui mark rises in, oversized and cropped by the bottom edge, fading into the page.
+ * variant where the ryan-ui arch rises in, oversized and cropped by the bottom edge, fading into the page.
  */
 export const SiteFooter = forwardRef<HTMLElement, SiteFooterProps>(function SiteFooter({
   variant = "columns",

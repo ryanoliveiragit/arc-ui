@@ -12,7 +12,7 @@ import styles from "./changelog-feed.module.css";
 export type ChangelogKind = "new" | "improved" | "fixed";
 type Kind = ChangelogKind;
 export type ChangelogMedia =
-  | { type: "photo"; src: string; alt: string; caption: string; /** Pixel size of the image, so the frame keeps its ratio before it loads. */ width?: number; height?: number }
+  | { type: "photo"; src: string; alt: string; caption: string; /** Pixel size, needed when `src` is a URL rather than an imported image. */ width?: number; height?: number }
   | { type: "code"; file: string; code: string };
 type Media = ChangelogMedia;
 export type ChangelogEntry = { id: string; month: string; date: string; iso: string; version: string; kind: Kind; title: string; summary: string; details: string[]; media?: Media };
@@ -181,7 +181,9 @@ function SubscribeControl({ reduce }: { reduce: boolean }) {
 function EntryMedia({ media }: { media: Media }) {
   if (media.type === "photo") {
     return <figure className={styles.photo}>
-      <div className={styles.photoFrame}><Image src={media.src} alt={media.alt} width={media.width ?? 1600} height={media.height ?? 1067} sizes="(max-width: 700px) 100vw, 560px" /></div>
+      <div className={styles.photoFrame}>{typeof media.src === "string"
+        ? <Image src={media.src} alt={media.alt} width={media.width ?? 1600} height={media.height ?? 1067} />
+        : <Image src={media.src} alt={media.alt} />}</div>
       <figcaption>{media.caption}</figcaption>
     </figure>;
   }

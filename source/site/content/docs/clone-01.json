@@ -1,0 +1,214 @@
+{
+  "window-range": {
+    "quandoUsar": [
+      "Escolher o intervalo de datas de um relatório de analytics enquanto a pessoa vê a forma da série por trás (visitas, receita, latência).",
+      "Comparar períodos arrastando uma janela sobre um gráfico compacto, com total e variação recalculados ao vivo enquanto a janela se move.",
+      "Um resumo compacto com janela móvel acima de um gráfico ou tabela detalhada, sem abrir um calendário."
+    ],
+    "quandoEvitar": [
+      "Use `date-range-picker` quando as pessoas escolhem datas exatas em um calendário ou o intervalo atravessa anos.",
+      "Use `brush-chart` quando a janela deve ampliar um gráfico grande e detalhado mostrando eventos no lugar.",
+      "Use `slider` para faixas numéricas sem série para mostrar, e `sparkline` para apenas uma tendência compacta junto a um valor."
+    ],
+    "teclado": [
+      {
+        "teclas": [
+          "Tab"
+        ],
+        "acao": "Move o foco da borda inicial para a janela e depois para a borda final. O anel só aparece com teclado; a parte pressionada pelo ponteiro assume o foco para as teclas continuarem onde o ponteiro parou."
+      },
+      {
+        "teclas": [
+          "→",
+          "←",
+          "↑",
+          "↓"
+        ],
+        "acao": "Numa borda, move essa borda um passo; na janela, desloca a janela inteira um passo."
+      },
+      {
+        "teclas": [
+          "Shift + seta",
+          "PageUp",
+          "PageDown"
+        ],
+        "acao": "Move a borda ou a janela um passo grande (um décimo do domínio por padrão)."
+      },
+      {
+        "teclas": [
+          "Home",
+          "End"
+        ],
+        "acao": "Na janela, leva-a ao início ou ao fim do domínio; numa borda, leva a borda até onde os limites de amplitude permitem."
+      }
+    ],
+    "acessibilidade": [
+      "O componente é um grupo nomeado pela prop label com três elementos role=slider focáveis: borda inicial, janela e borda final.",
+      "Cada borda fala sua data formatada; a janela fala as duas pontas (\"Aug 31 to Sep 29\") e seu range é o conjunto de posições iniciais possíveis.",
+      "O gráfico, o quadro e os readouts rolantes são decorativos e ficam fora do leitor de tela; os sliders carregam todos os valores."
+    ],
+    "movimento": [
+      "Arrastar acompanha o dedo um a um (eventos coalesced); além dos limites do domínio ou da amplitude, o quadro estica como elástico e volta com mola.",
+      "Soltar um arraste rápido conserva a velocidade medida: o ponto de parada é projetado do tapa, alinhado ao passo e atingido por uma mola criticamente amortecida que começa na velocidade do tapa.",
+      "Pressionar fora da janela faz ela deslizar até se centralizar sob o dedo numa mola mais macia; teclas, presets e novos valores por props usam o mesmo deslize.",
+      "Os readouts rolam cada dígito (nomes de mês rolam como palavra inteira) na direção da mudança; durante o arraste e a inércia atualizam no lugar, sem atrasar em relação ao quadro.",
+      "Dados novos deformam linha e área a partir da forma antiga; o ponto ao vivo pulsa com animação de compositor. Com movimento reduzido tudo salta direto, sem inércia, elástico, rolagem nem pulso."
+    ],
+    "responsivo": [
+      "Gráfico e quadro preenchem o contêiner a partir de 320px; os readouts dividem uma linha com a duração no meio — oculte-a passando formatSpan nulo em espaços muito apertados.",
+      "O plot usa touch-action pan-y, então a rolagem vertical da página continua funcionando sobre o gráfico; as bordas têm área de toque que chega a 14px para fora.",
+      "Rótulos de tick ficam sob seus valores; passe menos ticks em larguras estreitas."
+    ],
+    "desempenho": [
+      "Mover a janela só escreve transforms no quadro, nas bordas e no clip; o path do gráfico é reescrito apenas quando os dados mudam.",
+      "O gráfico é um par de paths SVG desenhado duas vezes com traço não escalável; redimensionar o contêiner custa uma única medição."
+    ],
+    "notasIA": [
+      "Mapeie o domínio para índices: um ponto por dia, min 0, e um format que converte o índice em data; formatSpan recebe fim menos início, então some um para contar dias inclusos.",
+      "Recalcule totais no onValueChange para feedback ao vivo e busque no onValueCommit, que dispara quando a janela assenta; combine com botões rápidos que definem value — o quadro desliza até eles e os readouts rolam."
+    ]
+  },
+  "emoji-picker": {
+    "quandoUsar": [
+      "Compositores de mensagem, caixas de comentário e entradas de chat, onde a pessoa espera o conjunto completo de emoji com busca.",
+      "Escolher um emoji para um status, um projeto, um ícone de página ou um rótulo.",
+      "Qualquer campo de texto que precise inserir emoji em posição exata do cursor, com seleção múltipla mantendo o painel aberto."
+    ],
+    "quandoEvitar": [
+      "Use reações (`reactions`) para um conjunto pequeno e fixo de respostas rápidas num post ou comentário.",
+      "Use `combobox` ou `select` quando as escolhas são uma lista curta e conhecida.",
+      "Não use como seletor de ícone: emoji é renderizado pelas fontes do sistema e muda de aparência entre plataformas, então não sirva como glifo visual definitivo de UI."
+    ],
+    "teclado": [
+      {
+        "teclas": [
+          "Tab"
+        ],
+        "acao": "Percorre busca → barra de categorias → grade → botão de tom de pele; cada célula é alcançada pelas setas dentro da grade (tabindex roving)."
+      },
+      {
+        "teclas": [
+          "Setas",
+          "Enter",
+          "Espaço"
+        ],
+        "acao": "Na grade, movem a célula destacada (↑ na primeira linha volta para a busca); Enter/Espaço escolhem. Na barra de categorias, ←/→ navegam entre abas e Enter/Espaço saltam à seção."
+      },
+      {
+        "teclas": [
+          "PageUp",
+          "PageDown",
+          "Home",
+          "End"
+        ],
+        "acao": "Uma página inteira ou o início/fim da linha; Ctrl/Cmd + Home/End vão ao primeiro/último emoji da lista."
+      },
+      {
+        "teclas": [
+          "Esc"
+        ],
+        "acao": "Em cascata: primeiro fecha o menu de tom de pele, depois limpa a busca, só então deixa o popover hospedeiro fechar."
+      }
+    ],
+    "acessibilidade": [
+      "O raiz é um role=group nomeado pela prop label; a grade é role=grid com aria-rowcount e aria-activedescendant apontando para a célula destacada, cada célula um gridcell rotulado pelo nome do emoji.",
+      "As seções são títulos role=columnheader; a barra de categorias é role=toolbar; o menu de tom é um radiogroup com o tom ativo marcado e tabindex roving.",
+      "O botão de tom anuncia o tom atual (\"Skin tone: Default\"); a linha de prévia e os ícones são decorativos e o contador de resultados de busca sai por região aria-live polite."
+    ],
+    "movimento": [
+      "Célula pressionada encolhe até 0,86; hover e destaque pintam accent-subtle com anel interno, e o emoji da prévia repica da escala 1,18 numa mola snappy.",
+      "O indicador da barra de categorias desliza de aba em aba com a mola morph; o menu de tom de pele abre e fecha revelando por clipPath com easing padrão.",
+      "O scroll da grade sincroniza a aba ativa continuamente; um pulso trava o indicador no alvo enquanto o salto suave termina (jumpLock).",
+      "Com movimento reduzido, transições CSS somem, molas viram pulos diretos e o reveal do menu de tom desliga o inicial/exit."
+    ],
+    "responsivo": [
+      "Largura e altura aceitas por style (--emoji-picker-width/height, padrão 352×408px); a coluna de células se ajusta à largura medida (mínimo 6 colunas de 36px) ou é fixada pela prop columns.",
+      "A grade é virtualizada: só as linhas visíveis mais um overscan de 3 linhas existem no DOM, então listas com milhares de itens rodam no mesmo custo.",
+      "Num palco de demo, prenda o PopoverContent com container={demoStage()}, side=\"top\", align=\"start\" e sideOffset 8 para o painel abrir inteiro acima do gatilho."
+    ],
+    "desempenho": [
+      "O dataset embarcado é parseado uma vez por carga e compartilhado por todas as instâncias; a busca testa um haystack minúsculo pré-computado por emoji.",
+      "Mapeamento base→entrada construído em Map para itens recentes em O(1); o handler de scroll é amortizado por requestAnimationFrame."
+    ],
+    "notasIA": [
+      "onSelect recebe (seleção, evento): escolha com Shift mantenha o popover aberto (controle open/onOpenChange você mesmo) para seleção múltipla, como o demo \"Shift picks several\".",
+      "storageKey persiste recents e tom no localStorage com fallback em memória se o storage estiver bloqueado; passe null para guardar só na sessão; recentLimit corta a lista e defaultRecent semeia a seção Popular.",
+      "O tom de pele se aplica sozinho aos emojis de mão/pessoa de cluster único; sequências ZWJ ignoram o modificador, e a seleção devolve base (sem tom) além do emoji final renderizado.",
+      "Dentro de PopoverContent passe style={{ padding: 0, width: 352, height: 410 }}; o componente não tem chrome próprio — superfície, borda e sombra vêm do host — e o host precisa dar altura definida, senão a lista estica o painel."
+    ]
+  },
+  "avatar-upload": {
+    "quandoUsar": [
+      "Configurações de perfil, conta ou membros de equipe em que a pessoa define a própria foto, com recorte circular e enquadramento antes do envio.",
+      "Upload de retrato com validação de tipo e tamanho de arquivo e mensagens claras antes da foto chegar ao servidor.",
+      "Fluxos que precisam do recorte já exportado (PNG/JPEG quadrado) em vez do arquivo bruto."
+    ],
+    "quandoEvitar": [
+      "Para enviar vários arquivos de qualquer tipo use uma dropzone (`file-dropzone`); aqui o alvo é um único retrato.",
+      "Não use para capas, banners ou fotos em faixa: a exportação é sempre um círculo quadrado (padrão 512 px).",
+      "Quando a foto já vem recortada do servidor e só precisa de preview, um avatar simples com botão de trocar resolve sem o editor."
+    ],
+    "teclado": [
+      {
+        "teclas": [
+          "Tab"
+        ],
+        "acao": "No modo ocioso percorre o gatilho redondo, o botão principal e Remove. Na tela de ajuste o foco entra direto na área de recorte e dali segue para os controles de zoom e as ações."
+      },
+      {
+        "teclas": [
+          "Setas"
+        ],
+        "acao": "Na área de recorte, movem a foto em passos de 2% (10% com Shift), respeitando os limites do enquadramento com efeito elástico."
+      },
+      {
+        "teclas": [
+          "+",
+          "−",
+          "0"
+        ],
+        "acao": "Aumentam/diminuem o zoom em 0,25 (de 1× a 4×); 0 devolve a foto ao centro com zoom 1×."
+      },
+      {
+        "teclas": [
+          "Enter"
+        ],
+        "acao": "Conclui o ajuste e inicia o upload."
+      },
+      {
+        "teclas": [
+          "Esc"
+        ],
+        "acao": "Cancela o recorte; o foco volta para o gatilho."
+      }
+    ],
+    "acessibilidade": [
+      "O raiz é um role=group rotulado pelo título; a área de recorte aberta é um group com aria-roledescription \"crop area\" e um rótulo dinâmico com o zoom atual e as instruções de navegação.",
+      "A linha de status vive numa região aria-live polite (dica padrão, erros de tipo/tamanho/arquivo/envio e \"Photo updated\"); um span status separado anuncia as fases (ajuste, envio, cancelamento, remoção) aos leitores de tela.",
+      "O gatilho redondo tem aria-label contextual (\"Change profile photo\" com foto, \"Upload profile photo\" sem); os ícones de câmera, alerta e check são decorativos.",
+      "Foco por ponteiro não desenha anel (decisão da fundação); o anel de teclado vem do outline global."
+    ],
+    "movimento": [
+      "Ao abrir o recorte, o círculo cresce da medida ociosa para o dobro mais 8 px sobre um fundo quadrado que desvanece (mola smooth), e a altura da linha acompanha o conteúdo lateral medido, sem salto.",
+      "O arraste é elástico: além do limite o movimento continua a 35% e assenta com mola snappy ao soltar; zoom pela roda (listener não-passivo) e pinça mantêm o ponto sob o dedo parado.",
+      "Durante o envio, um anel gira em espera e vira o progresso real (arco contra o relógio a partir das 12h); ao concluir, o anel verde expande e desvanece em 700 ms; na falha ele congela na porcentagem onde quebrou, em vermelho.",
+      "O conteúdo lateral troca com fade e blur(4px) na duração standard; com movimento reduzido as molas viram pulos, o giro fica mais lento e o flash final some."
+    ],
+    "responsivo": [
+      "Abaixo de 480 px de largura no contêiner, o estágio sobe para o topo e a coluna lateral ocupa a largura toda (container query), empilhando o card.",
+      "O diâmetro ocioso é a prop size (padrão 88 px); o recorte abre como círculo de size × 2 + 8 sobre um fundo de size × 2 + 72, ambos animados.",
+      "No palco do demo, o card a 560 px de largura faz o estado de recorte caber sem rolagem."
+    ],
+    "desempenho": [
+      "A decodificação usa um único <img> com object URL (aceita até SVG); a exportação desenha num canvas de 512 px com clip circular e encoda PNG para entrada PNG ou JPEG 92% para o resto, preenchendo os cantos com --surface-muted quando opaco.",
+      "Os offsets do arraste vivem em motion values atualizados a cada frame, sem re-renderizar o React; apenas zoom e fases são estado.",
+      "Todo object URL criado pelo componente é revogado (unmount, candidato descartado, cancelamento), e o abort do upload limpa timers e listeners."
+    ],
+    "notasIA": [
+      "onUpload resolve com uma URL para adotá-la como nova foto ou com void para usar a imagem exportada; rejeitar cai no estado falho (Try again/Discard), e abortar pelo signal volta silenciosamente à foto anterior.",
+      "selectFile expõe pelo ref a mesma validação (tipo → tamanho → decodificação) do seletor nativo, então demos podem injetar arquivos programaticamente — como o chip Fail next upload, que consome o armamento uma única vez.",
+      "label/hint personalizam o cabeçalho e a dica do modo ocioso; os textos de erro já vêm prontos, com apóstrofo U+2019, e onError espelha exatamente o que aparece na tela.",
+      "Sem onRemove, o botão Remove não renderiza; sem onUpload, o componente simula um envio de ~1,2 s e adota a imagem exportada."
+    ]
+  }
+}

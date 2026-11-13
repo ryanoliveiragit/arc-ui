@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, animate, motion, useMotionValue, useReducedMotion, type Variants } from "motion/react";
 import { motionTokens } from "@/lib/motion-tokens";
-import { AnimatedCounter } from "../animated-counter/animated-counter";
+import { AnimatedCounter } from "@/registry/components/animated-counter/animated-counter";
 import styles from "./metric-card.module.css";
 export interface MetricCardProps { label: string; value: number; suffix?: string; context: string; change?: string }
 

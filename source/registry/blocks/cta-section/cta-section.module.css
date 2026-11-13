@@ -10,7 +10,7 @@
 @media (hover: hover) and (pointer: fine) { .action:hover .arrow, .linkAction:hover .arrow { transform: translateX(3px); } }
 .linkAction { display: inline-flex; height: var(--control-height-lg); align-items: center; justify-content: center; gap: 8px; border: 1px solid transparent; border-radius: var(--radius-control); padding: 0 20px; font-size: var(--text-sm); font-weight: 500; text-decoration: none; transition: background-color var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard), transform var(--duration-instant) var(--ease-standard); }
 .linkAction[data-size="sm"] { height: var(--control-height-sm); padding: 0 14px; }
-.linkAction[data-variant="primary"] { background: var(--foreground); color: var(--background); }
+.linkAction[data-variant="primary"] { background: var(--accent); color: var(--accent-foreground); }
 .linkAction[data-variant="secondary"] { border-color: var(--border); background: var(--surface); color: var(--foreground); }
 .linkAction:active { transform: scale(.97); }
 

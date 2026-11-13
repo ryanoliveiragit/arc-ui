@@ -42,24 +42,15 @@ Primeira vez no projeto: instale a base uma vez (`npx shadcn@latest add https://
 
 ## Uso
 
-O demo da página do item, com os imports como ficam depois de instalar pela CLI. `Stack`, `Row`, `Caption`, `Field` e `Surface` (de `./_kit`) são auxiliares de layout do site: troque pelo layout do seu projeto.
+O demo da página do item, com os imports como ficam depois de instalar pela CLI.
 
 ```tsx
 import { useState } from "react";
 import Switch from "@/components/ryan-ui/switch/switch";
-import { Caption, Stack } from "./_kit";
 
 export default function SwitchDemo() {
-  const [push, setPush] = useState(true);
-  const [email, setEmail] = useState(false);
-  return (
-    <Stack width={320} gap={4}>
-      <Switch label="Push notifications" checked={push} onCheckedChange={setPush} />
-      <Switch label="Weekly email digest" checked={email} onCheckedChange={setEmail} />
-      <Switch label="Beta features (managed by admin)" defaultChecked disabled />
-      <Caption>Push {push ? "on" : "off"}, digest {email ? "on" : "off"}. Changes apply immediately.</Caption>
-    </Stack>
-  );
+  const [enabled, setEnabled] = useState(true);
+  return <Switch label="Weekly digest" checked={enabled} onCheckedChange={setEnabled} />;
 }
 ```
 

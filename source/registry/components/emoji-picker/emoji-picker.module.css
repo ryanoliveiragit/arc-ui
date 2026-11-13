@@ -1,0 +1,144 @@
+/* O picker não tem chrome próprio: superfície, borda e sombra vêm do popover/host que o recebe.
+   Aqui vivem só o layout interno e os estados interativos, tudo em tokens. */
+
+.root {
+  display: flex;
+  flex-direction: column;
+  width: min(var(--emoji-picker-width, 352px), 100%);
+  /* Altura definida: com % contra um host de altura auto a altura ficaria indefinida e a lista esticaria o painel. */
+  height: var(--emoji-picker-height, 408px);
+  font-family: inherit;
+}
+
+.searchRow { display: flex; align-items: center; gap: 8px; padding: 10px 12px 8px; }
+.searchBox {
+  flex: 1; display: flex; align-items: center; gap: 7px;
+  height: 36px; padding: 0 10px;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  transition: border-color 0.16s ease, box-shadow 0.16s ease;
+}
+.searchBox:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-subtle); }
+.searchIcon { flex: none; color: var(--text-muted); }
+.searchInput {
+  flex: 1; min-width: 0;
+  border: 0; outline: 0; background: transparent;
+  color: var(--foreground);
+  font-size: 14px; font-family: inherit;
+}
+.searchInput::placeholder { color: var(--text-muted); }
+.clear {
+  flex: none; display: grid; place-items: center;
+  width: 22px; height: 22px;
+  border: 0; border-radius: 9999px;
+  background: transparent; color: var(--text-muted);
+  cursor: pointer;
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+.clear:hover { background: var(--border); color: var(--text-secondary); }
+
+.cats { position: relative; display: flex; align-items: center; justify-content: space-between; height: 36px; margin: 0 8px 2px; }
+.cat {
+  display: grid; place-items: center;
+  width: 37px; height: 36px;
+  border: 0; border-radius: 10px;
+  background: transparent; color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.16s ease;
+}
+.cat:hover { color: var(--text-secondary); }
+.cat:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--accent); color: var(--foreground); }
+.cat[aria-current="true"] { color: var(--foreground); }
+.catInd {
+  position: absolute; bottom: -3px; left: 0;
+  width: 16px; height: 3px;
+  border-radius: 9999px;
+  background: var(--accent);
+  pointer-events: none;
+  will-change: transform;
+}
+
+.scroll {
+  flex: 1; min-height: 0;
+  overflow-y: auto; overscroll-behavior: contain;
+  padding: 2px 0 10px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+.scroll::-webkit-scrollbar { width: 8px; }
+.scroll::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 9999px; }
+.scroll::-webkit-scrollbar-track { background: transparent; }
+.scroll:focus-visible { outline: none; box-shadow: inset 0 0 0 2px var(--accent); }
+
+/* As linhas são posicionadas absolutas dentro dele; a folga lateral vem daqui (padding não aplicaria a filhos absolutos). */
+.inner { position: relative; margin: 0 12px; }
+
+.headRow { position: absolute; left: 0; right: 0; height: 30px; display: flex; align-items: center; }
+.head { padding-left: 6px; font-size: 11.5px; font-weight: 600; letter-spacing: 0.01em; color: var(--text-muted); }
+
+.gridRow { position: absolute; left: 0; right: 0; display: grid; grid-template-columns: repeat(var(--cols, 9), 1fr); gap: 4px 0; }
+.cell {
+  height: 36px;
+  display: grid; place-items: center;
+  border: 0; padding: 0;
+  background: transparent; border-radius: 10px;
+  font-size: 22px; line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.12s ease, transform 0.16s ease;
+}
+.cell:hover { background: var(--surface-muted); }
+.cell:active { transform: scale(0.86); }
+.cell:focus { outline: none; }
+.cellOn, .cellOn:hover { background: var(--accent-subtle); box-shadow: inset 0 0 0 1.5px var(--accent); }
+
+.empty { position: absolute; inset: 0; display: grid; place-items: center; font-size: 13px; color: var(--text-muted); }
+
+.footer { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 12px; }
+.toneBtn {
+  flex: none; display: grid; place-items: center;
+  width: 36px; height: 36px;
+  border: 0; border-radius: 9999px;
+  background: transparent;
+  font-size: 21px; line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.12s ease;
+}
+.toneBtn:hover { background: var(--surface-muted); }
+.toneBtn:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--accent); }
+.searchWrap { flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; }
+/* Aberto, o seletor de tom ocupa o slot da busca: seis mãos distribuídas na largura do painel. */
+.tones { flex: 1; min-width: 0; display: flex; align-items: center; gap: 2px; height: 36px; }
+.toneOpt {
+  flex: 1; min-width: 0;
+  display: grid; place-items: center;
+  height: 36px;
+  border: 0; border-radius: 10px;
+  background: transparent;
+  font-size: 20px; line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.12s ease;
+}
+.toneOpt:hover { background: var(--surface-muted); }
+.toneOpt:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--accent); }
+.toneOn, .toneOn:hover { background: var(--surface-raised); box-shadow: inset 0 0 0 1px var(--border-strong); }
+
+.preview { flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; }
+.previewEmoji { font-size: 18px; line-height: 1; }
+.previewIdle { font-size: 15px; line-height: 1; filter: grayscale(1); opacity: 0.55; }
+.previewName { font-size: 14px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.srOnly {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cell, .cat, .clear, .toneBtn, .toneOpt, .searchBox { transition: none !important; }
+  .cell:active { transform: none; }
+}

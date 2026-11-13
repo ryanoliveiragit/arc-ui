@@ -1,5 +1,4 @@
-import { useEffect, useState, useSyncExternalStore } from "react";
-import type { RefObject } from "react";
+import { useSyncExternalStore } from "react";
 import { useReducedMotion } from "motion/react";
 import type { Transition, Variants } from "motion/react";
 import { motionTokens } from "@/lib/motion-tokens";
@@ -29,31 +28,4 @@ const noop = () => () => {};
 export function useHeroReducedMotion() {
   const hydrated = useSyncExternalStore(noop, () => true, () => false);
   return !!useReducedMotion() && hydrated;
-}
-
-/** True while the element is on screen and the tab is visible. Loops (sample runs, rotating toasts) rest otherwise. */
-export function useOnScreen(ref: RefObject<Element | null>) {
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const node = ref.current;
-    if (!node || typeof IntersectionObserver === "undefined") return;
-    let onScreen = false;
-    const sync = () => setVisible(onScreen && document.visibilityState === "visible");
-    const observer = new IntersectionObserver(([entry]) => { if (!entry) return; onScreen = entry.isIntersecting; sync(); });
-    observer.observe(node);
-    document.addEventListener("visibilitychange", sync);
-    return () => { observer.disconnect(); document.removeEventListener("visibilitychange", sync); };
-  }, [ref]);
-  return visible;
-}
-
-/** Turns true once, `ms` after mount. It holds back the parts of a hero that should start after the entrance. */
-export function useAfter(ms: number) {
-  const [done, setDone] = useState(ms <= 0);
-  useEffect(() => {
-    if (ms <= 0) return;
-    const timer = window.setTimeout(() => setDone(true), ms);
-    return () => window.clearTimeout(timer);
-  }, [ms]);
-  return done;
 }

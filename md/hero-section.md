@@ -74,16 +74,16 @@ Primeira vez no projeto: instale a base uma vez (`npx shadcn@latest add https://
 O demo da página do item, com os imports como ficam depois de instalar pela CLI. `Stack`, `Row`, `Caption`, `Field` e `Surface` (de `./_kit`) são auxiliares de layout do site: troque pelo layout do seu projeto.
 
 ```tsx
-import HeroSectionBlock, { HeroSection, heroSectionVariants } from "@/components/ryan-ui/blocks/hero-section/hero-section";
+import HeroSectionBlock, { HeroSection, type HeroSectionVariant } from "@/components/ryan-ui/blocks/hero-section/hero-section";
 import type { DemoStage } from "./_kit";
 
 /** Tall enough for the product window to show under the copy; the frame lets the hero follow its own width. */
 export const stage: DemoStage = { layout: "fill", frame: true, height: 920 };
 
-/** With `variant` ("product", "workflow" or "editorial") the demo shows exactly that version; without it, the block's own switcher. */
+/** With `variant` ("centered", "split" or "minimal") the demo shows exactly that version; without it, the block's own switcher. */
 export default function HeroSectionDemo({ variant }: { variant?: string }) {
-  const chosen = heroSectionVariants.find(option => option.value === variant);
-  return chosen ? <HeroSection key={chosen.value} variant={chosen.value} /> : <HeroSectionBlock />;
+  const chosen = (["centered", "split", "minimal"] as const).find(v => v === variant);
+  return chosen ? <HeroSection key={chosen} variant={chosen as HeroSectionVariant} /> : <HeroSectionBlock />;
 }
 ```
 
@@ -93,30 +93,28 @@ Extraída do código-fonte. As descrições das props vêm dos comentários do c
 
 ### `HeroSection`
 
-A landing page hero in three designs on a solid page with a faint dot grid: a live product window with floating cards, an automation graph that routes sample events, and editorial type over a strip of scrolling words. No gradients.
+A full screen landing page hero in three designs: a product screenshot in perspective over a drifting mesh, a live workflow graph that routes sample events, and editorial type over a mesh gradient.
 
 | Prop | Tipo | Padrão | Descrição |
 | --- | --- | --- | --- |
-| `variant` | `HeroSectionVariant \| HeroSectionLegacyVariant` | `"product"` | `product` is centered copy over a live product window with floating cards, `workflow` sets the copy beside an automation graph that runs sample events with a pulse along each line, and `editorial` is very large type over a scrolling strip of words. The earlier names `centered`, `split` and `minimal` map to them in that order. |
+| `variant` | `"centered" \| "split" \| "minimal"` | `"centered"` | `centered` is a headline over a drifting mesh with a live dashboard rising from the bottom edge, `split` sets the copy beside a live workflow graph that runs sample events node by node, and `minimal` is large type over a mesh gradient. Each design fills one full screen. |
 | `animateIn` | `boolean` | `true` | Plays the entrance once on mount. Defaults to true. |
 | `primaryAction` | `HeroAction \| null` | — | The main call to action. With `doneLabel` and no `href`, the button confirms in place. |
 | `secondaryAction` | `HeroAction \| null` | — | The second call to action. |
 | `title` | `string` | — | Your own headline. When set, the hero renders your content in the chosen layout (see `HeroContent`) instead of the designed sample, together with the props below. |
-| `description` | `string` | — | One or two sentences under your own headline. |
-| `announcement` | `HeroAction \| null` | — | A small pill above your own headline. |
+| `description` | `string` | — | — |
+| `announcement` | `HeroAction \| null` | — | — |
 | `install` | `HeroInstallCommand[] \| null` | — | Install commands for your own content; the first one is shown with a copy button. |
-| `media` | `ReactNode` | — | A visual beside your own content in the workflow layout. |
+| `media` | `ReactNode` | — | A visual beside your own content in the split layout. |
 | `meta` | `string[]` | — | Small facts under your own content, such as the version and license. |
 | `highlight` | `string` | — | Kept for compatibility; highlighted phrases render as plain text. |
 | `className` | `string` | — | — |
 
 ### `HeroSectionBlock`
 
-Preview: a slim bar to choose the version, and the chosen hero filling the rest of the screen. Switching replays the entrance.
+Preview: the hero, full screen, with a small glass switch floating over its top edge. The switch takes no space of its own, so every design fills the screen exactly. Switching replays the entrance.
 
-| Prop | Tipo | Padrão | Descrição |
-| --- | --- | --- | --- |
-| `variant` | `"product" \| "workflow" \| "editorial"` | `"product"` | The version shown first. Defaults to `product`. |
+Sem props próprias: aceita as do elemento ou do primitivo que envolve.
 
 ### `HeroNav`
 
@@ -149,69 +147,68 @@ One phrase of a headline under a solid accent marker that draws in from left to 
 
 ### `ActionLink`
 
-A link or button that looks like a ryan-ui button. Links keep native navigation; a button with `doneLabel` confirms in place.
+A link or button that looks like an ryan-ui button. Links keep native navigation; a button with `doneLabel` confirms in place.
 
 Sem props próprias: aceita as do elemento ou do primitivo que envolve.
 
 ### `HeroContent`
 
-The hero with your own content: announcement, headline, description, actions, an optional install line, and an optional visual beside the copy, on a solid page. Use it when none of the three designed variants fits the product.
+The hero with your own content: announcement, headline, description, actions, an optional install line, and an optional visual beside the copy. Use it when none of the three designed variants fits the product.
 
 | Prop | Tipo | Padrão | Descrição |
 | --- | --- | --- | --- |
-| `layout` (obrigatória) | `"centered" \| "split" \| "minimal"` | — | `centered` stacks the copy in the middle, `split` puts `media` beside it, `minimal` aligns large copy to the left. |
-| `announcement` | `HeroAction \| null` | — | A small pill above the headline, such as a release note. |
-| `title` (obrigatória) | `string` | — | The headline. |
-| `description` | `string` | — | One or two sentences under the headline. |
-| `primaryAction` | `HeroAction \| null` | — | The main call to action, filled with the accent. |
-| `secondaryAction` | `HeroAction \| null` | — | The second call to action, outlined. |
-| `install` | `HeroInstallCommand[] \| null` | — | Install commands; the first one is shown with a copy button. |
-| `media` | `ReactNode` | — | A visual beside the copy in the split layout. |
-| `meta` | `string[]` | — | Small facts under the copy, such as the version and license. |
-| `animateIn` | `boolean` | `true` | Plays the entrance once on mount. Defaults to true. |
+| `layout` (obrigatória) | `"centered" \| "split" \| "minimal"` | — | — |
+| `announcement` | `HeroAction \| null` | — | — |
+| `title` (obrigatória) | `string` | — | — |
+| `description` | `string` | — | — |
+| `primaryAction` | `HeroAction \| null` | — | — |
+| `secondaryAction` | `HeroAction \| null` | — | — |
+| `install` | `HeroInstallCommand[] \| null` | — | — |
+| `media` | `ReactNode` | — | — |
+| `meta` | `string[]` | — | — |
+| `animateIn` | `boolean` | `true` | — |
 | `className` | `string` | — | — |
 
 ### `HeroLumen`
 
-Product hero: a navigation bar, a headline with one phrase under a solid accent marker, two actions, social proof, and a live product window on a solid page with a faint dot grid. In the window the figures roll up, the chart draws itself and its range control changes every number; two small cards float over its edges. Everything enters in a stagger, and nothing moves under reduced motion.
+Centered hero, one full screen: a headline over a drifting mesh, and a live revenue dashboard rising from the bottom edge. The window settles from a tilt as it enters and runs off the bottom of the screen into a fade. It is real markup built from ryan-ui charts; its range control works.
 
 | Prop | Tipo | Padrão | Descrição |
 | --- | --- | --- | --- |
-| `primaryAction` | `HeroAction` | `{ label: "Start free trial", doneLabel: "Tria…` | The main call to action. With `doneLabel` and no `href`, the button confirms in place. |
-| `secondaryAction` | `HeroAction` | `{ label: "Book a demo", doneLabel: "Demo requ…` | The second call to action. |
-| `animateIn` | `boolean` | `true` | Plays the entrance once on mount. Defaults to true. |
+| `primaryAction` | `HeroAction` | `{ label: "Start free trial", doneLabel: "Tria…` | — |
+| `secondaryAction` | `HeroAction` | `{ label: "Book a demo", doneLabel: "Demo requ…` | — |
+| `animateIn` | `boolean` | `true` | — |
 | `className` | `string` | — | — |
 
 ### `HeroRelay`
 
-Workflow hero, one full screen: the copy beside a live automation graph on a dotted canvas. Sample events arrive on their own and run the workflow node by node: a pulse in the accent travels along each line as the data moves, the branch decides which actions run, and every step reports its time. "Send test event" runs the next sample at once. The run pauses off screen, and under reduced motion each event shows its finished run without playing.
+Split hero, one full screen: the copy beside a live workflow graph on a dotted canvas. Sample Stripe events arrive on their own and run the workflow node by node; the data draws along each edge, the branch decides which actions run, and every step reports its time. "Send test event" runs the next sample at once. The run pauses off screen, and under reduced motion each event shows its finished run without playing.
 
 | Prop | Tipo | Padrão | Descrição |
 | --- | --- | --- | --- |
-| `primaryAction` | `HeroAction` | `{ label: "Start building", doneLabel: "Worksp…` | The main call to action. With `doneLabel` and no `href`, the button confirms in place. |
-| `secondaryAction` | `HeroAction` | `{ label: "Read the docs", doneLabel: "Opening…` | The second call to action. |
-| `animateIn` | `boolean` | `true` | Plays the entrance once on mount. Defaults to true. |
+| `primaryAction` | `HeroAction` | `{ label: "Start building", doneLabel: "Worksp…` | — |
+| `secondaryAction` | `HeroAction` | `{ label: "Read the docs", doneLabel: "Opening…` | — |
+| `animateIn` | `boolean` | `true` | — |
 | `className` | `string` | — | — |
 
 ### `HeroCadence`
 
-Editorial hero, one full screen: very large type with one phrase under a solid accent marker, a short paragraph beside the actions, and a strip of words that scrolls along the bottom edge. No product window and no imagery: type does the work.
+Minimal hero, one full screen: large type over a slowly drifting mesh gradient with grain, and the teams that use the product along the bottom edge.
 
 | Prop | Tipo | Padrão | Descrição |
 | --- | --- | --- | --- |
-| `primaryAction` | `HeroAction` | `{ label: "Download for Mac", doneLabel: "Down…` | The main call to action. With `doneLabel` and no `href`, the button confirms in place. |
-| `secondaryAction` | `HeroAction` | `{ label: "Try it on the web", doneLabel: "Ope…` | The second call to action. |
-| `animateIn` | `boolean` | `true` | Plays the entrance once on mount. Defaults to true. |
+| `primaryAction` | `HeroAction` | `{ label: "Download for Mac", doneLabel: "Down…` | — |
+| `secondaryAction` | `HeroAction` | `{ label: "Try it on the web", doneLabel: "Ope…` | — |
+| `animateIn` | `boolean` | `true` | — |
 | `className` | `string` | — | — |
 
 ### Tipos exportados
 
 | Tipo | Definição |
 | --- | --- |
-| `HeroSectionVariant` | `"product" \| "workflow" \| "editorial"` |
-| `HeroSectionLegacyVariant`: Names the versions had before; they still work. | `"centered" \| "split" \| "minimal"` |
+| `HeroSectionVariant` | `"centered" \| "split" \| "minimal"` |
 | `Bezier` | `[number, number, number, number]` |
-| `LumenRange`: Sample data for Lumen, an invented revenue analytics product. Replace it with your own product's numbers. | `"7d" \| "30d" \| "90d"` |
+| `LumenRange`: Sample data for Lumen, a revenue analytics product. Replace it with your own product's numbers. | `"30d" \| "90d" \| "12m"` |
 
 #### `HeroNavLink`
 
@@ -225,9 +222,9 @@ Editorial hero, one full screen: very large type with one phrase under a solid a
 
 | Campo | Tipo | Descrição |
 | --- | --- | --- |
-| `label` (obrigatória) | `string` | Text of the button or link. |
-| `href` | `string` | Makes it a link. Without it the action is a button. |
-| `onClick` | `() => void` | Called on press. |
+| `label` (obrigatória) | `string` | — |
+| `href` | `string` | — |
+| `onClick` | `() => void` | — |
 | `external` | `boolean` | Opens in a new tab and shows an outward arrow. |
 | `doneLabel` | `string` | Shown in place of the label for a moment after a press, such as "Trial started". Buttons only. |
 
@@ -242,55 +239,34 @@ Editorial hero, one full screen: very large type with one phrase under a solid a
 
 | Campo | Tipo | Descrição |
 | --- | --- | --- |
-| `id` (obrigatória) | `"revenue" \| "conversion" \| "sessions"` | — |
+| `id` (obrigatória) | `string` | — |
 | `label` (obrigatória) | `string` | — |
-| `value` (obrigatória) | `number` | — |
-| `prefix` | `string` | — |
-| `suffix` | `string` | — |
-| `decimals` | `number` | — |
-| `change` (obrigatória) | `string` | Change against the period before, as shown in the badge. |
-| `up` (obrigatória) | `boolean` | Whether the change is good news. |
+| `tone` (obrigatória) | `"accent" \| "success" \| "warning" \| "danger"` | — |
+| `byRange` (obrigatória) | `Record<LumenRange, { value: string; change: string; data: number[] }>` | — |
 
-#### `LumenPeriod`
+#### `LumenMover`
 
 | Campo | Tipo | Descrição |
 | --- | --- | --- |
-| `against` (obrigatória) | `string` | What the change is compared with. |
-| `caption` (obrigatória) | `string` | Line under the chart title. |
-| `kpis` (obrigatória) | `LumenKpi[]` | — |
-| `line` (obrigatória) | `number[]` | Revenue through the period, as a share of the top grid line (0 to 100). Every period has the same number of points, so the line morphs between them. |
-| `previous` (obrigatória) | `number[]` | The period before, on the same scale. |
-| `yTicks` (obrigatória) | `string[]` | Value axis labels from the top grid line down. |
-| `xTicks` (obrigatória) | `string[]` | Date axis labels, spread evenly from the first point to the last. |
-
-#### `LumenTransaction`
-
-| Campo | Tipo | Descrição |
-| --- | --- | --- |
-| `customer` (obrigatória) | `string` | — |
-| `plan` (obrigatória) | `string` | — |
-| `amount` (obrigatória) | `string` | — |
-| `status` (obrigatória) | `"Paid" \| "Pending" \| "Refunded"` | — |
-| `tone` (obrigatória) | `string` | Token behind the customer's initial, such as `--tone-teal`. |
+| `name` (obrigatória) | `string` | — |
+| `logo` (obrigatória) | `string` | — |
+| `mono` | `boolean` | Mono marks draw in the text color through a mask; color marks keep their own colors. |
+| `change` (obrigatória) | `string` | — |
+| `amount` (obrigatória) | `number` | — |
 
 ### Outras exportações
 
-- `heroSectionVariants` (valor)
 - `ease` (valor)
 - `heroGroup` (valor)
 - `heroRise` (valor)
 - `heroFade` (valor)
 - `instant` (valor)
 - `useHeroReducedMotion` (hook)
-- `useOnScreen` (hook)
-- `useAfter` (hook)
 - `lumenRanges` (valor)
-- `lumenPeriods` (valor)
-- `lumenTransactions` (valor)
-- `lumenPayments` (valor)
-- `lumenGoal` (valor)
-- `lumenFaces` (valor)
-- `lumenCustomers` (valor)
+- `lumenSeries` (valor)
+- `lumenKpis` (valor)
+- `lumenMovers` (valor)
+- `lumenInsight` (valor)
 
 ## Acessibilidade
 

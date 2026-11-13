@@ -11,11 +11,8 @@ import shell from "./hero-section.module.css";
 import styles from "./hero-content.module.css";
 
 export interface HeroAction {
-  /** Text of the button or link. */
   label: string;
-  /** Makes it a link. Without it the action is a button. */
   href?: string;
-  /** Called on press. */
   onClick?: () => void;
   /** Opens in a new tab and shows an outward arrow. */
   external?: boolean;
@@ -30,30 +27,20 @@ export interface HeroInstallCommand {
 }
 
 export interface HeroContentProps {
-  /** `centered` stacks the copy in the middle, `split` puts `media` beside it, `minimal` aligns large copy to the left. */
   layout: "centered" | "split" | "minimal";
-  /** A small pill above the headline, such as a release note. */
   announcement?: HeroAction | null;
-  /** The headline. */
   title: string;
-  /** One or two sentences under the headline. */
   description?: string;
-  /** The main call to action, filled with the accent. */
   primaryAction?: HeroAction | null;
-  /** The second call to action, outlined. */
   secondaryAction?: HeroAction | null;
-  /** Install commands; the first one is shown with a copy button. */
   install?: HeroInstallCommand[] | null;
-  /** A visual beside the copy in the split layout. */
   media?: ReactNode;
-  /** Small facts under the copy, such as the version and license. */
   meta?: string[];
-  /** Plays the entrance once on mount. Defaults to true. */
   animateIn?: boolean;
   className?: string;
 }
 
-/** A link or button that looks like a ryan-ui button. Links keep native navigation; a button with `doneLabel` confirms in place. */
+/** A link or button that looks like an ryan-ui button. Links keep native navigation; a button with `doneLabel` confirms in place. */
 export function ActionLink({ action, kind, className }: { action: HeroAction; kind: "primary" | "secondary"; className?: string }) {
   const [done, setDone] = useState(false);
   useEffect(() => {
@@ -71,7 +58,7 @@ export function ActionLink({ action, kind, className }: { action: HeroAction; ki
 
 /**
  * The hero with your own content: announcement, headline, description, actions, an optional install line, and an
- * optional visual beside the copy, on a solid page. Use it when none of the three designed variants fits the product.
+ * optional visual beside the copy. Use it when none of the three designed variants fits the product.
  */
 export function HeroContent({ layout, announcement, title, description, primaryAction, secondaryAction, install, media, meta, animateIn = true, className }: HeroContentProps) {
   const item = heroRise;

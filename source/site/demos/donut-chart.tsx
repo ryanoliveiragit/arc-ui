@@ -1,36 +1,79 @@
 import { useState } from "react";
 import DonutChart, { type DonutChartDatum } from "@/registry/components/donut-chart/donut-chart";
 import SegmentedControl from "@/registry/components/segmented-control/segmented-control";
-import { Caption, Stack, Surface } from "./_kit";
+import { Caption, Row, Stack, Surface } from "./_kit";
+import type { DemoStage } from "./_kit";
 
-const datasets: Record<string, DonutChartDatum[]> = {
-  august: [
-    { key: "search", label: "Organic search", value: 48200 },
-    { key: "direct", label: "Direct", value: 31400 },
-    { key: "social", label: "Social", value: 14800 },
-    { key: "email", label: "Email", value: 11900 },
-    { key: "referral", label: "Referral", value: 8300 },
-    { key: "ads", label: "Paid ads", value: 2100 },
-  ],
-  september: [
-    { key: "search", label: "Organic search", value: 52600 },
-    { key: "direct", label: "Direct", value: 29800 },
-    { key: "social", label: "Social", value: 21700 },
-    { key: "email", label: "Email", value: 9400 },
-    { key: "referral", label: "Referral", value: 10200 },
-    { key: "ads", label: "Paid ads", value: 6500 },
-  ],
+export const stage: DemoStage = { height: 560 };
+
+type Period = "week" | "month" | "year";
+
+const grouped = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
+const compact = new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 });
+
+interface Dataset {
+  range: string;
+  formatValue: (value: number) => string;
+  data: DonutChartDatum[];
+}
+
+const datasets: Record<Period, Dataset> = {
+  week: {
+    range: "Sep 15–21, 2026",
+    formatValue: value => grouped.format(value),
+    data: [
+      { key: "search", label: "Search", value: 4210 },
+      { key: "direct", label: "Direct", value: 2380 },
+      { key: "newsletter", label: "Newsletter", value: 1940 },
+      { key: "referrals", label: "Referrals", value: 1120 },
+      { key: "social", label: "Social", value: 385 },
+      { key: "podcasts", label: "Podcasts", value: 130 },
+      { key: "partners", label: "Partners", value: 70 },
+    ],
+  },
+  month: {
+    range: "Aug 23 – Sep 21, 2026",
+    formatValue: value => grouped.format(value),
+    data: [
+      { key: "search", label: "Search", value: 16840 },
+      { key: "direct", label: "Direct", value: 8120 },
+      { key: "newsletter", label: "Newsletter", value: 5260 },
+      { key: "referrals", label: "Referrals", value: 6430 },
+      { key: "social", label: "Social", value: 2910 },
+      { key: "podcasts", label: "Podcasts", value: 640 },
+      { key: "partners", label: "Partners", value: 410 },
+    ],
+  },
+  year: {
+    range: "Oct 2025 – Sep 2026",
+    formatValue: value => (value >= 100000 ? compact.format(value) : grouped.format(value)),
+    data: [
+      { key: "search", label: "Search", value: 168300 },
+      { key: "direct", label: "Direct", value: 71900 },
+      { key: "newsletter", label: "Newsletter", value: 38400 },
+      { key: "referrals", label: "Referrals", value: 52700 },
+      { key: "social", label: "Social", value: 41200 },
+      { key: "podcasts", label: "Podcasts", value: 16400 },
+      { key: "partners", label: "Partners", value: 10100 },
+    ],
+  },
 };
 
 export default function DonutChartDemo() {
-  const [month, setMonth] = useState("august");
+  const [period, setPeriod] = useState<Period>("month");
+  const dataset = datasets[period];
   return (
-    <Stack gap={4} width={520}>
-      <SegmentedControl label="Month" value={month} onValueChange={setMonth} options={[{ value: "august", label: "August" }, { value: "september", label: "September" }]} />
-      <Surface>
-        <DonutChart data={datasets[month] ?? []} label="Visits by source" unit="visits" totalLabel="Total visits" />
-      </Surface>
-      <Caption>Hover a segment or legend row to read it in the center; click a legend row to hide it.</Caption>
-    </Stack>
+    <Surface width={570} padding={5}>
+      <Stack gap={5}>
+        <Row justify="space-between" wrap={false}>
+          <div>
+            <h3 style={{ margin: 0, color: "var(--foreground)", fontSize: 15, fontWeight: 600 }}>Visits by source</h3>
+            <Caption>{dataset.range}</Caption>
+          </div>
+          <SegmentedControl label="Visits period" options={[{ value: "week", label: "Week" }, { value: "month", label: "Month" }, { value: "year", label: "Year" }]} value={period} onValueChange={value => setPeriod(value as Period)} />
+        </Row>
+        <DonutChart key={period} data={dataset.data} label={`Visits by source, ${dataset.range}`} totalLabel="Visits" formatValue={dataset.formatValue} />
+      </Stack>
+    </Surface>
   );
 }

@@ -12,7 +12,6 @@ import { AvatarGroup } from "@/registry/components/avatar-group/avatar-group";
 import { Badge } from "@/registry/components/badge/badge";
 import { Button } from "@/registry/components/button/button";
 import { Progress } from "@/registry/components/progress/progress";
-import { avatar } from "@/lib/media";
 import { motionTokens } from "@/lib/motion-tokens";
 import styles from "./page-header.module.css";
 import { writeClipboard } from "@/lib/use-copy-feedback";
@@ -28,11 +27,11 @@ const PROJECT_URL = "https://northline.example/projects/checkout-redesign";
 
 type PersonId = "emma" | "marcus" | "ava" | "sofia" | "jasmine";
 const people: Record<PersonId, { name: string; src: string }> = {
-  emma: { name: "Emma Collins", src: avatar("emma-collins") },
-  marcus: { name: "Marcus Johnson", src: avatar("marcus-johnson") },
-  ava: { name: "Ava Mitchell", src: avatar("ava-mitchell") },
-  sofia: { name: "Sofia Ramirez", src: avatar("sofia-ramirez") },
-  jasmine: { name: "Jasmine Brooks", src: avatar("jasmine-brooks") },
+  emma: { name: "Emma Collins", src: "/media/people/emma-collins.svg" },
+  marcus: { name: "Marcus Johnson", src: "/media/people/marcus-johnson.svg" },
+  ava: { name: "Ava Mitchell", src: "/media/people/ava-mitchell.svg" },
+  sofia: { name: "Sofia Ramirez", src: "/media/people/sofia-ramirez.svg" },
+  jasmine: { name: "Jasmine Brooks", src: "/media/people/jasmine-brooks.svg" },
 };
 const members = (["emma", "marcus", "ava", "sofia", "jasmine"] as const).map(key => people[key]);
 

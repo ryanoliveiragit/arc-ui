@@ -48,21 +48,56 @@ O demo da página do item, com os imports como ficam depois de instalar pela CLI
 
 ```tsx
 import { useState } from "react";
+import { ChevronRight, File } from "lucide-react";
 import { Breadcrumb } from "@/components/ryan-ui/breadcrumb/breadcrumb";
-import { Button } from "@/components/ryan-ui/button/button";
-import { Caption, Stack } from "./_kit";
+import { Stack, Surface } from "./_kit";
 
-const tree = ["Workspace", "Projects", "Mobile app", "Releases", "v2.4.0"];
+const startTrail = ["Projects", "Arc launch", "Design review"];
+const files = ["Motion pass", "Final copy"];
 
 export default function BreadcrumbDemo() {
-  const [depth, setDepth] = useState(3);
-  const items = tree.slice(0, depth).map((label, i) => ({ label, onClick: () => setDepth(i + 1) }));
+  const [trail, setTrail] = useState<string[]>(startTrail);
   return (
-    <Stack gap={5} align="center">
-      <Breadcrumb items={items} />
-      <Button variant="secondary" size="sm" disabled={depth >= tree.length} onClick={() => setDepth(d => d + 1)}>Go deeper</Button>
-      <Caption>New crumbs slide in; choose an earlier crumb to go back up.</Caption>
-    </Stack>
+    <Surface width={460} padding={3}>
+      <Stack gap={3}>
+        <Breadcrumb
+          items={trail.map((label, index) => ({
+            label,
+            onClick: index < trail.length - 1 ? () => setTrail(trail.slice(0, index + 1)) : undefined,
+          }))}
+        />
+        <div>
+          {files.map((file) => (
+            <button
+              key={file}
+              type="button"
+              onClick={() => setTrail((t) => [...t, file])}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: 12,
+                width: "100%",
+                padding: "8px 10px",
+                border: "none",
+                borderRadius: 8,
+                background: "transparent",
+                color: "var(--muted-foreground)",
+                fontSize: 14,
+                fontFamily: "inherit",
+                cursor: "pointer",
+              }}
+            >
+              <span style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <File size={15} aria-hidden="true" />
+                {file}
+              </span>
+              <ChevronRight size={15} aria-hidden="true" />
+            </button>
+          ))}
+        </div>
+      </Stack>
+    </Surface>
   );
 }
 ```

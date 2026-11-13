@@ -1,126 +1,97 @@
-/** Sample data for Lumen, an invented revenue analytics product. Replace it with your own product's numbers. */
+import type { LineChartDatum } from "@/registry/components/line-chart/line-chart";
 
-export type LumenRange = "7d" | "30d" | "90d";
+/** Sample data for Lumen, a revenue analytics product. Replace it with your own product's numbers. */
+
+export type LumenRange = "30d" | "90d" | "12m";
 
 export const lumenRanges: { value: LumenRange; label: string }[] = [
-  { value: "7d", label: "7D" },
   { value: "30d", label: "30D" },
   { value: "90d", label: "90D" },
+  { value: "12m", label: "12M" },
 ];
+
+/** A smooth, deterministic walk: a trend, one slow wave, and a little noise that repeats for the same seed. */
+function walk(count: number, start: number, end: number, wave: number, seed: number) {
+  let s = seed;
+  const rand = () => { s = (s * 16807) % 2147483647; return s / 2147483647 - .5; };
+  return Array.from({ length: count }, (_, i) => {
+    const t = i / (count - 1);
+    return Math.round(start + (end - start) * (t * t * .35 + t * .65) + Math.sin(t * Math.PI * 2.3) * wave + rand() * wave * .6);
+  });
+}
+
+const months = ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"];
+
+function series(range: LumenRange): LineChartDatum[] {
+  if (range === "12m") {
+    const now = walk(12, 9_800, 36_400, 2_600, 7), before = walk(12, 6_200, 21_900, 2_200, 19);
+    return months.map((month, i) => ({ key: `m${i}`, label: `${month} ${i < 3 ? 2025 : 2026}`, axisLabel: i % 2 === 0 ? month : undefined, values: { mrr: now[i], last: before[i] } }));
+  }
+  const days = range === "30d" ? 30 : 13;
+  const step = range === "30d" ? 1 : 7;
+  const now = walk(days, range === "30d" ? 640 : 4_300, range === "30d" ? 1_960 : 9_800, range === "30d" ? 260 : 900, range === "30d" ? 3 : 11);
+  const before = walk(days, range === "30d" ? 520 : 3_600, range === "30d" ? 1_180 : 6_100, range === "30d" ? 220 : 700, 29);
+  const end = new Date(Date.UTC(2026, 8, 24));
+  return now.map((value, i) => {
+    const date = new Date(end.getTime() - (days - 1 - i) * step * 86_400_000);
+    const label = date.toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
+    const every = range === "30d" ? 7 : 3;
+    return { key: date.toISOString().slice(0, 10), label, axisLabel: (days - 1 - i) % every === 0 ? label : undefined, values: { mrr: value, last: before[i] } };
+  });
+}
+
+export const lumenSeries: Record<LumenRange, LineChartDatum[]> = { "30d": series("30d"), "90d": series("90d"), "12m": series("12m") };
 
 export interface LumenKpi {
-  id: "revenue" | "conversion" | "sessions";
+  id: string;
   label: string;
-  value: number;
-  prefix?: string;
-  suffix?: string;
-  decimals?: number;
-  /** Change against the period before, as shown in the badge. */
+  tone: "accent" | "success" | "warning" | "danger";
+  byRange: Record<LumenRange, { value: string; change: string; data: number[] }>;
+}
+
+export const lumenKpis: LumenKpi[] = [
+  { id: "mrr", label: "MRR", tone: "accent", byRange: {
+    "30d": { value: "$482.9K", change: "+8.2%", data: walk(12, 446, 483, 4, 5) },
+    "90d": { value: "$482.9K", change: "+19.9%", data: walk(12, 402, 483, 6, 9) },
+    "12m": { value: "$482.9K", change: "+51.7%", data: walk(12, 318, 483, 8, 13) },
+  } },
+  { id: "nrr", label: "Net retention", tone: "success", byRange: {
+    "30d": { value: "118%", change: "+3 pts", data: walk(12, 112, 118, 1.5, 17) },
+    "90d": { value: "116%", change: "+5 pts", data: walk(12, 109, 116, 1.8, 21) },
+    "12m": { value: "114%", change: "+9 pts", data: walk(12, 103, 114, 2.4, 23) },
+  } },
+  { id: "new", label: "New customers", tone: "success", byRange: {
+    "30d": { value: "214", change: "+12%", data: walk(12, 5, 9, 2, 31) },
+    "90d": { value: "602", change: "+18%", data: walk(12, 38, 56, 6, 37) },
+    "12m": { value: "2,140", change: "+34%", data: walk(12, 120, 214, 16, 41) },
+  } },
+  { id: "churn", label: "Churned MRR", tone: "success", byRange: {
+    "30d": { value: "$6.1K", change: "−14%", data: walk(12, 9, 6, 1.2, 43) },
+    "90d": { value: "$21.4K", change: "−9%", data: walk(12, 26, 21, 2, 47) },
+    "12m": { value: "$96.8K", change: "−22%", data: walk(12, 12, 7, 1.4, 53) },
+  } },
+];
+
+export interface LumenMover {
+  name: string;
+  logo: string;
+  /** Mono marks draw in the text color through a mask; color marks keep their own colors. */
+  mono?: boolean;
   change: string;
-  /** Whether the change is good news. */
-  up: boolean;
+  amount: number;
 }
 
-export interface LumenPeriod {
-  /** What the change is compared with. */
-  against: string;
-  /** Line under the chart title. */
-  caption: string;
-  kpis: LumenKpi[];
-  /** Revenue through the period, as a share of the top grid line (0 to 100). Every period has the same number of points, so the line morphs between them. */
-  line: number[];
-  /** The period before, on the same scale. */
-  previous: number[];
-  /** Value axis labels from the top grid line down. */
-  yTicks: string[];
-  /** Date axis labels, spread evenly from the first point to the last. */
-  xTicks: string[];
-}
+export const lumenMovers: LumenMover[] = [
+  { name: "Linear", logo: "/block-logos/linear-color.svg", change: "Moved to Enterprise", amount: 4_200 },
+  { name: "Raycast", logo: "/block-logos/raycast-color.svg", change: "Added 120 seats", amount: 2_850 },
+  { name: "Vercel", logo: "/block-logos/vercel.svg", mono: true, change: "Annual prepay", amount: 1_900 },
+  { name: "Loom", logo: "/block-logos/loom-color.svg", change: "Removed 40 seats", amount: -1_240 },
+  { name: "Supabase", logo: "/block-logos/supabase-color.svg", change: "Added forecasting", amount: 980 },
+  { name: "Framer", logo: "/block-logos/framer.svg", mono: true, change: "Upgraded to Scale", amount: 760 },
+];
 
-export const lumenPeriods: Record<LumenRange, LumenPeriod> = {
-  "7d": {
-    against: "vs last week",
-    caption: "Daily, last 7 days",
-    kpis: [
-      { id: "revenue", label: "Revenue", value: 11_840, prefix: "$", change: "4.2%", up: true },
-      { id: "conversion", label: "Conversion", value: 4.1, suffix: "%", decimals: 1, change: "0.3 pts", up: true },
-      { id: "sessions", label: "Sessions", value: 2_960, change: "2.3%", up: false },
-    ],
-    line: [38, 44, 41, 36, 47, 55, 52, 49, 58, 66, 61, 57, 68, 74, 70, 79],
-    previous: [34, 37, 40, 35, 39, 46, 48, 44, 47, 54, 52, 50, 55, 60, 58, 63],
-    yTicks: ["$2.4k", "$1.8k", "$1.2k", "$600"],
-    xTicks: ["Sep 18", "Sep 20", "Sep 22", "Sep 24"],
-  },
-  "30d": {
-    against: "vs last month",
-    caption: "Daily, last 30 days",
-    kpis: [
-      { id: "revenue", label: "Revenue", value: 48_290, prefix: "$", change: "12.4%", up: true },
-      { id: "conversion", label: "Conversion", value: 3.8, suffix: "%", decimals: 1, change: "0.6 pts", up: true },
-      { id: "sessions", label: "Sessions", value: 12_480, change: "8.1%", up: true },
-    ],
-    line: [22, 26, 24, 31, 36, 33, 41, 46, 43, 52, 58, 55, 64, 71, 76, 84],
-    previous: [18, 20, 23, 22, 27, 30, 29, 34, 37, 36, 41, 45, 44, 49, 52, 56],
-    yTicks: ["$2k", "$1.5k", "$1k", "$500"],
-    xTicks: ["Aug 26", "Sep 5", "Sep 15", "Sep 24"],
-  },
-  "90d": {
-    against: "vs last quarter",
-    caption: "Weekly, last 90 days",
-    kpis: [
-      { id: "revenue", label: "Revenue", value: 139_650, prefix: "$", change: "21.7%", up: true },
-      { id: "conversion", label: "Conversion", value: 3.5, suffix: "%", decimals: 1, change: "0.4 pts", up: true },
-      { id: "sessions", label: "Sessions", value: 37_120, change: "15.2%", up: true },
-    ],
-    line: [14, 17, 21, 20, 26, 31, 37, 35, 43, 50, 54, 61, 66, 73, 81, 90],
-    previous: [12, 14, 15, 19, 21, 24, 27, 31, 33, 38, 41, 45, 50, 53, 58, 62],
-    yTicks: ["$16k", "$12k", "$8k", "$4k"],
-    xTicks: ["Jun 27", "Jul 27", "Aug 26", "Sep 24"],
-  },
+export const lumenInsight: Record<LumenRange, { lead: string; rest: string }> = {
+  "30d": { lead: "MRR grew $36.4K this month.", rest: "62% came from 14 expansions on the Scale plan, led by Linear." },
+  "90d": { lead: "MRR grew $80.6K this quarter.", rest: "Expansion outpaced new business for the first time since March." },
+  "12m": { lead: "MRR grew $164.5K in twelve months.", rest: "Net retention above 110% did more than new logos did." },
 };
-
-export interface LumenTransaction {
-  customer: string;
-  plan: string;
-  amount: string;
-  status: "Paid" | "Pending" | "Refunded";
-  /** Token behind the customer's initial, such as `--tone-teal`. */
-  tone: string;
-}
-
-/** Invented customers. */
-export const lumenTransactions: LumenTransaction[] = [
-  { customer: "Brightlane", plan: "Scale, yearly", amount: "$1,240.00", status: "Paid", tone: "--tone-teal" },
-  { customer: "Kestrel Labs", plan: "Team, monthly", amount: "$320.00", status: "Paid", tone: "--tone-violet" },
-  { customer: "Nordvik", plan: "Enterprise", amount: "$4,800.00", status: "Pending", tone: "--tone-amber" },
-  { customer: "Tessera", plan: "Team, monthly", amount: "$96.00", status: "Refunded", tone: "--tone-sky" },
-];
-
-/** Payments the floating toast announces, one after another. */
-export const lumenPayments = [
-  { amount: "$1,240.00", from: "Brightlane" },
-  { amount: "$320.00", from: "Kestrel Labs" },
-  { amount: "$2,150.00", from: "Oakhurst" },
-];
-
-/** Progress toward the month's revenue goal. */
-export const lumenGoal = { share: .82, reached: "$41k", target: "$50k" };
-
-/** People behind the social proof row. Initials only, each on its own tone. */
-export const lumenFaces = [
-  { name: "Emma Collins", tone: "--tone-teal" },
-  { name: "Marcus Johnson", tone: "--tone-violet" },
-  { name: "Sofia Ramirez", tone: "--tone-amber" },
-  { name: "Daniel Kim", tone: "--tone-sky" },
-  { name: "Ava Mitchell", tone: "--tone-rose" },
-];
-
-/** Invented customer names for the wordmark row, each with a plain geometric mark. */
-export const lumenCustomers: { name: string; shape: "circle" | "square" | "triangle" | "diamond" | "rings" | "bars" }[] = [
-  { name: "Brightlane", shape: "bars" },
-  { name: "Kestrel", shape: "triangle" },
-  { name: "Nordvik", shape: "circle" },
-  { name: "Tessera", shape: "square" },
-  { name: "Oakhurst", shape: "rings" },
-  { name: "Quillon", shape: "diamond" },
-];

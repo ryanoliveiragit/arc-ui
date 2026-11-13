@@ -6,7 +6,7 @@
   "copyright": "Copyright (c) 2026 Elia Kuratli"
  },
  "counts": {
-  "components": 179,
+  "components": 182,
   "blocks": 42
  },
  "items": [
@@ -509,6 +509,37 @@
    ],
    "hasDemo": true,
    "isNew": false,
+   "hasGuide": true
+  },
+  {
+   "name": "avatar-upload",
+   "title": "Avatar upload",
+   "description": "Click or drop a photo onto the avatar to crop it in place with drag, pinch and zoom. It uploads through a progress ring and settles, with clear errors and retry.",
+   "descricao": "Clique ou solte uma foto sobre o avatar para cortá-la no lugar, com arraste, pinça e zoom; o envio passa por um anel de progresso e assenta, com erros claros e nova tentativa.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "avatar",
+    "upload",
+    "crop",
+    "image",
+    "profile"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/avatar-upload/avatar-upload.tsx",
+    "registry/components/avatar-upload/avatar-upload.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/avatar-upload/avatar-upload.tsx",
+    "registry/components/avatar-upload/avatar-upload.module.css"
+   ],
+   "hasDemo": true,
+   "isNew": true,
    "hasGuide": true
   },
   {
@@ -2232,6 +2263,39 @@
    ],
    "hasDemo": true,
    "isNew": false,
+   "hasGuide": true
+  },
+  {
+   "name": "emoji-picker",
+   "title": "Emoji picker",
+   "description": "A full emoji picker with instant search, scroll-synced categories, skin tones, recently used emoji, and a virtualized, keyboard-navigable grid.",
+   "descricao": "Seletor de emoji completo com busca instantânea, categorias sincronizadas à rolagem, tons de pele, emojis usados recentemente e uma grade virtualizada que se navega por inteiro pelo teclado.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "emoji",
+    "picker",
+    "search",
+    "skin-tone",
+    "composer"
+   ],
+   "dependencies": [
+    "lucide-react",
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/emoji-picker/emoji-picker.tsx",
+    "registry/components/emoji-picker/emoji-picker.module.css",
+    "registry/components/emoji-picker/emoji-data.ts"
+   ],
+   "ownFiles": [
+    "registry/components/emoji-picker/emoji-picker.tsx",
+    "registry/components/emoji-picker/emoji-picker.module.css",
+    "registry/components/emoji-picker/emoji-data.ts"
+   ],
+   "hasDemo": true,
+   "isNew": true,
    "hasGuide": true
   },
   {
@@ -5222,7 +5286,7 @@
   {
    "name": "site-footer",
    "title": "Site footer",
-   "description": "A website footer with link columns and newsletter, a minimal layout, and a large fading ryan-ui mark.",
+   "description": "A website footer with link columns and newsletter, a minimal layout, and a large fading Arc mark.",
    "descricao": "Rodapé de site em três layouts, com colunas de links, redes sociais, newsletter e status.",
    "kind": "block",
    "category": "blocks",
@@ -6616,6 +6680,36 @@
    "ownFiles": [
     "registry/components/wheel-picker/wheel-picker.tsx",
     "registry/components/wheel-picker/wheel-picker.module.css"
+   ],
+   "hasDemo": true,
+   "isNew": true,
+   "hasGuide": true
+  },
+  {
+   "name": "window-range",
+   "title": "Window range",
+   "description": "A time window over a live area chart: drag its edges to resize, drag or flick it to pan with momentum, and the dates roll to their new values.",
+   "descricao": "Janela de tempo sobre um gráfico de área ao vivo: arraste as bordas para redimensionar, arraste ou dê um tapa para rolar com inércia, e as datas rolam para os novos valores.",
+   "kind": "component",
+   "category": "inputs",
+   "tags": [
+    "slider",
+    "chart",
+    "range",
+    "brush",
+    "analytics"
+   ],
+   "dependencies": [
+    "motion"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/window-range/window-range.tsx",
+    "registry/components/window-range/window-range.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/window-range/window-range.tsx",
+    "registry/components/window-range/window-range.module.css"
    ],
    "hasDemo": true,
    "isNew": true,

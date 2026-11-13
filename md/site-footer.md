@@ -4,7 +4,7 @@
 
 - Tipo: bloco
 - Página: https://ryanoliveiragit.github.io/arc-ui/#/b/site-footer
-- Descrição original (inglês): A website footer with link columns and newsletter, a minimal layout, and a large fading ryan-ui mark.
+- Descrição original (inglês): A website footer with link columns and newsletter, a minimal layout, and a large fading Arc mark.
 
 ## Instalação
 
@@ -48,13 +48,22 @@ Primeira vez no projeto: instale a base uma vez (`npx shadcn@latest add https://
 
 ## Uso
 
-O demo da página do item, com os imports como ficam depois de instalar pela CLI.
+O demo da página do item, com os imports como ficam depois de instalar pela CLI. `Stack`, `Row`, `Caption`, `Field` e `Surface` (de `./_kit`) são auxiliares de layout do site: troque pelo layout do seu projeto.
 
 ```tsx
 import SiteFooter from "@/components/ryan-ui/blocks/site-footer/site-footer";
+import type { DemoStage } from "./_kit";
+
+// Mesma regra do faq-section: a faixa pintada do canvas do site mede 774×612 com respiro de 14;
+// o iframe fica em 610 (= 612 − 2 bordas) e o excesso do respiro inferior corta na viewport.
+export const stage: DemoStage = { height: 610 };
 
 export default function SiteFooterDemo() {
-  return <SiteFooter />;
+  return (
+    <div style={{ display: "grid", placeItems: "center", padding: 14, background: "var(--surface-muted)" }}>
+      <SiteFooter />
+    </div>
+  );
 }
 ```
 
@@ -64,7 +73,7 @@ Extraída do código-fonte. As descrições das props vêm dos comentários do c
 
 ### `SiteFooter`
 
-A website footer in three layouts: link columns with a newsletter signup, a single quiet row, and a closing variant where the ryan-ui mark rises in, oversized and cropped by the bottom edge, fading into the page.
+A website footer in three layouts: link columns with a newsletter signup, a single quiet row, and a closing variant where the ryan-ui arch rises in, oversized and cropped by the bottom edge, fading into the page.
 
 | Prop | Tipo | Padrão | Descrição |
 | --- | --- | --- | --- |

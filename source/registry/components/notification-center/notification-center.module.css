@@ -34,7 +34,7 @@
 .itemExpanded { background: var(--surface-muted); }
 .itemRead .itemTitle strong { color: var(--text-secondary); }
 .itemMain { display: flex; align-items: flex-start; gap: 11px; min-width: 0; }
-.eventIcon { display: grid; width: 36px; height: 36px; flex: none; place-items: center; color: var(--accent-strong); }
+.eventIcon { display: grid; width: 36px; height: 36px; flex: none; place-items: center; color: var(--accent); }
 .eventIcon.success { color: var(--success); }
 .eventIcon.warning { color: var(--warning); }
 .itemToggle { display: grid; min-width: 0; flex: 1; gap: 4px; padding: 2px 0 0; border: 0; background: transparent; color: var(--foreground); text-align: left; font: inherit; cursor: pointer; }

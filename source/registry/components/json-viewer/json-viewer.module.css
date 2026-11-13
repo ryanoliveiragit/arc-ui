@@ -38,7 +38,7 @@
 /* Type colors lean on the semantic roles, so both themes stay legible. */
 .value { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
 .value[data-type="string"] { color: var(--success); }
-.value[data-type="number"] { color: var(--accent-strong); font-variant-numeric: tabular-nums; }
+.value[data-type="number"] { color: var(--accent); font-variant-numeric: tabular-nums; }
 .value[data-type="boolean"] { color: var(--warning); }
 .value[data-type="null"], .value[data-type="other"] { color: var(--text-muted); }
 

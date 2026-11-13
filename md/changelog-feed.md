@@ -80,7 +80,7 @@ Extraída do código-fonte. As descrições das props vêm dos comentários do c
 | Tipo | Definição |
 | --- | --- |
 | `ChangelogKind` | `"new" \| "improved" \| "fixed"` |
-| `ChangelogMedia` | `\| { type: "photo"; src: string; alt: string; caption: string; /** Pixel size of the image, so the frame keeps its ratio before it loads. */ width?: number; height?: number } \| { type: "code"; file: string; code: string }` |
+| `ChangelogMedia` | `` \| { type: "photo"; src: string; alt: string; caption: string; /** Pixel size, needed when `src` is a URL rather than an imported image. */ width?: number; height?: number } \| { type: "code"; file: string; code: string } `` |
 
 #### `ChangelogEntry`
 

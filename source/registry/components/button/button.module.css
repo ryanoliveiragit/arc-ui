@@ -11,7 +11,7 @@
 .labelContent { display: inline-flex; flex: none; align-items: center; }
 .labelPhase { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2); white-space: nowrap; }
 .labelPhase svg { flex: none; }
-.primary { color: var(--accent-foreground); background: var(--accent); border-color: var(--accent); font-weight: 600; }
+.primary { color: var(--accent-foreground); background: var(--accent); border-color: var(--accent); }
 .secondary { color: var(--foreground); background: var(--surface); border-color: var(--border); }
 .ghost { color: var(--text-secondary); background: transparent; border-color: transparent; }
 .danger { color: var(--danger); background: var(--surface); border-color: var(--border); }
@@ -20,7 +20,7 @@
 .danger:disabled { color: color-mix(in oklab, var(--danger) 55%, var(--surface-muted)); }
 .ghost:disabled { opacity: 1; color: var(--text-muted); }
 @media (hover: hover) and (pointer: fine) {
-  .primary:hover:not(:disabled) { opacity: .9; }
+  .primary:hover:not(:disabled) { opacity: .91; box-shadow: var(--shadow-resting); }
   .secondary:hover:not(:disabled) { background: var(--surface-muted); box-shadow: var(--shadow-resting); }
   .ghost:hover:not(:disabled) { color: var(--foreground); background: var(--surface-muted); }
   .danger:hover:not(:disabled) { border-color: var(--danger); background: var(--surface-muted); }

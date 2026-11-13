@@ -6,31 +6,24 @@ import SegmentedControl from "@/registry/components/segmented-control/segmented-
 import { HeroLumen } from "./hero-lumen";
 import { HeroRelay } from "./hero-relay";
 import { HeroCadence } from "./hero-cadence";
+import { HeroMesh } from "./hero-mesh";
+import type { HeroMeshPoint } from "./hero-mesh";
 import { HeroContent } from "./hero-content";
 import type { HeroAction, HeroInstallCommand } from "./hero-content";
-import { HeroBackdrop, HeroMark, HeroNav } from "./hero-parts";
-import type { HeroNavLink } from "./hero-parts";
 import styles from "./hero-section.module.css";
 
-export { HeroBackdrop, HeroCadence, HeroContent, HeroLumen, HeroMark, HeroNav, HeroRelay };
-/** The three designs under the names of their versions. */
-export { HeroLumen as HeroProduct, HeroRelay as HeroWorkflow, HeroCadence as HeroEditorial };
-export type { HeroAction, HeroInstallCommand, HeroNavLink };
+export { HeroCadence, HeroContent, HeroLumen, HeroMesh, HeroRelay };
+export type { HeroAction, HeroInstallCommand, HeroMeshPoint };
 
-export type HeroSectionVariant = "product" | "workflow" | "editorial";
-/** Names the versions had before; they still work. */
-export type HeroSectionLegacyVariant = "centered" | "split" | "minimal";
-
-const LEGACY: Record<HeroSectionLegacyVariant, HeroSectionVariant> = { centered: "product", split: "workflow", minimal: "editorial" };
-const LAYOUT: Record<HeroSectionVariant, HeroSectionLegacyVariant> = { product: "centered", workflow: "split", editorial: "minimal" };
+export type HeroSectionVariant = "centered" | "split" | "minimal";
 
 export interface HeroSectionProps {
   /**
-   * `product` is centered copy over a live product window with floating cards, `workflow` sets the copy beside an automation
-   * graph that runs sample events with a pulse along each line, and `editorial` is very large type over a scrolling strip of
-   * words. The earlier names `centered`, `split` and `minimal` map to them in that order.
+   * `centered` is a headline over a drifting mesh with a live dashboard rising from the bottom edge, `split` sets the copy
+   * beside a live workflow graph that runs sample events node by node, and `minimal` is large type over a mesh gradient.
+   * Each design fills one full screen.
    */
-  variant?: HeroSectionVariant | HeroSectionLegacyVariant;
+  variant?: HeroSectionVariant;
   /** Plays the entrance once on mount. Defaults to true. */
   animateIn?: boolean;
   /** The main call to action. With `doneLabel` and no `href`, the button confirms in place. */
@@ -42,13 +35,11 @@ export interface HeroSectionProps {
    * designed sample, together with the props below.
    */
   title?: string;
-  /** One or two sentences under your own headline. */
   description?: string;
-  /** A small pill above your own headline. */
   announcement?: HeroAction | null;
   /** Install commands for your own content; the first one is shown with a copy button. */
   install?: HeroInstallCommand[] | null;
-  /** A visual beside your own content in the workflow layout. */
+  /** A visual beside your own content in the split layout. */
   media?: ReactNode;
   /** Small facts under your own content, such as the version and license. */
   meta?: string[];
@@ -58,40 +49,34 @@ export interface HeroSectionProps {
 }
 
 /**
- * A landing page hero in three designs on a solid page with a faint dot grid: a live product window with floating cards, an
- * automation graph that routes sample events, and editorial type over a strip of scrolling words. No gradients.
+ * A full screen landing page hero in three designs: a product screenshot in perspective over a drifting mesh, a live workflow
+ * graph that routes sample events, and editorial type over a mesh gradient.
  */
-export function HeroSection({ variant = "product", animateIn = true, primaryAction, secondaryAction, title, description, announcement, install, media, meta, className }: HeroSectionProps) {
-  const design = variant in LEGACY ? LEGACY[variant as HeroSectionLegacyVariant] : variant as HeroSectionVariant;
-  if (title) return <HeroContent layout={LAYOUT[design]} title={title} description={description} announcement={announcement} primaryAction={primaryAction} secondaryAction={secondaryAction} install={install} media={media} meta={meta} animateIn={animateIn} className={className} />;
+export function HeroSection({ variant = "centered", animateIn = true, primaryAction, secondaryAction, title, description, announcement, install, media, meta, className }: HeroSectionProps) {
+  if (title) return <HeroContent layout={variant} title={title} description={description} announcement={announcement} primaryAction={primaryAction} secondaryAction={secondaryAction} install={install} media={media} meta={meta} animateIn={animateIn} className={className} />;
   const actions = { primaryAction: primaryAction ?? undefined, secondaryAction: secondaryAction ?? undefined };
-  if (design === "workflow") return <HeroRelay animateIn={animateIn} className={className} {...actions} />;
-  if (design === "editorial") return <HeroCadence animateIn={animateIn} className={className} {...actions} />;
+  if (variant === "split") return <HeroRelay animateIn={animateIn} className={className} {...actions} />;
+  if (variant === "minimal") return <HeroCadence animateIn={animateIn} className={className} {...actions} />;
   return <HeroLumen animateIn={animateIn} className={className} {...actions} />;
 }
 
-/** The three versions, in the order the switcher shows them. */
-export const heroSectionVariants: { value: HeroSectionVariant; label: string }[] = [
-  { value: "product", label: "Product" },
-  { value: "workflow", label: "Workflow" },
-  { value: "editorial", label: "Editorial" },
+const variantOptions = [
+  { value: "centered", label: "Screenshot" },
+  { value: "split", label: "Workflow" },
+  { value: "minimal", label: "Mesh" },
 ];
 
-export interface HeroSectionBlockProps {
-  /** The version shown first. Defaults to `product`. */
-  variant?: HeroSectionVariant;
-}
-
 /**
- * Preview: a slim bar to choose the version, and the chosen hero filling the rest of the screen. Switching replays the entrance.
+ * Preview: the hero, full screen, with a small glass switch floating over its top edge. The switch takes no space of its own,
+ * so every design fills the screen exactly. Switching replays the entrance.
  */
-export function HeroSectionBlock({ variant: initial = "product" }: HeroSectionBlockProps) {
+export function HeroSectionBlock({ variant: initial = "centered" }: { variant?: HeroSectionVariant }) {
   const [variant, setVariant] = useState<HeroSectionVariant>(initial);
   return <div className={styles.preview}>
-    <div className={styles.switcher}>
-      <SegmentedControl label="Hero version" options={heroSectionVariants} value={variant} onValueChange={value => setVariant(value as HeroSectionVariant)} />
-    </div>
     <HeroSection key={variant} variant={variant} />
+    <div className={styles.switcher}>
+      <SegmentedControl label="Hero design" options={variantOptions} value={variant} onValueChange={value => setVariant(value as HeroSectionVariant)} className={styles.switch} />
+    </div>
   </div>;
 }
 

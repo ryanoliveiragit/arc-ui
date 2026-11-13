@@ -1444,7 +1444,8 @@
           "overlay",
           "menu"
         ]
-      }
+      },
+      "registryDependencies": []
     },
     {
       "name": "tooltip",
@@ -4299,7 +4300,8 @@
           "disclosure",
           "new"
         ]
-      }
+      },
+      "registryDependencies": []
     },
     {
       "name": "radio-cards",
@@ -4401,7 +4403,8 @@
           "numbers",
           "new"
         ]
-      }
+      },
+      "registryDependencies": []
     },
     {
       "name": "toggle-group",
@@ -4471,7 +4474,8 @@
           "motion",
           "new"
         ]
-      }
+      },
+      "registryDependencies": []
     },
     {
       "name": "signup-form",
@@ -5217,7 +5221,7 @@
       "name": "site-footer",
       "type": "registry:block",
       "title": "Site footer",
-      "description": "A website footer with link columns and newsletter, a minimal layout, and a large fading ryan-ui mark.",
+      "description": "A website footer with link columns and newsletter, a minimal layout, and a large fading Arc mark.",
       "categories": [
         "blocks"
       ],
@@ -8845,6 +8849,130 @@
         ],
         "origin": "ryan-ui",
         "batch": "V"
+      }
+    },
+    {
+      "name": "window-range",
+      "type": "registry:ui",
+      "title": "Window range",
+      "description": "A time window over a live area chart: drag its edges to resize, drag or flick it to pan with momentum, and the dates roll to their new values.",
+      "categories": [
+        "inputs"
+      ],
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "ryan-motion-tokens"
+      ],
+      "files": [
+        {
+          "path": "registry/components/window-range/window-range.tsx",
+          "type": "registry:component",
+          "target": "@components/ryan-ui/window-range/window-range.tsx"
+        },
+        {
+          "path": "registry/components/window-range/window-range.module.css",
+          "type": "registry:component",
+          "target": "@components/ryan-ui/window-range/window-range.module.css"
+        }
+      ],
+      "meta": {
+        "kind": "component",
+        "tags": [
+          "slider",
+          "chart",
+          "range",
+          "brush",
+          "analytics"
+        ],
+        "origin": "ryan-ui",
+        "batch": "clone-01"
+      }
+    },
+    {
+      "name": "emoji-picker",
+      "type": "registry:ui",
+      "title": "Emoji picker",
+      "description": "A full emoji picker with instant search, scroll-synced categories, skin tones, recently used emoji, and a virtualized, keyboard-navigable grid.",
+      "categories": [
+        "inputs"
+      ],
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "registryDependencies": [
+        "ryan-motion-tokens"
+      ],
+      "files": [
+        {
+          "path": "registry/components/emoji-picker/emoji-picker.tsx",
+          "type": "registry:component",
+          "target": "@components/ryan-ui/emoji-picker/emoji-picker.tsx"
+        },
+        {
+          "path": "registry/components/emoji-picker/emoji-picker.module.css",
+          "type": "registry:component",
+          "target": "@components/ryan-ui/emoji-picker/emoji-picker.module.css"
+        },
+        {
+          "path": "registry/components/emoji-picker/emoji-data.ts",
+          "type": "registry:component",
+          "target": "@components/ryan-ui/emoji-picker/emoji-data.ts"
+        }
+      ],
+      "meta": {
+        "kind": "component",
+        "tags": [
+          "emoji",
+          "picker",
+          "search",
+          "skin-tone",
+          "composer"
+        ],
+        "origin": "ryan-ui",
+        "batch": "clone-01"
+      }
+    },
+    {
+      "name": "avatar-upload",
+      "type": "registry:ui",
+      "title": "Avatar upload",
+      "description": "Click or drop a photo onto the avatar to crop it in place with drag, pinch and zoom. It uploads through a progress ring and settles, with clear errors and retry.",
+      "categories": [
+        "inputs"
+      ],
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "registryDependencies": [
+        "ryan-motion-tokens"
+      ],
+      "files": [
+        {
+          "path": "registry/components/avatar-upload/avatar-upload.tsx",
+          "type": "registry:component",
+          "target": "@components/ryan-ui/avatar-upload/avatar-upload.tsx"
+        },
+        {
+          "path": "registry/components/avatar-upload/avatar-upload.module.css",
+          "type": "registry:component",
+          "target": "@components/ryan-ui/avatar-upload/avatar-upload.module.css"
+        }
+      ],
+      "meta": {
+        "kind": "component",
+        "tags": [
+          "avatar",
+          "upload",
+          "crop",
+          "image",
+          "profile"
+        ],
+        "origin": "ryan-ui",
+        "batch": "clone-01"
       }
     },
     {

@@ -8,7 +8,7 @@
  *
  *   import Link from "next/link";
  *   import Image from "next/image";
- *   import { RyanProvider } from "@/components/ryan-ui/lib/ryan-provider";
+ *   import { RyanProvider } from "@/components/arc/lib/arc-provider";
  *
  *   <RyanProvider link={Link} image={Image}>{children}</RyanProvider>
  *
@@ -79,16 +79,16 @@ export function RyanProvider({ link, image, children }: RyanProviderProps) {
 }
 
 /** The link component from the nearest RyanProvider, or a plain anchor. */
-export const useRyanLink = () => useContext(RyanContext).link;
+export const useArcLink = () => useContext(RyanContext).link;
 /** The image component from the nearest RyanProvider, or a plain img. */
-export const useRyanImage = () => useContext(RyanContext).image;
+export const useArcImage = () => useContext(RyanContext).image;
 
 /** What ryan-ui components render for a link: the provider's link component, or a plain anchor. */
 export function RyanLink(props: RyanLinkProps) {
-  return createElement(useRyanLink(), props);
+  return createElement(useArcLink(), props);
 }
 
 /** What ryan-ui components render for an image: the provider's image component, or a plain img. */
 export function RyanImage(props: RyanImageProps) {
-  return createElement(useRyanImage(), props);
+  return createElement(useArcImage(), props);
 }

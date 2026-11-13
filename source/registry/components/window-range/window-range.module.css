@@ -1,0 +1,219 @@
+.root {
+  display: block;
+  width: 100%;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.busy { }
+
+/* Readouts row above the plot: start date left, length middle, end date right. */
+.readouts {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.read {
+  color: var(--foreground);
+  font-size: var(--text-sm);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.readMid {
+  color: var(--text-muted);
+  font-size: calc(var(--text-sm) - 1px);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Rolling segments: each slot clips, the incoming and outgoing copies slide vertically past each other. */
+.slot {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: baseline;
+  line-height: 1.2;
+}
+
+.char {
+  display: inline-block;
+  white-space: pre;
+  will-change: transform;
+}
+
+.plot {
+  position: relative;
+  touch-action: pan-y;
+}
+
+.svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.line {
+  fill: none;
+  stroke: var(--wr-line);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.area {
+  fill: color-mix(in srgb, var(--wr-line) 16%, transparent);
+}
+
+.mutedLine {
+  fill: none;
+  stroke: var(--wr-line);
+  stroke-width: 1.5;
+  opacity: 0.3;
+}
+
+.mutedArea {
+  fill: color-mix(in srgb, var(--wr-line) 7%, transparent);
+}
+
+/* Latest-point indicator inside the lens. The pulse lives on ::after so the motion transform on
+   the dot itself keeps riding the spring. */
+.liveDot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  border-radius: 50%;
+  background: var(--wr-line);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.liveDot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: currentcolor;
+  color: var(--wr-line);
+  animation: wr-pulse 1.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@keyframes wr-pulse {
+  0% { transform: scale(1); opacity: 0.9; }
+  70%, 100% { transform: scale(2.2); opacity: 0; }
+}
+
+[data-reduced] .liveDot::after {
+  animation: none;
+  opacity: 0;
+}
+
+/* Opaque panel behind the magnified slice, drawn inside the svg so it covers the muted chart beneath. */
+.lensBg {
+  fill: var(--surface);
+}
+
+/* The frame: a floating lens with a thick bezel on its rails and a thin edge top and bottom. */
+.frame {
+  position: absolute;
+  left: 0;
+  z-index: 3;
+  border: 2px solid var(--wr-frame);
+  border-inline-width: 10px;
+  border-radius: 14px;
+  box-shadow: var(--shadow-raised);
+  cursor: grab;
+}
+
+.frame:active {
+  cursor: grabbing;
+}
+
+.frame[role="slider"]:focus-visible {
+  outline: none !important;
+  box-shadow:
+    var(--shadow-raised),
+    0 0 0 var(--focus-outline-width, 2px) var(--focus-outline, color-mix(in oklab, var(--accent-strong) 72%, transparent));
+}
+
+/* Edge handles share the frame box; only a 14px outward hit strip is interactive. */
+.edge {
+  position: absolute;
+  left: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.edge[role="slider"]:focus-visible {
+  outline: none !important;
+}
+
+.edge::before {
+  content: "";
+  position: absolute;
+  top: 12%;
+  bottom: 12%;
+  width: 16px;
+  pointer-events: auto;
+}
+
+.edgeStart::before {
+  left: -8px;
+  cursor: ew-resize;
+}
+
+.edgeEnd::before {
+  right: -8px;
+  cursor: ew-resize;
+}
+
+/* The grips are dark slits set into the bezel rails, like side buttons. */
+.grip {
+  position: absolute;
+  top: 58%;
+  translate: 0 -50%;
+  width: 3.5px;
+  height: 14px;
+  border-radius: 2px;
+  background: color-mix(in oklab, var(--wr-frame) 16%, var(--background));
+}
+
+.edgeStart .grip {
+  left: 3px;
+}
+
+.edgeEnd .grip {
+  right: 3px;
+}
+
+/* Keyboard focus rings the slit, not the whole box. */
+.edge:focus-visible .grip {
+  box-shadow: 0 0 0 var(--focus-outline-width, 2px) var(--focus-outline, color-mix(in oklab, var(--accent-strong) 72%, transparent));
+}
+
+.axis {
+  position: relative;
+  height: 18px;
+  margin-top: var(--space-2);
+}
+
+.tick {
+  position: absolute;
+  top: 0;
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  line-height: 1.4;
+  white-space: nowrap;
+}

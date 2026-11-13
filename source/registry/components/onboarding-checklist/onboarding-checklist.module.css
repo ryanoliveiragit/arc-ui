@@ -5,7 +5,7 @@
 .title { margin: 0; color: var(--foreground); font-family: var(--font-body); font-size: var(--text-base); font-weight: 500; letter-spacing: var(--tracking-body); line-height: var(--leading-body); }
 .count { margin: 0; color: var(--text-muted); font-size: var(--text-sm); line-height: var(--leading-body); }
 .countVisual, .groupLabel { display: inline-flex; align-items: baseline; }
-.ring { position: relative; display: grid; width: 40px; height: 40px; color: var(--accent-strong); }
+.ring { position: relative; display: grid; width: 40px; height: 40px; color: var(--accent); }
 .ringArc, .ringTick { grid-area: 1 / 1; width: 40px; height: 40px; }
 .ringTrack { stroke: var(--border); }
 .ringFill { stroke: var(--accent); }

@@ -43,32 +43,31 @@ Primeira vez no projeto: instale a base uma vez (`npx shadcn@latest add https://
 
 ## Uso
 
-O demo da página do item, com os imports como ficam depois de instalar pela CLI. `Stack`, `Row`, `Caption`, `Field` e `Surface` (de `./_kit`) são auxiliares de layout do site: troque pelo layout do seu projeto.
+O demo da página do item, com os imports como ficam depois de instalar pela CLI. O arquivo `.module.css` importado pelo demo é só do exemplo.
 
 ```tsx
 import { JsonViewer } from "@/components/ryan-ui/json-viewer/json-viewer";
-import { Stack } from "./_kit";
-
-const order = {
-  id: "ord_8f3k2m",
-  status: "paid",
-  createdAt: "2026-11-04T14:22:09Z",
-  total: { amount: 12480, currency: "USD" },
-  customer: { id: "cus_91ab", name: "Hannah Walsh", email: "hannah.walsh@example.com", vip: true },
-  items: [
-    { sku: "CH-204", name: "Lounge chair", quantity: 2, price: 4200 },
-    { sku: "LP-118", name: "Table lamp", quantity: 1, price: 1890 },
-    { sku: "LT-032", name: "Linen throw", quantity: 3, price: 730 },
-  ],
-  shipping: { method: "express", address: { city: "Lisbon", country: "PT", postalCode: "1200-195" }, tracking: null },
-  tags: ["gift", "priority"],
-};
+import order from "./json-viewer-data.json";
+import styles from "./json-viewer.module.css";
 
 export default function JsonViewerDemo() {
   return (
-    <Stack width={560}>
-      <JsonViewer data={order} rootName="order" defaultExpandDepth={2} maxHeight={360} label="Order payload" />
-    </Stack>
+    <div className={styles.demo}>
+      <div className={styles.request}>
+        <span className={styles.method}>GET</span>
+        <code className={styles.url}>/v1/orders/{order.id}</code>
+        <span className={styles.status}><span className={styles.dot} aria-hidden="true" />200</span>
+        <span className={styles.time}>84 ms</span>
+      </div>
+      <JsonViewer
+        data={order}
+        rootName="order"
+        maxHeight={380}
+        label="Order response"
+        onCopy={(detail) => { void navigator.clipboard?.writeText(detail.text); }}
+      />
+      <p className={styles.note}>Try searching for <code>refund</code>, then use the arrow keys</p>
+    </div>
   );
 }
 ```

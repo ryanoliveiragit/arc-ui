@@ -1,9 +1,0 @@
-node_modules
-dist
-# gerados pelo npm run build (prebuild) e por scripts/build-thumbs.mjs
-public/r
-public/api
-public/docs
-public/md
-public/llms.txt
-public/thumbs

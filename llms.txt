@@ -1,6 +1,6 @@
 # ryan-ui
 
-> Componentes e blocos React com movimento, em CSS modules e tokens de design, instalados com a CLI do shadcn: 179 componentes e 42 blocos, código aberto (MIT).
+> Componentes e blocos React com movimento, em CSS modules e tokens de design, instalados com a CLI do shadcn: 182 componentes e 42 blocos, código aberto (MIT).
 
 Cada item abaixo tem um arquivo Markdown com o comando de instalação, os arquivos, o código de uso, a API (props) e, quando existe, o guia (quando usar, teclado, acessibilidade, movimento). Os textos estão em português; nomes de código e descrições das props, em inglês.
 
@@ -37,6 +37,7 @@ Antes do primeiro item, instale a base uma vez: `npx shadcn@latest add https://r
 
 - [Adaptive stepper](https://ryanoliveiragit.github.io/arc-ui/md/adaptive-stepper.md): componente. Contador que não muda de tamanho: os dígitos rolam até o novo valor e o botão de menos ou de mais se recolhe no limite.
 - [Arc picker](https://ryanoliveiragit.github.io/arc-ui/md/arc-picker.md): componente. Seletor radial: as opções ficam em um arco, giram com a rolagem, o arraste ou as setas, e uma moldura abraça a opção ativa.
+- [Avatar upload](https://ryanoliveiragit.github.io/arc-ui/md/avatar-upload.md): componente. Clique ou solte uma foto sobre o avatar para cortá-la no lugar, com arraste, pinça e zoom; o envio passa por um anel de progresso e assenta, com erros claros e nova tentativa.
 - [Billing toggle](https://ryanoliveiragit.github.io/arc-ui/md/billing-toggle.md): componente. Alternância entre cobrança mensal e anual, com selo de economia e preços que rolam até o novo valor.
 - [Calendar](https://ryanoliveiragit.github.io/arc-ui/md/calendar.md): componente. Navegue pelas datas em uma visão mensal clara e compacta.
 - [Checkbox](https://ryanoliveiragit.github.io/arc-ui/md/checkbox.md): componente. Uma escolha binária com estado preciso e fácil de ler.
@@ -47,6 +48,7 @@ Antes do primeiro item, instale a base uma vez: `npx shadcn@latest add https://r
 - [Date picker](https://ryanoliveiragit.github.io/arc-ui/md/date-picker.md): componente. Escolha uma data sem perder o contexto da página.
 - [Date range picker](https://ryanoliveiragit.github.io/arc-ui/md/date-range-picker.md): componente. Seletor de período que cresce a partir do gatilho, com dois meses, atalhos e destaque elástico.
 - [Elastic slider](https://ryanoliveiragit.github.io/arc-ui/md/elastic-slider.md): componente. Controle deslizante que estica como borracha nos limites, com etiqueta que balança e marcas magnéticas.
+- [Emoji picker](https://ryanoliveiragit.github.io/arc-ui/md/emoji-picker.md): componente. Seletor de emoji completo com busca instantânea, categorias sincronizadas à rolagem, tons de pele, emojis usados recentemente e uma grade virtualizada que se navega por inteiro pelo teclado.
 - [Expanding search](https://ryanoliveiragit.github.io/arc-ui/md/expanding-search.md): componente. Um ícone que se transforma em campo de busca, com resultados logo abaixo.
 - [File dropzone](https://ryanoliveiragit.github.io/arc-ui/md/file-dropzone.md): componente. Uma área generosa para soltar um ou vários arquivos, com progresso de envio.
 - [Inline edit](https://ryanoliveiragit.github.io/arc-ui/md/inline-edit.md): componente. Renomeie no próprio lugar: o texto vira campo sem mudar de posição.
@@ -78,6 +80,7 @@ Antes do primeiro item, instale a base uma vez: `npx shadcn@latest add https://r
 - [Time picker](https://ryanoliveiragit.github.io/arc-ui/md/time-picker.md): componente. Escolha um horário com um comportamento de teclado sensato, em formato 12h ou 24h.
 - [Toggle group](https://ryanoliveiragit.github.io/arc-ui/md/toggle-group.md): componente. Uma fileira de botões de alternância, única ou múltipla, como numa barra de formatação.
 - [Wheel picker](https://ryanoliveiragit.github.io/arc-ui/md/wheel-picker.md): componente. Seletor de roda como o de hora do celular: arraste, solte com impulso e ele encaixa na opção; aceita várias colunas e teclado.
+- [Window range](https://ryanoliveiragit.github.io/arc-ui/md/window-range.md): componente. Janela de tempo sobre um gráfico de área ao vivo: arraste as bordas para redimensionar, arraste ou dê um tapa para rolar com inércia, e as datas rolam para os novos valores.
 
 ## Componentes · Revelação
 

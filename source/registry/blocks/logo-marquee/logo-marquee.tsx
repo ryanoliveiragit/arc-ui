@@ -25,17 +25,14 @@ export interface LogoMarqueeProps {
   tone?: LogoMarqueeTone;
 }
 
-/** Abstract marks as data URIs: the public/block-logos files this example used to point at are not part of the project. */
-const mark = (body: string) => `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">${body}</svg>`)}`;
-
 const exampleBrands: LogoMarqueeBrand[] = [
-  { name: "Figma", icon: mark('<circle cx="8" cy="8" r="5"/><circle cx="16" cy="8" r="5"/><circle cx="8" cy="16" r="5"/>'), color: "#F24E1E" },
-  { name: "Linear", icon: mark('<circle cx="12" cy="12" r="10"/>'), color: "#5E6AD2" },
-  { name: "Notion", icon: mark('<rect x="3" y="3" width="18" height="18" rx="4"/>') },
-  { name: "Slack", icon: mark('<rect x="3" y="9" width="18" height="6" rx="3"/><rect x="9" y="3" width="6" height="18" rx="3"/>'), color: "#36C5F0" },
-  { name: "GitHub", icon: mark('<path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 5l5 9H7z"/>') },
-  { name: "Stripe", icon: mark('<path d="M4 6h16v4H4zm0 8h16v4H4z"/>'), color: "#635BFF" },
-  { name: "Vercel", icon: mark('<path d="M12 3l10 18H2z"/>') },
+  { name: "Figma", icon: "/block-logos/figma.svg", colorIcon: "/block-logos/figma-color.svg" },
+  { name: "Linear", icon: "/block-logos/linear.svg", color: "#5E6AD2" },
+  { name: "Notion", icon: "/block-logos/notion.svg" },
+  { name: "Slack", icon: "/block-logos/slack.svg", colorIcon: "/block-logos/slack-color.svg" },
+  { name: "GitHub", icon: "/block-logos/github.svg" },
+  { name: "Stripe", icon: "/block-logos/stripe.svg", color: "#635BFF" },
+  { name: "Vercel", icon: "/block-logos/vercel.svg" },
 ];
 
 function BrandMark({ brand, tone }: { brand: LogoMarqueeBrand; tone: LogoMarqueeTone }) {

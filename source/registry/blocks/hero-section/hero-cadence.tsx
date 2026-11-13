@@ -1,43 +1,50 @@
 "use client";
 
 import { MotionConfig, motion } from "motion/react";
-import { Asterisk } from "lucide-react";
-import { Marquee } from "@/registry/components/marquee/marquee";
-import { motionTokens } from "@/lib/motion-tokens";
 import { ActionLink } from "./hero-content";
 import type { HeroAction } from "./hero-content";
-import { HeroBackdrop, HeroMark, HeroNav } from "./hero-parts";
+import { HeroMesh } from "./hero-mesh";
+import type { HeroMeshPoint } from "./hero-mesh";
 import { heroGroup, heroRise } from "./hero-motion";
 import shell from "./hero-section.module.css";
 import styles from "./hero-cadence.module.css";
 
 export interface HeroCadenceProps {
-  /** The main call to action. With `doneLabel` and no `href`, the button confirms in place. */
   primaryAction?: HeroAction;
-  /** The second call to action. */
   secondaryAction?: HeroAction;
-  /** Plays the entrance once on mount. Defaults to true. */
   animateIn?: boolean;
   className?: string;
 }
 
-const LINKS = [{ label: "Features" }, { label: "Teams" }, { label: "Pricing" }, { label: "Download" }];
-/** What the product plans, as the words that scroll along the bottom edge. */
-const WORDS = ["Deep work", "Stand-ups", "Deadlines", "One-on-ones", "Reviews", "Lunch, actually", "Focus time", "Travel days"];
+/** Six points, authored the way the Gradient mesh editor saves them. Colors live in CSS, one palette per theme. */
+const MESH: HeroMeshPoint[] = [
+  { x: .1, y: .88, spread: .72 },
+  { x: .86, y: .12, spread: .66 },
+  { x: .16, y: .14, spread: .56 },
+  { x: .62, y: .62, spread: .5 },
+  { x: .94, y: .92, spread: .48 },
+  { x: .44, y: .3, spread: .34 },
+];
 
-/**
- * Editorial hero, one full screen: very large type with one phrase under a solid accent marker, a short paragraph beside the
- * actions, and a strip of words that scrolls along the bottom edge. No product window and no imagery: type does the work.
- */
+/** Sample customers. The marks are the brands' own icons, drawn in the text color. */
+const BRANDS = [
+  { name: "Linear", logo: "/block-logos/linear.svg" },
+  { name: "Vercel", logo: "/block-logos/vercel.svg" },
+  { name: "Raycast", logo: "/block-logos/raycast.svg" },
+  { name: "Notion", logo: "/block-logos/notion.svg" },
+  { name: "Figma", logo: "/block-logos/figma.svg" },
+  { name: "Stripe", logo: "/block-logos/stripe.svg" },
+  { name: "Loom", logo: "/block-logos/loom.svg" },
+];
+
+/** Minimal hero, one full screen: large type over a slowly drifting mesh gradient with grain, and the teams that use the product along the bottom edge. */
 export function HeroCadence({ primaryAction = { label: "Download for Mac", doneLabel: "Download started" }, secondaryAction = { label: "Try it on the web", doneLabel: "Opening Cadence" }, animateIn = true, className }: HeroCadenceProps) {
   const item = heroRise;
-  // Reduced motion: Motion skips every transform (rise); opacity still fades briefly, and the strip of words stops scrolling.
+  // Reduced motion: Motion skips every transform (rise, zoom, tilt entrance); opacity still fades briefly.
   return <MotionConfig reducedMotion="user"><section className={[shell.hero, shell.screen, styles.hero, className].filter(Boolean).join(" ")}>
-    <HeroBackdrop className={styles.dots} />
-    <HeroNav brand="Cadence" mark={<CadenceMark />} links={LINKS} animateIn={animateIn} />
+    <HeroMesh className={styles.mesh} points={MESH} grain={.55} speed={.45} />
     <motion.div className={styles.inner} variants={heroGroup} initial={animateIn ? "hidden" : false} animate="shown">
-      <motion.p variants={item} className={styles.kicker}><span className={styles.tag}>3.0</span>The calendar that plans itself</motion.p>
-      <motion.h1 variants={item} className={[shell.title, styles.title].join(" ")}>Your week, planned <br className={styles.break} /><HeroMark animateIn={animateIn}>before Monday</HeroMark></motion.h1>
+      <motion.h1 variants={item} className={[shell.title, styles.title].join(" ")}>Your week, planned before Monday</motion.h1>
       <div className={styles.row}>
         <motion.p variants={item} className={[shell.description, styles.description].join(" ")}>Cadence reads your tasks, meetings and focus goals, then books time for the work that matters. When plans change, it moves everything for you.</motion.p>
         <motion.div variants={item} className={styles.cta}>
@@ -48,25 +55,14 @@ export function HeroCadence({ primaryAction = { label: "Download for Mac", doneL
           <p className={styles.fine}>Free for personal use. Teams from $8 a seat.</p>
         </motion.div>
       </div>
-    </motion.div>
-    <motion.div className={styles.band} initial={animateIn ? { opacity: 0 } : false} animate={{ opacity: 1 }} transition={{ duration: motionTokens.duration.considered, delay: .36 }}>
-      <Marquee label="What Cadence plans" speed={56} gap="var(--band-gap)" fade="8%">
-        {WORDS.map((word, index) => <span key={word} className={styles.word} data-quiet={index % 2 === 1 || undefined}>
-          {word}
-          <span className={styles.sep} aria-hidden="true"><Asterisk strokeWidth={2.5} /></span>
-        </span>)}
-      </Marquee>
+      <motion.div variants={item} className={styles.brands}>
+        <p>Teams at these companies plan with Cadence</p>
+        <ul aria-label="Sample customers">
+          {BRANDS.map(brand => <li key={brand.name}><i style={{ maskImage: `url(${brand.logo})`, WebkitMaskImage: `url(${brand.logo})` }} aria-hidden="true" />{brand.name}</li>)}
+        </ul>
+      </motion.div>
     </motion.div>
   </section></MotionConfig>;
 }
 
-/** The brand glyph: three bars of a week, the middle one tallest. */
-function CadenceMark() {
-  return <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-    <rect x="2" y="6.5" width="3" height="7" rx="1.2" /><rect x="6.5" y="2.5" width="3" height="11" rx="1.2" /><rect x="11" y="5" width="3" height="8.5" rx="1.2" />
-  </svg>;
-}
-
-export { HeroCadence as HeroEditorial };
-export type { HeroCadenceProps as HeroEditorialProps };
 export default HeroCadence;

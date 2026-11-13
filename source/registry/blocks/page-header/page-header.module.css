@@ -62,7 +62,7 @@
 .milestones li:last-child, .activity li:last-child, .files li:last-child { border-bottom: 0; }
 .milestones li > svg { color: var(--text-muted); }
 .milestones li[data-state="done"] > svg { color: var(--success); }
-.milestones li[data-state="active"] > svg { color: var(--accent-strong); }
+.milestones li[data-state="active"] > svg { color: var(--accent); }
 .activity li { display: grid; min-height: 52px; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; border-bottom: 1px solid var(--border-subtle); }
 .activity p { margin: 0; color: var(--text-secondary); }
 .activity strong { color: var(--foreground); font-weight: 500; }

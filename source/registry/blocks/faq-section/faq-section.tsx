@@ -58,8 +58,8 @@ export const faqExampleItems: FaqItem[] = [
   { question: "Which frameworks are supported?", answer: "ryan-ui targets React 19 and Next.js 16. The components are client components and also run in Vite and React Router apps.", category: "Technical" },
   { question: "How do I install a component?", answer: "Run the shadcn CLI with the component name, or copy the files by hand. Each page lists the packages it needs.", category: "Technical" },
   { question: "How do updates work?", answer: "New components and fixes ship in small releases. Run the CLI again to pull the latest version of anything you installed.", category: "Technical" },
-  { question: "Can I use ryan-ui in client projects?", answer: "Yes. Everything in ryan-ui is MIT licensed, so it is free for personal and commercial work, for you or your whole team.", category: "Licensing" },
-  { question: "Do I need to pay or attribute anything?", answer: "No. There are no paid tiers or license keys. Keep the MIT notice from the source files and the code is yours to ship.", category: "Licensing" },
+  { question: "Can I use ryan-ui in client projects?", answer: "Yes. Free components are MIT licensed, and a Pro license covers commercial work for you or your team.", category: "Licensing" },
+  { question: "What happens when my plan ends?", answer: "You keep every component you installed. Renewing only matters for new releases and updates.", category: "Licensing" },
 ];
 
 const keyOf = (item: FaqItem) => item.id ?? item.question;
