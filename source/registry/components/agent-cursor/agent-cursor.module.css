@@ -1,0 +1,460 @@
+/* Agent cursor — live document card where an agent edits like a collaborator.
+   All colors resolve through theme tokens; the agent's brand color arrives as --agent on .card. */
+
+.card {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  margin-inline: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-resting);
+  overflow: hidden;
+  font-family: var(--font-body);
+  color: var(--foreground);
+  --agent-tint: color-mix(in oklab, var(--agent) 9%, transparent);
+}
+
+:global(:root[data-theme="dark"]) .card {
+  --agent-tint: color-mix(in oklab, var(--agent) 5.5%, transparent);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip-path: inset(50%);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* ---------- header: presence + status + action ---------- */
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 52px;
+  padding: 9px 12px 9px 16px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.headLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.agentChip {
+  width: 27px;
+  height: 27px;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 0 0 1px var(--border-subtle);
+}
+
+.collabAvatar {
+  width: 27px;
+  height: 27px;
+  flex: none;
+  margin-left: -9px;
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--surface);
+  object-fit: cover;
+  display: block;
+}
+
+.status {
+  font-size: 13px;
+  line-height: 1;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.headBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  height: 30px;
+  padding: 0 11px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-control);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 140ms ease, color 140ms ease;
+}
+
+.headBtn:hover {
+  background: var(--surface-muted);
+  color: var(--foreground);
+}
+
+/* ---------- document ---------- */
+
+.doc {
+  position: relative;
+  padding: 22px 26px 34px;
+}
+
+.meta {
+  margin: 6px 0 20px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--text-muted);
+}
+
+.block {
+  position: relative;
+}
+
+.title {
+  margin-top: 0;
+}
+
+.h {
+  margin-top: 20px;
+}
+
+.p {
+  margin-top: 12px;
+  font-size: 15px;
+  line-height: 1.58;
+  color: var(--foreground);
+}
+
+.titleText {
+  margin: 0;
+  font-size: 21px;
+  line-height: 1.25;
+  font-weight: 640;
+  letter-spacing: -0.015em;
+  color: var(--foreground);
+}
+
+.hText {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.35;
+  font-weight: 620;
+  letter-spacing: -0.005em;
+  color: var(--foreground);
+}
+
+/* Pending change tint — follows the agent's brand color on both themes. */
+.tinted {
+  background: var(--agent-tint);
+  border-radius: 6px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 2px 7px;
+  margin-left: -7px;
+  margin-right: -7px;
+}
+
+/* Streaming rewrite: an invisible ghost reserves the final height, the live
+   text paints over it. Only the last words fade in; no blur, no slide. */
+.streamWrap {
+  position: relative;
+  display: block;
+}
+
+.ghost {
+  display: block;
+  visibility: hidden;
+}
+
+.live {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.fresh {
+  animation: freshIn 140ms var(--ease-enter) both;
+}
+
+@keyframes freshIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fadeOut {
+  display: inline;
+}
+
+/* Wavy flag on the exact word a fix edit will replace. */
+.fixMark {
+  text-decoration: underline wavy var(--agent);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+
+/* ---------- line-by-line selection (rewrite pass) ---------- */
+
+.selLayer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.selRect {
+  position: absolute;
+  transform: scaleY(0.88);
+  background: color-mix(in oklab, var(--agent) 24%, transparent);
+  border-radius: 3px;
+  opacity: 0;
+  transition: opacity 90ms linear;
+}
+
+.selOn {
+  opacity: 1;
+}
+
+/* ---------- cursors ---------- */
+
+.cursorLayer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.cursor,
+.cursorAgent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}
+
+.arrow {
+  position: relative;
+  display: block;
+}
+
+/* Gentle idle drift for the resting collaborator cursor; the outer element
+   keeps the measured translate, so the drift never fights it. */
+.driftBox {
+  display: block;
+  animation: drift 7s ease-in-out infinite;
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(1.5px, -2px); }
+  50% { transform: translate(-1px, -3.5px); }
+  75% { transform: translate(-2px, 1px); }
+}
+
+.tag {
+  position: absolute;
+  left: 11px;
+  top: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 22px;
+  padding: 0 9px 0 6px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-raised);
+  color: var(--foreground);
+  white-space: nowrap;
+}
+
+/* The agent's own tag carries its brand tint; people keep neutral pills. */
+.cursorAgent .tag {
+  background: color-mix(in oklab, var(--agent) 14%, var(--surface-raised));
+  border-color: color-mix(in oklab, var(--agent) 35%, var(--border));
+}
+
+.tagFlip {
+  left: auto;
+  right: 14px;
+}
+
+.tagMark {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+}
+
+.tagAvatar {
+  width: 15px;
+  height: 15px;
+  flex: none;
+  border-radius: var(--radius-pill);
+  object-fit: cover;
+  display: block;
+}
+
+.tagDot {
+  width: 15px;
+  height: 15px;
+  flex: none;
+  border-radius: var(--radius-pill);
+  display: inline-block;
+}
+
+.tagName {
+  font-size: 12px;
+  font-weight: 550;
+  line-height: 1;
+}
+
+/* ---------- floating review bar ---------- */
+
+.bar {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  translate: -50% 0; /* independent of the motion transform, which animates y */
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: calc(100% - 32px);
+  padding: 8px 9px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-floating);
+}
+
+.barText {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  line-height: 1;
+  color: var(--foreground);
+  white-space: nowrap;
+}
+
+.byLine {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.barIcon {
+  display: inline-flex;
+  color: var(--danger);
+}
+
+.okIcon {
+  display: inline-flex;
+  color: var(--success);
+}
+
+.undoIcon {
+  display: inline-flex;
+  color: var(--text-muted);
+}
+
+.barSep {
+  width: 1px;
+  height: 16px;
+  flex: none;
+  background: var(--border);
+}
+
+.barBtn,
+.barBtnAccent {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 11px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  line-height: 1;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.barBtn {
+  background: transparent;
+  color: var(--text-secondary);
+  transition: background-color 140ms ease, color 140ms ease;
+}
+
+.barBtn:hover {
+  background: var(--surface-muted);
+  color: var(--foreground);
+}
+
+.barBtnAccent {
+  background: var(--accent);
+  color: var(--accent-foreground);
+  font-weight: 600;
+  padding: 0 12px;
+  transition: filter 140ms ease;
+}
+
+.barBtnAccent:hover {
+  filter: brightness(1.05);
+}
+
+.barBtnAccent:active {
+  filter: brightness(0.95);
+}
+
+/* ---------- responsive ---------- */
+
+@media (max-width: 480px) {
+  .head {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .doc {
+    padding: 16px 16px 30px;
+  }
+
+  .byLine {
+    display: none;
+  }
+}
+
+/* ---------- reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .driftBox {
+    animation: none;
+  }
+
+  .fresh {
+    animation: none;
+  }
+
+  .selRect {
+    transition: none;
+  }
+
+  .headBtn,
+  .barBtn,
+  .barBtnAccent {
+    transition: none;
+  }
+}

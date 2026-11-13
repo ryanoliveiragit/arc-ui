@@ -1,0 +1,462 @@
+{
+  "smart-form-fill": {
+    "quandoUsar": [
+      "Criar um registro a partir de texto não estruturado: contato de CRM, perfil de fornecedor ou endereço a partir de uma assinatura colada.",
+      "Fluxos em que a pessoa cola um e-mail encaminhado ou anotações e espera o formulário se preencher sozinho, com revisão antes do save.",
+      "Onboarding onde digitar seis campos à mão é a principal fricção."
+    ],
+    "quandoEvitar": [
+      "Digitação simples sem fonte não estruturada: use `input` e `textarea`.",
+      "Aplicações longas multi-página: adicione uma etapa de colar em vez de usar o cartão inteiro.",
+      "Importação em lote de muitos registros: prefira um fluxo de importação de tabela."
+    ],
+    "teclado": [
+      {
+        "teclas": [
+          "Tab"
+        ],
+        "acao": "Percorre área de colar, Edit text, cada campo, botões Check, Undo e Save contact."
+      },
+      {
+        "teclas": [
+          "Esc"
+        ],
+        "acao": "Interrompe uma leitura em andamento sem alterar nada."
+      },
+      {
+        "teclas": [
+          "Ctrl + Enter",
+          "Cmd + Enter"
+        ],
+        "acao": "No modo Edit text, lê o texto digitado na área."
+      }
+    ],
+    "acessibilidade": [
+      "Região `aria-live` polida anuncia leitura, quantos campos foram preenchidos, pendências de revisão, checagem, undo e salvamento.",
+      "Cada campo preenchido recebe `aria-description` com a confiança (e a nota, quando baixa); campos pendentes ficam `aria-invalid` até serem checados ou editados.",
+      "Confiança nunca é só cor: ponto mais porcentagem ou palavra (Review, Checked, Edited); o botão Check nomeia o campo no `aria-label`."
+    ],
+    "movimento": [
+      "Os campos se preenchem em ordem com 140 ms de intervalo: o valor aparece em 200 ms e a moldura respira um tom do accent por 900 ms, sem mudança de tamanho.",
+      "Trechos-fonte têm três tons por confiança: neutro (≥98%), âmbar suave (92–97%) e âmbar forte (<92%); ativo, hover ou foco ficam sempre no tom forte. Selos e rótulos trocam num crossfade (100 ms / 160 ms com 2 px) e o rótulo de leitura usa shimmer.",
+      "Com “reduzir movimento”, todos os campos preenchem de uma vez, sem respiração nem shimmer, e o loop de autoplay desliga; todos os estados finais são mantidos. O autoplay pausa fora da tela e para para sempre no primeiro toque dentro do cartão."
+    ],
+    "responsivo": [
+      "Container queries: de 720 px para cima o texto colado fica à esquerda e o formulário à direita; abaixo disso o bem de colar empilha acima.",
+      "Abaixo de 440 px cada campo ocupa a linha inteira e o rodapé empilha status sobre as ações."
+    ],
+    "desempenho": [
+      "Só CSS anima respiração, shimmer e spin; motion faz apenas os pequenos crossfades. Sem layout animation, seguro para uma instância por tela."
+    ],
+    "notasIA": [
+      "Ligue `extract` ao seu modelo com saída estruturada `{ value, confidence, source }`, onde `source` é a substring exata do texto colado — ela alimenta o destaque que liga causa e efeito.",
+      "Mantenha `reviewThreshold` perto de 0.8 para apostas (estado inferido, título reformulado, um de vários telefones) ficarem marcadas e bloquearem o Save até serem checados.",
+      "Em produto use `autoPlay={false}`; o loop padrão é para docs e marketing. Colar no modo edição agenda a leitura ~700 ms depois e o botão principal é `Fill`. `resolveLogo` aceita seus logotipos; há marca da Stripe embutida e chip genérico para o resto."
+    ]
+  },
+  "enrich-column": {
+    "quandoUsar": [
+      "Aumentar linhas de uma tabela com um campo gerado por IA (headcount, estágio de funding, classificação) mantendo a execução cancelável e auditável.",
+      "Mostrar progresso real por linha — fila, executando, concluído, falhou — dentro de uma coluna, sem trocar de tela.",
+      "Editar o nome do campo e o prompt direto no cabeçalho e reexecutar as linhas com o novo prompt."
+    ],
+    "quandoEvitar": [
+      "Pergunta livre sobre os dados com gráfico e insight como resposta: esse é o território do ask-your-data.",
+      "Fluxos multi-etapa que navegam pelo documento ou chamam ferramentas em sequência: aí entre em cena o agent-cursor.",
+      "Tabelas longas sem paginação: dezenas de rastros animados por célula cansam mais do que um spinner único na coluna."
+    ],
+    "teclado": [
+      {
+        "teclas": [
+          "Tab"
+        ],
+        "acao": "Atinge o lápis do cabeçalho e os controles das linhas; o Retry da linha falha está sempre visível."
+      },
+      {
+        "teclas": [
+          "Enter",
+          "Space"
+        ],
+        "acao": "No lápis, abre o editor com o nome do campo já em foco."
+      },
+      {
+        "teclas": [
+          "Cmd + Enter",
+          "Ctrl + Enter"
+        ],
+        "acao": "No editor aberto, salva, aplica a mudança e reexecuta a coluna inteira."
+      },
+      {
+        "teclas": [
+          "Esc"
+        ],
+        "acao": "Fecha o editor e devolve o foco ao botão lápis, sem alterar o prompt salvo."
+      }
+    ],
+    "acessibilidade": [
+      "Cada linha usa th com scope=\"row\" e o cabeçalho da coluna usa th com scope=\"col\": o leitor de tela identifica a célula pelo par linha e coluna.",
+      "Um region aria-live anuncia o início e o fim de cada execução, com contagem de falhas quando houver.",
+      "Falha não é só cor: o motivo aparece como texto visível na célula e o Retry permanece acessível sem depender de hover.",
+      "Com reduzir movimento ativo, as trocas de estado viram opacidade simples, sem deslize vertical nem desenho do check."
+    ],
+    "movimento": [
+      "O estado da célula troca num crossfade curto sobre uma camada posicionada de altura fixa, para a linha não dançar.",
+      "O check verde é um path SVG desenhado em ~240 ms depois que o valor assenta.",
+      "O editor da coluna abre com mola criticamente amortecida na altura, sem overshoot.",
+      "No modo demo o loop segura ~4,2 s entre rodadas, pausa fora da viewport e para para sempre no primeiro toque ou tecla dentro do cartão."
+    ],
+    "responsivo": [
+      "Container queries: até 560 px saem do cabeçalho o rótulo do domínio-fonte e o detalhe do modelo; até 440 px o gutter cai para 16 px, o valor vira clamp de duas linhas em linha de 60 px e o motivo de falha some.",
+      "Em hover:none (touch) os controles de execução da linha ficam sempre visíveis."
+    ],
+    "desempenho": [
+      "A execução roda duas linhas em paralelo com defasagem de 140 ms e um AbortController compartilhado para o cancelamento.",
+      "IntersectionObserver pausa a demo quando o cartão sai da viewport; depois de qualquer interação ela não reinicia sozinha.",
+      "Cada célula animada reutiliza uma única camada posicionada dentro do td de altura fixa, sem criar nós por estado."
+    ],
+    "notasIA": [
+      "O modo `enrich` simulado é ilustrativo e monta já no fim; em produção ligue a função real que retorna valor, fonte e confiança por linha.",
+      "Falha é dado, não exceção: a linha guarda o motivo (como \"sem fonte com data\") e oferece retry isolado.",
+      "Cancelar uma execução em andamento restaura os valores concluídos antes do abort e devolve o resto ao estado inicial."
+    ]
+  },
+  "ticket-router": {
+    "quandoUsar": [
+      "Mostrar como um classificador de IA faz a triagem de mensagens de suporte (Gmail, Intercom, Slack, Zendesk) em filas de time, uma a uma.",
+      "Widget ao vivo num helpdesk ou dashboard de ops, com lane de revisão humana para os tickets de baixa confiança.",
+      "Demo de marketing ou onboarding de produtos de suporte que fazem roteamento com IA."
+    ],
+    "quandoEvitar": [
+      "Caixa de entrada completa com busca e ações em lote: prefira um layout de tabela ou lista.",
+      "Um passo de ferramenta numa transcrição de conversa com agente: esse é o território do tool-call.",
+      "Progresso genérico multi-etapa de um agente: use agent-status ou agent-plan."
+    ],
+    "teclado": [
+      {
+        "teclas": [
+          "Tab"
+        ],
+        "acao": "Move o foco entre Pause, as ações de erro (Retry e Send to review) e os tickets da lane Needs review."
+      },
+      {
+        "teclas": [
+          "Enter",
+          "Space"
+        ],
+        "acao": "Pausa ou retoma o fluxo, repete uma classificação falha e confirma a lane sugerida num ticket de revisão."
+      }
+    ],
+    "acessibilidade": [
+      "O cartão é uma section nomeada pelo título; cada lane é uma lista nomeada com o nome da equipe e a contagem de tickets.",
+      "Uma região aria-live polida anuncia cada roteamento (lane e responsável), falhas, pausas, confirmações de revisão e que a execução é simulada e nada foi enviado.",
+      "Intenção, sentimento e status de revisão sempre pareiam ícone com texto; a confiança lê como porcentagem, nunca só cor.",
+      "Tickets de revisão são botões reais cujo aria-label nomeia o assunto, a confiança e a lane de destino."
+    ],
+    "movimento": [
+      "Ritmo de ~2 s por ticket: chegada em 220 ms, etiquetas com fade em stagger de 50 ms, pulso desenhado no conector em 240 ms e aterrissagem da linha na lane.",
+      "Linhas entram e saem animando a altura medida com mola sem bounce (visualDuration .24); contadores rodam em largura tabular reservada.",
+      "A troca de ticket é um crossfade único: saída em 100 ms e entrada em 160 ms com pequena subida. Sem blur nem movimento letra a letra.",
+      "Com reduzir movimento ativo, todos os estados finais e o destaque da lane ficam; saem o deslocamento, a subida e o desenho do conector. O fluxo pausa fora da tela."
+    ],
+    "responsivo": [
+      "Container queries: o cartão preenche o container até 840 px; acima de 600 px de largura útil as quatro lanes ficam em fileira com conector, abaixo viram grade 2×2 com duas linhas cada.",
+      "Abaixo de 600 px as etiquetas do classificador empilham sobre o alvo da rota; abaixo de 400 px o medidor de confiança e o nome do modelo somem, mantendo a porcentagem.",
+      "Toda linha de texto trunca com elipse: assuntos e nomes longos nunca mudam a altura do cartão."
+    ],
+    "desempenho": [
+      "Só um timer ou uma chamada de classificador roda por vez; ambos cancelam na pausa, fora da tela (IntersectionObserver) e no unmount.",
+      "O histórico roteado tem teto de 80 tickets e cada lane renderiza apenas as linhas visíveis.",
+      "As marcas dos canais são SVG inline sem rede; avatares são tiles de gradiente com a inicial, sem requisição."
+    ],
+    "notasIA": [
+      "Ligue classify à chamada do seu modelo devolvendo { intent, sentiment, confidence }; jogue para exibir o estado de erro com Retry e Send to review. Sem ela, o classificador simulado lê a amostra embutida.",
+      "Os ids devolvidos por route precisam casar com lanes; id desconhecido cai na primeira lane não-review. Passe loop={false} com seus próprios tickets para os estados vazio e All caught up.",
+      "Mantenha o cartão dentro de uma coluna de conteúdo (360 a 880 px); abaixo de 600 px as lanes dobram em grade 2×2 e o conector some."
+    ]
+  },
+  "ask-your-data": {
+    "quandoUsar": [
+      "Responder perguntas de negócio sobre uma base de dados em linguagem natural: “signups por plano desde agosto” vira SQL, gráfico e leitura em segundos.",
+      "Widget analítico ao vivo em dashboards ou copilotos de dados, com o SQL gerado visível para auditoria.",
+      "Demo de produto de IA + dados em que a resposta precisa parecer consultável: linhas escaneadas em tempo real, rows devolvidas e tempo de execução."
+    ],
+    "quandoEvitar": [
+      "Gráficos estáticos de relatório: use um componente de chart direto; aqui o valor é a sequência pergunta → SQL → execução → resposta.",
+      "Editor de SQL completo com autocomplete e histórico de consultas: prefira um editor code embutido.",
+      "Conversa longa e iterativa com o modelo: use um layout de thread; aqui a resposta é um único resultado tabular com insight."
+    ],
+    "teclado": [
+      {
+        "teclas": [
+          "Tab"
+        ],
+        "acao": "Move o foco entre o campo da pergunta, o toggle do SQL gerado, o botão de copiar e o grupo do gráfico; na visão Table a navegação de tabela é a nativa."
+      },
+      {
+        "teclas": [
+          "Enter"
+        ],
+        "acao": "No campo da pergunta, envia a consulta; se ela está rodando, para."
+      },
+      {
+        "teclas": [
+          "Esc"
+        ],
+        "acao": "No campo, para a consulta em andamento; no gráfico, limpa a leitura ativa."
+      },
+      {
+        "teclas": [
+          "←",
+          "→",
+          "Home",
+          "End"
+        ],
+        "acao": "Sobre o gráfico focável, move a leitura entre categorias (ou vai à primeira/última); cada posição é anunciada."
+      },
+      {
+        "teclas": [
+          "Enter",
+          "Space"
+        ],
+        "acao": "No botão de copiar, copia o SQL gerado."
+      }
+    ],
+    "acessibilidade": [
+      "O cartão é uma região nomeada com duas live regions polidas: uma narra a sequência writing → running → título/linhas (e que a amostra é simulada, nada foi consultado); outra anuncia cada leitura do gráfico no formato “Aug 10: Free 61, Pro 24, …, total 97”.",
+      "A linha do SQL é um botão real com aria-expanded/aria-controls cujo nome inclui o metadado (dialecto, linhas, rows, ms); o status nunca é só cor — spinner, alerta e check vêm acompanhados do texto de estado.",
+      "O gráfico é um grupo focável (role=group) com instruções de setas no aria-label; a leitura visível é redundante na live region.",
+      "A tabela mantém th scope=col e th scope=row por linha; contadores e totais usam tabular-nums para não tremer.",
+      "O campo de pergunta ganha border + ring de accent em focus-within; painel do SQL, botões e chips têm :focus-visible próprio."
+    ],
+    "movimento": [
+      "O SQL sai 4 palavras por tick, 34 ms, pintando sobre um ghost invisível que já reserva a altura final; o painel abre e fecha em mola suave (~300 ms, sem bounce) via grid-template-rows 0fr→1fr.",
+      "Barras sobem em 320 ms com stagger total ≤ 180 ms; linhas desenham pathLength em 460 ms; a troca Bar/Line é crossfade (~120 ms de saída, ~160 ms de entrada) sobre a mesma área fixa.",
+      "O insight streama 4 palavras por tick, 70 ms, com a altura final exata reservada pelo texto completo invisível.",
+      "Com reduzir movimento ativo, tudo chega inteiro de uma vez — SQL revelado, gráficos e insight finais — sem spinner, caret, respiração do skeleton ou desenho. Fora da tela os timers pausam (IntersectionObserver) e a reprise só agenda com o cartão visível."
+    ],
+    "responsivo": [
+      "Container queries sobre o cartão: abaixo de 520 px a fonte fica só com o ícone e o seletor Bar/Line/Table vai para largura cheia, acima da legenda.",
+      "Os rótulos do eixo X afinam para manter ≥ 46 px entre vizinhos; linhas largas de SQL e a tabela rolam dentro do próprio poço.",
+      "A leitura (tooltip) fica presa dentro do plot: perto das bordas ela desliza para o lado com espaço em vez de cortar."
+    ],
+    "desempenho": [
+      "Gráficos em SVG puro medidos por um único ResizeObserver, sem lib de gráfico; texto e hairlines desenhados em pixels do dispositivo, nítidos em qualquer largura.",
+      "O tokenizer de SQL é uma única passada de regex, memoizada por consulta; o painel e cada visão montam só enquanto exibidas.",
+      "As linhas escaneadas chegam por onProgress — em consultas muito rápidas, lote-as para algumas por segundo."
+    ],
+    "notasIA": [
+      "Sem generateSql/runQuery roda no modo amostra: monta já no resultado pronto (analytics · PostgreSQL · 1,284 signups) e reprisa a cada 4,2 s até o primeiro toque. Passe suas funções para ligar ao modelo; rejeite a promessa para ver Failed com Try again.",
+      "generateSql pode devolver string ou AsyncIterable de chunks; runQuery recebe onProgress(rowsScanned, total?) e devolve AskYourDataResult. O AbortSignal cancela tudo no Stop, no novo run e no unmount.",
+      "stacked=true soma as séries (barras empilhadas, total na legenda e na leitura); legendValue escolhe sum/last/none; keepSqlOpen segura o painel aberto durante a execução; result.chart/defaultChart escolhem a visão inicial."
+    ]
+  },
+  "agent-cursor": {
+    "quandoUsar": [
+      "Mostrar um assistente de escrita de IA editando um documento junto com pessoas, com passo de revisão (aceitar/desfazer) antes de aplicar.",
+      "Seções de landing ou onboarding que demonstram um editor colaborativo com IA em movimento.",
+      "Superfícies de produto em que um agente devolve edits estruturados (reescrita, inserção de bloco, correção) e um humano precisa aprovar cada lote."
+    ],
+    "quandoEvitar": [
+      "Conversa ou Q&A livre: use um componente de transcript de chat; aqui o valor é a edição in place com cursor e revisão.",
+      "Um editor rich text de verdade: ligue os cursores de colaboração do próprio editor; este cartão renderiza blocos somente leitura.",
+      "Documentos longos com muitas seções: o cartão foi feito para um excerto curto, uns cinco a dez blocos."
+    ],
+    "teclado": [
+      {
+        "teclas": [
+          "Tab"
+        ],
+        "acao": "Move o foco entre o botão do cabeçalho (Stop durante o run, Run again depois) e, na barra de revisão, entre Undo e Accept changes."
+      },
+      {
+        "teclas": [
+          "Enter",
+          "Space"
+        ],
+        "acao": "Ativa o botão com foco (para o run, rejoga, desfaz ou aceita as mudanças)."
+      }
+    ],
+    "acessibilidade": [
+      "Uma live region polida narra cada etapa (pensando, a edição em curso, edits prontos, aceito, desfeito, erro) e acrescenta “Simulated, nothing was saved” nos runs simulados.",
+      "Cursores, seleção e a linha de status são decorativos e ficam fora da árvore; o documento mantém headings e parágrafos reais, marcados com aria-busy enquanto o agente edita.",
+      "O status nunca é só cor: todo estado terminal combina ícone com rótulo, e as mudanças pendentes ficam tingidas e contadas na barra de revisão.",
+      "Hover ou focus dentro do cartão segura o loop em review, para ninguém perder a barra de ação no meio do alcance."
+    ],
+    "movimento": [
+      "Os cursores deslizam num arco suave ease-in-out, 280 a 600 ms conforme a distância, dirigidos por motion values — nada re-renderiza por frame.",
+      "A seleção preenche linha por linha em passo com o arraste; a reescrita faz fade do texto antigo em 110 ms e streama 4 palavras a cada 34 ms sobre um ghost invisível que reserva a altura exata, cada chunk esmaecendo em 140 ms sem blur nem slide.",
+      "Blocos inseridos crescem do zero com mola sem bounce (motionTokens.spring.smooth); o rótulo de status faz crossfade (100 ms de saída, 160 ms de entrada) e a barra de revisão sobe 8 px e aparece em 200 ms.",
+      "Com reduzir movimento ativo os cursores pulam direto para o alvo, o texto chega inteiro, o drift de repouso e o stagger param, e todos os estados finais permanecem visíveis."
+    ],
+    "responsivo": [
+      "O cartão é fluido dentro do container, limitado a 720 px e centralizado; abaixo de 480 px o padding do documento aperta e a barra de revisão dispensa o “by Claude” para caber em uma linha.",
+      "As tags dos cursores viram para a esquerda perto da borda direita, e o cursor de repouso da colaboradora se reancora quando o cartão redimensiona (ResizeObserver).",
+      "Alvos de seleção e de cursor vêm de Range.getClientRects nas caixas de linha vivas, então texto embrulhado continua mirado em qualquer largura, inclusive 360 px sem scroll horizontal."
+    ],
+    "desempenho": [
+      "Posições dos cursores são motion values, então o trajeto nunca re-renderiza React; o streaming re-renderiza um bloco por tick.",
+      "Geometria de seleção e de alvo sai de getClientRects sob demanda, não a cada frame.",
+      "Timer pausável por um IntersectionObserver (limiar 0,2): loops, drift e esperas param com o cartão fora da tela, e o AbortController cancela o run no Stop, no re-jogo e no unmount."
+    ],
+    "notasIA": [
+      "Sem run o componente roda o modo amostra: um launch brief de exemplo com três edits (reescrita, heading e typo) em loop — autoPlay, loop e simulated são true por padrão nesse modo, e o primeiro hover/toque segura o ciclo.",
+      "Ligue ao seu agente com run(signal): promessa async abortável; uma rejeição vira estado de erro com Retry no cabeçalho e na barra. Edits apontam blocos pelo id, e fix precisa da palavra exata como ela está no texto.",
+      "Persista o resultado: salve o que onAccept devolve e repasse em blocks. agent aceita outro provedor com name/mark/color — cursor, seleção e tint seguem agent.color; collaborator null esconde o segundo cursor; autoPlay false troca o cabeçalho para Ask.",
+      "Tudo dentro do cartão é medido em pixels vivos (getBoundingClientRect/getClientRects relativo ao card), então funciona embutido em qualquer layout, desde que o container não use transform enquanto roda."
+    ]
+  },
+  "provider-status": {
+    "quandoUsar": [
+      "Mostrar a saúde, a latência e o uptime recente dos provedores de modelos que um produto de IA roteia.",
+      "Explicar funcionalidades degradadas para usuários ou admins com os updates de incidente do provedor por perto.",
+      "Páginas de roteamento ou fallback em que é preciso ver quais provedores estão saudáveis agora."
+    ],
+    "quandoEvitar": [
+      "Uma página pública de status completa, com componentes, assinaturas e histórico: construa uma página, não um cartão.",
+      "O estado de um único provedor num cabeçalho de chat: use agent-status ou um badge pequeno.",
+      "Gráficos detalhados de latência ao longo do tempo: use um componente de gráfico."
+    ],
+    "teclado": [
+      {
+        "teclas": [
+          "Tab"
+        ],
+        "acao": "Move o foco entre o botão de refresh, cada linha de incidente e cada barra de uptime."
+      },
+      {
+        "teclas": [
+          "Enter",
+          "Space"
+        ],
+        "acao": "Numa linha de incidente, abre ou fecha os updates."
+      },
+      {
+        "teclas": [
+          "Arrow Left",
+          "Arrow Right"
+        ],
+        "acao": "Numa barra de uptime, move o tooltip do dia um dia para trás ou para frente."
+      },
+      {
+        "teclas": [
+          "Home",
+          "End"
+        ],
+        "acao": "Numa barra de uptime, pula para o dia mais antigo ou para hoje."
+      },
+      {
+        "teclas": [
+          "Escape"
+        ],
+        "acao": "Numa barra de uptime, esconde o tooltip do dia."
+      }
+    ],
+    "acessibilidade": [
+      "O cartão é uma seção rotulada; as linhas formam uma lista e a linha de incidente tem um botão de largura inteira com aria-expanded e aria-controls, nomeado com o provedor, sua saúde e o título do incidente.",
+      "A saúde nunca é só cor: todo status mostra ícone com rótulo, e os ticks carregam a saúde no tooltip e no rótulo da barra.",
+      "Cada barra de uptime é um único tab stop com um rótulo que resume os 30 dias; as setas percorrem os dias e uma live region polida narra cada um, então 180 ticks nunca inundam a ordem de tabulação.",
+      "Uma live region polida anuncia checks, erros de refresh e ações simuladas (\"Simulated, no requests were sent\")."
+    ],
+    "movimento": [
+      "Rótulos de saúde, latência, uptime e o resumo trocam num crossfade único (saída em 100 ms, entrada em 160 ms com subida de 2 px) dentro de uma célula de grid reservada, então nada reflowa.",
+      "O painel de incidente faz spring até a altura medida sem bounce; novos updates fazem fade-in enquanto o painel cresce.",
+      "Ticks trocam de cor em 240 ms; o anel de countdown é um drain linear em CSS que pausa fora da tela e em abas ocultas; Checking troca o anel por um spinner curto e um rótulo pulsante.",
+      "Com reduzir movimento ativo todos os estados finais permanecem e caem a subida, o spring de altura, o spinner e o pulso do skeleton."
+    ],
+    "responsivo": [
+      "Acima de 560 px de container cada linha é uma linha só, com colunas para status, p50, a barra de uptime e a porcentagem dos 30 dias.",
+      "Abaixo de 560 px (container query, então segue o cartão e não a janela) as linhas ocupam duas linhas: nome e status em cima, barra de uptime em largura inteira e a porcentagem embaixo, com a latência sob o nome.",
+      "Segura em 360 px sem scroll horizontal; nomes e detalhes longos truncam com elipse."
+    ],
+    "desempenho": [
+      "Um tooltip único para o cartão inteiro, posicionado sob demanda, em vez de um por tick.",
+      "O countdown re-renderiza no máximo uma vez por segundo e o anel anima em CSS; ambos pausam com o cartão fora da tela e em abas ocultas.",
+      "Refreshes são abortáveis e nunca se sobrepõem; um check mais novo aborta o anterior pelo signal."
+    ],
+    "notasIA": [
+      "Use para uma visão de saúde de provedores num produto de IA: página de settings, tile de admin ou popover de status. Ligue onRefresh ao seu endpoint de agregação; não poline páginas públicas de status do browser.",
+      "Passe marks reais a 16 px; marks mono devem usar currentColor para seguirem o tema. Gemini e Mistral mantêm os fills de marca.",
+      "Mantenha latência e uptime como números simples; o componente formata (412 ms, 1.92 s, 99.61%). Dados amostrais ou sintéticos vão anotados no prop footnote.",
+      "Sem props ele roda uma história de exemplo em checks simulados: um outage da OpenAI e um slowdown do Gemini se resolvem, o Mistral tem um incidente curto e um check falha para mostrar o estado de erro."
+    ]
+  },
+  "training-run": {
+    "quandoUsar": [
+      "Acompanhar um único job de fine-tuning ou destilação rodando na plataforma: loss, learning rate, tempo decorrido, ETA e eventos recentes sem sair da página.",
+      "Onboarding de produto em que o modelo treina sobre os dados do cliente e termina o run num deploy.",
+      "Monitoramento somente leitura: sem nenhum callback a vira um cartão sem botões, só dados."
+    ],
+    "quandoEvitar": [
+      "Gráfico multi-série genérico sem ciclo de vida de job: use line-chart.",
+      "Tarefas de agente com passos em vez de curva de loss: use agent-status.",
+      "Lista de muitos jobs: renderize uma linha compacta por job e abra este cartão apenas para o selecionado."
+    ],
+    "teclado": [
+      {
+        "teclas": [
+          "Tab"
+        ],
+        "acao": "Percorre o gráfico de loss e as ações do rodapé."
+      },
+      {
+        "teclas": [
+          "Esquerda",
+          "Direita"
+        ],
+        "acao": "No gráfico focado, percorre as amostras; a legenda mostra a train e a validation loss do passo inspecionado."
+      },
+      {
+        "teclas": [
+          "Shift + Esquerda",
+          "Shift + Direita"
+        ],
+        "acao": "Avança dez amostras de cada vez."
+      },
+      {
+        "teclas": [
+          "Home",
+          "End"
+        ],
+        "acao": "Salta para a primeira ou para a última amostra."
+      },
+      {
+        "teclas": [
+          "Esc"
+        ],
+        "acao": "Limpa o passo inspecionado."
+      },
+      {
+        "teclas": [
+          "Enter",
+          "Espaço"
+        ],
+        "acao": "Ativa a ação focada; o Cancel pede um segundo toque em Confirm cancel dentro de uma janela de 3s."
+      }
+    ],
+    "acessibilidade": [
+      "Região aria-live polida anuncia mudanças de status (Queued, Training, Paused, Completed, Failed) e qualquer notice passado via notice; nunca anuncia passo a passo.",
+      "O status é ícone mais rótulo, nunca só cor; o motivo da falha fica como texto no rodapé (no lugar do dataset) e no log de eventos.",
+      "O gráfico é um grupo com rótulo cujo aria-label carrega o passo atual e as duas losses; as setas inspecionam amostras e uma nota flutuante mostra os valores do passo inspecionado.",
+      "As métricas são uma lista de descrição (dl) e todos os números usam tabular numerals; o Cancel é ação em duas etapas, para um toque perdido nunca parar um run longo."
+    ],
+    "movimento": [
+      "As curvas de treino e validação crescem amostra a amostra conforme o run avança; o eixo Y se fixa a partir das primeiras amostras e o eixo X cobre o run inteiro, então nada reescala no meio do treino.",
+      "O playhead e a trilha de progresso por epoch avançam junto com o passo atual; eventos novos deslizam para o log em 240 ms com o ease standard, e status, métricas e textos do rodapé trocam em crossfade com subida de 2 px.",
+      "Com movimento reduzido o spinner para, as transições viram instantâneas e a curva salta direto entre amostras.",
+      "Na simulação embutida o relógio congela quando o cartão sai da tela (IntersectionObserver) e, só no modo demo sem status externo, o run reinicia sozinho após a pausa do estado completado, a menos que alguém interaja."
+    ],
+    "responsivo": [
+      "Ocupa o container até 640 px de largura.",
+      "Container queries: abaixo de 480 px o padding do cartão cai para 14/16 px, as quatro métricas viram duas colunas, a legenda encurta Validation para Val e o rodapé empilha contexto acima das ações."
+    ],
+    "desempenho": [
+      "O SVG é medido e redesenhado em pixels reais (ResizeObserver), nítido em qualquer largura; o filtro das amostras do demo roda a cada tick de 90 ms e aguenta alguns milhares de pontos — para runs maiores, subamostrai loss para uns 500 antes de passar."
+    ],
+    "notasIA": [
+      "Passe totalSteps e epochs vindo da configuração do job para o eixo estar certo desde a primeira amostra; envie loss conforme ele chega, mais antigo primeiro.",
+      "Cada controle só aparece quando seu callback é passado: um monitor somente leitura usa apenas props de dados. Sem status, o cartão toca a simulação LoRA embutida do Qwen3.8 Max.",
+      "Importe QwenColorMark e HuggingFaceMark do próprio componente ou passe seus SVGs em model.mark / dataset.mark; ações primárias (Resume, Retry, Deploy) usam o accent e só o Confirm cancel usa danger.",
+      "onDeploy recebe um AbortSignal; faça abort no unmount e o cartão já mostra o endpoint retornado com botão de copiar."
+    ]
+  }
+}

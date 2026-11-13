@@ -6,7 +6,7 @@
   "copyright": "Copyright (c) 2026 Elia Kuratli"
  },
  "counts": {
-  "components": 182,
+  "components": 189,
   "blocks": 42
  },
  "items": [
@@ -178,6 +178,37 @@
    "ownFiles": [
     "registry/components/agent-activity/agent-activity.tsx",
     "registry/components/agent-activity/agent-activity.module.css"
+   ],
+   "hasDemo": true,
+   "isNew": true,
+   "hasGuide": true
+  },
+  {
+   "name": "agent-cursor",
+   "title": "Agent cursor",
+   "description": "A live document where Claude edits like a collaborator: its labeled cursor comes out of its avatar, selects a paragraph and streams in a rewrite, adds a heading and fixes a typo, while a teammate's cursor reads along. Changes stay tinted until someone accepts or undoes them from a floating review bar.",
+   "descricao": "Documento ao vivo em que o Claude edita como colaborador: o cursor com nome sai do avatar dele, seleciona um parágrafo e digita a reescrita palavra por palavra, adiciona um heading e corrige um typo sublinhado de ziguezague, enquanto a cursor da colega lê junto; as mudanças ficam tingidas até alguém aceitar ou desfazer na barra de revisão flutuante.",
+   "kind": "component",
+   "category": "special",
+   "tags": [
+    "ai",
+    "collaboration",
+    "cursor",
+    "writing",
+    "review"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/agent-cursor/agent-cursor.tsx",
+    "registry/components/agent-cursor/agent-cursor.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/agent-cursor/agent-cursor.tsx",
+    "registry/components/agent-cursor/agent-cursor.module.css"
    ],
    "hasDemo": true,
    "isNew": true,
@@ -387,6 +418,37 @@
    "ownFiles": [
     "registry/components/arc-picker/arc-picker.tsx",
     "registry/components/arc-picker/arc-picker.module.css"
+   ],
+   "hasDemo": true,
+   "isNew": true,
+   "hasGuide": true
+  },
+  {
+   "name": "ask-your-data",
+   "title": "Ask your data",
+   "description": "A natural language to chart card: you ask a question, PostgreSQL streams into a collapsible, syntax highlighted panel, the query runs with a rolling row count, and the answer builds as stacked bars, lines or a table, with a one line insight streamed in underneath.",
+   "descricao": "Pergunta livre sobre os dados em linguagem natural: o SQL é escrito palavra a palavra num painel recolhível com syntax highlighting, a consulta roda com contagem de linhas e responde em barras empilhadas, linhas ou tabela, com um insight em streaming logo abaixo.",
+   "kind": "component",
+   "category": "special",
+   "tags": [
+    "chart",
+    "ai",
+    "sql",
+    "analytics",
+    "insight"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/ask-your-data/ask-your-data.tsx",
+    "registry/components/ask-your-data/ask-your-data.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/ask-your-data/ask-your-data.tsx",
+    "registry/components/ask-your-data/ask-your-data.module.css"
    ],
    "hasDemo": true,
    "isNew": true,
@@ -2354,6 +2416,37 @@
    ],
    "hasDemo": true,
    "isNew": false,
+   "hasGuide": true
+  },
+  {
+   "name": "enrich-column",
+   "title": "Enrich column",
+   "description": "An AI enrichment column for a data table where one prompt runs down every row, each cell shimmers while it works, then settles into a value with its source or a failure you can retry, with a footer tallying what's done.",
+   "descricao": "Coluna de enriquecimento com IA para tabela: um prompt desce todas as linhas, cada célula shimmeriza enquanto trabalha e assenta num valor com fonte ou numa falha com retry, e o rodapé conta o que ficou pronto.",
+   "kind": "component",
+   "category": "special",
+   "tags": [
+    "table",
+    "ai",
+    "enrichment",
+    "data",
+    "agent"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/enrich-column/enrich-column.tsx",
+    "registry/components/enrich-column/enrich-column.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/enrich-column/enrich-column.tsx",
+    "registry/components/enrich-column/enrich-column.module.css"
+   ],
+   "hasDemo": true,
+   "isNew": true,
    "hasGuide": true
   },
   {
@@ -4555,6 +4648,37 @@
    "hasGuide": true
   },
   {
+   "name": "provider-status",
+   "title": "Provider status",
+   "description": "A status card for the AI providers your product depends on. Each row shows the provider's real mark, its health as an icon and label, p50 latency and a 30-day uptime bar with a tooltip for each day. An incident row expands into its timeline of updates, and the card checks again on a visible countdown.",
+   "descricao": "Um cartão de status para os provedores de IA em que seu produto depende: cada linha mostra o mark real do provedor, a saúde com ícone e rótulo, a latência p50 e uma barra de uptime de 30 dias com tooltip por dia; uma linha com incidente expande para a timeline de updates (Investigating até Resolved) e o cartão reconfere num countdown visível, com estado de checking e de erro que mantém os últimos resultados na tela.",
+   "kind": "component",
+   "category": "special",
+   "tags": [
+    "ai",
+    "providers",
+    "status",
+    "uptime",
+    "incident"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/provider-status/provider-status.tsx",
+    "registry/components/provider-status/provider-status.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/provider-status/provider-status.tsx",
+    "registry/components/provider-status/provider-status.module.css"
+   ],
+   "hasDemo": true,
+   "isNew": true,
+   "hasGuide": true
+  },
+  {
    "name": "pull-to-refresh",
    "title": "Pull to refresh",
    "description": "A scroll container you drag down with a finger or the mouse: the indicator stretches, spins while the async refresh runs, confirms and settles.",
@@ -5494,6 +5618,37 @@
    "hasGuide": true
   },
   {
+   "name": "smart-form-fill",
+   "title": "Smart form fill",
+   "description": "A paste-to-fill form card where AI reads an email signature or rough notes and fills the contact field by field with a confidence dot, lights up each value's source in the pasted text, flags low-confidence guesses for review, and Undo restores the old values.",
+   "descricao": "Formulário que se preenche com IA: você cola uma assinatura de e-mail ou anotações, os campos recebem um valor de cada vez com ponto de confiança, a fonte de cada valor fica destacada no texto colado, apostas baixas pedem revisão e o Undo devolve os valores anteriores.",
+   "kind": "component",
+   "category": "special",
+   "tags": [
+    "form",
+    "ai",
+    "autofill",
+    "extraction",
+    "confidence"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/smart-form-fill/smart-form-fill.tsx",
+    "registry/components/smart-form-fill/smart-form-fill.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/smart-form-fill/smart-form-fill.tsx",
+    "registry/components/smart-form-fill/smart-form-fill.module.css"
+   ],
+   "hasDemo": true,
+   "isNew": true,
+   "hasGuide": true
+  },
+  {
    "name": "sortable-data-table",
    "title": "Sortable data table",
    "description": "Compare structured records with sortable columns.",
@@ -6011,6 +6166,37 @@
    "hasGuide": true
   },
   {
+   "name": "ticket-router",
+   "title": "Ticket router",
+   "description": "A support ticket router where messages from Gmail, Intercom, Slack and Zendesk come in one at a time. An AI classifier labels each one with intent, sentiment and confidence, and the ticket moves into a team lane with an assignee. Low confidence tickets wait in a review lane, and one click there routes them to the suggested team.",
+   "descricao": "Roteador de tickets de suporte com IA: as mensagens chegam uma a uma, recebem intenção, sentimento e confiança e caem numa lane de time com responsável em round robin; as de baixa confiança esperam na lane de revisão até alguém confirmar.",
+   "kind": "component",
+   "category": "special",
+   "tags": [
+    "support",
+    "triage",
+    "classifier",
+    "queue",
+    "confidence"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/ticket-router/ticket-router.tsx",
+    "registry/components/ticket-router/ticket-router.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/ticket-router/ticket-router.tsx",
+    "registry/components/ticket-router/ticket-router.module.css"
+   ],
+   "hasDemo": true,
+   "isNew": true,
+   "hasGuide": true
+  },
+  {
    "name": "tilt-card",
    "title": "Tilt card",
    "description": "A card that tilts in 3D toward the cursor with a glare highlight and springs back flat on leave; it stays still on touch and with reduced motion.",
@@ -6390,6 +6576,37 @@
    ],
    "hasDemo": true,
    "isNew": false,
+   "hasGuide": true
+  },
+  {
+   "name": "training-run",
+   "title": "Training run",
+   "description": "A fine-tuning job card where a live train and validation loss curve draws across a fixed step axis that doubles as the epoch progress bar. It shows the learning rate, elapsed time and ETA, the latest evals and checkpoints, has Pause and Cancel while it runs, and ends in results with a Deploy button.",
+   "descricao": "Cartão de job de fine-tuning: as curvas de loss de treino e validação desenham ao vivo sobre um eixo de passos fixo que também é a barra de progresso por epoch; mostra learning rate, tempo decorrido e ETA, os últimos evals e checkpoints, tem Pause e Cancel durante o run e termina em resultados com botão de Deploy.",
+   "kind": "component",
+   "category": "special",
+   "tags": [
+    "ai",
+    "fine-tuning",
+    "loss curve",
+    "lora",
+    "checkpoint"
+   ],
+   "dependencies": [
+    "motion",
+    "lucide-react"
+   ],
+   "requires": [],
+   "files": [
+    "registry/components/training-run/training-run.tsx",
+    "registry/components/training-run/training-run.module.css"
+   ],
+   "ownFiles": [
+    "registry/components/training-run/training-run.tsx",
+    "registry/components/training-run/training-run.module.css"
+   ],
+   "hasDemo": true,
+   "isNew": true,
    "hasGuide": true
   },
   {

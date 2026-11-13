@@ -1,1 +1,0 @@
-import{D as e,k as t,v as n}from"./index-Cj2C1ZSw.js";import{t as r}from"./segmented-control-_k0VLWG3.js";var i=t(e(),1),a=n();function o(){let[e,t]=(0,i.useState)(`Review`);return(0,a.jsx)(r,{label:`Project view`,value:e,onValueChange:t,options:[{value:`Review`,label:`Review`},{value:`Activity`,label:`Activity`},{value:`Files`,label:`Files`}]})}export{o as default};
